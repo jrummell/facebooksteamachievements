@@ -1,0 +1,21 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs"
+    Inherits="SteamAchievements.Site" %>
+
+
+<%--<html>
+<head></head>
+<body>--%>
+
+<asp:label runat="server" id="css" />
+<asp:label runat="server" id="js" />
+<asp:label runat="server" id="header">
+<fb:dashboard/>
+</asp:label>
+<div id="main_body">
+    <asp:contentplaceholder id="body" runat="server">
+    </asp:contentplaceholder>
+</div>
+
+<%--</body>
+</html>--%>
+
