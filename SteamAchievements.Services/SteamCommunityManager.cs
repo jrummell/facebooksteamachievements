@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Net;
 using System.Text.RegularExpressions;
-using SteamAchievements.Properties;
+using SteamAchievements.Data;
+using SteamAchievements.Services.Properties;
 
-namespace SteamAchievements.Data
+namespace SteamAchievements.Services
 {
-    public class SteamCommunityService
+    public class SteamCommunityManager
     {
+        private readonly AchievementManager _service = new AchievementManager();
+
         public AchievementCollection GetAchievements(string steamUserId)
         {
-            SteamDataContext context = new SteamDataContext();
             AchievementCollection achievements = new AchievementCollection();
 
-            foreach (Game game in context.Games)
+            foreach (Game game in _service.GetGames())
             {
                 string statsUrl = String.Format("http://steamcommunity.com/id/{0}/stats/{1}?tab=achievements", steamUserId,
                                                 game);
