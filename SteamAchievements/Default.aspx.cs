@@ -20,9 +20,11 @@ namespace SteamAchievements
 
         private void Page_Load(object sender, EventArgs e)
         {
+            return;
+
             try
             {
-                AchievementService service = new AchievementService();
+                AchievementManager service = new AchievementManager();
                 string steamUserId = service.GetSteamUserId(Master.Api.Session.UserId);
 
                 if (!String.IsNullOrEmpty(steamUserId))
@@ -35,6 +37,11 @@ namespace SteamAchievements
             {
                 Response.Write(ex.Message);
             }
+        }
+
+        protected string SteamUserId
+        {
+            get { return "NullReference"; }
         }
     }
 }

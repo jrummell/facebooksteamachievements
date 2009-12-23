@@ -6,9 +6,9 @@
 <head></head>
 <body>--%>
 
-<asp:label runat="server" id="css" />
+<%--<asp:label runat="server" id="css" />
 <asp:label runat="server" id="js" />
-<asp:label runat="server" id="header">
+<asp:label runat="server" id="header">--%>
 <fb:dashboard/>
 </asp:label>
 <div id="main_body">

@@ -35,7 +35,7 @@ namespace SteamAchievements
 
             XmlWriter writer = new XmlTextWriter(context.Response.Output);
 
-            AchievementService service = new AchievementService();
+            AchievementManager service = new AchievementManager();
             AchievementCollection achievements = service.GetAchievements(steamId, gameId);
             SyndicationFeed feed = achievements.ToSyndicationFeed();
 
