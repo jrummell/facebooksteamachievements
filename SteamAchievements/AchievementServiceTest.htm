@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title></title>
+</head>
+<body>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script type="text/javascript" src="js/json2.js"></script>
+    
+    <div id="errorDiv"></div>
+    <div>
+        <select id="gamesSelect" onchange="getAchievements();"></select>
+    </div>
+    
+    <script type="text/javascript">
+        getGames();
+
+        function getGames()
+        {
+            var callback = function(data)
+            {
+                var gamesHtml = "<option>[select a game]<\/option>";
+
+                for (var i = 0; i < data.length; i++)
+                {
+                    var a = data[i];
+                    gamesHtml += "<option value='" + a.Id + "'>" + a.Name + "<\/option>";
+                }
+
+                $("#gamesSelect").html(gamesHtml);
+            };
+
+            var error = function(e) { $("#errorDiv").text(e.Message || "An error has occurred."); };
+            var url = "Services/Achievement.svc/GetGames";
+            
+            $.ajax({
+                url: url,
+                data: "{}",
+                type: "POST",
+                processData: true,
+                contentType: "application/json",
+                timeout: 10000,
+                dataType: "json",
+                success: callback,
+                error: function(xhr)
+                {
+                    if (!error) return;
+                    if (xhr.responseText)
+                    {
+                        var err = JSON2.parse(xhr.responseText);
+                        if (err)
+                            error(err);
+                        else
+                            error({ Message: "Unknown server error." })
+                    }
+                    return;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

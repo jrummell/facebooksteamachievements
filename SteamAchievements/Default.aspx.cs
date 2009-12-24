@@ -20,18 +20,14 @@ namespace SteamAchievements
 
         private void Page_Load(object sender, EventArgs e)
         {
+            SteamUserId = "NullReference";
+
             return;
 
             try
             {
                 AchievementManager service = new AchievementManager();
-                string steamUserId = service.GetSteamUserId(Master.Api.Session.UserId);
-
-                if (!String.IsNullOrEmpty(steamUserId))
-                {
-                    achievementsRepeater.DataSource = service.GetAchievements(steamUserId, 1);
-                    achievementsRepeater.DataBind();
-                }
+                SteamUserId = service.GetSteamUserId(Master.Api.Session.UserId);
             }
             catch (Exception ex)
             {
@@ -41,7 +37,7 @@ namespace SteamAchievements
 
         protected string SteamUserId
         {
-            get { return "NullReference"; }
+            get; private set;
         }
     }
 }
