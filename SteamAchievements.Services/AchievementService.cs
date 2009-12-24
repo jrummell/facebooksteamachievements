@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using SteamAchievements.Data;
+using System.ServiceModel.Activation;
 
 namespace SteamAchievements.Services
 {
