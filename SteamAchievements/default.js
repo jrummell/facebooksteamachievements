@@ -1,13 +1,15 @@
-﻿var _serviceBase = "http://www.rummell.info/SteamAchievements/Services/Achievement.svc/";
+﻿/// <reference path="js/jquery-vsdoc.js" />
+/// <reference path="js/json2.js" />
+/// <reference path="js/FeatureLoader.js" />
+var _serviceBase = "Services/Achievement.svc/";
+var _log = false;
 
 function getGames()
 {
     var ondone = function(data)
     {
-        document.getElementById("debugDiv").setTextValue("ajax.ondone entry point");
-
-        var games = data.payload.data;
-        var gamesHtml = "<option>[select a game]</option>";
+        var games = data;
+        var gamesHtml = "<option value=''>[select a game]</option>";
 
         for (var i = 0; i < games.length; i++)
         {
@@ -15,21 +17,26 @@ function getGames()
             gamesHtml += "<option value='" + a.Id + "'>" + a.Name + "</option>";
         }
 
-        document.getElementById("debugDiv").setTextValue("ajax.ondone done");
-        document.getElementById("gamesSelect").setInnerXHTML(gamesHtml);
-    };
-    
-    var onerror = function()
-    {
-        var gamesSelect = document.getElementById("gamesSelect");
-        dialog = new Dialog(Dialog.DIALOG_CONTEXTUAL).setContext(gamesSelect).showMessage('Oops', 'A communication error occured. Try reloading the page.');
+        log(gamesHtml);
+        $("#gamesSelect").html(gamesHtml);
     };
 
-    callAjax("GetGames", "{}", ondone, onerror);
+    callAjax("GetGames", {}, ondone);
 }
 
 function getAchievements()
 {
+    var steamUserId = $("#steamIdTextBox").val();
+    var gameId = $("#gamesSelect").val();
+
+    if (gameId == null || gameId == "")
+    {
+        return false;
+    }
+    
+    var $achievements = $("#achievementsDiv");
+    $achievements.text("loading ...");
+    
     var ondone = function(data)
     {
         var achievementsHtml = "";
@@ -37,53 +44,95 @@ function getAchievements()
         for (var i = 0; i < data.length; i++)
         {
             var a = data[i];
-            achievementsHtml += "<div>";
+            achievementsHtml += "<div class='achievement'>";
             achievementsHtml += "<div style='float: left;'><img src='" + a.ImageUrl + "' /></div>";
-            achievementsHtml += "<div><strong>" + a.Name + "</strong><p>" + a.Description + "</p></div>";
-            achievementsHtml += "</div>";
+            achievementsHtml += "<div><h3>" + a.Name + "</h3><p>" + a.Description + "</p></div>";
+            achievementsHtml += "<br class='clear'/></div>";
         }
 
-        var achievementsDiv = document.getElementById("achievementsDiv");
-        achievementsDiv.setInnerXHTML(achievementsHtml);
+        log(achievementsHtml);
+        $achievements.html(achievementsHtml);
     };
 
-    var onerror = function() { };
+    var parameters = { "SteamUserId": steamUserId, "GameId": gameId };
+    callAjax("GetAchievements", parameters, ondone);
+}
 
-    var steamUserId = document.getElementById("steamIdTextBox").getValue();
-    var gameId = document.getElementById("gamesSelect").getValue();
+function updateAchievements()
+{
+    var $updating = $("#updating");
+    $updating.show();
 
-    var parameters = { "steamUserId": steamUserId, "gameId": gameId };
-    callAjax("GetAchievements", parameters, ondone, onerror);
+    var ondone = function(data)
+    {
+        $updating.hide();
+
+        getAchievements();
+    };
+
+    var steamUserId = $("#steamIdTextBox").val();
+    var parameters = { "SteamUserId": steamUserId };
+    callAjax("UpdateAchievements", parameters, ondone);
 }
 
 function updateSteamUserId()
 {
-    document.getElementById("steamIdError").setStyle("display", "none");
+    var $steamIdError = $("#steamIdError");
+    $steamIdError.removeClass("error");
 
-    var steamUserId = document.getElementById("steamIdTextBox").getValue();
+    var steamUserId = $("#steamIdTextBox").val();
 
     if (steamUserId == null || steamUserId == "")
     {
-        document.getElementById("steamIdError").setStyle("display", "inline");
+        $steamIdError.addClass("error");
         return false;
     }
 
-    //TODO: update achievements with web service
+    var faceBookUserId = $("#facebookUserIdHidden").val();
+    
     var ondone = function(data) { /* display update success message */ };
-    var onerror = function() { };
 
-    var parameters = { "facebookUserId": null, "steamUserId": steamUserId };
-    callAjax("UpdateSteamId", parameters, ondone, onerror);
+    var parameters = { "FacebookUserId": faceBookUserId, "SteamUserId": steamUserId };
+    callAjax("UpdateSteamUserId", parameters, ondone);
 }
 
-function callAjax(method, query, ondone, onerror)
+function callAjax(method, query, ondone)
 {
-    var ajax = new Ajax();
-    ajax.responseType = Ajax.JSON;
-    //ajax.requireLogin = true;
-    ajax.useLocalProxy = true;
-    ajax.ondone = ondone;
-    ajax.onerror = onerror;
+    var onerror = function(message)
+    {
+        var dialog = new Dialog(Dialog.DIALOG_CONTEXTUAL);
+        dialog.showMessage('Oops', message);
+    };
     
-    ajax.post(_serviceBase + method, query);
+    $.ajax({
+        url: _serviceBase + method,
+        data: JSON.stringify(query),
+        type: "POST",
+        processData: true,
+        contentType: "application/json",
+        timeout: 10000,
+        dataType: "json",
+        success: ondone,
+        error: function(xhr)
+        {
+            if (!onerror) return;
+            if (xhr.responseText)
+            {
+                var err = JSON.parse(xhr.responseText);
+                if (err)
+                    onerror(err);
+                else
+                    onerror({ Message: "Unknown server error." })
+            }
+            return;
+        }
+    });
+}
+
+function log(message)
+{
+    if (_log)
+    {
+        $("#log").append(message);
+    }
 }

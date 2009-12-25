@@ -26,22 +26,40 @@ using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
+    public class GetAchievementsParameter
+    {
+        public string SteamUserId { get; set; }
+        public int GameId { get; set; }
+    }
+
+    public class UpdateAchievementsParameter
+    {
+        public string SteamUserId { get; set; }
+    }
+
+    public class UpdateSteamUserIdParameter
+    {
+        public long FacebookUserId { get; set; }
+        public string SteamUserId { get; set; }
+    }
+
     [ServiceContract]
     public interface IAchievementService
     {
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "GetAchievements?steamUserId={steamUserId}&gameId={gameId}",
-            ResponseFormat = WebMessageFormat.Json)]
-        AchievementCollection GetAchievements(string steamUserId, int gameId);
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        AchievementCollection GetAchievements(GetAchievementsParameter json);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/GetGames", RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json)]
-        Collection<Game> GetGames(); // returning IEnumerable<GameDTO> causes a serialization exception
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        Collection<Game> GetGames(); // returning IEnumerable<Game> causes a serialization exception
 
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "UpdateAchievements?steamUserId={steamUserId}",
-            ResponseFormat = WebMessageFormat.Json)]
-        void UpdateAchievements(string steamUserId);
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        bool UpdateAchievements(UpdateAchievementsParameter json);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        bool UpdateSteamUserId(UpdateSteamUserIdParameter json);
     }
 }

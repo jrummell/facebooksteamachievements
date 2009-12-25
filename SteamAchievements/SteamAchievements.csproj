@@ -122,8 +122,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AchievementServiceTest.htm" />
+    <Content Include="channel\xd_receiver.htm" />
     <Content Include="crossdomain.xml" />
+    <Content Include="css\style.css" />
     <Content Include="default.js" />
+    <Content Include="js\FeatureLoader.js" />
+    <Content Include="js\jquery-vsdoc.js" />
     <Content Include="js\json2.js" />
     <Content Include="Web.config" />
   </ItemGroup>
