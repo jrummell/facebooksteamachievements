@@ -39,7 +39,7 @@ namespace SteamAchievements.Services
             {
                 string statsUrl = String.Format("http://steamcommunity.com/id/{0}/stats/{1}?tab=achievements",
                                                 steamUserId,
-                                                game);
+                                                game.Abbreviation);
                 string html = GetStatsHtml(statsUrl);
 
                 const RegexOptions options = RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline;

@@ -77,39 +77,64 @@ namespace SteamAchievements.Data
 
         private void AssignNewAchievements(string steamUserId, IEnumerable<Achievement> achievements)
         {
-            SteamDataContext context = new SteamDataContext();
+            // get the achievement ids for the games in the given achievements
+            var gameIds = (from a in achievements
+                           select a.GameId).Distinct();
 
-            IQueryable<int> unassignedAchievements =
-                from dbAchievement in context.Achievements
-                join achievement in achievements on dbAchievement.Name equals achievement.Name
-                select dbAchievement.Id;
+            var achievementNames = (from a in achievements
+                                    where gameIds.Contains(a.GameId)
+                                    select a.Name);
 
-            if (!unassignedAchievements.Any())
+            SteamDataContext context = new SteamDataContext { ObjectTrackingEnabled = false };
+            IEnumerable<int> achievementIds =
+                (from a in context.Achievements
+                 where achievementNames.Contains(a.Name)
+                 select a.Id).ToList();
+
+            if (!achievementIds.Any())
             {
                 return;
             }
 
-            DateTime now = DateTime.Now;
-            foreach (int achievement in unassignedAchievements)
+            // get the unassigned achievement ids
+            IEnumerable<int> assignedAchievementIds = 
+                (from a in context.UserAchievements
+                where a.SteamUserId == steamUserId
+                select a.AchievementId).ToList();
+
+            IEnumerable<int> unassignedAchievementIds =
+                from id in achievementIds
+                where !assignedAchievementIds.Contains(id)
+                select id;
+
+            if (!unassignedAchievementIds.Any())
             {
-                UserAchievement userAchievement = new UserAchievement
-                                                      {
-                                                          SteamUserId = steamUserId,
-                                                          AchievementId = achievement,
-                                                          Date = now
-                                                      };
-                context.UserAchievements.Attach(userAchievement);
+                return;
             }
 
-            context.SubmitChanges();
+            // create the unassigned achievements and insert them
+            IEnumerable<UserAchievement> newUserAchievements =
+                from id in unassignedAchievementIds
+                select new UserAchievement
+                {
+                    SteamUserId = steamUserId,
+                    AchievementId = id,
+                    Date = DateTime.Now
+                };
+
+            SteamDataContext context2 = new SteamDataContext();
+            context2.UserAchievements.InsertAllOnSubmit(newUserAchievements);
+            context2.SubmitChanges();
         }
 
         private void InsertMissingAchievements(IEnumerable<Achievement> achievements)
         {
             SteamDataContext context = new SteamDataContext();
 
+            IEnumerable<Achievement> dbAchievements = context.Achievements.ToList();
+
             IEnumerable<Achievement> missingAchievements = from achievement in achievements
-                                                           join dbAchievement in context.Achievements on
+                                                           join dbAchievement in dbAchievements on
                                                                achievement.Name equals
                                                                dbAchievement.Name into x
                                                            from missing in x.DefaultIfEmpty()
@@ -130,7 +155,7 @@ namespace SteamAchievements.Data
                                                      Description = achievement.Description,
                                                      ImageUrl = achievement.ImageUrl
                                                  };
-                context.Achievements.Attach(newAchievement);
+                context.Achievements.InsertOnSubmit(newAchievement);
             }
 
             context.SubmitChanges();
@@ -140,6 +165,34 @@ namespace SteamAchievements.Data
         {
             SteamDataContext context = new SteamDataContext();
             return context.Games;
+        }
+
+        public void UpdateSteamUserId(long facebookUserId, string steamUserId)
+        {
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            SteamDataContext context = new SteamDataContext();
+            var query = from u in context.Users
+                        where u.FacebookUserId == facebookUserId
+                        select u;
+
+            User user = query.SingleOrDefault();
+
+            if (user == null)
+            {
+                user = new User { FacebookUserId = facebookUserId, SteamUserId = steamUserId };
+
+                context.Users.InsertOnSubmit(user);
+            }
+            else
+            {
+                user.SteamUserId = steamUserId;
+            }
+
+            context.SubmitChanges();
         }
     }
 }

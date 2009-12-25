@@ -1,34 +1,38 @@
-﻿<%@ Page Language="C#" AutoEventWireup="false" MasterPageFile="~/Site.Master"
-    CodeBehind="Default.aspx.cs" Inherits="SteamAchievements.Default" %>
-<%@ Import Namespace="SteamAchievements.Data"%>
+﻿<%@ Page Language="C#" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="Default.aspx.cs"
+    Inherits="SteamAchievements.Default" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content runat="server" ID="content" ContentPlaceHolderID="body">
-
-    <h2>
-        Steam Achievements</h2>
+    <h1>
+        Steam Achievements</h1>
     <div>
+        <input id="facebookUserIdHidden" type="hidden" value="<%= FacebookUserId %>" />
         <p>
-            <label for="steamIdTextBox">Steam Community ID</label><br />
+            <label for="steamIdTextBox">
+                Steam Community ID</label><br />
             http://steamcommunity.com/id/
-            <input id="steamIdTextBox" value="<%= SteamUserId %>"/>
-            <span id="steamIdError" style="display:none; color:Red;">Required</span>
+            <input id="steamIdTextBox" value="<%= SteamUserId %>" />
+            <span id="steamIdError" style="display: none; color: Red;">Required</span>
             <input type="button" value="Update" onclick="return updateSteamUserId();" />
         </p>
+        <p>
+            (<a href="#" onclick="updateAchievements(); return false;">Update achievements</a>)
+            <span id="updating" style="display: none;">Updating ...</span>
+        </p>
     </div>
-    
     <div>
-        <select id="gamesSelect" onchange="getAchievements();"></select>
+        <select id="gamesSelect" onchange="getAchievements();">
+        </select>
     </div>
-    
-    <div id="achievementsDiv"></div>
-    
-    <div id="debugDiv">[no error?]</div>
-    
-    <script src="http://www.rummell.info/SteamAchievements/default.js"></script>
-    <script>
-        getGames();
+    <div id="achievementsDiv">
+    </div>
+    <div id="log">
+    </div>
+
+    <script type="text/javascript" src="default.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() { getGames(); });
     </script>
-    
-    <fb:local-proxy/>
+
 </asp:Content>

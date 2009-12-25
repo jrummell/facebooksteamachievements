@@ -24,6 +24,7 @@ using System.ServiceModel.Syndication;
 using System.Web;
 using System.Xml;
 using SteamAchievements.Data;
+using SteamAchievements.Services;
 
 namespace SteamAchievements
 {
@@ -35,6 +36,7 @@ namespace SteamAchievements
         {
             string steamId = context.Request.QueryString["user"];
             string gameIdString = context.Request.QueryString["game"];
+            string live = context.Request.QueryString["live"];
 
             if (String.IsNullOrEmpty(steamId) || String.IsNullOrEmpty(gameIdString))
             {
@@ -58,6 +60,12 @@ namespace SteamAchievements
 
             AchievementManager service = new AchievementManager();
             AchievementCollection achievements = service.GetAchievements(steamId, gameId);
+
+            if (!String.IsNullOrEmpty(live))
+            {
+                achievements = new SteamCommunityManager().GetAchievements(steamId);
+            }
+
             SyndicationFeed feed = achievements.ToSyndicationFeed();
 
             feed.SaveAsRss20(writer);

@@ -29,6 +29,8 @@ namespace SteamAchievements
     {
         protected string SteamUserId { get; private set; }
 
+        protected long FacebookUserId { get; private set; }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -36,21 +38,14 @@ namespace SteamAchievements
             Load += Page_Load;
         }
 
-        protected void Page_PreInit(object sender, EventArgs e)
-        {
-            Master.RequireLogin = true;
-        }
-
         private void Page_Load(object sender, EventArgs e)
         {
-            SteamUserId = "NullReference";
-
-            return;
-
             try
             {
+                FacebookUserId = Master.Api.Session.UserId;
+
                 AchievementManager service = new AchievementManager();
-                SteamUserId = service.GetSteamUserId(Master.Api.Session.UserId);
+                SteamUserId = service.GetSteamUserId(FacebookUserId);
             }
             catch (Exception ex)
             {

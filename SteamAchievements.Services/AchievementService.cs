@@ -19,7 +19,9 @@
 
 #endregion
 
+using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
@@ -31,9 +33,57 @@ namespace SteamAchievements.Services
 
         #region IAchievementService Members
 
-        public AchievementCollection GetAchievements(string steamUserId, int gameId)
+        public AchievementCollection GetAchievements(GetAchievementsParameter json)
         {
-            return new AchievementCollection(steamUserId, "l4d")
+            if (json == null)
+            {
+                throw new ArgumentNullException("json");
+            }
+
+            return _service.GetAchievements(json.SteamUserId, json.GameId);
+        }
+
+        public Collection<Game> GetGames()
+        {
+            return new Collection<Game>(_service.GetGames().ToList());
+        }
+
+        public bool UpdateAchievements(UpdateAchievementsParameter json)
+        {
+            if (json == null)
+            {
+                throw new ArgumentNullException("json");
+            }
+
+            AchievementCollection achievements = _communityService.GetAchievements(json.SteamUserId);
+
+            _service.UpdateAchievements(json.SteamUserId, achievements);
+
+            return true;
+        }
+
+        public bool UpdateSteamUserId(UpdateSteamUserIdParameter json)
+        {
+            if (json == null)
+            {
+                throw new ArgumentNullException("json");
+            }
+
+            _service.UpdateSteamUserId(json.FacebookUserId, json.SteamUserId);
+
+            return true;
+        }
+
+        #endregion
+    }
+
+    public class MockAchievementService : IAchievementService
+    {
+        #region IAchievementService Members
+
+        public AchievementCollection GetAchievements(GetAchievementsParameter json)
+        {
+            return new AchievementCollection("steamUser", "l4d")
                        {
                            new Achievement
                                {
@@ -52,8 +102,6 @@ namespace SteamAchievements.Services
                                        "http://media.steampowered.com/steamcommunity/public/images/apps/500/0abefbfb22ef97d532d95fbb5261ff2d52f55e5f.jpg"
                                }
                        };
-
-            return _service.GetAchievements(steamUserId, gameId);
         }
 
         public Collection<Game> GetGames()
@@ -64,14 +112,16 @@ namespace SteamAchievements.Services
                            new Game {Abbreviation = "tf2", Id = 2, Name = "Team Fortress 2"}
                        };
 
-            //return _service.GetGames();
         }
 
-        public void UpdateAchievements(string steamUserId)
+        public bool UpdateAchievements(UpdateAchievementsParameter json)
         {
-            AchievementCollection achievements = _communityService.GetAchievements(steamUserId);
+            return true;
+        }
 
-            _service.UpdateAchievements(steamUserId, achievements);
+        public bool UpdateSteamUserId(UpdateSteamUserIdParameter json)
+        {
+            return true;
         }
 
         #endregion
