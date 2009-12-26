@@ -26,7 +26,7 @@
     </div>
     <div id="achievementsDiv">
     </div>
-    <div id="log">
+    <div id="log" class="fberrorbox" style="display: none;">
     </div>
 
     <script type="text/javascript" src="default.js"></script>
