@@ -33,10 +33,10 @@ function getAchievements()
     {
         return false;
     }
-    
+
     var $achievements = $("#achievementsDiv");
     $achievements.text("loading ...");
-    
+
     var ondone = function(data)
     {
         var achievementsHtml = "";
@@ -89,7 +89,7 @@ function updateSteamUserId()
     }
 
     var faceBookUserId = $("#facebookUserIdHidden").val();
-    
+
     var ondone = function(data) { /* display update success message */ };
 
     var parameters = { "FacebookUserId": faceBookUserId, "SteamUserId": steamUserId };
@@ -98,12 +98,11 @@ function updateSteamUserId()
 
 function callAjax(method, query, ondone)
 {
-    var onerror = function(message)
+    var onerror = function(m)
     {
-        var dialog = new Dialog(Dialog.DIALOG_CONTEXTUAL);
-        dialog.showMessage('Oops', message);
+        $("#log").text(m.Message).show();
     };
-    
+
     $.ajax({
         url: _serviceBase + method,
         data: JSON.stringify(query),
@@ -115,14 +114,29 @@ function callAjax(method, query, ondone)
         success: ondone,
         error: function(xhr)
         {
-            if (!onerror) return;
+            if (!onerror)
+            {
+                return;
+            }
+            
             if (xhr.responseText)
             {
-                var err = JSON.parse(xhr.responseText);
-                if (err)
-                    onerror(err);
-                else
-                    onerror({ Message: "Unknown server error." })
+                try
+                {
+                    var err = JSON.parse(xhr.responseText);
+                    if (err)
+                    {
+                        onerror(err);
+                    }
+                    else
+                    {
+                        onerror({ Message: "Unknown server error." });
+                    }
+                }
+                catch (e)
+                {
+                    onerror({ Message: e.toString() });
+                }
             }
             return;
         }

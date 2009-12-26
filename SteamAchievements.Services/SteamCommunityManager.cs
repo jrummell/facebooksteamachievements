@@ -42,13 +42,19 @@ namespace SteamAchievements.Services
                                                 game.Abbreviation);
                 string html = GetStatsHtml(statsUrl);
 
+                // achievements the player hasn't earned yet come after 3 br tags
+                int index = html.IndexOf("<br /><br /><br />");
+                if (index > 0)
+                {
+                    html = html.Substring(0, index);
+                }
+
                 const RegexOptions options = RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline;
                 Regex textRegex = new Regex(Settings.Default.AchievementTextRegex, options);
                 Regex imageRegex = new Regex(Settings.Default.AchievementImageRegex, options);
 
                 MatchCollection textMatches = textRegex.Matches(html);
                 MatchCollection imagesMatches = imageRegex.Matches(html);
-
 
                 for (int i = 0; i < textMatches.Count; i++)
                 {

@@ -59,6 +59,8 @@ namespace SteamAchievements.Services
 
             _service.UpdateAchievements(json.SteamUserId, achievements);
 
+            //TODO: post up to 5 of the newly added achievements to fb profile
+
             return true;
         }
 
