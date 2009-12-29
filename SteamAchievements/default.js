@@ -62,17 +62,27 @@ function updateAchievements()
 {
     var $updating = $("#updating");
     $updating.show();
+    
+    var steamUserId = $("#steamIdTextBox").val();
 
     var ondone = function(data)
     {
         $updating.hide();
 
         getAchievements();
+
+        postAchievements(steamUserId);
     };
 
-    var steamUserId = $("#steamIdTextBox").val();
     var parameters = { "SteamUserId": steamUserId };
     callAjax("UpdateAchievements", parameters, ondone);
+}
+
+function postAchievements(steamUserId)
+{
+    // unlike the other service methods, this one is a PageMethod.
+    var parameters = { "steamUserId": steamUserId };
+    callAjax("PostAchievements", parameters, null, "Default.aspx/");
 }
 
 function updateSteamUserId()
@@ -96,15 +106,17 @@ function updateSteamUserId()
     callAjax("UpdateSteamUserId", parameters, ondone);
 }
 
-function callAjax(method, query, ondone)
+function callAjax(method, query, ondone, baseUrl)
 {
     var onerror = function(m)
     {
         $("#log").text(m.Message).show();
     };
 
+    baseUrl = baseUrl || _serviceBase;
+
     $.ajax({
-        url: _serviceBase + method,
+        url: baseUrl + method,
         data: JSON.stringify(query),
         type: "POST",
         processData: true,

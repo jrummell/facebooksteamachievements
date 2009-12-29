@@ -20,6 +20,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using SteamAchievements.Data;
@@ -58,8 +59,6 @@ namespace SteamAchievements.Services
             AchievementCollection achievements = _communityService.GetAchievements(json.SteamUserId);
 
             _service.UpdateAchievements(json.SteamUserId, achievements);
-
-            //TODO: post up to 5 of the newly added achievements to fb profile
 
             return true;
         }
