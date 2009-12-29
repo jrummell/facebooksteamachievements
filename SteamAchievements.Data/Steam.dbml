@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Database Name="steam" Class="SteamDataContext" AccessModifier="Internal" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=rum0812807424549.db.3014066.hostedresource.com;Initial Catalog=rum0812807424549;User ID=rum0812807424549" SettingsObjectName="SteamAchievements.Data.Properties.Settings" SettingsPropertyName="steamConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\SQLEXPRESS;AttachDbFilename=&quot;C:\Users\John\Documents\Visual Studio 2008\Projects\FacebookSteamAchievements\SteamAchievements\App_Data\Steam.mdf&quot;;Integrated Security=True;Connect Timeout=30;User Instance=True" SettingsObjectName="SteamAchievements.Data.Properties.Settings" SettingsPropertyName="steamConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.steam_Achievement" Member="Achievements">
     <Type Name="Achievement">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />

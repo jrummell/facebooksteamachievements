@@ -132,7 +132,15 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Content Include="Config\connectionStrings.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Steam.mdf">
+    </Content>
+    <Content Include="App_Data\Steam_log.ldf">
+      <DependentUpon>Steam.mdf</DependentUpon>
+    </Content>
+    <Content Include="Config\appSettings.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
