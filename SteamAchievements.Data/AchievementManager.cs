@@ -75,6 +75,25 @@ namespace SteamAchievements.Data
             AssignNewAchievements(steamUserId, achievements);
         }
 
+        public IEnumerable<Achievement> GetLatestAchievements(string steamUserId)
+        {
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            DateTime oneHourAgo = DateTime.Now.AddHours(-1);
+
+            SteamDataContext context = new SteamDataContext();
+            IQueryable<Achievement> achievements =
+                from userAchievement in context.UserAchievements
+                where userAchievement.SteamUserId == steamUserId && userAchievement.Date > oneHourAgo
+                orderby userAchievement.Date descending 
+                select userAchievement.Achievement;
+
+            return new AchievementCollection(achievements.Take(5).ToList(), steamUserId, null);
+        }
+
         private void AssignNewAchievements(string steamUserId, IEnumerable<Achievement> achievements)
         {
             // get the achievement ids for the games in the given achievements

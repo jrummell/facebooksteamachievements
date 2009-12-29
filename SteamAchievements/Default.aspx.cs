@@ -20,7 +20,13 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
+using System.Web.Configuration;
+using System.Web.Services;
 using System.Web.UI;
+using Facebook.Rest;
+using Facebook.Schema;
+using Facebook.Session;
 using SteamAchievements.Data;
 
 namespace SteamAchievements
@@ -44,13 +50,71 @@ namespace SteamAchievements
             {
                 FacebookUserId = Master.Api.Session.UserId;
 
-                AchievementManager service = new AchievementManager();
-                SteamUserId = service.GetSteamUserId(FacebookUserId);
+                AchievementManager manager = new AchievementManager();
+                SteamUserId = manager.GetSteamUserId(FacebookUserId);
             }
             catch (Exception ex)
             {
                 Response.Write(ex.Message);
             }
         }
+
+        /// <summary>
+        /// Posts the achievements.
+        /// </summary>
+        /// <remarks>This method depends on Master.Api, otherwise it would be in <see cref="SteamAchievements.Services.AchievementService"/>.</remarks>
+        /// <param name="json">The json.</param>
+        [WebMethod]
+        public static void PostAchievements(string steamUserId)
+        {
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            string appKey = WebConfigurationManager.AppSettings["APIKey"];
+            string appSecret = WebConfigurationManager.AppSettings["Secret"];
+            List<Enums.ExtendedPermissions> permissions =
+                new List<Enums.ExtendedPermissions> {Enums.ExtendedPermissions.publish_stream};
+            IFrameCanvasSession session = new IFrameCanvasSession(appKey, appSecret, permissions);
+            Api api = new Api(session);
+
+            AchievementManager manager = new AchievementManager();
+            IEnumerable<Achievement> latestAchievements = manager.GetLatestAchievements(steamUserId);
+
+            foreach (Achievement achievement in latestAchievements)
+            {
+                string description = String.Format("earned the {0} achievement in {1}.", achievement.Name, achievement.Game.Name);
+                attachment attachment = new attachment
+                                            {
+                                                caption = achievement.Description,
+                                                name = achievement.Name,
+                                                href = String.Format("http://steamcommunity.com/id/{0}/stats/{1}",
+                                                                     steamUserId, achievement.Game.Abbreviation),
+                                                media = new List<attachment_media>
+                                                            {
+                                                                new attachment_media_image
+                                                                    {
+                                                                        src = achievement.ImageUrl,
+                                                                        href =
+                                                                            String.Format(
+                                                                            "http://steamcommunity.com/id/{0}/stats/{1}?tab=achievements",
+                                                                            steamUserId, achievement.Game.Abbreviation)
+                                                                    }
+                                                            }
+                                            };
+
+                api.Stream.Publish(description, attachment, null, null, 0);
+            }
+        }
+
+        #region Nested type: PostAchievementsParameter
+
+        public class PostAchievementsParameter
+        {
+            public string SteamUserId { get; set; }
+        }
+
+        #endregion
     }
 }
