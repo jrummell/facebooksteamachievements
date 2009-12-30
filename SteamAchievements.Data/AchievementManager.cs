@@ -214,7 +214,9 @@ namespace SteamAchievements.Data
         public IEnumerable<Game> GetGames()
         {
             SteamDataContext context = new SteamDataContext();
-            return context.Games;
+            return from game in context.Games
+                   orderby game.Name
+                   select game;
         }
 
         /// <summary>
@@ -238,13 +240,23 @@ namespace SteamAchievements.Data
 
             if (user == null)
             {
+                // the user does not exist, create a new one.
                 user = new User {FacebookUserId = facebookUserId, SteamUserId = steamUserId};
 
                 context.Users.InsertOnSubmit(user);
             }
             else
             {
+                // update steam id
+                string oldSteamUserId = user.SteamUserId;
                 user.SteamUserId = steamUserId;
+
+                // delete all achievements associated with the old id
+                IQueryable<UserAchievement> users = from u in context.UserAchievements
+                                                    where u.SteamUserId == oldSteamUserId
+                                                    select u;
+
+                context.UserAchievements.DeleteAllOnSubmit(users);
             }
 
             context.SubmitChanges();
