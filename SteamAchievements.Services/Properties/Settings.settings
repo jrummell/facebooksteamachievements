@@ -8,5 +8,8 @@
     <Setting Name="AchievementImageRegex" Type="System.String" Scope="Application">
       <Value Profile="(Default)">&lt;div class="achieveImgHolder"&gt;\s*&lt;img src="(?&lt;image&gt;.*?)"\swidth="64"\sheight="64"\sborder="0"\s+/&gt;\s*&lt;/div&gt;</Value>
     </Setting>
+    <Setting Name="AchievementSeparatorRegex" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">&lt;br /?&gt;\s*&lt;br /?&gt;\s*&lt;br /?&gt;</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -1,0 +1,68 @@
+﻿<!-- 
+  Microsoft Visual Studio 2008 Web Deployment Project 
+  http://go.microsoft.com/fwlink/?LinkID=104956
+
+-->
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{73830ED6-0B07-4CEB-A323-F4EE6B6333E6}</ProjectGuid>
+    <SourceWebPhysicalPath>..\SteamAchievements</SourceWebPhysicalPath>
+    <SourceWebProject>{255FFFAF-4FED-461D-B8B6-496C4B9C77A8}|SteamAchievements\SteamAchievements.csproj</SourceWebProject>
+    <SourceWebVirtualPath>/SteamAchievements.csproj</SourceWebVirtualPath>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>.\Debug</OutputPath>
+    <EnableUpdateable>true</EnableUpdateable>
+    <UseMerge>true</UseMerge>
+    <SingleAssemblyName>SteamAchievements.Deploy</SingleAssemblyName>
+    <UseWebConfigReplacement>true</UseWebConfigReplacement>
+    <ValidateWebConfigReplacement>true</ValidateWebConfigReplacement>
+    <DeleteAppDataFolder>true</DeleteAppDataFolder>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>.\Release</OutputPath>
+    <EnableUpdateable>true</EnableUpdateable>
+    <UseMerge>true</UseMerge>
+    <SingleAssemblyName>SteamAchievements.Deploy</SingleAssemblyName>
+    <UseWebConfigReplacement>true</UseWebConfigReplacement>
+    <DeleteAppDataFolder>true</DeleteAppDataFolder>
+    <ValidateWebConfigReplacement>true</ValidateWebConfigReplacement>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <WebConfigReplacementFiles Include="Config\Release\appSettings.config">
+      <Section>appSettings</Section>
+    </WebConfigReplacementFiles>
+    <WebConfigReplacementFiles Include="Config\Release\connectionStrings.config">
+      <Section>connectionStrings</Section>
+    </WebConfigReplacementFiles>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <WebConfigReplacementFiles Include="Config\Debug\appSettings.config">
+      <Section>appSettings</Section>
+    </WebConfigReplacementFiles>
+    <WebConfigReplacementFiles Include="Config\Debug\connectionStrings.config">
+      <Section>connectionStrings</Section>
+    </WebConfigReplacementFiles>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WebDeployment\v9.0\Microsoft.WebDeployment.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.WebDeployment.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="BeforeMerge">
+  </Target>
+  <Target Name="AfterMerge">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

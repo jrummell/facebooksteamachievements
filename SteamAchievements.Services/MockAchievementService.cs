@@ -31,7 +31,7 @@ namespace SteamAchievements.Services
     {
         #region IAchievementService Members
 
-        public List<Achievement> GetAchievements(GetAchievementsParameter json)
+        public List<Achievement> GetAchievements(SteamUserIdGameIdParameter json)
         {
             return new List<Achievement>
                        {
@@ -63,12 +63,17 @@ namespace SteamAchievements.Services
                        };
         }
 
-        public bool UpdateAchievements(UpdateAchievementsParameter json)
+        public bool UpdateAchievements(SteamUserIdParameter json)
         {
             return true;
         }
 
-        public bool UpdateSteamUserId(UpdateSteamUserIdParameter json)
+        public bool UpdateSteamUserId(SteamUserIdFacebookUserIdParameter json)
+        {
+            return true;
+        }
+
+        public bool PublishLatestAchievements(SteamUserIdFacebookUserIdParameter json)
         {
             return true;
         }

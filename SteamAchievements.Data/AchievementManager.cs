@@ -92,7 +92,7 @@ namespace SteamAchievements.Data
         }
 
         /// <summary>
-        /// Gets the latest achievements.
+        /// Gets the last 5 achievements added in the last 5 minutes.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <returns></returns>
@@ -103,7 +103,7 @@ namespace SteamAchievements.Data
                 throw new ArgumentNullException("steamUserId");
             }
 
-            DateTime oneHourAgo = DateTime.Now.AddHours(-1);
+            DateTime oneHourAgo = DateTime.Now.AddMinutes(-5);
 
             SteamDataContext context = new SteamDataContext();
             IQueryable<Achievement> achievements =

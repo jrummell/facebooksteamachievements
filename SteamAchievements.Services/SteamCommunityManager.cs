@@ -30,32 +30,42 @@ namespace SteamAchievements.Services
 {
     public class SteamCommunityManager
     {
+        private const RegexOptions _options = RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline;
+
+        private readonly Regex _endRegex = new Regex(Settings.Default.AchievementSeparatorRegex, _options);
+        private readonly Regex _imageRegex = new Regex(Settings.Default.AchievementImageRegex, _options);
         private readonly AchievementManager _service = new AchievementManager();
+        private readonly Regex _textRegex = new Regex(Settings.Default.AchievementTextRegex, _options);
 
         public IEnumerable<Achievement> GetAchievements(string steamUserId)
         {
             List<Achievement> achievements = new List<Achievement>();
 
-            foreach (Game game in _service.GetGames())
+            IEnumerable<Game> games = _service.GetGames();
+            foreach (Game game in games)
             {
                 string statsUrl = String.Format("http://steamcommunity.com/id/{0}/stats/{1}?tab=achievements",
-                                                steamUserId,
-                                                game.Abbreviation);
+                                                steamUserId, game.Abbreviation);
                 string html = GetStatsHtml(statsUrl);
-
-                // achievements the player hasn't earned yet come after 3 br tags
-                int index = html.IndexOf("<br /><br /><br />");
-                if (index > 0)
+                if (html == null)
                 {
-                    html = html.Substring(0, index);
+                    continue;
                 }
 
-                const RegexOptions options = RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline;
-                Regex textRegex = new Regex(Settings.Default.AchievementTextRegex, options);
-                Regex imageRegex = new Regex(Settings.Default.AchievementImageRegex, options);
+                // achievements the player hasn't earned yet come after the separator expression
+                Match endMatch = _endRegex.Match(html);
+                if (endMatch.Success)
+                {
+                    html = html.Substring(0, endMatch.Index);
+                }
+                else
+                {
+                    // there are no earned achievements for this game
+                    continue;
+                }
 
-                MatchCollection textMatches = textRegex.Matches(html);
-                MatchCollection imagesMatches = imageRegex.Matches(html);
+                MatchCollection textMatches = _textRegex.Matches(html);
+                MatchCollection imagesMatches = _imageRegex.Matches(html);
 
                 for (int i = 0; i < textMatches.Count; i++)
                 {
@@ -77,12 +87,26 @@ namespace SteamAchievements.Services
             return achievements;
         }
 
+        /// <summary>
+        /// Gets the stats HTML.
+        /// </summary>
+        /// <param name="statsUrl">The stats URL.</param>
+        /// <returns></returns>
         private static string GetStatsHtml(string statsUrl)
         {
             string html;
             using (WebClient client = new WebClient())
             {
-                html = client.DownloadString(statsUrl);
+                try
+                {
+                    html = client.DownloadString(statsUrl);
+                }
+                catch (WebException)
+                {
+                    return null;
+                }
+
+                // remove new lines so that Regex parsing is easier
                 html = html.Replace("\r\n", "").Replace("\n", "");
             }
             return html;
