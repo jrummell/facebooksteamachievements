@@ -33,8 +33,16 @@ namespace SteamAchievements
 {
     public partial class Default : Page
     {
+        /// <summary>
+        /// Gets or sets the steam user id.
+        /// </summary>
+        /// <value>The steam user id.</value>
         protected string SteamUserId { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the facebook user id.
+        /// </summary>
+        /// <value>The facebook user id.</value>
         protected long FacebookUserId { get; private set; }
 
         protected override void OnInit(EventArgs e)
@@ -62,8 +70,8 @@ namespace SteamAchievements
         /// <summary>
         /// Posts the achievements.
         /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
         /// <remarks>This method depends on Master.Api, otherwise it would be in <see cref="SteamAchievements.Services.AchievementService"/>.</remarks>
-        /// <param name="json">The json.</param>
         [WebMethod]
         public static void PostAchievements(string steamUserId)
         {
@@ -84,7 +92,8 @@ namespace SteamAchievements
 
             foreach (Achievement achievement in latestAchievements)
             {
-                string description = String.Format("earned the {0} achievement in {1}.", achievement.Name, achievement.Game.Name);
+                string description = String.Format("earned the {0} achievement in {1}.", achievement.Name,
+                                                   achievement.Game.Name);
                 attachment attachment = new attachment
                                             {
                                                 caption = achievement.Description,
