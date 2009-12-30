@@ -42,7 +42,7 @@ function updateSteamUserId()
         $updating.hide();
     };
 
-    var parameters = { "FacebookUserId": faceBookUserId, "SteamUserId": steamUserId };
+    var parameters = { "facebookUserId": faceBookUserId, "steamUserId": steamUserId };
     callAjax("UpdateSteamUserId", parameters, ondone);
 }
 
@@ -88,7 +88,7 @@ function getAchievements()
         $loading.hide();
     };
 
-    var parameters = { "SteamUserId": steamUserId, "GameId": gameId };
+    var parameters = { "steamUserId": steamUserId, "gameId": gameId };
     callAjax("GetAchievements", parameters, ondone);
 }
 
@@ -113,14 +113,14 @@ function updateAchievements()
         publishLatestAchievements(steamUserId);
     };
 
-    var parameters = { "SteamUserId": steamUserId };
+    var parameters = { "steamUserId": steamUserId };
     callAjax("UpdateAchievements", parameters, ondone);
 }
 
 function publishLatestAchievements(steamUserId)
 {
     var faceBookUserId = $("#facebookUserIdHidden").val();
-    var parameters = { "SteamUserId": steamUserId, "FacebookUserId": faceBookUserId };
+    var parameters = { "steamUserId": steamUserId, "facebookUserId": faceBookUserId };
     callAjax("PublishLatestAchievements", parameters, null);
 }
 
