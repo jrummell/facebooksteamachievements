@@ -80,9 +80,6 @@
     <Reference Include="System.Web.Services" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AchievementsFeed.ashx.cs">
-      <DependentUpon>AchievementsFeed.ashx</DependentUpon>
-    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -105,7 +102,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Services\Achievement.svc" />
-    <Content Include="AchievementsFeed.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
@@ -126,7 +122,6 @@
     <Content Include="crossdomain.xml" />
     <Content Include="css\style.css" />
     <Content Include="default.js" />
-    <Content Include="js\FeatureLoader.js" />
     <Content Include="js\jquery-vsdoc.js" />
     <Content Include="js\json2.js" />
     <Content Include="Web.config" />
@@ -141,6 +136,7 @@
       <DependentUpon>Steam.mdf</DependentUpon>
     </Content>
     <Content Include="Config\appSettings.config" />
+    <Content Include="logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -27,6 +27,11 @@ namespace SteamAchievements.Data
 {
     public class AchievementManager
     {
+        /// <summary>
+        /// Gets the steam user id.
+        /// </summary>
+        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <returns></returns>
         public string GetSteamUserId(long facebookUserId)
         {
             SteamDataContext context = new SteamDataContext();
@@ -38,7 +43,13 @@ namespace SteamAchievements.Data
             return query.SingleOrDefault();
         }
 
-        public AchievementCollection GetAchievements(string steamUserId, int gameId)
+        /// <summary>
+        /// Gets the achievements.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="gameId">The game id.</param>
+        /// <returns></returns>
+        public IEnumerable<Achievement> GetAchievements(string steamUserId, int gameId)
         {
             if (steamUserId == null)
             {
@@ -51,9 +62,14 @@ namespace SteamAchievements.Data
                 where userAchievement.SteamUserId == steamUserId && userAchievement.Achievement.GameId == gameId
                 select userAchievement.Achievement;
 
-            return new AchievementCollection(achievements.ToList(), steamUserId, null);
+            return achievements;
         }
 
+        /// <summary>
+        /// Updates the achievements.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="achievements">All achievements for the given user.</param>
         public void UpdateAchievements(string steamUserId, IEnumerable<Achievement> achievements)
         {
             if (steamUserId == null)
@@ -75,6 +91,11 @@ namespace SteamAchievements.Data
             AssignNewAchievements(steamUserId, achievements);
         }
 
+        /// <summary>
+        /// Gets the latest achievements.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns></returns>
         public IEnumerable<Achievement> GetLatestAchievements(string steamUserId)
         {
             if (steamUserId == null)
@@ -88,27 +109,31 @@ namespace SteamAchievements.Data
             IQueryable<Achievement> achievements =
                 from userAchievement in context.UserAchievements
                 where userAchievement.SteamUserId == steamUserId && userAchievement.Date > oneHourAgo
-                orderby userAchievement.Date descending 
+                orderby userAchievement.Date descending
                 select userAchievement.Achievement;
 
-            return new AchievementCollection(achievements.Take(5).ToList(), steamUserId, null);
+            return achievements.Take(5);
         }
 
+        /// <summary>
+        /// Assigns the new achievements.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="achievements">All achievements for the given user.</param>
         private void AssignNewAchievements(string steamUserId, IEnumerable<Achievement> achievements)
         {
             // get the achievement ids for the games in the given achievements
-            var gameIds = (from a in achievements
-                           select a.GameId).Distinct();
+            IEnumerable<int> gameIds = (from a in achievements
+                                        select a.GameId).Distinct();
 
-            var achievementNames = (from a in achievements
-                                    where gameIds.Contains(a.GameId)
-                                    select a.Name);
+            IEnumerable<string> achievementNames = from a in achievements
+                                                   where gameIds.Contains(a.GameId)
+                                                   select a.Name;
 
-            SteamDataContext context = new SteamDataContext { ObjectTrackingEnabled = false };
-            IEnumerable<int> achievementIds =
-                (from a in context.Achievements
-                 where achievementNames.Contains(a.Name)
-                 select a.Id).ToList();
+            SteamDataContext context = new SteamDataContext {ObjectTrackingEnabled = false};
+            IEnumerable<int> achievementIds = (from a in context.Achievements
+                                               where achievementNames.Contains(a.Name)
+                                               select a.Id).ToList();
 
             if (!achievementIds.Any())
             {
@@ -116,15 +141,13 @@ namespace SteamAchievements.Data
             }
 
             // get the unassigned achievement ids
-            IEnumerable<int> assignedAchievementIds = 
-                (from a in context.UserAchievements
-                where a.SteamUserId == steamUserId
-                select a.AchievementId).ToList();
+            IEnumerable<int> assignedAchievementIds = (from a in context.UserAchievements
+                                                       where a.SteamUserId == steamUserId
+                                                       select a.AchievementId).ToList();
 
-            IEnumerable<int> unassignedAchievementIds =
-                from id in achievementIds
-                where !assignedAchievementIds.Contains(id)
-                select id;
+            IEnumerable<int> unassignedAchievementIds = from id in achievementIds
+                                                        where !assignedAchievementIds.Contains(id)
+                                                        select id;
 
             if (!unassignedAchievementIds.Any())
             {
@@ -135,17 +158,21 @@ namespace SteamAchievements.Data
             IEnumerable<UserAchievement> newUserAchievements =
                 from id in unassignedAchievementIds
                 select new UserAchievement
-                {
-                    SteamUserId = steamUserId,
-                    AchievementId = id,
-                    Date = DateTime.Now
-                };
+                           {
+                               SteamUserId = steamUserId,
+                               AchievementId = id,
+                               Date = DateTime.Now
+                           };
 
             SteamDataContext context2 = new SteamDataContext();
             context2.UserAchievements.InsertAllOnSubmit(newUserAchievements);
             context2.SubmitChanges();
         }
 
+        /// <summary>
+        /// Inserts the missing achievements.
+        /// </summary>
+        /// <param name="achievements">The achievements.</param>
         private void InsertMissingAchievements(IEnumerable<Achievement> achievements)
         {
             SteamDataContext context = new SteamDataContext();
@@ -180,12 +207,21 @@ namespace SteamAchievements.Data
             context.SubmitChanges();
         }
 
+        /// <summary>
+        /// Gets the games.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Game> GetGames()
         {
             SteamDataContext context = new SteamDataContext();
             return context.Games;
         }
 
+        /// <summary>
+        /// Updates the steam user id.
+        /// </summary>
+        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="steamUserId">The steam user id.</param>
         public void UpdateSteamUserId(long facebookUserId, string steamUserId)
         {
             if (steamUserId == null)
@@ -194,15 +230,15 @@ namespace SteamAchievements.Data
             }
 
             SteamDataContext context = new SteamDataContext();
-            var query = from u in context.Users
-                        where u.FacebookUserId == facebookUserId
-                        select u;
+            IQueryable<User> query = from u in context.Users
+                                     where u.FacebookUserId == facebookUserId
+                                     select u;
 
             User user = query.SingleOrDefault();
 
             if (user == null)
             {
-                user = new User { FacebookUserId = facebookUserId, SteamUserId = steamUserId };
+                user = new User {FacebookUserId = facebookUserId, SteamUserId = steamUserId};
 
                 context.Users.InsertOnSubmit(user);
             }

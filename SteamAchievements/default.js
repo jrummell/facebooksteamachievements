@@ -35,7 +35,7 @@ function getAchievements()
     }
 
     var $achievements = $("#achievementsDiv");
-    $achievements.text("loading ...");
+    $achievements.text("Loading ...");
 
     var ondone = function(data)
     {
@@ -60,7 +60,7 @@ function getAchievements()
 
 function updateAchievements()
 {
-    var $updating = $("#updating");
+    var $updating = $("#updatingAchievements");
     $updating.show();
     
     var steamUserId = $("#steamIdTextBox").val();
@@ -90,6 +90,9 @@ function updateSteamUserId()
     var $steamIdError = $("#steamIdError");
     $steamIdError.removeClass("error");
 
+    var $updating = $("#updatingSteamUserId");
+    $updating.show();
+
     var steamUserId = $("#steamIdTextBox").val();
 
     if (steamUserId == null || steamUserId == "")
@@ -100,7 +103,10 @@ function updateSteamUserId()
 
     var faceBookUserId = $("#facebookUserIdHidden").val();
 
-    var ondone = function(data) { /* display update success message */ };
+    var ondone = function(data)
+    {
+        $updating.hide(); 
+    };
 
     var parameters = { "FacebookUserId": faceBookUserId, "SteamUserId": steamUserId };
     callAjax("UpdateSteamUserId", parameters, ondone);

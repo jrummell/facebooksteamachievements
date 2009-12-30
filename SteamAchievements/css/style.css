@@ -26,7 +26,7 @@
 
 /* http://devtacular.com/articles/bkonrad/how-to-style-an-application-like-facebook/ */
 
-h1, h2, h3, h4, h5
+h1, h2, h3, h4, h5, legend
 {
     font-size: 13px;
     color: #333;
@@ -43,7 +43,7 @@ h4, h5
 }
 
 /* Default Facebook CSS */
-.fbbody
+.fbbody, .fbbody input
 {
     font-family: "lucida grande" ,tahoma,verdana,arial,sans-serif;
     font-size: 11px;

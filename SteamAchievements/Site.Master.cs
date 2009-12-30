@@ -19,6 +19,8 @@
 
 #endregion
 
+using System.Collections.Generic;
+using Facebook.Schema;
 using Facebook.Web;
 
 namespace SteamAchievements
@@ -28,6 +30,7 @@ namespace SteamAchievements
         public Site()
         {
             RequireLogin = true;
+            RequiredPermissions = new List<Enums.ExtendedPermissions> {Enums.ExtendedPermissions.publish_stream};
         }
     }
 }

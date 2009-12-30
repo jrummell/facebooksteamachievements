@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using SteamAchievements.Data;
 
@@ -34,21 +33,35 @@ namespace SteamAchievements.Services
 
         #region IAchievementService Members
 
-        public AchievementCollection GetAchievements(GetAchievementsParameter json)
+        /// <summary>
+        /// Gets the achievements.
+        /// </summary>
+        /// <param name="json">The json object.</param>
+        /// <returns></returns>
+        public List<Achievement> GetAchievements(GetAchievementsParameter json)
         {
             if (json == null)
             {
                 throw new ArgumentNullException("json");
             }
 
-            return _service.GetAchievements(json.SteamUserId, json.GameId);
+            return _service.GetAchievements(json.SteamUserId, json.GameId).ToList();
         }
 
-        public Collection<Game> GetGames()
+        /// <summary>
+        /// Gets the games.
+        /// </summary>
+        /// <returns></returns>
+        public List<Game> GetGames()
         {
-            return new Collection<Game>(_service.GetGames().ToList());
+            return _service.GetGames().ToList();
         }
 
+        /// <summary>
+        /// Updates the achievements.
+        /// </summary>
+        /// <param name="json">The json object.</param>
+        /// <returns></returns>
         public bool UpdateAchievements(UpdateAchievementsParameter json)
         {
             if (json == null)
@@ -56,13 +69,18 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("json");
             }
 
-            AchievementCollection achievements = _communityService.GetAchievements(json.SteamUserId);
+            IEnumerable<Achievement> achievements = _communityService.GetAchievements(json.SteamUserId);
 
             _service.UpdateAchievements(json.SteamUserId, achievements);
 
             return true;
         }
 
+        /// <summary>
+        /// Updates the steam user id.
+        /// </summary>
+        /// <param name="json">The json object.</param>
+        /// <returns></returns>
         public bool UpdateSteamUserId(UpdateSteamUserIdParameter json)
         {
             if (json == null)

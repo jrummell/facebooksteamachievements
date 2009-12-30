@@ -20,6 +20,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.RegularExpressions;
 using SteamAchievements.Data;
@@ -31,9 +32,9 @@ namespace SteamAchievements.Services
     {
         private readonly AchievementManager _service = new AchievementManager();
 
-        public AchievementCollection GetAchievements(string steamUserId)
+        public IEnumerable<Achievement> GetAchievements(string steamUserId)
         {
-            AchievementCollection achievements = new AchievementCollection();
+            List<Achievement> achievements = new List<Achievement>();
 
             foreach (Game game in _service.GetGames())
             {
