@@ -32,74 +32,57 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Gets the achievements.
         /// </summary>
-        /// <param name="json">The json object.</param>
-        /// <returns>All <see cref="Achievement"/>s for the given user and game.</returns>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="gameId">The game id.</param>
+        /// <returns>
+        /// All <see cref="Achievement"/>s for the given user and game.
+        /// </returns>
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        List<Achievement> GetAchievements(SteamUserIdGameIdParameter json);
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        List<Achievement> GetAchievements(string steamUserId, int gameId);
 
         /// <summary>
         /// Gets the games.
         /// </summary>
         /// <returns>All <see cref="Game"/>s.</returns>
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         List<Game> GetGames(); // returning IEnumerable<Game> causes a serialization exception
 
         /// <summary>
         /// Updates the achievements.
         /// </summary>
-        /// <param name="json">The json object.</param>
-        /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
+        /// <param name="steamUserId">The steam user id.</param>
         /// <returns>true if successful, else false.</returns>
+        /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        bool UpdateAchievements(SteamUserIdParameter json);
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        bool UpdateAchievements(string steamUserId);
 
         /// <summary>
         /// Updates the steam user id.
         /// </summary>
-        /// <param name="json">The json object.</param>
-        /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
+        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="steamUserId">The steam user id.</param>
         /// <returns>true if successful, else false.</returns>
+        /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        bool UpdateSteamUserId(SteamUserIdFacebookUserIdParameter json);
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        bool UpdateSteamUserId(long facebookUserId, string steamUserId);
 
         /// <summary>
         /// Publishes the last 5 achievements added within the last hour for the given user.
         /// </summary>
-        /// <param name="json">The json object.</param>
+        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="steamUserId">The steam user id.</param>
         /// <returns>true if successful, else false.</returns>
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        bool PublishLatestAchievements(SteamUserIdFacebookUserIdParameter json);
-    }
-
-    public class SteamUserIdGameIdParameter : SteamUserIdParameter
-    {
-        /// <summary>
-        /// Gets or sets the game id.
-        /// </summary>
-        /// <value>The game id.</value>
-        public int GameId { get; set; }
-    }
-
-    public class SteamUserIdParameter
-    {
-        /// <summary>
-        /// Gets or sets the steam user id.
-        /// </summary>
-        /// <value>The steam user id.</value>
-        public string SteamUserId { get; set; }
-    }
-
-    public class SteamUserIdFacebookUserIdParameter : SteamUserIdParameter
-    {
-        /// <summary>
-        /// Gets or sets the facebook user id.
-        /// </summary>
-        /// <value>The facebook user id.</value>
-        public long FacebookUserId { get; set; }
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        bool PublishLatestAchievements(long facebookUserId, string steamUserId);
     }
 }

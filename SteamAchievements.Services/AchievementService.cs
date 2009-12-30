@@ -36,18 +36,19 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Gets the achievements.
         /// </summary>
-        /// <param name="json">The json object.</param>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="gameId">The game id.</param>
         /// <returns>
         /// All <see cref="Achievement"/>s for the given user and game.
         /// </returns>
-        public List<Achievement> GetAchievements(SteamUserIdGameIdParameter json)
+        public List<Achievement> GetAchievements(string steamUserId, int gameId)
         {
-            if (json == null)
+            if (steamUserId == null)
             {
-                throw new ArgumentNullException("json");
+                throw new ArgumentNullException("steamUserId");
             }
 
-            return _service.GetAchievements(json.SteamUserId, json.GameId).ToList();
+            return _service.GetAchievements(steamUserId, gameId).ToList();
         }
 
         /// <summary>
@@ -62,19 +63,19 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Updates the achievements.
         /// </summary>
-        /// <param name="json">The json object.</param>
+        /// <param name="steamUserId">The steam user id.</param>
         /// <returns>true if successful, else false.</returns>
         /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
-        public bool UpdateAchievements(SteamUserIdParameter json)
+        public bool UpdateAchievements(string steamUserId)
         {
-            if (json == null)
+            if (steamUserId == null)
             {
-                throw new ArgumentNullException("json");
+                throw new ArgumentNullException("steamUserId");
             }
 
-            IEnumerable<Achievement> achievements = _communityService.GetAchievements(json.SteamUserId);
+            IEnumerable<Achievement> achievements = _communityService.GetAchievements(steamUserId);
 
-            _service.UpdateAchievements(json.SteamUserId, achievements);
+            _service.UpdateAchievements(steamUserId, achievements);
 
             return true;
         }
@@ -82,17 +83,18 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Updates the steam user id.
         /// </summary>
-        /// <param name="json">The json object.</param>
+        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="steamUserId">The steam user id.</param>
         /// <returns>true if successful, else false.</returns>
         /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
-        public bool UpdateSteamUserId(SteamUserIdFacebookUserIdParameter json)
+        public bool UpdateSteamUserId(long facebookUserId, string steamUserId)
         {
-            if (json == null)
+            if (steamUserId == null)
             {
-                throw new ArgumentNullException("json");
+                throw new ArgumentNullException("steamUserId");
             }
 
-            _service.UpdateSteamUserId(json.FacebookUserId, json.SteamUserId);
+            _service.UpdateSteamUserId(facebookUserId, steamUserId);
 
             return true;
         }
@@ -100,21 +102,22 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Publishes the last 5 achievements added within the last 5 minutes for the given user.
         /// </summary>
-        /// <param name="json">The json object.</param>
+        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="steamUserId">The steam user id.</param>
         /// <returns>true if successful, else false.</returns>
-        public bool PublishLatestAchievements(SteamUserIdFacebookUserIdParameter json)
+        public bool PublishLatestAchievements(long facebookUserId, string steamUserId)
         {
-            if (json == null)
+            if (steamUserId == null)
             {
-                throw new ArgumentNullException("json");
+                throw new ArgumentNullException("steamUserId");
             }
 
-            IEnumerable<Achievement> achievements = _service.GetLatestAchievements(json.SteamUserId);
+            IEnumerable<Achievement> achievements = _service.GetLatestAchievements(steamUserId);
 
             if (achievements.Any())
             {
                 AchievementsPublisher publisher = new AchievementsPublisher();
-                publisher.Publish(achievements, json.SteamUserId, json.FacebookUserId);
+                publisher.Publish(achievements, steamUserId, facebookUserId);
             }
 
             return true;
