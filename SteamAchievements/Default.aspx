@@ -9,26 +9,31 @@
         <div>
             http://steamcommunity.com/id/
             <input id="steamIdTextBox" value="<%= SteamUserId %>" />
-            <span id="steamIdError" style="display: none; color: Red;">Required</span> <a href="#"
-                onclick="return updateSteamUserId();">Update</a> <span id="updatingSteamUserId" style="display: none;">
-                    Updating ...</span>
+            <span id="steamIdError" class="error" style="display: none;">Required</span> <a href="#"
+                onclick="return updateSteamUserId();">Update</a>
+            <div id="updatingSteamUserId" class="loading" style="display: none;">
+            </div>
         </div>
     </fieldset>
     <fieldset>
         <legend>Achievements</legend>
         <div>
-            <a href="#" onclick="updateAchievements(); return false;">Update</a> <span id="updatingAchievements"
-                style="display: none;">Updating ...</span>
+            <a href="#" onclick="updateAchievements(); return false;">Update</a>
+            <div id="updatingAchievements" class="loading" style="display: none;">
+            </div>
         </div>
         <div>
             <select id="gamesSelect" onchange="getAchievements();">
                 <option>Loading ...</option>
             </select>
         </div>
+        <div id="loadingAchievements" class="loading" style="display: none;">
+        </div>
         <div id="achievementsDiv">
         </div>
     </fieldset>
     <div id="log" class="fberrorbox" style="display: none;">
+        <asp:Literal ID="errorLiteral" runat="server" />
     </div>
 
     <script type="text/javascript" src="default.js"></script>

@@ -37,8 +37,10 @@ namespace SteamAchievements.Services
         /// Gets the achievements.
         /// </summary>
         /// <param name="json">The json object.</param>
-        /// <returns></returns>
-        public List<Achievement> GetAchievements(GetAchievementsParameter json)
+        /// <returns>
+        /// All <see cref="Achievement"/>s for the given user and game.
+        /// </returns>
+        public List<Achievement> GetAchievements(SteamUserIdGameIdParameter json)
         {
             if (json == null)
             {
@@ -51,7 +53,7 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Gets the games.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>All <see cref="Game"/>s.</returns>
         public List<Game> GetGames()
         {
             return _service.GetGames().ToList();
@@ -61,8 +63,9 @@ namespace SteamAchievements.Services
         /// Updates the achievements.
         /// </summary>
         /// <param name="json">The json object.</param>
-        /// <returns></returns>
-        public bool UpdateAchievements(UpdateAchievementsParameter json)
+        /// <returns>true if successful, else false.</returns>
+        /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
+        public bool UpdateAchievements(SteamUserIdParameter json)
         {
             if (json == null)
             {
@@ -80,8 +83,9 @@ namespace SteamAchievements.Services
         /// Updates the steam user id.
         /// </summary>
         /// <param name="json">The json object.</param>
-        /// <returns></returns>
-        public bool UpdateSteamUserId(UpdateSteamUserIdParameter json)
+        /// <returns>true if successful, else false.</returns>
+        /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
+        public bool UpdateSteamUserId(SteamUserIdFacebookUserIdParameter json)
         {
             if (json == null)
             {
@@ -89,6 +93,29 @@ namespace SteamAchievements.Services
             }
 
             _service.UpdateSteamUserId(json.FacebookUserId, json.SteamUserId);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Publishes the last 5 achievements added within the last 5 minutes for the given user.
+        /// </summary>
+        /// <param name="json">The json object.</param>
+        /// <returns>true if successful, else false.</returns>
+        public bool PublishLatestAchievements(SteamUserIdFacebookUserIdParameter json)
+        {
+            if (json == null)
+            {
+                throw new ArgumentNullException("json");
+            }
+
+            IEnumerable<Achievement> achievements = _service.GetLatestAchievements(json.SteamUserId);
+
+            if (achievements.Any())
+            {
+                AchievementsPublisher publisher = new AchievementsPublisher();
+                publisher.Publish(achievements, json.SteamUserId, json.FacebookUserId);
+            }
 
             return true;
         }

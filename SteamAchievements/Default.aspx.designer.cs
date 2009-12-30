@@ -14,6 +14,15 @@ namespace SteamAchievements {
     public partial class Default {
         
         /// <summary>
+        /// errorLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal errorLiteral;
+        
+        /// <summary>
         /// Master property.
         /// </summary>
         /// <remarks>

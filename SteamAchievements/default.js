@@ -24,8 +24,35 @@ function getGames()
     callAjax("GetGames", {}, ondone);
 }
 
+function updateSteamUserId()
+{
+    if (!validateSteamUserId())
+    {
+        return false;
+    }
+
+    var $updating = $("#updatingSteamUserId");
+    $updating.show();
+
+    var steamUserId = $("#steamIdTextBox").val();
+    var faceBookUserId = $("#facebookUserIdHidden").val();
+
+    var ondone = function(data)
+    {
+        $updating.hide();
+    };
+
+    var parameters = { "FacebookUserId": faceBookUserId, "SteamUserId": steamUserId };
+    callAjax("UpdateSteamUserId", parameters, ondone);
+}
+
 function getAchievements()
 {
+    if (!validateSteamUserId())
+    {
+        return false;
+    }
+
     var steamUserId = $("#steamIdTextBox").val();
     var gameId = $("#gamesSelect").val();
 
@@ -35,7 +62,8 @@ function getAchievements()
     }
 
     var $achievements = $("#achievementsDiv");
-    $achievements.text("Loading ...");
+    var $loading = $("#loadingAchievements");
+    $loading.show();
 
     var ondone = function(data)
     {
@@ -50,8 +78,14 @@ function getAchievements()
             achievementsHtml += "<br class='clear'/></div>";
         }
 
+        if (achievementsHtml == "")
+        {
+            achievementsHtml = "You haven't earned any achievements for this game yet!";
+        }
+
         log(achievementsHtml);
         $achievements.html(achievementsHtml);
+        $loading.hide();
     };
 
     var parameters = { "SteamUserId": steamUserId, "GameId": gameId };
@@ -60,9 +94,14 @@ function getAchievements()
 
 function updateAchievements()
 {
+    if (!validateSteamUserId())
+    {
+        return false;
+    }
+
     var $updating = $("#updatingAchievements");
     $updating.show();
-    
+
     var steamUserId = $("#steamIdTextBox").val();
 
     var ondone = function(data)
@@ -71,58 +110,46 @@ function updateAchievements()
 
         getAchievements();
 
-        postAchievements(steamUserId);
+        publishLatestAchievements(steamUserId);
     };
 
     var parameters = { "SteamUserId": steamUserId };
     callAjax("UpdateAchievements", parameters, ondone);
 }
 
-function postAchievements(steamUserId)
+function publishLatestAchievements(steamUserId)
 {
-    // unlike the other service methods, this one is a PageMethod.
-    var parameters = { "steamUserId": steamUserId };
-    callAjax("PostAchievements", parameters, null, "Default.aspx/");
+    var faceBookUserId = $("#facebookUserIdHidden").val();
+    var parameters = { "SteamUserId": steamUserId, "FacebookUserId": faceBookUserId };
+    callAjax("PublishLatestAchievements", parameters, null);
 }
 
-function updateSteamUserId()
+// validate steam user id
+function validateSteamUserId()
 {
     var $steamIdError = $("#steamIdError");
-    $steamIdError.removeClass("error");
-
-    var $updating = $("#updatingSteamUserId");
-    $updating.show();
+    $steamIdError.hide();
 
     var steamUserId = $("#steamIdTextBox").val();
 
     if (steamUserId == null || steamUserId == "")
     {
-        $steamIdError.addClass("error");
+        $steamIdError.show();
         return false;
     }
 
-    var faceBookUserId = $("#facebookUserIdHidden").val();
-
-    var ondone = function(data)
-    {
-        $updating.hide(); 
-    };
-
-    var parameters = { "FacebookUserId": faceBookUserId, "SteamUserId": steamUserId };
-    callAjax("UpdateSteamUserId", parameters, ondone);
+    return true;
 }
 
-function callAjax(method, query, ondone, baseUrl)
+function callAjax(method, query, ondone)
 {
     var onerror = function(m)
     {
         $("#log").text(m.Message).show();
     };
 
-    baseUrl = baseUrl || _serviceBase;
-
     $.ajax({
-        url: baseUrl + method,
+        url: _serviceBase + method,
         data: JSON.stringify(query),
         type: "POST",
         processData: true,
@@ -136,7 +163,7 @@ function callAjax(method, query, ondone, baseUrl)
             {
                 return;
             }
-            
+
             if (xhr.responseText)
             {
                 try

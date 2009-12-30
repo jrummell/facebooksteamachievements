@@ -36,7 +36,7 @@ namespace SteamAchievements.Services
         /// <returns>All <see cref="Achievement"/>s for the given user and game.</returns>
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        List<Achievement> GetAchievements(GetAchievementsParameter json);
+        List<Achievement> GetAchievements(SteamUserIdGameIdParameter json);
 
         /// <summary>
         /// Gets the games.
@@ -54,7 +54,7 @@ namespace SteamAchievements.Services
         /// <returns>true if successful, else false.</returns>
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        bool UpdateAchievements(UpdateAchievementsParameter json);
+        bool UpdateAchievements(SteamUserIdParameter json);
 
         /// <summary>
         /// Updates the steam user id.
@@ -64,17 +64,20 @@ namespace SteamAchievements.Services
         /// <returns>true if successful, else false.</returns>
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        bool UpdateSteamUserId(UpdateSteamUserIdParameter json);
+        bool UpdateSteamUserId(SteamUserIdFacebookUserIdParameter json);
+
+        /// <summary>
+        /// Publishes the last 5 achievements added within the last hour for the given user.
+        /// </summary>
+        /// <param name="json">The json object.</param>
+        /// <returns>true if successful, else false.</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        bool PublishLatestAchievements(SteamUserIdFacebookUserIdParameter json);
     }
 
-    public class GetAchievementsParameter
+    public class SteamUserIdGameIdParameter : SteamUserIdParameter
     {
-        /// <summary>
-        /// Gets or sets the steam user id.
-        /// </summary>
-        /// <value>The steam user id.</value>
-        public string SteamUserId { get; set; }
-
         /// <summary>
         /// Gets or sets the game id.
         /// </summary>
@@ -82,7 +85,7 @@ namespace SteamAchievements.Services
         public int GameId { get; set; }
     }
 
-    public class UpdateAchievementsParameter
+    public class SteamUserIdParameter
     {
         /// <summary>
         /// Gets or sets the steam user id.
@@ -91,18 +94,12 @@ namespace SteamAchievements.Services
         public string SteamUserId { get; set; }
     }
 
-    public class UpdateSteamUserIdParameter
+    public class SteamUserIdFacebookUserIdParameter : SteamUserIdParameter
     {
         /// <summary>
         /// Gets or sets the facebook user id.
         /// </summary>
         /// <value>The facebook user id.</value>
         public long FacebookUserId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the steam user id.
-        /// </summary>
-        /// <value>The steam user id.</value>
-        public string SteamUserId { get; set; }
     }
 }
