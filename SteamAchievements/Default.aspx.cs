@@ -49,16 +49,23 @@ namespace SteamAchievements
         private void Page_Load(object sender, EventArgs e)
         {
             // set FacebookUserId and SteamUserId
-            try
+            if (Master.Debug)
             {
-                FacebookUserId = Master.Api.Session.UserId;
-
-                AchievementManager manager = new AchievementManager();
-                SteamUserId = manager.GetSteamUserId(FacebookUserId);
+                SteamUserId = "nullreference";
             }
-            catch (Exception ex)
+            else
             {
-                errorLiteral.Text = ex.Message;
+                try
+                {
+                    FacebookUserId = Master.Api.Session.UserId;
+
+                    AchievementManager manager = new AchievementManager();
+                    SteamUserId = manager.GetSteamUserId(FacebookUserId);
+                }
+                catch (Exception ex)
+                {
+                    errorLiteral.Text = ex.Message;
+                }
             }
         }
     }

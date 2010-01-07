@@ -23,13 +23,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SteamAchievements.Data;
+using SteamAchievements.Services.Properties;
 
 namespace SteamAchievements.Services
 {
     public class AchievementService : IAchievementService
     {
         private readonly SteamCommunityManager _communityService = new SteamCommunityManager();
-        private readonly AchievementManager _service = new AchievementManager();
+        private readonly IAchievementManager _service;
+
+        public AchievementService()
+        {
+            Type managerType = Type.GetType(Settings.Default.AchievementManagerType);
+            _service = (IAchievementManager)Activator.CreateInstance(managerType);
+        }
 
         #region IAchievementService Members
 

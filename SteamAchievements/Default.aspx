@@ -2,15 +2,19 @@
     Inherits="SteamAchievements.Default" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
-<asp:Content runat="server" ID="content" ContentPlaceHolderID="body">
+<asp:Content runat="server" ID="Content1" ContentPlaceHolderID="head">
+</asp:Content>
+<asp:Content runat="server" ID="Content2" ContentPlaceHolderID="body">
     <fieldset>
-        <legend>Steam Community ID</legend>
+        <legend>Steam Community Nickname</legend>
         <input id="facebookUserIdHidden" type="hidden" value="<%= FacebookUserId %>" />
         <div>
             http://steamcommunity.com/id/
             <input id="steamIdTextBox" value="<%= SteamUserId %>" />
             <span id="steamIdError" class="error" style="display: none;">Required</span> <a href="#"
-                onclick="return updateSteamUserId();">Update</a>
+                onclick="return updateSteamUserId();">Update</a> <a href="Help.aspx?<%= Request.QueryString %>">
+                    <img src="images/help.png" alt="Help" /></a><br />
+            <img src="images/profilecustomurl.png" alt="" />
             <div id="updatingSteamUserId" class="loading" style="display: none;">
             </div>
         </div>
