@@ -4,15 +4,14 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{097473AA-B8FB-4A5E-889E-00559C65C660}</ProjectGuid>
     <!--<ProjectGuid>{097473AA-B8FB-4A5E-889E-00559C65C660}</ProjectGuid>-->
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SteamAchievements.Services</RootNamespace>
     <AssemblyName>SteamAchievements.Services</AssemblyName>
-    <!--<ProjectTypeGuids>{3D9AD99F-2412-4246-B90B-4EAA41C64699};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>-->
     <StartArguments>/client:"WcfTestClient.exe"</StartArguments>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ProjectGuid>{097473AA-B8FB-4A5E-889E-00559C65C660}</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -63,7 +62,6 @@
     <Compile Include="AchievementService.cs" />
     <Compile Include="AchievementsPublisher.cs" />
     <Compile Include="IAchievementService.cs" />
-    <Compile Include="MockAchievementService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

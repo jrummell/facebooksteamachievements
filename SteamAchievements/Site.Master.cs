@@ -27,10 +27,20 @@ namespace SteamAchievements
 {
     public partial class Site : CanvasIFrameMasterPage
     {
+        // helper for testing
+#if DEBUG
+        public readonly bool Debug = true;
+#else
+        public readonly bool Debug = false;
+#endif
+
         public Site()
         {
-            RequireLogin = true;
-            RequiredPermissions = new List<Enums.ExtendedPermissions> {Enums.ExtendedPermissions.publish_stream};
+            if (!Debug)
+            {
+                RequireLogin = true;
+                RequiredPermissions = new List<Enums.ExtendedPermissions> { Enums.ExtendedPermissions.publish_stream };
+            }
         }
     }
 }

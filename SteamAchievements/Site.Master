@@ -15,7 +15,7 @@
 <body>
     <div class="fbbody">
         <div>
-            <img src="logo.png" alt="Steam Achievements" />
+            <img src="images/logo.png" alt="Steam Achievements" />
         </div>
         <asp:ContentPlaceHolder ID="body" runat="server">
         </asp:ContentPlaceHolder>
