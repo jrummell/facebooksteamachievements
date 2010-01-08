@@ -4,6 +4,11 @@
 var _serviceBase = "Services/Achievement.svc/";
 var _log = false;
 
+function init()
+{
+    $("img.loading").hide();
+}
+
 function getGames()
 {
     var ondone = function(data)
@@ -31,15 +36,16 @@ function updateSteamUserId()
         return false;
     }
 
-    var $updating = $("#updatingSteamUserId");
-    $updating.show();
+    var updatingSelector = "#updatingSteamUserId";
+    showLoading(updatingSelector);
 
     var steamUserId = $("#steamIdTextBox").val();
     var faceBookUserId = $("#facebookUserIdHidden").val();
 
     var ondone = function(data)
     {
-        $updating.hide();
+        hideLoading(updatingSelector);
+        showMessage("#steamIdUpdateSuccess");
     };
 
     var parameters = { "facebookUserId": faceBookUserId, "steamUserId": steamUserId };
@@ -62,8 +68,8 @@ function getAchievements()
     }
 
     var $achievements = $("#achievementsDiv");
-    var $loading = $("#loadingAchievements");
-    $loading.show();
+    var loadingSelector = "#loadingAchievements";
+    showLoading(loadingSelector);
 
     var ondone = function(data)
     {
@@ -85,7 +91,7 @@ function getAchievements()
 
         log(achievementsHtml);
         $achievements.html(achievementsHtml);
-        $loading.hide();
+        hideLoading(loadingSelector);
     };
 
     var parameters = { "steamUserId": steamUserId, "gameId": gameId };
@@ -99,18 +105,20 @@ function updateAchievements()
         return false;
     }
 
-    var $updating = $("#updatingAchievements");
-    $updating.show();
+    var updatingSelector = "#updatingAchievements";
+    showLoading(updatingSelector);
 
     var steamUserId = $("#steamIdTextBox").val();
 
     var ondone = function(data)
     {
-        $updating.hide();
+        hideLoading(updatingSelector);
 
         getAchievements();
 
         publishLatestAchievements(steamUserId);
+
+        showMessage("#achievementsUpdateSuccess");
     };
 
     var parameters = { "steamUserId": steamUserId };
@@ -186,6 +194,22 @@ function callAjax(method, query, ondone)
             return;
         }
     });
+}
+
+function showLoading(selector)
+{
+    $(selector).show();
+}
+
+function hideLoading(selector)
+{
+    $(selector).fadeOut("slow");
+}
+
+function showMessage(selector)
+{
+    $(selector).show("normal");
+    setTimeout("$('" + selector + "').hide('slow');", 5000);
 }
 
 function log(message)

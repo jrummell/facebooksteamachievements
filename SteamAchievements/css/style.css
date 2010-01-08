@@ -1,4 +1,20 @@
-﻿/* .GenericStory_Body */
+﻿img
+{
+    border-style: none;
+}
+
+p
+{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+fieldset
+{
+    margin: 5px 5px 5px 5px;
+    padding: 5px 5px 5px 5px;
+}
+
 .achievement
 {
     border-top: 1px solid #EEEEEE;
@@ -22,21 +38,6 @@
     background-color: #ffebe8;
     color: #333333;
     padding: 10px;
-}
-
-.loading
-{
-    display: block;
-    width: 250px;
-    height: 12px;
-    background-image: url('ajax-loader.gif');
-    background-position: center center;
-    background-repeat: no-repeat;
-}
-
-img
-{
-    border-style: none;
 }
 
 /* http://devtacular.com/articles/bkonrad/how-to-style-an-application-like-facebook/ */
@@ -139,4 +140,20 @@ h4, h5
     background-color: #3b5998;
     color: #ffffff;
     cursor: hand;
+}
+
+.button, a.button:link, a.button:visited, a.button:hover, a.button:active
+{
+    margin: 5px 2px 5px 2px;
+    padding: 5px 5px 5px 5px;
+    background-color: #4F6AA3;
+    background-image: none;
+    border-color: #29447E;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.button img
+{
+    vertical-align: text-top;
 }

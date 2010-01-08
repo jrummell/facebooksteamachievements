@@ -29,13 +29,14 @@ namespace SteamAchievements.Services
 {
     public class AchievementService : IAchievementService
     {
-        private readonly SteamCommunityManager _communityService = new SteamCommunityManager();
+        private readonly SteamCommunityManager _communityService;
         private readonly IAchievementManager _service;
 
         public AchievementService()
         {
             Type managerType = Type.GetType(Settings.Default.AchievementManagerType);
             _service = (IAchievementManager)Activator.CreateInstance(managerType);
+            _communityService = new SteamCommunityManager(_service);
         }
 
         #region IAchievementService Members
