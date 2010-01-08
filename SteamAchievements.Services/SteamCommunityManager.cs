@@ -34,8 +34,17 @@ namespace SteamAchievements.Services
 
         private readonly Regex _endRegex = new Regex(Settings.Default.AchievementSeparatorRegex, _options);
         private readonly Regex _imageRegex = new Regex(Settings.Default.AchievementImageRegex, _options);
-        private readonly AchievementManager _service = new AchievementManager();
+        private readonly IAchievementManager _service;
         private readonly Regex _textRegex = new Regex(Settings.Default.AchievementTextRegex, _options);
+
+        public SteamCommunityManager(IAchievementManager achievementManager)
+        {
+            if (achievementManager == null)
+            {
+                throw new ArgumentNullException("achievementManager");
+            }
+            _service = achievementManager;
+        }
 
         public IEnumerable<Achievement> GetAchievements(string steamUserId)
         {

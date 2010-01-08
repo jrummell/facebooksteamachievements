@@ -159,6 +159,14 @@
   <ItemGroup>
     <Content Include="Config\Release\SteamAchievements.Services.Properties.Settings.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\Debug\serviceHostingEnvironment.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\Release\serviceHostingEnvironment.config" />
+    <Content Include="images\ajax-loader.gif" />
+    <Content Include="images\disk.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

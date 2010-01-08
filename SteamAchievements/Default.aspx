@@ -6,32 +6,39 @@
 </asp:Content>
 <asp:Content runat="server" ID="Content2" ContentPlaceHolderID="body">
     <fieldset>
-        <legend>Steam Community Nickname</legend>
+        <legend>Steam Community Custom URL</legend>
         <input id="facebookUserIdHidden" type="hidden" value="<%= FacebookUserId %>" />
+        <div id="steamIdUpdateSuccess" class="fbinfobox" style="display: none;">
+            Your URL has been updated.</div>
         <div>
-            http://steamcommunity.com/id/
-            <input id="steamIdTextBox" value="<%= SteamUserId %>" />
-            <span id="steamIdError" class="error" style="display: none;">Required</span> <a href="#"
-                onclick="return updateSteamUserId();">Update</a> <a href="Help.aspx?<%= Request.QueryString %>">
-                    <img src="images/help.png" alt="Help" /></a><br />
-            <img src="images/profilecustomurl.png" alt="" />
-            <div id="updatingSteamUserId" class="loading" style="display: none;">
-            </div>
+            <p>
+                http://steamcommunity.com/id/
+                <input id="steamIdTextBox" value="<%= SteamUserId %>" />
+                <span id="steamIdError" class="error" style="display: none;">Required</span> <a class="button"
+                    href="#" onclick="return updateSteamUserId();">
+                    <img src="images/disk.png" alt="" />
+                    Update URL</a> <a class="button" href="Help.aspx?<%= Request.QueryString %>">
+                        <img src="images/help.png" alt="Help" align="middle" />
+                        Help</a>
+                <img id="updatingSteamUserId" class="loading" src="images/ajax-loader.gif" alt="Updating..." />
+            </p>
         </div>
     </fieldset>
     <fieldset>
         <legend>Achievements</legend>
+        <div id="achievementsUpdateSuccess" class="fbinfobox" style="display: none;">
+            Your achievements have been updated.</div>
         <div>
-            <a href="#" onclick="updateAchievements(); return false;">Update</a>
-            <div id="updatingAchievements" class="loading" style="display: none;">
-            </div>
+            <p>
+                <a class="button" href="#" onclick="updateAchievements(); return false;">Update Achievements</a>
+                <img id="updatingAchievements" class="loading" src="images/ajax-loader.gif" alt="Updating..." />
+            </p>
         </div>
         <div>
             <select id="gamesSelect" onchange="getAchievements();">
                 <option>Loading ...</option>
-            </select>
-        </div>
-        <div id="loadingAchievements" class="loading" style="display: none;">
+            </select><img id="loadingAchievements" class="loading" src="images/ajax-loader.gif"
+                alt="Loading..." />
         </div>
         <div id="achievementsDiv">
         </div>
@@ -43,7 +50,11 @@
     <script type="text/javascript" src="default.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function() { getGames(); });
+        $(document).ready(function()
+        {
+            init();
+            getGames();
+        });
     </script>
 
 </asp:Content>
