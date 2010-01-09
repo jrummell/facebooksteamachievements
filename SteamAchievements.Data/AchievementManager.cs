@@ -25,109 +25,10 @@ using System.Linq;
 
 namespace SteamAchievements.Data
 {
-    public interface IAchievementManager
+    public class AchievementManager : IAchievementManager
     {
-        string GetSteamUserId(long facebookUserId);
-
-        IEnumerable<Achievement> GetAchievements(string steamUserId, int gameId);
-
-        void UpdateAchievements(string steamUserId, IEnumerable<Achievement> achievements);
-
-        IEnumerable<Achievement> GetLatestAchievements(string steamUserId);
-
-        IEnumerable<Game> GetGames();
-
-        void UpdateSteamUserId(long facebookUserId, string steamUserId);
-    }
-
-    public class MockAchievementManager : IAchievementManager
-    {
-
         #region IAchievementManager Members
 
-        public string GetSteamUserId(long facebookUserId)
-        {
-            return "MySteamID";
-        }
-
-        public IEnumerable<Achievement> GetAchievements(string steamUserId, int gameId)
-        {
-            if (gameId == 1)
-            {
-                return new List<Achievement>
-                       {
-                           new Achievement
-                               {
-                                   Id = 1,
-                                   Name = "Cr0wnd",
-                                   Description = "Kill a Witch with a single headshot.",
-                                   ImageUrl =
-                                       "http://media.steampowered.com/steamcommunity/public/images/apps/500/2b9a77bc3d6052538797337dad9eee87e74f639d.jpg"
-                               },
-                           new Achievement
-                               {
-                                   Id = 2,
-                                   Name = "Dead Stop",
-                                   Description = "Punch a Hunter as he is pouncing.",
-                                   ImageUrl =
-                                       "http://media.steampowered.com/steamcommunity/public/images/apps/500/0abefbfb22ef97d532d95fbb5261ff2d52f55e5f.jpg"
-                               }
-                       };
-            }
-            else
-            {
-                return new List<Achievement>
-                       {
-                           new Achievement
-                               {
-                                   Id = 1,
-                                   Name = "Head Of The Class",
-                                   Description = "Play a complete round with every class.",
-                                   ImageUrl =
-                                       "http://media.steampowered.com/steamcommunity/public/images/apps/440/tf_play_game_everyclass.jpg"
-                               },
-                           new Achievement
-                               {
-                                   Id = 2,
-                                   Name = "World Traveler",
-                                   Description = "Play a complete game on 2Fort, Dustbowl, Granary, Gravel Pit, Hydro, and Well (CP).",
-                                   ImageUrl =
-                                       "http://media.steampowered.com/steamcommunity/public/images/apps/440/tf_play_game_everymap.jpg"
-                               }
-                       };
-            }
-        }
-
-        public void UpdateAchievements(string steamUserId, IEnumerable<Achievement> achievements)
-        {
-
-        }
-
-        public IEnumerable<Achievement> GetLatestAchievements(string steamUserId)
-        {
-            // return an empty array so that the service won't try to publish them.
-            return new Achievement[0];
-        }
-
-        public IEnumerable<Game> GetGames()
-        {
-            return new List<Game>
-                       {
-                           new Game {Abbreviation = "l4d", Id = 1, Name = "Left 4 Dead"},
-                           new Game {Abbreviation = "tf2", Id = 2, Name = "Team Fortress 2"}
-                       };
-        }
-
-        public void UpdateSteamUserId(long facebookUserId, string steamUserId)
-        {
-
-        }
-
-        #endregion
-    }
-
-    public class AchievementManager
-    {
         /// <summary>
         /// Gets the steam user id.
         /// </summary>
@@ -217,6 +118,63 @@ namespace SteamAchievements.Data
         }
 
         /// <summary>
+        /// Gets the games.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Game> GetGames()
+        {
+            SteamDataContext context = new SteamDataContext();
+            return from game in context.Games
+                   orderby game.Name
+                   select game;
+        }
+
+        /// <summary>
+        /// Updates the steam user id.
+        /// </summary>
+        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="steamUserId">The steam user id.</param>
+        public void UpdateSteamUserId(long facebookUserId, string steamUserId)
+        {
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            SteamDataContext context = new SteamDataContext();
+            IQueryable<User> query = from u in context.Users
+                                     where u.FacebookUserId == facebookUserId
+                                     select u;
+
+            User user = query.SingleOrDefault();
+
+            if (user == null)
+            {
+                // the user does not exist, create a new one.
+                user = new User {FacebookUserId = facebookUserId, SteamUserId = steamUserId};
+
+                context.Users.InsertOnSubmit(user);
+            }
+            else
+            {
+                // update steam id
+                string oldSteamUserId = user.SteamUserId;
+                user.SteamUserId = steamUserId;
+
+                // delete all achievements associated with the old id
+                IQueryable<UserAchievement> users = from u in context.UserAchievements
+                                                    where u.SteamUserId == oldSteamUserId
+                                                    select u;
+
+                context.UserAchievements.DeleteAllOnSubmit(users);
+            }
+
+            context.SubmitChanges();
+        }
+
+        #endregion
+
+        /// <summary>
         /// Assigns the new achievements.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
@@ -231,7 +189,7 @@ namespace SteamAchievements.Data
                                                    where gameIds.Contains(a.GameId)
                                                    select a.Name;
 
-            SteamDataContext context = new SteamDataContext { ObjectTrackingEnabled = false };
+            SteamDataContext context = new SteamDataContext {ObjectTrackingEnabled = false};
             IEnumerable<int> achievementIds = (from a in context.Achievements
                                                where achievementNames.Contains(a.Name)
                                                select a.Id).ToList();
@@ -303,61 +261,6 @@ namespace SteamAchievements.Data
                                                      ImageUrl = achievement.ImageUrl
                                                  };
                 context.Achievements.InsertOnSubmit(newAchievement);
-            }
-
-            context.SubmitChanges();
-        }
-
-        /// <summary>
-        /// Gets the games.
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Game> GetGames()
-        {
-            SteamDataContext context = new SteamDataContext();
-            return from game in context.Games
-                   orderby game.Name
-                   select game;
-        }
-
-        /// <summary>
-        /// Updates the steam user id.
-        /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
-        /// <param name="steamUserId">The steam user id.</param>
-        public void UpdateSteamUserId(long facebookUserId, string steamUserId)
-        {
-            if (steamUserId == null)
-            {
-                throw new ArgumentNullException("steamUserId");
-            }
-
-            SteamDataContext context = new SteamDataContext();
-            IQueryable<User> query = from u in context.Users
-                                     where u.FacebookUserId == facebookUserId
-                                     select u;
-
-            User user = query.SingleOrDefault();
-
-            if (user == null)
-            {
-                // the user does not exist, create a new one.
-                user = new User { FacebookUserId = facebookUserId, SteamUserId = steamUserId };
-
-                context.Users.InsertOnSubmit(user);
-            }
-            else
-            {
-                // update steam id
-                string oldSteamUserId = user.SteamUserId;
-                user.SteamUserId = steamUserId;
-
-                // delete all achievements associated with the old id
-                IQueryable<UserAchievement> users = from u in context.UserAchievements
-                                                    where u.SteamUserId == oldSteamUserId
-                                                    select u;
-
-                context.UserAchievements.DeleteAllOnSubmit(users);
             }
 
             context.SubmitChanges();

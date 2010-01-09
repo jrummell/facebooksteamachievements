@@ -44,6 +44,12 @@
     <WebConfigReplacementFiles Include="Config\Release\connectionStrings.config">
       <Section>connectionStrings</Section>
     </WebConfigReplacementFiles>
+    <WebConfigReplacementFiles Include="Config\Release\serviceHostingEnvironment.config">
+      <Section>system.serviceModel/serviceHostingEnvironment</Section>
+    </WebConfigReplacementFiles>
+    <WebConfigReplacementFiles Include="Config\Release\SteamAchievements.Services.Properties.Settings.config">
+      <Section>applicationSettings/SteamAchievements.Services.Properties.Settings</Section>
+    </WebConfigReplacementFiles>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <WebConfigReplacementFiles Include="Config\Debug\appSettings.config">
@@ -51,6 +57,12 @@
     </WebConfigReplacementFiles>
     <WebConfigReplacementFiles Include="Config\Debug\connectionStrings.config">
       <Section>connectionStrings</Section>
+    </WebConfigReplacementFiles>
+    <WebConfigReplacementFiles Include="Config\Debug\serviceHostingEnvironment.config">
+      <Section>system.serviceModel/serviceHostingEnvironment</Section>
+    </WebConfigReplacementFiles>
+    <WebConfigReplacementFiles Include="Config\Debug\SteamAchievements.Services.Properties.Settings.config">
+      <Section>applicationSettings/SteamAchievements.Services.Properties.Settings</Section>
     </WebConfigReplacementFiles>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WebDeployment\v9.0\Microsoft.WebDeployment.targets" />
