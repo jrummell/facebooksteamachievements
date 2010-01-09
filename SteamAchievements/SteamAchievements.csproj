@@ -165,6 +165,7 @@
   <ItemGroup>
     <Content Include="Config\Release\serviceHostingEnvironment.config" />
     <Content Include="images\ajax-loader.gif" />
+    <Content Include="images\appcustomurl.png" />
     <Content Include="images\disk.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
