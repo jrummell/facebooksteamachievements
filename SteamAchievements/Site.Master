@@ -21,7 +21,7 @@
         </asp:ContentPlaceHolder>
         <div id="disclaimer" style="color: #999; margin-top: 1em;">
             Steam Achievements is not developed by Facebook or Valve. Valve, Steam and the Steam
-            logo are registered trademarks of Valve Corporation.
+            logo are registered trademarks of Valve Corporation. Icons courtesy of <a href="http://www.famfamfam.com">FamFamFam</a>.
         </div>
     </div>
 
