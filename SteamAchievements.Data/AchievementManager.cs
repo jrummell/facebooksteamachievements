@@ -240,8 +240,8 @@ namespace SteamAchievements.Data
 
             IEnumerable<Achievement> missingAchievements = from achievement in achievements
                                                            join dbAchievement in dbAchievements on
-                                                               achievement.Name equals
-                                                               dbAchievement.Name into x
+                                                               achievement.Name.ToUpper() equals
+                                                               dbAchievement.Name.ToUpper() into x
                                                            from missing in x.DefaultIfEmpty()
                                                            where missing == null
                                                            select achievement;
