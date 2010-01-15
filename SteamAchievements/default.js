@@ -100,6 +100,8 @@ function getAchievements()
 
 function updateAchievements()
 {
+    $("#achievementsUpdateFailure").hide();
+    
     if (!validateSteamUserId())
     {
         return false;
@@ -121,8 +123,15 @@ function updateAchievements()
         showMessage("#achievementsUpdateSuccess");
     };
 
+    var onerror = function()
+    {
+        hideLoading(updatingSelector);
+        
+        showMessage("#achievementsUpdateFailure", false);
+    }
+
     var parameters = { "steamUserId": steamUserId };
-    callAjax("UpdateAchievements", parameters, ondone);
+    callAjax("UpdateAchievements", parameters, ondone, onerror);
 }
 
 function publishLatestAchievements(steamUserId)
@@ -149,12 +158,15 @@ function validateSteamUserId()
     return true;
 }
 
-function callAjax(method, query, ondone)
+function callAjax(method, query, ondone, onerror)
 {
-    var onerror = function(m)
+    if (onerror == null)
     {
-        $("#log").text(m.Message).show();
-    };
+        onerror = function(m)
+        {
+            $("#log").text(m.Message).show();
+        };
+    }
 
     $.ajax({
         url: _serviceBase + method,
@@ -188,7 +200,7 @@ function callAjax(method, query, ondone)
                 }
                 catch (e)
                 {
-                    onerror({ Message: e.toString() });
+                    onerror({ Message: "Unknown server error." });
                 }
             }
             return;
@@ -206,10 +218,19 @@ function hideLoading(selector)
     $(selector).fadeOut("slow");
 }
 
-function showMessage(selector)
+function showMessage(selector, fadeOut)
 {
+    if (fadeOut == null)
+    {
+        fadeOut = true;
+    }
+
     $(selector).show("normal");
-    setTimeout("$('" + selector + "').hide('slow');", 5000);
+
+    if (fadeOut)
+    {
+        setTimeout("$('" + selector + "').hide('slow');", 5000);
+    }
 }
 
 function log(message)

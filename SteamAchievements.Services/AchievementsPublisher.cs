@@ -89,7 +89,7 @@ namespace SteamAchievements.Services
                                               {
                                                   new action_link
                                                       {
-                                                          text = achievement.Game.Name + " stats",
+                                                          text = achievement.Game.Abbreviation + " stats",
                                                           href = gameStatsLink
                                                       }
                                               };
