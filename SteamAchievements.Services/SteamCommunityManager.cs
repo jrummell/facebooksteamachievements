@@ -22,21 +22,18 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text.RegularExpressions;
 using SteamAchievements.Data;
-using SteamAchievements.Services.Properties;
 
 namespace SteamAchievements.Services
 {
     public class SteamCommunityManager
     {
-        private const RegexOptions _options = RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline;
-
-        private readonly Regex _endRegex = new Regex(Settings.Default.AchievementSeparatorRegex, _options);
-        private readonly Regex _imageRegex = new Regex(Settings.Default.AchievementImageRegex, _options);
         private readonly IAchievementManager _service;
-        private readonly Regex _textRegex = new Regex(Settings.Default.AchievementTextRegex, _options);
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SteamCommunityManager"/> class.
+        /// </summary>
+        /// <param name="achievementManager">The achievement manager.</param>
         public SteamCommunityManager(IAchievementManager achievementManager)
         {
             if (achievementManager == null)
@@ -46,79 +43,33 @@ namespace SteamAchievements.Services
             _service = achievementManager;
         }
 
+        /// <summary>
+        /// Gets the achievements from http://steamcommunity.com/id/[customurl]/stats/[game]/?xml=1.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns></returns>
         public IEnumerable<Achievement> GetAchievements(string steamUserId)
         {
+            AchievementXmlParser parser = new AchievementXmlParser();
             List<Achievement> achievements = new List<Achievement>();
 
             IEnumerable<Game> games = _service.GetGames();
             foreach (Game game in games)
             {
-                string statsUrl = String.Format("http://steamcommunity.com/id/{0}/stats/{1}?tab=achievements",
+                int gameId = game.Id;
+                string statsUrl = String.Format("http://steamcommunity.com/id/{0}/stats/{1}/?xml=1",
                                                 steamUserId, game.Abbreviation);
-                string html = GetStatsHtml(statsUrl);
-                if (html == null)
+                string xml;
+                using (WebClient client = new WebClient())
                 {
-                    continue;
+                    xml = client.DownloadString(statsUrl);
                 }
 
-                // achievements the player hasn't earned yet come after the separator expression
-                Match endMatch = _endRegex.Match(html);
-                if (endMatch.Success)
-                {
-                    html = html.Substring(0, endMatch.Index);
-                }
-                else
-                {
-                    // there are no earned achievements for this game
-                    continue;
-                }
-
-                MatchCollection textMatches = _textRegex.Matches(html);
-                MatchCollection imagesMatches = _imageRegex.Matches(html);
-
-                for (int i = 0; i < textMatches.Count; i++)
-                {
-                    string name = textMatches[i].Groups["name"].Value;
-                    string description = textMatches[i].Groups["description"].Value;
-                    string image = imagesMatches[i].Groups["image"].Value;
-
-                    Achievement achievement = new Achievement
-                                                  {
-                                                      Name = name,
-                                                      Description = description,
-                                                      ImageUrl = image,
-                                                      GameId = game.Id
-                                                  };
-                    achievements.Add(achievement);
-                }
+                IEnumerable<Achievement> gameAchievements = parser.Parse(xml, gameId);
+                achievements.AddRange(gameAchievements);
             }
 
             return achievements;
-        }
-
-        /// <summary>
-        /// Gets the stats HTML.
-        /// </summary>
-        /// <param name="statsUrl">The stats URL.</param>
-        /// <returns></returns>
-        private static string GetStatsHtml(string statsUrl)
-        {
-            string html;
-            using (WebClient client = new WebClient())
-            {
-                try
-                {
-                    html = client.DownloadString(statsUrl);
-                }
-                catch (WebException)
-                {
-                    return null;
-                }
-
-                // remove new lines so that Regex parsing is easier
-                html = html.Replace("\r\n", "").Replace("\n", "");
-            }
-            return html;
         }
     }
 }
