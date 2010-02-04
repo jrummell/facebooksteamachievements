@@ -21,11 +21,11 @@ namespace SteamAchievements.Data
 	using System.Runtime.Serialization;
 	using System.ComponentModel;
 	using System;
-	
-	
-	[System.Data.Linq.Mapping.DatabaseAttribute(Name="steam")]
+
+
+    [System.Data.Linq.Mapping.DatabaseAttribute(Name="steam")]
 	internal partial class SteamDataContext : System.Data.Linq.DataContext
-	{
+    {
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
 		

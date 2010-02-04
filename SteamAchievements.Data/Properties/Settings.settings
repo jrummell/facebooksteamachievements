@@ -10,5 +10,8 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=.\SQLEXPRESS;AttachDbFilename="C:\Users\John\Documents\Visual Studio 2008\Projects\FacebookSteamAchievements\SteamAchievements\App_Data\Steam.mdf";Integrated Security=True;Connect Timeout=30;User Instance=True</Value>
     </Setting>
+    <Setting Name="SteamRepositoryType" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SteamAchievements.Data.MockSteamRepository, SteamAchievements.Data</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
