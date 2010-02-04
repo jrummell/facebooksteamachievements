@@ -52,7 +52,8 @@ namespace SteamAchievements.Services
                    select new Achievement
                               {
                                   GameId = gameId,
-                                  Name = _textInfo.ToTitleCase(name.Value.ToLower()), // name is in all caps - fix it
+                                  Name = _textInfo.ToTitleCase(name.Value.ToLower()),
+                                  // name is in all caps - fix it
                                   Description = description.Value,
                                   ImageUrl = image.Value
                               };

@@ -19,7 +19,9 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
+using System.Web.Configuration;
 using Facebook.Schema;
 using Facebook.Web;
 
@@ -28,18 +30,17 @@ namespace SteamAchievements
     public partial class Site : CanvasIFrameMasterPage
     {
         // helper for testing
-#if DEBUG
-        public readonly bool Debug = true;
-#else
-        public readonly bool Debug = false;
-#endif
+        public readonly bool TestMode;
 
         public Site()
         {
-            if (!Debug)
+            string testModeValue = WebConfigurationManager.AppSettings["TestMode"] ?? false.ToString();
+            TestMode = Convert.ToBoolean(testModeValue);
+
+            if (!TestMode)
             {
                 RequireLogin = true;
-                RequiredPermissions = new List<Enums.ExtendedPermissions> { Enums.ExtendedPermissions.publish_stream };
+                RequiredPermissions = new List<Enums.ExtendedPermissions> {Enums.ExtendedPermissions.publish_stream};
             }
         }
     }

@@ -154,10 +154,10 @@
     <Content Include="images\steamsettings.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config\Debug\SteamAchievements.Services.Properties.Settings.config" />
+    <Content Include="Config\Debug\SteamAchievements.Data.Properties.Settings.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config\Release\SteamAchievements.Services.Properties.Settings.config" />
+    <Content Include="Config\Release\SteamAchievements.Data.Properties.Settings.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\Debug\serviceHostingEnvironment.config" />

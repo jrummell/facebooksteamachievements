@@ -22,6 +22,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml;
 using NUnit.Framework;
 using SteamAchievements.Data;
 
@@ -31,6 +32,29 @@ namespace SteamAchievements.Services.Tests
     public class AchievementXmlParserFixture
     {
         [Test]
+        public void ParseNotValid()
+        {
+            AchievementXmlParser parser = new AchievementXmlParser();
+
+            Assert.Throws<XmlException>(() => parser.Parse("asdf asdf asdf asdf", 1));
+        }
+
+        [Test]
+        public void ParseTf2MagnakayDeathFromAboveNotClosed()
+        {
+            string xml = File.ReadAllText("achievements2.xml");
+
+            AchievementXmlParser parser = new AchievementXmlParser();
+            IEnumerable<Achievement> achievements = parser.Parse(xml, 2);
+
+            // does not contain Death from Above
+            Assert.That(achievements.Any(a => a.Id == 273), Is.False);
+
+            // does not contain First Blood
+            Assert.That(achievements.Any(a => a.Id == 270), Is.False);
+        }
+
+        [Test]
         public void ParseValid()
         {
             string xml = File.ReadAllText("achievements.xml");
@@ -39,14 +63,6 @@ namespace SteamAchievements.Services.Tests
             IEnumerable<Achievement> achievements = parser.Parse(xml, 1);
 
             Assert.That(achievements.Any());
-        }
-
-        [Test]
-        public void ParseNotValid()
-        {
-            AchievementXmlParser parser = new AchievementXmlParser();
-
-            Assert.Throws<System.Xml.XmlException>(() => parser.Parse("asdf asdf asdf asdf", 1));
         }
     }
 }

@@ -34,5 +34,14 @@ namespace SteamAchievements.Data.Properties {
                 return ((string)(this["steamConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("SteamAchievements.Data.MockSteamRepository, SteamAchievements.Data")]
+        public string SteamRepositoryType {
+            get {
+                return ((string)(this["SteamRepositoryType"]));
+            }
+        }
     }
 }

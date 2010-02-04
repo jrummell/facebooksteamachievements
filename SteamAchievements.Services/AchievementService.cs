@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SteamAchievements.Data;
-using SteamAchievements.Services.Properties;
 
 namespace SteamAchievements.Services
 {
@@ -34,8 +33,7 @@ namespace SteamAchievements.Services
 
         public AchievementService()
         {
-            Type managerType = Type.GetType(Settings.Default.AchievementManagerType);
-            _service = (IAchievementManager) Activator.CreateInstance(managerType);
+            _service = new AchievementManager();
             _communityService = new SteamCommunityManager(_service);
         }
 
