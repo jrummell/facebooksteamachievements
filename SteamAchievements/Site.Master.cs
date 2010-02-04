@@ -34,7 +34,7 @@ namespace SteamAchievements
 
         public Site()
         {
-            string testModeValue = WebConfigurationManager.AppSettings["TestMode"] ?? false.ToString();
+            string testModeValue = WebConfigurationManager.AppSettings["TestMode"] ?? true.ToString();
             TestMode = Convert.ToBoolean(testModeValue);
 
             if (!TestMode)

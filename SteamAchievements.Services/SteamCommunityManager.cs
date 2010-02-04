@@ -28,32 +28,27 @@ namespace SteamAchievements.Services
 {
     public class SteamCommunityManager
     {
-        private readonly IAchievementManager _service;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SteamCommunityManager"/> class.
-        /// </summary>
-        /// <param name="achievementManager">The achievement manager.</param>
-        public SteamCommunityManager(IAchievementManager achievementManager)
-        {
-            if (achievementManager == null)
-            {
-                throw new ArgumentNullException("achievementManager");
-            }
-            _service = achievementManager;
-        }
-
         /// <summary>
         /// Gets the achievements from http://steamcommunity.com/id/[customurl]/stats/[game]/?xml=1.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="games">The games.</param>
         /// <returns></returns>
-        public IEnumerable<Achievement> GetAchievements(string steamUserId)
+        public IEnumerable<Achievement> GetAchievements(string steamUserId, IEnumerable<Game> games)
         {
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            if (games == null)
+            {
+                throw new ArgumentNullException("games");
+            }
+            
             AchievementXmlParser parser = new AchievementXmlParser();
             List<Achievement> achievements = new List<Achievement>();
 
-            IEnumerable<Game> games = _service.GetGames();
             foreach (Game game in games)
             {
                 int gameId = game.Id;
