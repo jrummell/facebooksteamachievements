@@ -34,7 +34,7 @@ namespace SteamAchievements.Services
         public AchievementService()
         {
             _service = new AchievementManager();
-            _communityService = new SteamCommunityManager(_service);
+            _communityService = new SteamCommunityManager();
         }
 
         #region IAchievementService Members
@@ -79,7 +79,7 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            IEnumerable<Achievement> achievements = _communityService.GetAchievements(steamUserId);
+            IEnumerable<Achievement> achievements = _communityService.GetAchievements(steamUserId, _service.GetGames());
 
             _service.UpdateAchievements(steamUserId, achievements);
 

@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AchievementManagerFixture.cs" />
+    <Compile Include="SteamCommunityManagerFixture.cs" />
     <Compile Include="AchievementXmlParserFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

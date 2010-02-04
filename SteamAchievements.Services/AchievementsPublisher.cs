@@ -32,14 +32,19 @@ namespace SteamAchievements.Services
     public class AchievementsPublisher
     {
         private readonly Api _api;
+        private readonly bool _testMode;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AchievementsPublisher"/> class.
         /// </summary>
         public AchievementsPublisher()
         {
+            string testModeValue = WebConfigurationManager.AppSettings["TestMode"] ?? true.ToString();
+            _testMode = Convert.ToBoolean(testModeValue);
+
             string appKey = WebConfigurationManager.AppSettings["APIKey"];
             string appSecret = WebConfigurationManager.AppSettings["Secret"];
+
             List<Enums.ExtendedPermissions> permissions =
                 new List<Enums.ExtendedPermissions> {Enums.ExtendedPermissions.publish_stream};
             CanvasSession session = new IFrameCanvasSession(appKey, appSecret, permissions, false);
@@ -57,6 +62,11 @@ namespace SteamAchievements.Services
             if (steamUserId == null)
             {
                 throw new ArgumentNullException("steamUserId");
+            }
+
+            if (_testMode)
+            {
+                return;
             }
             
             foreach (Achievement achievement in achievements)

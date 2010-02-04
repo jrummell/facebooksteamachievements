@@ -67,8 +67,8 @@ namespace SteamAchievements.Data
         private List<Game> _games =
             new List<Game>
                 {
-                    new Game {Id = 1, Abbreviation = "game1", Name = "Game 1"},
-                    new Game {Id = 2, Abbreviation = "game2", Name = "Game 2"}
+                    new Game {Id = 1, Abbreviation = "l4d", Name = "Game 1"},
+                    new Game {Id = 2, Abbreviation = "l4d2", Name = "Game 2"}
                 };
 
         private List<UserAchievement> _userAchievements =
@@ -88,7 +88,7 @@ namespace SteamAchievements.Data
                                                   Description = "Do some thing cool in Game 1",
                                                   ImageUrl =
                                                       "http://media.steampowered.com/steamcommunity/public/images/apps/550/8a1dbb0d78c8e288ed5ce990a20454073d01ba9b.jpg",
-                                                  Game = new Game {Id = 1, Abbreviation = "game1", Name = "Game 1"}
+                                                  Game = new Game {Id = 1, Abbreviation = "l4d", Name = "Game 1"}
                                               }
                         },
                     new UserAchievement
@@ -105,7 +105,7 @@ namespace SteamAchievements.Data
                                                   Description = "Do some thing cool in Game 1",
                                                   ImageUrl =
                                                       "http://media.steampowered.com/steamcommunity/public/images/apps/550/8a1dbb0d78c8e288ed5ce990a20454073d01ba9b.jpg",
-                                                  Game = new Game {Id = 1, Abbreviation = "game1", Name = "Game 1"}
+                                                  Game = new Game {Id = 1, Abbreviation = "l4d", Name = "Game 1"}
                                               }
                         },
                     new UserAchievement
@@ -122,7 +122,7 @@ namespace SteamAchievements.Data
                                                   Description = "Do some thing cool in Game 1",
                                                   ImageUrl =
                                                       "http://media.steampowered.com/steamcommunity/public/images/apps/550/8a1dbb0d78c8e288ed5ce990a20454073d01ba9b.jpg",
-                                                  Game = new Game {Id = 1, Abbreviation = "game1", Name = "Game 1"}
+                                                  Game = new Game {Id = 1, Abbreviation = "l4d", Name = "Game 1"}
                                               }
                         }
                 };
