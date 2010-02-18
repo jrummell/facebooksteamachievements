@@ -108,7 +108,9 @@ namespace SteamAchievements.Data
 
             IQueryable<Achievement> achievements =
                 from userAchievement in _repository.UserAchievements
-                where userAchievement.SteamUserId == steamUserId && userAchievement.Achievement.GameId == gameId
+                where userAchievement.SteamUserId == steamUserId
+                      && userAchievement.Achievement.GameId == gameId
+                orderby userAchievement.Date
                 select userAchievement.Achievement;
 
             return achievements;
@@ -327,9 +329,9 @@ namespace SteamAchievements.Data
             return from achievement in communityAchievements
                    where
                        !_repository.Achievements.Any(
-                            dbAchievemnt =>
-                            dbAchievemnt.GameId == achievement.GameId &&
-                            dbAchievemnt.Name.ToUpper() == achievement.Name.ToUpper())
+                            dbAchievement =>
+                            dbAchievement.GameId == achievement.GameId &&
+                            dbAchievement.Name.ToUpper() == achievement.Name.ToUpper())
                    select achievement;
         }
     }
