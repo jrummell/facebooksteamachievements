@@ -177,7 +177,7 @@ function callAjax(method, query, ondone, onerror)
         type: "POST",
         processData: true,
         contentType: "application/json",
-        timeout: 10000,
+        timeout: 120000, // 2 minutes
         dataType: "json",
         success: ondone,
         error: function(xhr)
