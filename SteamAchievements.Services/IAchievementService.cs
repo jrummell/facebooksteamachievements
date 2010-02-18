@@ -55,12 +55,12 @@ namespace SteamAchievements.Services
         /// Updates the achievements.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
-        /// <returns>true if successful, else false.</returns>
+        /// <returns>The number of achievements that were updated.</returns>
         /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool UpdateAchievements(string steamUserId);
+        int UpdateAchievements(string steamUserId);
 
         /// <summary>
         /// Updates the steam user id.

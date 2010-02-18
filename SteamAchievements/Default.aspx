@@ -27,7 +27,7 @@
     <fieldset>
         <legend>Achievements</legend>
         <div id="achievementsUpdateSuccess" class="fbinfobox" style="display: none;">
-            Your achievements have been updated.</div>
+            Your achievements have been updated (<span id="newAchievementCount"></span> new).</div>
         <div id="achievementsUpdateFailure" class="fberrorbox" style="display: none;">
             Your achievements could not be updated. Please verify that your Custom Url is correct
             and that your Steam Community Profile is public. <a href="Help.aspx?<%= Request.QueryString %>">

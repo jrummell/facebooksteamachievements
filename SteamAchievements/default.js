@@ -120,6 +120,9 @@ function updateAchievements()
 
         publishLatestAchievements(steamUserId);
 
+        // set the new achievement count
+        $("#newAchievementCount").text(data);
+
         showMessage("#achievementsUpdateSuccess");
     };
 

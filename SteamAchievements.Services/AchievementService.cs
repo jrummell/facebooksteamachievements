@@ -72,7 +72,7 @@ namespace SteamAchievements.Services
         /// <param name="steamUserId">The steam user id.</param>
         /// <returns>true if successful, else false.</returns>
         /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
-        public bool UpdateAchievements(string steamUserId)
+        public int UpdateAchievements(string steamUserId)
         {
             if (steamUserId == null)
             {
@@ -81,9 +81,9 @@ namespace SteamAchievements.Services
 
             IEnumerable<Achievement> achievements = _communityService.GetAchievements(steamUserId, _service.GetGames());
 
-            _service.UpdateAchievements(steamUserId, achievements);
+            int updated = _service.UpdateAchievements(steamUserId, achievements);
 
-            return true;
+            return updated;
         }
 
         /// <summary>
