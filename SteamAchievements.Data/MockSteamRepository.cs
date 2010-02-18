@@ -12,124 +12,10 @@ namespace SteamAchievements.Data
     /// </remarks>
     public class MockSteamRepository : ISteamRepository
     {
-        #region Fields
-
-        private List<Achievement> _achievements =
-            new List<Achievement>
-                {
-                    new Achievement
-                        {
-                            Id = 1,
-                            GameId = 1,
-                            Name = "Achievement 1 Game 1",
-                            Description = "Do some thing cool in Game 1",
-                            ImageUrl =
-                                "http://media.steampowered.com/steamcommunity/public/images/apps/550/8a1dbb0d78c8e288ed5ce990a20454073d01ba9b.jpg"
-                        },
-                    new Achievement
-                        {
-                            Id = 2,
-                            GameId = 1,
-                            Name = "Achievement 2 Game 1",
-                            Description = "Do some thing cool in Game 1",
-                            ImageUrl =
-                                "http://media.steampowered.com/steamcommunity/public/images/apps/550/8a1dbb0d78c8e288ed5ce990a20454073d01ba9b.jpg"
-                        },
-                    new Achievement
-                        {
-                            Id = 3,
-                            GameId = 1,
-                            Name = "Achievement 3 Game 1",
-                            Description = "Do some thing cool in Game 1",
-                            ImageUrl =
-                                "http://media.steampowered.com/steamcommunity/public/images/apps/550/8a1dbb0d78c8e288ed5ce990a20454073d01ba9b.jpg"
-                        },
-                    new Achievement
-                        {
-                            Id = 4,
-                            GameId = 2,
-                            Name = "Achievement 1 Game 2",
-                            Description = "Do some thing cool in Game 2",
-                            ImageUrl =
-                                "http://media.steampowered.com/steamcommunity/public/images/apps/550/8a1dbb0d78c8e288ed5ce990a20454073d01ba9b.jpg"
-                        },
-                    new Achievement
-                        {
-                            Id = 5,
-                            GameId = 2,
-                            Name = "Achievement 2 Game 2",
-                            Description = "Do some thing cool in Game 2",
-                            ImageUrl =
-                                "http://media.steampowered.com/steamcommunity/public/images/apps/550/8a1dbb0d78c8e288ed5ce990a20454073d01ba9b.jpg"
-                        }
-                };
-
-        private List<Game> _games =
-            new List<Game>
-                {
-                    new Game {Id = 1, Abbreviation = "l4d", Name = "Game 1"},
-                    new Game {Id = 2, Abbreviation = "l4d2", Name = "Game 2"}
-                };
-
-        private List<UserAchievement> _userAchievements =
-            new List<UserAchievement>
-                {
-                    new UserAchievement
-                        {
-                            Id = 1,
-                            AchievementId = 1,
-                            Date = DateTime.Now,
-                            SteamUserId = "user1",
-                            Achievement = new Achievement
-                                              {
-                                                  Id = 1,
-                                                  GameId = 1,
-                                                  Name = "Achievement 1 Game 1",
-                                                  Description = "Do some thing cool in Game 1",
-                                                  ImageUrl =
-                                                      "http://media.steampowered.com/steamcommunity/public/images/apps/550/8a1dbb0d78c8e288ed5ce990a20454073d01ba9b.jpg",
-                                                  Game = new Game {Id = 1, Abbreviation = "l4d", Name = "Game 1"}
-                                              }
-                        },
-                    new UserAchievement
-                        {
-                            Id = 2,
-                            AchievementId = 2,
-                            Date = DateTime.Now,
-                            SteamUserId = "user1",
-                            Achievement = new Achievement
-                                              {
-                                                  Id = 2,
-                                                  GameId = 1,
-                                                  Name = "Achievement 2 Game 1",
-                                                  Description = "Do some thing cool in Game 1",
-                                                  ImageUrl =
-                                                      "http://media.steampowered.com/steamcommunity/public/images/apps/550/8a1dbb0d78c8e288ed5ce990a20454073d01ba9b.jpg",
-                                                  Game = new Game {Id = 1, Abbreviation = "l4d", Name = "Game 1"}
-                                              }
-                        },
-                    new UserAchievement
-                        {
-                            Id = 3,
-                            AchievementId = 3,
-                            Date = DateTime.Now,
-                            SteamUserId = "user1",
-                            Achievement = new Achievement
-                                              {
-                                                  Id = 3,
-                                                  GameId = 1,
-                                                  Name = "Achievement 3 Game 1",
-                                                  Description = "Do some thing cool in Game 1",
-                                                  ImageUrl =
-                                                      "http://media.steampowered.com/steamcommunity/public/images/apps/550/8a1dbb0d78c8e288ed5ce990a20454073d01ba9b.jpg",
-                                                  Game = new Game {Id = 1, Abbreviation = "l4d", Name = "Game 1"}
-                                              }
-                        }
-                };
-
-        private List<User> _users = new List<User> {new User {FacebookUserId = 1234567890, SteamUserId = "user1"}};
-
-        #endregion
+        private Dictionary<int, Achievement> _achievements = new Dictionary<int, Achievement>();
+        private Dictionary<int, Game> _games = new Dictionary<int, Game>();
+        private Dictionary<int, UserAchievement> _userAchievements = new Dictionary<int, UserAchievement>();
+        private Dictionary<UserKey, User> _users = new Dictionary<UserKey, User>();
 
         #region ISteamRepository Members
 
@@ -139,8 +25,8 @@ namespace SteamAchievements.Data
         /// <value>The achievements.</value>
         public IQueryable<Achievement> Achievements
         {
-            get { return _achievements.AsQueryable(); }
-            set { _achievements = new List<Achievement>(value); }
+            get { return _achievements.Values.AsQueryable(); }
+            set { _achievements = value.ToDictionary(x => x.Id, x => x); }
         }
 
         /// <summary>
@@ -149,8 +35,8 @@ namespace SteamAchievements.Data
         /// <value>The user achievements.</value>
         public IQueryable<UserAchievement> UserAchievements
         {
-            get { return _userAchievements.AsQueryable(); }
-            set { _userAchievements = new List<UserAchievement>(value); }
+            get { return _userAchievements.Values.AsQueryable(); }
+            set { _userAchievements = value.ToDictionary(x => x.Id, x => x); }
         }
 
         /// <summary>
@@ -159,8 +45,8 @@ namespace SteamAchievements.Data
         /// <value>The games.</value>
         public IQueryable<Game> Games
         {
-            get { return _games.AsQueryable(); }
-            set { _games = new List<Game>(value); }
+            get { return _games.Values.AsQueryable(); }
+            set { _games = value.ToDictionary(x => x.Id, x => x); }
         }
 
         /// <summary>
@@ -169,8 +55,8 @@ namespace SteamAchievements.Data
         /// <value>The users.</value>
         public IQueryable<User> Users
         {
-            get { return _users.AsQueryable(); }
-            set { _users = new List<User>(value); }
+            get { return _users.Values.AsQueryable(); }
+            set { _users = value.ToDictionary(x => new UserKey(x), x => x); }
         }
 
         /// <summary>
@@ -179,7 +65,7 @@ namespace SteamAchievements.Data
         /// <param name="user">The user.</param>
         public void InsertOnSubmit(User user)
         {
-            _users.Add(user);
+            _users.Add(new UserKey(user), user);
         }
 
         /// <summary>
@@ -188,7 +74,10 @@ namespace SteamAchievements.Data
         /// <param name="achievements">The achievements.</param>
         public void DeleteAllOnSubmit(IEnumerable<UserAchievement> achievements)
         {
-            _userAchievements.RemoveAll(ua => achievements.Contains(ua));
+            foreach (UserAchievement userAchievement in achievements)
+            {
+                _userAchievements.Remove(userAchievement.Id);
+            }
         }
 
         /// <summary>
@@ -204,8 +93,8 @@ namespace SteamAchievements.Data
         /// <param name="achievement">The achievement.</param>
         public void InsertOnSubmit(Achievement achievement)
         {
-            achievement.Id = _achievements.Max(a => a.Id) + 1;
-            _achievements.Add(achievement);
+            achievement.Id = _achievements.Values.Max(a => a.Id) + 1;
+            _achievements.Add(achievement.Id, achievement);
         }
 
         /// <summary>
@@ -214,14 +103,88 @@ namespace SteamAchievements.Data
         /// <param name="achievements">The achievements.</param>
         public void InsertAllOnSubmit(IEnumerable<UserAchievement> achievements)
         {
-            int maxId = _userAchievements.Max(ua => ua.Id);
+            int maxId = _userAchievements.Values.Max(ua => ua.Id);
 
             foreach (UserAchievement userAchievement in achievements)
             {
                 userAchievement.Id = ++maxId;
+
+                _userAchievements.Add(userAchievement.Id, userAchievement);
+            }
+        }
+
+        #endregion
+
+        #region Nested type: UserKey
+
+        private class UserKey : IEquatable<UserKey>
+        {
+            public UserKey(User user)
+            {
+                if (user == null)
+                {
+                    throw new ArgumentNullException("user");
+                }
+
+                FacebookUserId = user.FacebookUserId;
+                SteamUserId = user.SteamUserId;
             }
 
-            _userAchievements.AddRange(achievements);
+            public long FacebookUserId { get; set; }
+
+            public string SteamUserId { get; set; }
+
+            #region IEquatable<UserKey> Members
+
+            public bool Equals(UserKey other)
+            {
+                if (ReferenceEquals(null, other))
+                {
+                    return false;
+                }
+                if (ReferenceEquals(this, other))
+                {
+                    return true;
+                }
+                return other.FacebookUserId == FacebookUserId && Equals(other.SteamUserId, SteamUserId);
+            }
+
+            #endregion
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                if (ReferenceEquals(this, obj))
+                {
+                    return true;
+                }
+                if (obj.GetType() != typeof (UserKey))
+                {
+                    return false;
+                }
+                return Equals((UserKey) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return (int) ((FacebookUserId*397) ^ (SteamUserId != null ? SteamUserId.GetHashCode() : 0));
+                }
+            }
+
+            public static bool operator ==(UserKey left, UserKey right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(UserKey left, UserKey right)
+            {
+                return !Equals(left, right);
+            }
         }
 
         #endregion

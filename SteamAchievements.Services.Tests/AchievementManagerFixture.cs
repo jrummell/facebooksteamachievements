@@ -86,15 +86,6 @@ namespace SteamAchievements.Services.Tests
         private MockSteamRepository _repository;
 
         [Test]
-        public void GetUnassignedAchievementIds()
-        {
-            IEnumerable<int> achievementIds = _manager.GetUnassignedAchievementIds("user1", _repository.Achievements);
-
-            Assert.That(achievementIds.Contains(4));
-            Assert.That(achievementIds.Contains(5));
-        }
-
-        [Test]
         public void AssignAchievements()
         {
             const string steamUserId = "user1";
@@ -112,7 +103,9 @@ namespace SteamAchievements.Services.Tests
             foreach (Achievement achievement in achievements)
             {
                 int achievementId = achievement.Id;
-                int count = _repository.UserAchievements.Count(ua => ua.SteamUserId == steamUserId && ua.AchievementId == achievementId);
+                int count =
+                    _repository.UserAchievements.Count(
+                        ua => ua.SteamUserId == steamUserId && ua.AchievementId == achievementId);
                 Assert.That(count, Is.EqualTo(1));
             }
         }
@@ -135,8 +128,31 @@ namespace SteamAchievements.Services.Tests
             IEnumerable<Achievement> missingAchievements =
                 _manager.GetMissingAchievements(communityAchievements);
 
+            Assert.That(missingAchievements.Count(), Is.EqualTo(2));
+
             CollectionAssert.Contains(missingAchievements, achievement1Game5);
             CollectionAssert.Contains(missingAchievements, achievement2Game5);
+        }
+
+        [Test]
+        public void GetUnassignedAchievementIds()
+        {
+            IEnumerable<int> achievementIds = _manager.GetUnassignedAchievementIds("user1", _repository.Achievements);
+
+            Assert.That(achievementIds.Contains(4));
+            Assert.That(achievementIds.Contains(5));
+        }
+
+        [Test]
+        public void InsertMissingAchievements()
+        {
+            Achievement achievement1Game5 = new Achievement {GameId = 5, Name = "Achievement 1 for Game 5"};
+            Achievement achievement2Game5 = new Achievement {GameId = 5, Name = "Achievement 2 for Game 5"};
+
+            _manager.InsertMissingAchievements(new[] {achievement1Game5, achievement2Game5});
+
+            Assert.That(_repository.Achievements.Count(a => a.Name == achievement1Game5.Name), Is.EqualTo(1));
+            Assert.That(_repository.Achievements.Count(a => a.Name == achievement2Game5.Name), Is.EqualTo(1));
         }
 
         [Test]
@@ -174,11 +190,14 @@ namespace SteamAchievements.Services.Tests
                 int achievementId = achievement.Id;
                 int gameId = achievement.GameId;
                 string name = achievement.Name;
-                int achievementCount = _repository.Achievements.Count(a => a.Id == achievementId && a.GameId == gameId && a.Name == name);
+                int achievementCount =
+                    _repository.Achievements.Count(a => a.Id == achievementId && a.GameId == gameId && a.Name == name);
                 Assert.That(achievementCount, Is.EqualTo(1));
 
                 // assert that the new achievements were assigned
-                int userAchievementCount = _repository.UserAchievements.Count(ua => ua.SteamUserId == steamUserId && ua.AchievementId == achievementId);
+                int userAchievementCount =
+                    _repository.UserAchievements.Count(
+                        ua => ua.SteamUserId == steamUserId && ua.AchievementId == achievementId);
                 Assert.That(userAchievementCount, Is.EqualTo(1));
             }
         }
