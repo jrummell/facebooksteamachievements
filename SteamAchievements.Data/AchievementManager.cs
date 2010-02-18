@@ -208,22 +208,22 @@ namespace SteamAchievements.Data
                 user = new User {FacebookUserId = facebookUserId, SteamUserId = steamUserId};
 
                 _repository.InsertOnSubmit(user);
+                _repository.SubmitChanges();
             }
             else
             {
-                // update steam id
-                string oldSteamUserId = user.SteamUserId;
-                user.SteamUserId = steamUserId;
-
                 // delete all achievements associated with the old id
                 IQueryable<UserAchievement> userAchievements = from u in _repository.UserAchievements
-                                                               where u.SteamUserId == oldSteamUserId
+                                                               where u.SteamUserId == user.SteamUserId
                                                                select u;
 
                 _repository.DeleteAllOnSubmit(userAchievements);
-            }
+                _repository.SubmitChanges();
 
-            _repository.SubmitChanges();
+                // update steam id
+                user.SteamUserId = steamUserId;
+                _repository.SubmitChanges();
+            }
         }
 
         #endregion
