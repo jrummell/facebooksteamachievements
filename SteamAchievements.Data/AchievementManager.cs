@@ -122,7 +122,7 @@ namespace SteamAchievements.Data
         /// <remarks>
         /// Calls <see cref="InsertMissingAchievements"/> and <see cref="AssignAchievements"/>.
         /// </remarks>
-        public void UpdateAchievements(string steamUserId, IEnumerable<Achievement> achievements)
+        public int UpdateAchievements(string steamUserId, IEnumerable<Achievement> achievements)
         {
             if (steamUserId == null)
             {
@@ -136,7 +136,7 @@ namespace SteamAchievements.Data
 
             if (!achievements.Any())
             {
-                return;
+                return 0;
             }
 
             IEnumerable<Achievement> missingAchievements = GetMissingAchievements(achievements);
@@ -145,7 +145,7 @@ namespace SteamAchievements.Data
                 InsertMissingAchievements(missingAchievements);
             }
 
-            AssignAchievements(steamUserId, achievements);
+            return AssignAchievements(steamUserId, achievements);
         }
 
         /// <summary>
@@ -231,14 +231,14 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="achievements">All achievements for the given user.</param>
-        public void AssignAchievements(string steamUserId, IEnumerable<Achievement> achievements)
+        public int AssignAchievements(string steamUserId, IEnumerable<Achievement> achievements)
         {
             // get the achievement ids for the games in the given achievements
             IEnumerable<int> unassignedAchievementIds = GetUnassignedAchievementIds(steamUserId, achievements);
 
             if (!unassignedAchievementIds.Any())
             {
-                return;
+                return 0;
             }
 
             // create the unassigned achievements and insert them
@@ -253,6 +253,8 @@ namespace SteamAchievements.Data
 
             _repository.InsertAllOnSubmit(newUserAchievements);
             _repository.SubmitChanges();
+
+            return newUserAchievements.Count();
         }
 
         /// <summary>

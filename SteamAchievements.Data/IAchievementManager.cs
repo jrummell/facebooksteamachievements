@@ -45,7 +45,7 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="achievements">The achievements.</param>
-        void UpdateAchievements(string steamUserId, IEnumerable<Achievement> achievements);
+        int UpdateAchievements(string steamUserId, IEnumerable<Achievement> achievements);
 
         /// <summary>
         /// Gets the latest achievements.
