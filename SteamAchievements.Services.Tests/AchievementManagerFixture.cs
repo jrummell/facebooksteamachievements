@@ -201,5 +201,17 @@ namespace SteamAchievements.Services.Tests
                 Assert.That(userAchievementCount, Is.EqualTo(1));
             }
         }
+
+        [Test]
+        public void UpdateSteamUserId()
+        {
+            const string steamUserId = "userxxx";
+            const int facebookUserId = 1234567890;
+            _manager.UpdateSteamUserId(facebookUserId, steamUserId);
+
+            Assert.That(_repository.Users.Single(u => u.FacebookUserId == facebookUserId).SteamUserId,
+                        Is.EqualTo(steamUserId));
+            Assert.That(!_repository.UserAchievements.Any(ua => ua.SteamUserId == steamUserId));
+        }
     }
 }
