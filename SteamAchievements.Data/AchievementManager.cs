@@ -212,12 +212,18 @@ namespace SteamAchievements.Data
             }
             else
             {
+                // nothing to change
+                if (user.SteamUserId == steamUserId)
+                {
+                    return;
+                }
+
                 // delete all achievements associated with the old id
                 IQueryable<UserAchievement> userAchievements = from u in _repository.UserAchievements
                                                                where u.SteamUserId == user.SteamUserId
                                                                select u;
 
-                _repository.DeleteAllOnSubmit(userAchievements);
+                _repository.DeleteAllOnSubmit(userAchievements.ToArray());
                 _repository.SubmitChanges();
 
                 // update steam id
