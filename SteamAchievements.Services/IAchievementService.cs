@@ -49,14 +49,13 @@ namespace SteamAchievements.Services
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        List<Game> GetGames(); // returning IEnumerable<Game> causes a serialization exception
+        List<Game> GetGames();
 
         /// <summary>
         /// Updates the achievements.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <returns>The number of achievements that were updated.</returns>
-        /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
@@ -80,6 +79,7 @@ namespace SteamAchievements.Services
         /// <param name="facebookUserId">The facebook user id.</param>
         /// <param name="steamUserId">The steam user id.</param>
         /// <returns>true if successful, else false.</returns>
+        /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]

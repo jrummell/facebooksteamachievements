@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Elmah, Version=1.1.11517.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Elmah.dll</HintPath>
+    </Reference>
     <Reference Include="Facebook, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Facebook.dll</HintPath>
@@ -163,6 +167,7 @@
     <Content Include="Config\Debug\serviceHostingEnvironment.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\elmah\ReadMe.txt" />
     <Content Include="Config\Release\serviceHostingEnvironment.config" />
     <Content Include="images\ajax-loader.gif" />
     <Content Include="images\appcustomurl.png" />
