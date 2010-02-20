@@ -23,7 +23,7 @@
     <SingleAssemblyName>SteamAchievements.Deploy</SingleAssemblyName>
     <UseWebConfigReplacement>true</UseWebConfigReplacement>
     <ValidateWebConfigReplacement>true</ValidateWebConfigReplacement>
-    <DeleteAppDataFolder>true</DeleteAppDataFolder>
+    <DeleteAppDataFolder>false</DeleteAppDataFolder>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
@@ -32,7 +32,7 @@
     <UseMerge>true</UseMerge>
     <SingleAssemblyName>SteamAchievements.Deploy</SingleAssemblyName>
     <UseWebConfigReplacement>true</UseWebConfigReplacement>
-    <DeleteAppDataFolder>true</DeleteAppDataFolder>
+    <DeleteAppDataFolder>false</DeleteAppDataFolder>
     <ValidateWebConfigReplacement>true</ValidateWebConfigReplacement>
   </PropertyGroup>
   <ItemGroup>
