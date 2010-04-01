@@ -79,7 +79,7 @@ function getAchievements()
         {
             var a = data[i];
             achievementsHtml += "<div class='achievement'>";
-            achievementsHtml += "<div style='float: left;'><img src='" + a.ImageUrl + "' /></div>";
+            achievementsHtml += "<div class='achievementImage'><img src='" + a.ImageUrl + "' alt='missing' /></div>";
             achievementsHtml += "<div><h3>" + a.Name + "</h3><p>" + a.Description + "</p></div>";
             achievementsHtml += "<br class='clear'/></div>";
         }

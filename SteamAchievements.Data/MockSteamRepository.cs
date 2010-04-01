@@ -12,10 +12,81 @@ namespace SteamAchievements.Data
     /// </remarks>
     public class MockSteamRepository : ISteamRepository
     {
-        private Dictionary<int, Achievement> _achievements = new Dictionary<int, Achievement>();
-        private Dictionary<int, Game> _games = new Dictionary<int, Game>();
-        private Dictionary<int, UserAchievement> _userAchievements = new Dictionary<int, UserAchievement>();
-        private Dictionary<UserKey, User> _users = new Dictionary<UserKey, User>();
+        private Dictionary<int, Achievement> _achievements;
+        private Dictionary<int, Game> _games;
+        private Dictionary<int, UserAchievement> _userAchievements;
+        private Dictionary<UserKey, User> _users;
+
+        public MockSteamRepository()
+        {
+            Init();
+        }
+
+        private void Init()
+        {
+            IQueryable<Achievement> achievements =
+                (new[]
+                     {
+                         new Achievement
+                             {Id = 1, GameId = 1, Name = "Achievement 1 for Game 1", Description = "Achievement Description", ImageUrl = "http://example.com/image.png"},
+                         new Achievement
+                             {Id = 2, GameId = 1, Name = "Achievement 2 for Game 1", Description = "Achievement Description", ImageUrl = "http://example.com/image.png"},
+                         new Achievement
+                             {Id = 3, GameId = 1, Name = "Achievement 3 for Game 1", Description = "Achievement Description", ImageUrl = "http://example.com/image.png"},
+                         new Achievement
+                             {Id = 4, GameId = 2, Name = "Achievement 1 for Game 2", Description = "Achievement Description", ImageUrl = "http://example.com/image.png"},
+                         new Achievement
+                             {Id = 5, GameId = 2, Name = "Achievement 2 for Game 2", Description = "Achievement Description", ImageUrl = "http://example.com/image.png"}
+                     }).AsQueryable();
+
+            IQueryable<Game> games =
+                (new[]
+                     {
+                         new Game {Id = 1, Abbreviation = "game1", Name = "Game 1"},
+                         new Game {Id = 2, Abbreviation = "game2", Name = "Game 2"}
+                     }).AsQueryable();
+
+            IQueryable<User> users =
+                (new[]
+                     {
+                         new User {FacebookUserId = 1234567890, SteamUserId = "user1"},
+                         new User {FacebookUserId = 1234567891, SteamUserId = "user2"}
+                     }).AsQueryable();
+
+            IQueryable<UserAchievement> userAchievements =
+                (new[]
+                     {
+                         new UserAchievement
+                             {
+                                 Id = 1,
+                                 AchievementId = 1,
+                                 Date = DateTime.Now,
+                                 SteamUserId = "user1",
+                                 Achievement = achievements.Single(a => a.Id == 1)
+                             },
+                         new UserAchievement
+                             {
+                                 Id = 2,
+                                 AchievementId = 2,
+                                 Date = DateTime.Now,
+                                 SteamUserId = "user1",
+                                 Achievement = achievements.Single(a => a.Id == 2)
+                             },
+                         new UserAchievement
+                             {
+                                 Id = 3,
+                                 AchievementId = 3,
+                                 Date = DateTime.Now,
+                                 SteamUserId = "user1",
+                                 Achievement = achievements.Single(a => a.Id == 3)
+                             }
+                     }).AsQueryable();
+
+            Achievements = achievements;
+            Games = games;
+            UserAchievements = userAchievements;
+            Users = users;
+        }
 
         #region ISteamRepository Members
 
@@ -161,18 +232,18 @@ namespace SteamAchievements.Data
                 {
                     return true;
                 }
-                if (obj.GetType() != typeof (UserKey))
+                if (obj.GetType() != typeof(UserKey))
                 {
                     return false;
                 }
-                return Equals((UserKey) obj);
+                return Equals((UserKey)obj);
             }
 
             public override int GetHashCode()
             {
                 unchecked
                 {
-                    return (int) ((FacebookUserId*397) ^ (SteamUserId != null ? SteamUserId.GetHashCode() : 0));
+                    return (int)((FacebookUserId * 397) ^ (SteamUserId != null ? SteamUserId.GetHashCode() : 0));
                 }
             }
 
