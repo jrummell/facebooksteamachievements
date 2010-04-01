@@ -129,8 +129,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AchievementServiceTest.htm" />
-    <Content Include="channel\xd_receiver.htm" />
-    <Content Include="crossdomain.xml" />
     <Content Include="css\style.css" />
     <Content Include="default.js" />
     <Content Include="js\jquery-vsdoc.js" />
@@ -156,12 +154,6 @@
     <Content Include="images\profilecustomurl.png" />
     <Content Include="images\help.png" />
     <Content Include="images\steamsettings.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Config\Debug\SteamAchievements.Data.Properties.Settings.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Config\Release\SteamAchievements.Data.Properties.Settings.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\Debug\serviceHostingEnvironment.config" />

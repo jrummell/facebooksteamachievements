@@ -25,7 +25,7 @@
         </div>
     </fieldset>
     <fieldset>
-        <legend>Achievements</legend>
+        <legend>Update</legend>
         <div id="achievementsUpdateSuccess" class="fbinfobox" style="display: none;">
             Your achievements have been updated (<span id="newAchievementCount"></span> new).</div>
         <div id="achievementsUpdateFailure" class="fberrorbox" style="display: none;">
@@ -39,6 +39,9 @@
                 <img id="updatingAchievements" class="loading" src="images/ajax-loader.gif" alt="Updating..." />
             </p>
         </div>
+    </fieldset>
+    <fieldset>
+        <legend>Achievements</legend>
         <div>
             <select id="gamesSelect" onchange="getAchievements();">
                 <option>Loading ...</option>

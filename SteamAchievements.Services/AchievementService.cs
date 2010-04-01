@@ -28,12 +28,14 @@ namespace SteamAchievements.Services
 {
     public class AchievementService : IAchievementService
     {
+        //TODO: return simple objects instead of LINQ to SQL objects
+
         private readonly SteamCommunityManager _communityService;
-        private readonly IAchievementManager _service;
+        private readonly IAchievementManager _achievementManager;
 
         public AchievementService()
         {
-            _service = new AchievementManager();
+            _achievementManager = new AchievementManager();
             _communityService = new SteamCommunityManager();
         }
 
@@ -54,7 +56,7 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            return _service.GetAchievements(steamUserId, gameId).ToList();
+            return _achievementManager.GetAchievements(steamUserId, gameId).ToList();
         }
 
         /// <summary>
@@ -63,7 +65,7 @@ namespace SteamAchievements.Services
         /// <returns>All <see cref="Game"/>s.</returns>
         public List<Game> GetGames()
         {
-            return _service.GetGames().ToList();
+            return _achievementManager.GetGames().ToList();
         }
 
         /// <summary>
@@ -79,9 +81,9 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            IEnumerable<Achievement> achievements = _communityService.GetAchievements(steamUserId, _service.GetGames());
+            IEnumerable<Achievement> achievements = _communityService.GetAchievements(steamUserId, _achievementManager.GetGames());
 
-            int updated = _service.UpdateAchievements(steamUserId, achievements);
+            int updated = _achievementManager.UpdateAchievements(steamUserId, achievements);
 
             return updated;
         }
@@ -100,7 +102,7 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            _service.UpdateSteamUserId(facebookUserId, steamUserId);
+            _achievementManager.UpdateSteamUserId(facebookUserId, steamUserId);
 
             return true;
         }
@@ -118,7 +120,7 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            IEnumerable<Achievement> achievements = _service.GetLatestAchievements(steamUserId);
+            IEnumerable<Achievement> achievements = _achievementManager.GetLatestAchievements(steamUserId);
 
             if (achievements.Any())
             {

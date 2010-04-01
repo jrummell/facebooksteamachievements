@@ -23,6 +23,11 @@ fieldset
     padding-top: 8px;
 }
 
+.achievement div.achievementImage
+{
+    float: left;
+}
+
 .achievement img
 {
     padding-right: 20px;
