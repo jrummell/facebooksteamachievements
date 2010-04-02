@@ -57,5 +57,11 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="achievements">The achievements.</param>
         void InsertAllOnSubmit(IEnumerable<UserAchievement> achievements);
+
+        /// <summary>
+        /// Inserts the game on submit.
+        /// </summary>
+        /// <param name="game">The game.</param>
+        void InsertOnSubmit(Game game);
     }
 }

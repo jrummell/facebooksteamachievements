@@ -340,5 +340,20 @@ namespace SteamAchievements.Data
                             dbAchievement.Name.ToUpper() == achievement.Name.ToUpper())
                    select achievement;
         }
+
+        /// <summary>
+        /// Adds the game.
+        /// </summary>
+        /// <param name="game">The game.</param>
+        public void AddGame(Game game)
+        {
+            if (game == null)
+            {
+                throw new ArgumentNullException("game");
+            }
+
+            _repository.InsertOnSubmit(game);
+            _repository.SubmitChanges();
+        }
     }
 }

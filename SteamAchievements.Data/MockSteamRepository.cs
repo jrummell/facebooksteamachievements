@@ -140,6 +140,16 @@ namespace SteamAchievements.Data
         }
 
         /// <summary>
+        /// Inserts the game on submit.
+        /// </summary>
+        /// <param name="user">The game.</param>
+        public void InsertOnSubmit(Game game)
+        {
+            game.Id = _games.Values.Max(a => a.Id) + 1;
+            _games.Add(game.Id, game);
+        }
+
+        /// <summary>
         /// Deletes all given achievements on submit.
         /// </summary>
         /// <param name="achievements">The achievements.</param>
