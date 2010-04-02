@@ -28,8 +28,6 @@ namespace SteamAchievements.Services
 {
     public class AchievementService : IAchievementService
     {
-        //TODO: return simple objects instead of LINQ to SQL objects
-
         private readonly SteamCommunityManager _communityService;
         private readonly IAchievementManager _achievementManager;
 
@@ -49,23 +47,30 @@ namespace SteamAchievements.Services
         /// <returns>
         /// All <see cref="Achievement"/>s for the given user and game.
         /// </returns>
-        public List<Achievement> GetAchievements(string steamUserId, int gameId)
+        public List<SimpleAchievement> GetAchievements(string steamUserId, int gameId)
         {
             if (steamUserId == null)
             {
                 throw new ArgumentNullException("steamUserId");
             }
 
-            return _achievementManager.GetAchievements(steamUserId, gameId).ToList();
+            return (from achievement in _achievementManager.GetAchievements(steamUserId, gameId)
+                    select new SimpleAchievement
+                    {
+                        ImageUrl = achievement.ImageUrl,
+                        Name = achievement.Name,
+                        Description = achievement.Description
+                    }).ToList();
         }
 
         /// <summary>
         /// Gets the games.
         /// </summary>
         /// <returns>All <see cref="Game"/>s.</returns>
-        public List<Game> GetGames()
+        public List<SimpleGame> GetGames()
         {
-            return _achievementManager.GetGames().ToList();
+            return (from game in _achievementManager.GetGames()
+                    select new SimpleGame { Id = game.Id.ToString(), Name = game.Name }).ToList();
         }
 
         /// <summary>
