@@ -35,6 +35,10 @@
         </div>
         <div>
             <p>
+                Update your achievements and publish new ones on your wall. This won't publish more
+                than five at a time.
+            </p>
+            <p>
                 <a class="button" href="#" onclick="updateAchievements(); return false;">Update Achievements</a>
                 <img id="updatingAchievements" class="loading" src="images/ajax-loader.gif" alt="Updating..." />
             </p>
@@ -43,6 +47,8 @@
     <fieldset>
         <legend>Achievements</legend>
         <div>
+            <p>
+                View your achievements.</p>
             <select id="gamesSelect" onchange="getAchievements();">
                 <option>Loading ...</option>
             </select><img id="loadingAchievements" class="loading" src="images/ajax-loader.gif"
