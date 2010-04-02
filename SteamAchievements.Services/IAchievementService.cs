@@ -40,7 +40,7 @@ namespace SteamAchievements.Services
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        List<Achievement> GetAchievements(string steamUserId, int gameId);
+        List<SimpleAchievement> GetAchievements(string steamUserId, int gameId);
 
         /// <summary>
         /// Gets the games.
@@ -49,7 +49,7 @@ namespace SteamAchievements.Services
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        List<Game> GetGames();
+        List<SimpleGame> GetGames();
 
         /// <summary>
         /// Updates the achievements.
@@ -84,5 +84,21 @@ namespace SteamAchievements.Services
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         bool PublishLatestAchievements(long facebookUserId, string steamUserId);
+    }
+
+    public class SimpleGame
+    {
+        public string Id { get; set; }
+
+        public string Name { get; set; }
+    }
+
+    public class SimpleAchievement
+    {
+        public string ImageUrl { get; set; }
+
+        public string Name { get; set; }
+
+        public string Description { get; set; }
     }
 }
