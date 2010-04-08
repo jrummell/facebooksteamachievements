@@ -69,6 +69,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="SimpleAchievement.cs" />
+    <Compile Include="SimpleGame.cs" />
     <Compile Include="SteamCommunityManager.cs" />
   </ItemGroup>
   <ItemGroup>

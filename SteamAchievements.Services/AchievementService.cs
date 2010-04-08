@@ -28,8 +28,8 @@ namespace SteamAchievements.Services
 {
     public class AchievementService : IAchievementService
     {
-        private readonly SteamCommunityManager _communityService;
         private readonly IAchievementManager _achievementManager;
+        private readonly SteamCommunityManager _communityService;
 
         public AchievementService()
         {
@@ -56,11 +56,11 @@ namespace SteamAchievements.Services
 
             return (from achievement in _achievementManager.GetAchievements(steamUserId, gameId)
                     select new SimpleAchievement
-                    {
-                        ImageUrl = achievement.ImageUrl,
-                        Name = achievement.Name,
-                        Description = achievement.Description
-                    }).ToList();
+                               {
+                                   ImageUrl = achievement.ImageUrl,
+                                   Name = achievement.Name,
+                                   Description = achievement.Description
+                               }).ToList();
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace SteamAchievements.Services
         public List<SimpleGame> GetGames()
         {
             return (from game in _achievementManager.GetGames()
-                    select new SimpleGame { Id = game.Id.ToString(), Name = game.Name }).ToList();
+                    select new SimpleGame {Id = game.Id.ToString(), Name = game.Name}).ToList();
         }
 
         /// <summary>
@@ -86,7 +86,8 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            IEnumerable<Achievement> achievements = _communityService.GetAchievements(steamUserId, _achievementManager.GetGames());
+            IEnumerable<Achievement> achievements = _communityService.GetAchievements(steamUserId,
+                                                                                      _achievementManager.GetGames());
 
             int updated = _achievementManager.UpdateAchievements(steamUserId, achievements);
 

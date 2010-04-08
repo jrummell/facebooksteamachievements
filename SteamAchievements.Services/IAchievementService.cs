@@ -85,20 +85,4 @@ namespace SteamAchievements.Services
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         bool PublishLatestAchievements(long facebookUserId, string steamUserId);
     }
-
-    public class SimpleGame
-    {
-        public string Id { get; set; }
-
-        public string Name { get; set; }
-    }
-
-    public class SimpleAchievement
-    {
-        public string ImageUrl { get; set; }
-
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-    }
 }

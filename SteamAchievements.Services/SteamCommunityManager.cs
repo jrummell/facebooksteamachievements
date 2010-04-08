@@ -45,7 +45,7 @@ namespace SteamAchievements.Services
             {
                 throw new ArgumentNullException("games");
             }
-            
+
             AchievementXmlParser parser = new AchievementXmlParser();
             List<Achievement> achievements = new List<Achievement>();
 

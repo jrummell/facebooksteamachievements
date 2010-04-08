@@ -5,11 +5,15 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <form runat="server">
-    <h1>Admin Home</h1>
+    <h1>
+        Admin Home</h1>
     <p>
         <a href="AddGame.aspx">Add a new game</a></p>
     <p>
-        <asp:Button ID="updateAchievementsButton" runat="server" 
-            Text="Update Game Achievements" onclick="updateAchievementsButton_Click" /></p>
+        <a href="elmah.axd">Error Log</a>
+    </p>
+    <p>
+        <asp:Button ID="updateAchievementsButton" runat="server" Text="Update Game Achievements"
+            OnClick="updateAchievementsButton_Click" /></p>
     </form>
 </asp:Content>

@@ -33,7 +33,7 @@
     <SingleAssemblyName>SteamAchievements.Deploy</SingleAssemblyName>
     <UseWebConfigReplacement>true</UseWebConfigReplacement>
     <DeleteAppDataFolder>false</DeleteAppDataFolder>
-    <ValidateWebConfigReplacement>true</ValidateWebConfigReplacement>
+    <ValidateWebConfigReplacement>false</ValidateWebConfigReplacement>
   </PropertyGroup>
   <ItemGroup>
   </ItemGroup>
@@ -41,11 +41,20 @@
     <WebConfigReplacementFiles Include="Config\Release\appSettings.config">
       <Section>appSettings</Section>
     </WebConfigReplacementFiles>
+    <WebConfigReplacementFiles Include="Config\Release\authentication.config">
+      <Section>system.web/authentication</Section>
+    </WebConfigReplacementFiles>
     <WebConfigReplacementFiles Include="Config\Release\connectionStrings.config">
       <Section>connectionStrings</Section>
     </WebConfigReplacementFiles>
+    <WebConfigReplacementFiles Include="Config\Release\errorMail.config">
+      <Section>elmah/errorMail</Section>
+    </WebConfigReplacementFiles>
     <WebConfigReplacementFiles Include="Config\Release\serviceHostingEnvironment.config">
       <Section>system.serviceModel/serviceHostingEnvironment</Section>
+    </WebConfigReplacementFiles>
+    <WebConfigReplacementFiles Include="Config\Release\smtp.config">
+      <Section>system.net/mailSettings/smtp</Section>
     </WebConfigReplacementFiles>
     <WebConfigReplacementFiles Include="Config\Release\SteamAchievements.Data.Properties.Settings.config">
       <Section>applicationSettings/SteamAchievements.Data.Properties.Settings</Section>
@@ -63,6 +72,9 @@
     </WebConfigReplacementFiles>
     <WebConfigReplacementFiles Include="Config\Debug\SteamAchievements.Data.Properties.Settings.config">
       <Section>applicationSettings/SteamAchievements.Data.Properties.Settings</Section>
+    </WebConfigReplacementFiles>
+    <WebConfigReplacementFiles Include="Config\Release\authentication.config">
+      <Section>system.web/authentication</Section>
     </WebConfigReplacementFiles>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WebDeployment\v9.0\Microsoft.WebDeployment.targets" />
