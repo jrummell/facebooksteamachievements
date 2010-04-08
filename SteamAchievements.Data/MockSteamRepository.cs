@@ -1,3 +1,24 @@
+#region License
+
+// Copyright 2010 John Rummell
+// 
+// This file is part of SteamAchievements.
+// 
+//     SteamAchievements is free software: you can redistribute it and/or modify
+//     it under the terms of the GNU General Public License as published by
+//     the Free Software Foundation, either version 3 of the License, or
+//     (at your option) any later version.
+// 
+//     SteamAchievements is distributed in the hope that it will be useful,
+//     but WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//     GNU General Public License for more details.
+// 
+//     You should have received a copy of the GNU General Public License
+//     along with SteamAchievements.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,72 +41,6 @@ namespace SteamAchievements.Data
         public MockSteamRepository()
         {
             Init();
-        }
-
-        private void Init()
-        {
-            IQueryable<Achievement> achievements =
-                (new[]
-                     {
-                         new Achievement
-                             {Id = 1, GameId = 1, Name = "Achievement 1 for Game 1", Description = "Achievement Description", ImageUrl = "http://example.com/image.png"},
-                         new Achievement
-                             {Id = 2, GameId = 1, Name = "Achievement 2 for Game 1", Description = "Achievement Description", ImageUrl = "http://example.com/image.png"},
-                         new Achievement
-                             {Id = 3, GameId = 1, Name = "Achievement 3 for Game 1", Description = "Achievement Description", ImageUrl = "http://example.com/image.png"},
-                         new Achievement
-                             {Id = 4, GameId = 2, Name = "Achievement 1 for Game 2", Description = "Achievement Description", ImageUrl = "http://example.com/image.png"},
-                         new Achievement
-                             {Id = 5, GameId = 2, Name = "Achievement 2 for Game 2", Description = "Achievement Description", ImageUrl = "http://example.com/image.png"}
-                     }).AsQueryable();
-
-            IQueryable<Game> games =
-                (new[]
-                     {
-                         new Game {Id = 1, Abbreviation = "game1", Name = "Game 1"},
-                         new Game {Id = 2, Abbreviation = "game2", Name = "Game 2"}
-                     }).AsQueryable();
-
-            IQueryable<User> users =
-                (new[]
-                     {
-                         new User {FacebookUserId = 1234567890, SteamUserId = "user1"},
-                         new User {FacebookUserId = 1234567891, SteamUserId = "user2"}
-                     }).AsQueryable();
-
-            IQueryable<UserAchievement> userAchievements =
-                (new[]
-                     {
-                         new UserAchievement
-                             {
-                                 Id = 1,
-                                 AchievementId = 1,
-                                 Date = DateTime.Now,
-                                 SteamUserId = "user1",
-                                 Achievement = achievements.Single(a => a.Id == 1)
-                             },
-                         new UserAchievement
-                             {
-                                 Id = 2,
-                                 AchievementId = 2,
-                                 Date = DateTime.Now,
-                                 SteamUserId = "user1",
-                                 Achievement = achievements.Single(a => a.Id == 2)
-                             },
-                         new UserAchievement
-                             {
-                                 Id = 3,
-                                 AchievementId = 3,
-                                 Date = DateTime.Now,
-                                 SteamUserId = "user1",
-                                 Achievement = achievements.Single(a => a.Id == 3)
-                             }
-                     }).AsQueryable();
-
-            Achievements = achievements;
-            Games = games;
-            UserAchievements = userAchievements;
-            Users = users;
         }
 
         #region ISteamRepository Members
@@ -142,7 +97,7 @@ namespace SteamAchievements.Data
         /// <summary>
         /// Inserts the game on submit.
         /// </summary>
-        /// <param name="user">The game.</param>
+        /// <param name="game">The game.</param>
         public void InsertOnSubmit(Game game)
         {
             game.Id = _games.Values.Max(a => a.Id) + 1;
@@ -196,6 +151,102 @@ namespace SteamAchievements.Data
 
         #endregion
 
+        private void Init()
+        {
+            IQueryable<Achievement> achievements =
+                (new[]
+                     {
+                         new Achievement
+                             {
+                                 Id = 1,
+                                 GameId = 1,
+                                 Name = "Achievement 1 for Game 1",
+                                 Description = "Achievement Description",
+                                 ImageUrl = "http://example.com/image.png"
+                             },
+                         new Achievement
+                             {
+                                 Id = 2,
+                                 GameId = 1,
+                                 Name = "Achievement 2 for Game 1",
+                                 Description = "Achievement Description",
+                                 ImageUrl = "http://example.com/image.png"
+                             },
+                         new Achievement
+                             {
+                                 Id = 3,
+                                 GameId = 1,
+                                 Name = "Achievement 3 for Game 1",
+                                 Description = "Achievement Description",
+                                 ImageUrl = "http://example.com/image.png"
+                             },
+                         new Achievement
+                             {
+                                 Id = 4,
+                                 GameId = 2,
+                                 Name = "Achievement 1 for Game 2",
+                                 Description = "Achievement Description",
+                                 ImageUrl = "http://example.com/image.png"
+                             },
+                         new Achievement
+                             {
+                                 Id = 5,
+                                 GameId = 2,
+                                 Name = "Achievement 2 for Game 2",
+                                 Description = "Achievement Description",
+                                 ImageUrl = "http://example.com/image.png"
+                             }
+                     }).AsQueryable();
+
+            IQueryable<Game> games =
+                (new[]
+                     {
+                         new Game {Id = 1, Abbreviation = "game1", Name = "Game 1"},
+                         new Game {Id = 2, Abbreviation = "game2", Name = "Game 2"}
+                     }).AsQueryable();
+
+            IQueryable<User> users =
+                (new[]
+                     {
+                         new User {FacebookUserId = 1234567890, SteamUserId = "user1"},
+                         new User {FacebookUserId = 1234567891, SteamUserId = "user2"}
+                     }).AsQueryable();
+
+            IQueryable<UserAchievement> userAchievements =
+                (new[]
+                     {
+                         new UserAchievement
+                             {
+                                 Id = 1,
+                                 AchievementId = 1,
+                                 Date = DateTime.Now,
+                                 SteamUserId = "user1",
+                                 Achievement = achievements.Single(a => a.Id == 1)
+                             },
+                         new UserAchievement
+                             {
+                                 Id = 2,
+                                 AchievementId = 2,
+                                 Date = DateTime.Now,
+                                 SteamUserId = "user1",
+                                 Achievement = achievements.Single(a => a.Id == 2)
+                             },
+                         new UserAchievement
+                             {
+                                 Id = 3,
+                                 AchievementId = 3,
+                                 Date = DateTime.Now,
+                                 SteamUserId = "user1",
+                                 Achievement = achievements.Single(a => a.Id == 3)
+                             }
+                     }).AsQueryable();
+
+            Achievements = achievements;
+            Games = games;
+            UserAchievements = userAchievements;
+            Users = users;
+        }
+
         #region Nested type: UserKey
 
         private class UserKey : IEquatable<UserKey>
@@ -242,18 +293,18 @@ namespace SteamAchievements.Data
                 {
                     return true;
                 }
-                if (obj.GetType() != typeof(UserKey))
+                if (obj.GetType() != typeof (UserKey))
                 {
                     return false;
                 }
-                return Equals((UserKey)obj);
+                return Equals((UserKey) obj);
             }
 
             public override int GetHashCode()
             {
                 unchecked
                 {
-                    return (int)((FacebookUserId * 397) ^ (SteamUserId != null ? SteamUserId.GetHashCode() : 0));
+                    return (int) ((FacebookUserId*397) ^ (SteamUserId != null ? SteamUserId.GetHashCode() : 0));
                 }
             }
 

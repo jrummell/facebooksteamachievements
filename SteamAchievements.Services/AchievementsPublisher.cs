@@ -68,7 +68,7 @@ namespace SteamAchievements.Services
             {
                 return;
             }
-            
+
             foreach (Achievement achievement in achievements)
             {
                 string description = String.Format("earned the {0} achievement in {1}.", achievement.Name,

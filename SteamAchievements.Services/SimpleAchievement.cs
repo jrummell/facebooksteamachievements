@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 
 // Copyright 2010 John Rummell
 // 
@@ -19,16 +19,26 @@
 
 #endregion
 
-using System;
-using System.Web.UI;
-
-namespace SteamAchievements.Admin
+namespace SteamAchievements.Services
 {
-    public partial class Default : Page
+    public class SimpleAchievement
     {
-        protected void updateAchievementsButton_Click(object sender, EventArgs e)
-        {
-            //TODO: update achievements for all games
-        }
+        /// <summary>
+        /// Gets or sets the image URL.
+        /// </summary>
+        /// <value>The image URL.</value>
+        public string ImageUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>The name.</value>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the description.
+        /// </summary>
+        /// <value>The description.</value>
+        public string Description { get; set; }
     }
 }

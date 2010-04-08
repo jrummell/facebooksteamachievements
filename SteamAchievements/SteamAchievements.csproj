@@ -157,18 +157,10 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config\Release\connectionStrings.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Config\Release\appSettings.config" />
     <Content Include="images\logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config\Debug\appSettings.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_Data\ReadMe.txt" />
-    <Content Include="Config\Debug\connectionStrings.config" />
     <Content Include="App_Themes\Default\ajax-loader.gif" />
     <Content Include="Help.aspx" />
     <Content Include="images\achievements.png" />
@@ -177,11 +169,7 @@
     <Content Include="images\steamsettings.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config\Debug\serviceHostingEnvironment.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_Data\elmah\ReadMe.txt" />
-    <Content Include="Config\Release\serviceHostingEnvironment.config" />
     <Content Include="images\ajax-loader.gif" />
     <Content Include="images\appcustomurl.png" />
     <Content Include="images\disk.png" />
@@ -191,11 +179,8 @@
     <Content Include="Admin\Default.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config\Debug\authentication.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Admin\AddGame.aspx" />
-    <Content Include="Config\Release\authentication.config" />
+    <Content Include="favicon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
