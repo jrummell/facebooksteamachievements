@@ -40,8 +40,10 @@ namespace SteamAchievements.Admin
                                 Name = nameTextBox.Text
                             };
 
-            AchievementManager manager = new AchievementManager();
-            manager.AddGame(game);
+            using (AchievementManager manager = new AchievementManager())
+            { 
+                manager.AddGame(game); 
+            }
 
             Response.Redirect("~/Admin");
         }

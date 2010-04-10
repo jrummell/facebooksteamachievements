@@ -101,6 +101,12 @@ namespace SteamAchievements.Services.Tests
             _manager = new AchievementManager(_repository);
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            _manager.Dispose();
+        }
+
         #endregion
 
         private AchievementManager _manager;

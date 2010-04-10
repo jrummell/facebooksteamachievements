@@ -138,5 +138,15 @@ namespace SteamAchievements.Services
         }
 
         #endregion
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            _achievementManager.Dispose();
+            _communityService.Dispose();
+        }
+
+        #endregion
     }
 }

@@ -26,8 +26,11 @@ using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
-    public class SteamCommunityManager
+    public class SteamCommunityManager : IDisposable
     {
+        private readonly WebClient _webClient = new WebClient();
+        private readonly AchievementXmlParser _parser = new AchievementXmlParser();
+
         /// <summary>
         /// Gets the achievements from http://steamcommunity.com/id/[customurl]/stats/[game]/?xml=1.
         /// </summary>
@@ -46,7 +49,6 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("games");
             }
 
-            AchievementXmlParser parser = new AchievementXmlParser();
             List<Achievement> achievements = new List<Achievement>();
 
             foreach (Game game in games)
@@ -54,17 +56,23 @@ namespace SteamAchievements.Services
                 int gameId = game.Id;
                 string statsUrl = String.Format("http://steamcommunity.com/id/{0}/stats/{1}/?xml=1",
                                                 steamUserId, game.Abbreviation);
-                string xml;
-                using (WebClient client = new WebClient())
-                {
-                    xml = client.DownloadString(statsUrl);
-                }
 
-                IEnumerable<Achievement> gameAchievements = parser.Parse(xml, gameId);
+                string xml = _webClient.DownloadString(statsUrl);
+
+                IEnumerable<Achievement> gameAchievements = _parser.Parse(xml, gameId);
                 achievements.AddRange(gameAchievements);
             }
 
             return achievements;
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            _webClient.Dispose();
+        }
+
+        #endregion
     }
 }

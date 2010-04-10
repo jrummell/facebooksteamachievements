@@ -58,8 +58,10 @@ namespace SteamAchievements
             {
                 FacebookUserId = Master.Api.Session.UserId;
 
-                AchievementManager manager = new AchievementManager();
-                SteamUserId = manager.GetSteamUserId(FacebookUserId);
+                using (AchievementManager manager = new AchievementManager())
+                {
+                    SteamUserId = manager.GetSteamUserId(FacebookUserId);
+                }
             }
             catch (Exception ex)
             {

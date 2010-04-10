@@ -20,10 +20,11 @@
 #endregion
 
 using System.Collections.Generic;
+using System;
 
 namespace SteamAchievements.Data
 {
-    public interface IAchievementManager
+    public interface IAchievementManager : IDisposable
     {
         /// <summary>
         /// Gets the steam user id.

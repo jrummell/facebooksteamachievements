@@ -355,5 +355,14 @@ namespace SteamAchievements.Data
             _repository.InsertOnSubmit(game);
             _repository.SubmitChanges();
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            _repository.Dispose();
+        }
+
+        #endregion
     }
 }

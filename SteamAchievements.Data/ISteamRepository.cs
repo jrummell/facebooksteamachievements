@@ -21,10 +21,11 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace SteamAchievements.Data
 {
-    public interface ISteamRepository
+    public interface ISteamRepository : IDisposable
     {
         /// <summary>
         /// Gets the achievements.
