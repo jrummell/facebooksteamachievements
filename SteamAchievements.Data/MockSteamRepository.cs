@@ -247,6 +247,15 @@ namespace SteamAchievements.Data
             Users = users;
         }
 
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            // nothing to dispose
+        }
+
+        #endregion
+
         #region Nested type: UserKey
 
         private class UserKey : IEquatable<UserKey>
