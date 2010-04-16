@@ -1,12 +1,14 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="false" CodeBehind="Site.Master.cs" Inherits="SteamAchievements.Site"
     EnableTheming="false" %>
 
+<%@ Register Src="~/Controls/GoogleAds.ascx" TagPrefix="steam" TagName="GoogleAds" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <link href='<%= ResolveUrl("~/favicon.ico") %>' rel="icon" type="image/x-icon" />
-    <asp:ContentPlaceHolder ID="head" runat="server" />
+    <link runat="server" href="~/favicon.ico" rel="icon" type="image/x-icon" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
 </head>
 <body>
     <div class="fbbody">
@@ -15,6 +17,9 @@
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 
+        <div style="margin-bottom: 1em">
+            <steam:GoogleAds ID="ads" runat="server" />
+        </div>
         <div>
             <img src='<%= ResolveUrl("~/images/logo.png") %>' alt="Steam Achievements" />
         </div>
