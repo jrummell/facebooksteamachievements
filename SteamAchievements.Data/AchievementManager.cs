@@ -356,6 +356,27 @@ namespace SteamAchievements.Data
             _repository.SubmitChanges();
         }
 
+        /// <summary>
+        /// Adds achievements for a game.
+        /// </summary>
+        /// <param name="gameId">The game id.</param>
+        /// <param name="achievements">The game achievements.</param>
+        public void AddAchievements(int gameId, IEnumerable<Achievement> achievements)
+        {
+            if (achievements == null)
+            {
+                throw new ArgumentNullException("achievements");
+            }
+
+            foreach (Achievement achievement in achievements)
+            {
+                achievement.GameId = gameId;
+                _repository.InsertOnSubmit(achievement);
+            }
+
+            _repository.SubmitChanges();
+        }
+
         #region IDisposable Members
 
         public void Dispose()

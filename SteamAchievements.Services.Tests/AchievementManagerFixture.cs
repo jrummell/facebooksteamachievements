@@ -251,5 +251,21 @@ namespace SteamAchievements.Services.Tests
 
             Assert.That(_repository.Games.Count(game => game.Id == newGame.Id), Is.EqualTo(1));
         }
+
+        [Test]
+        public void AddGameAchievements()
+        {
+            int gameId = 99;
+            List<Achievement> gameAchievements = new List<Achievement>();
+            for (int i = 0; i < 10; i++)
+            {
+                Achievement achievement = new Achievement { Name = "Achievement " + i, Description = "Achievement " + i, ImageUrl = "http://example.com/achievement" + i + ".gif" };
+                gameAchievements.Add(achievement);
+            }
+
+            _manager.AddAchievements(99, gameAchievements);
+
+            Assert.That(_repository.Achievements.Count(a => a.GameId == gameId), Is.EqualTo(10));
+        }
     }
 }

@@ -16,6 +16,11 @@
         <asp:TextBox ID="nameTextBox" runat="server" />
         <asp:RequiredFieldValidator ID="nameValidator" runat="server" ControlToValidate="nameTextBox"
             Display="Dynamic" ErrorMessage="Name is required." />
+        <asp:Label ID="steamUserIdLabel" runat="server" AssociatedControlID="steamUserIdTextBox">Steam User ID:</asp:Label>
+        <asp:TextBox ID="steamUserIdTextBox" runat="server" />
+        (To add achievements)
+        <asp:RequiredFieldValidator ID="steamUserIdValidator" runat="server" ControlToValidate="steamUserIdTextBox"
+            Display="Dynamic" ErrorMessage="Steam User ID is required." />
         <br />
         <asp:Button ID="addButton" runat="server" Text="Add" OnClick="addButton_Click" />
     </div>

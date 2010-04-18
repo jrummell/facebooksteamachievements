@@ -36,7 +36,7 @@ namespace SteamAchievements.Services.Tests
         {
             AchievementXmlParser parser = new AchievementXmlParser();
 
-            Assert.Throws<XmlException>(() => parser.Parse("asdf asdf asdf asdf", 1));
+            Assert.Throws<XmlException>(() => parser.Parse("asdf asdf asdf asdf", 1, true));
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace SteamAchievements.Services.Tests
             string xml = File.ReadAllText("achievements2.xml");
 
             AchievementXmlParser parser = new AchievementXmlParser();
-            IEnumerable<Achievement> achievements = parser.Parse(xml, 2);
+            IEnumerable<Achievement> achievements = parser.Parse(xml, 2, true);
 
             // does not contain Death from Above
             Assert.That(achievements.Any(a => a.Id == 273), Is.False);
@@ -60,7 +60,7 @@ namespace SteamAchievements.Services.Tests
             string xml = File.ReadAllText("achievements.xml");
 
             AchievementXmlParser parser = new AchievementXmlParser();
-            IEnumerable<Achievement> achievements = parser.Parse(xml, 1);
+            IEnumerable<Achievement> achievements = parser.Parse(xml, 1, true);
 
             Assert.That(achievements.Any());
         }

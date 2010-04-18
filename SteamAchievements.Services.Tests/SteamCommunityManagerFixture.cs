@@ -44,5 +44,18 @@ namespace SteamAchievements.Services.Tests
 
             Assert.That(achievements.SingleOrDefault(a => a.Name == "Acid Reflex"), Is.Not.Null);
         }
+
+        [Test]
+        public void GetGameAchievements()
+        {
+            SteamCommunityManager manager = new SteamCommunityManager();
+
+            Game game = new Game { Id = 1, Name = "Left 4 Dead", Abbreviation = "l4d" };
+
+            IEnumerable<Achievement> achievements = manager.GetAchievements("nullreference", game);
+
+            Assert.That(achievements.Any());
+            Assert.That(achievements.All(a => a.GameId == game.Id));
+        }
     }
 }
