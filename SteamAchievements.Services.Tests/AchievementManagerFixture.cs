@@ -240,5 +240,16 @@ namespace SteamAchievements.Services.Tests
                         Is.EqualTo(steamUserId));
             Assert.That(!_repository.UserAchievements.Any(ua => ua.SteamUserId == steamUserId));
         }
+
+        [Test]
+        public void AddGame()
+        {
+            Game newGame = new Game { Abbreviation = "NewGame", Name = "New Game" };
+            _manager.AddGame(newGame);
+
+            Assert.That(newGame.Id, Is.GreaterThan(0));
+
+            Assert.That(_repository.Games.Count(game => game.Id == newGame.Id), Is.EqualTo(1));
+        }
     }
 }
