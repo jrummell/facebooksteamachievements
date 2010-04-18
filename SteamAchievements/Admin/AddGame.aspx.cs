@@ -22,6 +22,8 @@
 using System;
 using System.Web.UI;
 using SteamAchievements.Data;
+using SteamAchievements.Services;
+using System.Collections.Generic;
 
 namespace SteamAchievements.Admin
 {
@@ -40,9 +42,15 @@ namespace SteamAchievements.Admin
                                 Name = nameTextBox.Text
                             };
 
+            using (SteamCommunityManager community = new SteamCommunityManager())
             using (AchievementManager manager = new AchievementManager())
             { 
-                manager.AddGame(game); 
+                manager.AddGame(game);
+
+                IEnumerable<Achievement> achievements = 
+                    community.GetAchievements(steamUserIdTextBox.Text, game);
+
+                manager.AddAchievements(game.Id, achievements);
             }
 
             Response.Redirect("~/Admin");

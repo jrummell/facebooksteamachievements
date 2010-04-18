@@ -32,7 +32,7 @@ namespace SteamAchievements.Services
         private readonly AchievementXmlParser _parser = new AchievementXmlParser();
 
         /// <summary>
-        /// Gets the achievements from http://steamcommunity.com/id/[customurl]/stats/[game]/?xml=1.
+        /// Gets the closed achievements from http://steamcommunity.com/id/[customurl]/stats/[game]/?xml=1.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="games">The games.</param>
@@ -54,16 +54,46 @@ namespace SteamAchievements.Services
             foreach (Game game in games)
             {
                 int gameId = game.Id;
-                string statsUrl = String.Format("http://steamcommunity.com/id/{0}/stats/{1}/?xml=1",
-                                                steamUserId, game.Abbreviation);
+                string statsUrl = GetStatsUrl(steamUserId, game.Abbreviation);
 
                 string xml = _webClient.DownloadString(statsUrl);
 
-                IEnumerable<Achievement> gameAchievements = _parser.Parse(xml, gameId);
+                IEnumerable<Achievement> gameAchievements = _parser.Parse(xml, gameId, true);
                 achievements.AddRange(gameAchievements);
             }
 
             return achievements;
+        }
+
+        /// <summary>
+        /// Gets all achievements from http://steamcommunity.com/id/[customurl]/stats/[game]/?xml=1.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="game">The game.</param>
+        /// <returns></returns>
+        public IEnumerable<Achievement> GetAchievements(string steamUserId, Game game)
+        {
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            if (game == null)
+            {
+                throw new ArgumentException("game");
+            }
+
+            string statsUrl = GetStatsUrl(steamUserId, game.Abbreviation);
+
+            string xml = _webClient.DownloadString(statsUrl);
+
+            return _parser.Parse(xml, game.Id, true);
+        }
+
+        private static string GetStatsUrl(string steamUserId, string gameAbbreviation)
+        {
+            return String.Format("http://steamcommunity.com/id/{0}/stats/{1}/?xml=1",
+                                                steamUserId, gameAbbreviation);
         }
 
         #region IDisposable Members

@@ -37,25 +37,44 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="gameId">The game id.</param>
         /// <param name="xml">The XML.</param>
+        /// <param name="closedOnly">If true, get only closed achievements, else get all achievements.</param>
         /// <returns></returns>
-        public IEnumerable<Achievement> Parse(string xml, int gameId)
+        public IEnumerable<Achievement> Parse(string xml, int gameId, bool closedOnly)
         {
             XDocument document = XDocument.Parse(xml);
 
-            return from element in document.Descendants("achievement")
-                   let closed = element.Attribute("closed")
-                   let name = element.Element("name")
-                   let description = element.Element("description")
-                   let image = element.Element("iconClosed")
-                   where closed != null && closed.Value == "1"
-                         && name != null && description != null && image != null
+            var achievements =
+                from element in document.Descendants("achievement")
+                let closed = element.Attribute("closed")
+                let name = element.Element("name")
+                let description = element.Element("description")
+                let image = element.Element("iconClosed")
+                where closed != null && name != null
+                    && description != null && image != null
+                select new
+                        {
+                            closed = closed.Value == "1",
+                            // name is in all caps - fix it
+                            name = _textInfo.ToTitleCase(name.Value.ToLower()),
+                            description = description.Value,
+                            image = image.Value
+                        };
+
+            if (closedOnly)
+            {
+                achievements = from achievement in achievements
+                               where achievement.closed
+                               select achievement;
+            }
+
+
+            return from achievement in achievements
                    select new Achievement
                               {
                                   GameId = gameId,
-                                  Name = _textInfo.ToTitleCase(name.Value.ToLower()),
-                                  // name is in all caps - fix it
-                                  Description = description.Value,
-                                  ImageUrl = image.Value
+                                  Name = achievement.name,
+                                  Description = achievement.description,
+                                  ImageUrl = achievement.image
                               };
         }
     }
