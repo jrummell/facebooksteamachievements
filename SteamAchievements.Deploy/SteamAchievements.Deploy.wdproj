@@ -33,7 +33,7 @@
     <SingleAssemblyName>SteamAchievements.Deploy</SingleAssemblyName>
     <UseWebConfigReplacement>true</UseWebConfigReplacement>
     <DeleteAppDataFolder>false</DeleteAppDataFolder>
-    <ValidateWebConfigReplacement>false</ValidateWebConfigReplacement>
+    <ValidateWebConfigReplacement>true</ValidateWebConfigReplacement>
     <DeleteAppCodeCompiledFiles>true</DeleteAppCodeCompiledFiles>
   </PropertyGroup>
   <ItemGroup>
@@ -50,9 +50,6 @@
     </WebConfigReplacementFiles>
     <WebConfigReplacementFiles Include="Config\Release\serviceHostingEnvironment.config">
       <Section>system.serviceModel/serviceHostingEnvironment</Section>
-    </WebConfigReplacementFiles>
-    <WebConfigReplacementFiles Include="Config\Release\smtp.config">
-      <Section>system.net/mailSettings/smtp</Section>
     </WebConfigReplacementFiles>
     <WebConfigReplacementFiles Include="Config\Release\SteamAchievements.Data.Properties.Settings.config">
       <Section>applicationSettings/SteamAchievements.Data.Properties.Settings</Section>
