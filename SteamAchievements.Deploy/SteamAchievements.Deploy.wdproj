@@ -48,9 +48,6 @@
     <WebConfigReplacementFiles Include="Config\Release\connectionStrings.config">
       <Section>connectionStrings</Section>
     </WebConfigReplacementFiles>
-    <WebConfigReplacementFiles Include="Config\Release\errorMail.config">
-      <Section>elmah/errorMail</Section>
-    </WebConfigReplacementFiles>
     <WebConfigReplacementFiles Include="Config\Release\serviceHostingEnvironment.config">
       <Section>system.serviceModel/serviceHostingEnvironment</Section>
     </WebConfigReplacementFiles>
