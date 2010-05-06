@@ -1,0 +1,31 @@
+﻿<%@ Master Language="C#" AutoEventWireup="false" CodeBehind="Site.Master.cs" Inherits="SteamAchievements.Admin.Site"
+    EnableTheming="false" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link runat="server" href="~/favicon.ico" rel="icon" type="image/x-icon" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <div class="fbbody">
+
+        <script type="text/javascript" src='<%= ResolveUrl("~/js/json2.js") %>'></script>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+
+        <div>
+            <img src='<%= ResolveUrl("~/images/logo.png") %>' alt="Steam Achievements" />
+        </div>
+        <asp:ContentPlaceHolder ID="body" runat="server">
+        </asp:ContentPlaceHolder>
+        <div id="disclaimer" style="color: #999; margin-top: 1em;">
+            Steam Achievements is not developed by Facebook or Valve. Valve, Steam and the Steam
+            logo are registered trademarks of Valve Corporation. Icons courtesy of <a href="http://www.famfamfam.com">
+                FamFamFam</a>.
+        </div>
+    </div>
+</body>
+</html>
