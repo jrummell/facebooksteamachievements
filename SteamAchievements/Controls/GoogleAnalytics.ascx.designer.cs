@@ -11,6 +11,6 @@
 namespace SteamAchievements.Controls {
     
     
-    public partial class GoogleAds {
+    public partial class GoogleAnalytics {
     }
 }

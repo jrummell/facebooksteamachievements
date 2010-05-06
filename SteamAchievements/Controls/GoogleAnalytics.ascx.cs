@@ -24,42 +24,15 @@ using System.Web.UI;
 
 namespace SteamAchievements.Controls
 {
-    public partial class GoogleAds : UserControl
+    public partial class GoogleAnalytics : UserControl
     {
         /// <summary>
-        /// Gets the ad client.
+        /// Gets the Google Analytics code.
         /// </summary>
-        /// <value>The ad client.</value>
-        protected string AdClient
+        /// <value>The code.</value>
+        protected string Code
         {
-            get { return WebConfigurationManager.AppSettings["GoogleAdClient"]; }
-        }
-
-        /// <summary>
-        /// Gets the ad slot.
-        /// </summary>
-        /// <value>The ad slot.</value>
-        protected string AdSlot
-        {
-            get { return WebConfigurationManager.AppSettings["GoogleAdSlot"]; }
-        }
-
-        /// <summary>
-        /// Gets the width.
-        /// </summary>
-        /// <value>The width.</value>
-        protected string Width
-        {
-            get { return WebConfigurationManager.AppSettings["GoogleAdWidth"]; }
-        }
-
-        /// <summary>
-        /// Gets the height.
-        /// </summary>
-        /// <value>The height.</value>
-        protected string Height
-        {
-            get { return WebConfigurationManager.AppSettings["GoogleAdHeight"]; }
+            get { return WebConfigurationManager.AppSettings["GoogleAnalyticsCode"]; }
         }
     }
 }

@@ -11,6 +11,15 @@
 namespace SteamAchievements.Controls {
     
     
-    public partial class GoogleAds {
+    public partial class Disclaimer {
+        
+        /// <summary>
+        /// appVersion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal appVersion;
     }
 }

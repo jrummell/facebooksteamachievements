@@ -1,7 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="false" CodeBehind="Site.Master.cs" Inherits="SteamAchievements.Site"
     EnableTheming="false" %>
 
-<%@ Register Src="~/Controls/GoogleAds.ascx" TagPrefix="steam" TagName="GoogleAds" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -21,29 +20,14 @@
             <steam:GoogleAds ID="ads" runat="server" />
         </div>
         <div>
-            <img src='<%= ResolveUrl("~/images/logo.png") %>' alt="Steam Achievements" />
+            <steam:Logo ID="logo" runat="server" />
         </div>
         <asp:ContentPlaceHolder ID="body" runat="server">
         </asp:ContentPlaceHolder>
-        <div id="disclaimer" style="color: #999; margin-top: 1em;">
-            Steam Achievements is not developed by Facebook or Valve. Valve, Steam and the Steam
-            logo are registered trademarks of Valve Corporation. Icons courtesy of <a href="http://www.famfamfam.com">
-                FamFamFam</a>.
+        <div style="color: #999; margin-top: 1em;">
+            <steam:Disclaimer ID="disclaimer" runat="server" />
         </div>
     </div>
-
-    <script type="text/javascript">
-        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-
-    <script type="text/javascript">
-        try
-        {
-            var pageTracker = _gat._getTracker("UA-5393169-1");
-            pageTracker._trackPageview();
-        } catch (err) { }
-    </script>
-
+    <steam:GoogleAnalytics ID="tracker" runat="server" />
 </body>
 </html>
