@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="false"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin/Site.Master" AutoEventWireup="false"
     CodeBehind="AddGame.aspx.cs" Inherits="SteamAchievements.Admin.AddGame" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
