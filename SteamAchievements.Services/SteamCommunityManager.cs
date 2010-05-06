@@ -87,7 +87,7 @@ namespace SteamAchievements.Services
 
             string xml = _webClient.DownloadString(statsUrl);
 
-            return _parser.Parse(xml, game.Id, true);
+            return _parser.Parse(xml, game.Id, false);
         }
 
         private static string GetStatsUrl(string steamUserId, string gameAbbreviation)
