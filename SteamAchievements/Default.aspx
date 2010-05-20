@@ -17,7 +17,7 @@
                 <span id="steamIdError" class="error" style="display: none;">Required</span> <a class="button"
                     href="#" onclick="return updateSteamUserId();">
                     <img src="images/disk.png" alt="" />
-                    Update URL</a> <a class="button" href="Help.aspx">
+                    Update URL</a> <a class="button" href="Help.aspx?<%= Request.QueryString %>">
                         <img src="images/help.png" alt="Help" align="middle" />
                         Help</a>
                 <img id="updatingSteamUserId" class="loading" src="images/ajax-loader.gif" alt="Updating..." />
@@ -30,7 +30,8 @@
             Your achievements have been updated (<span id="newAchievementCount"></span> new).</div>
         <div id="achievementsUpdateFailure" class="fberrorbox" style="display: none;">
             Your achievements could not be updated. Please verify that your Custom Url is correct
-            and that your Steam Community Profile is public. <a href="Help.aspx">Help</a>
+            and that your Steam Community Profile is public. <a href="Help.aspx?<%= Request.QueryString %>">
+                Help</a>
         </div>
         <div>
             <p>
