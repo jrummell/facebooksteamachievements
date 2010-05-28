@@ -26,6 +26,9 @@
         </asp:ContentPlaceHolder>
         <div style="color: #999; margin-top: 1em;">
             <steam:Disclaimer ID="disclaimer" runat="server" />
+
+            <script type="text/javascript" src="http://www.ohloh.net/p/483250/widgets/project_thin_badge.js"></script>
+
         </div>
     </div>
     <steam:GoogleAnalytics ID="tracker" runat="server" />
