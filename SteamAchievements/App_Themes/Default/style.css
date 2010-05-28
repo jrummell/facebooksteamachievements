@@ -15,22 +15,14 @@ fieldset
     padding: 5px 5px 5px 5px;
 }
 
-.achievement
+.game
 {
-    border-top: 1px solid #EEEEEE;
-    color: #808080;
-    padding-left: 60px;
-    padding-top: 8px;
+    padding: 5px;
 }
 
-.achievement div.achievementImage
+.game a
 {
-    float: left;
-}
-
-.achievement img
-{
-    padding-right: 20px;
+    display: block;
 }
 
 .clear

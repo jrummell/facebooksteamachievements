@@ -14,8 +14,8 @@
             <p>
                 http://steamcommunity.com/id/
                 <input id="steamIdTextBox" value="<%= SteamUserId %>" />
-                <span id="steamIdError" class="error" style="display: none;">Required</span> <a class="button"
-                    href="#" onclick="return updateSteamUserId();">
+                <span id="steamIdError" class="error" style="display: none;">Required</span> <a id="updateSteamIdButton"
+                    class="button" href="#">
                     <img src="images/disk.png" alt="" />
                     Update URL</a> <a class="button" href="Help.aspx?<%= Request.QueryString %>">
                         <img src="images/help.png" alt="Help" align="middle" />
@@ -39,22 +39,17 @@
                 than five at a time.
             </p>
             <p>
-                <a class="button" href="#" onclick="updateAchievements(); return false;">Update Achievements</a>
+                <a id="updateAchievementsButton" class="button" href="#">Update Achievements</a>
                 <img id="updatingAchievements" class="loading" src="images/ajax-loader.gif" alt="Updating..." />
             </p>
         </div>
     </fieldset>
     <fieldset>
-        <legend>Achievements</legend>
+        <legend>Games</legend>
         <div>
-            <p>
-                View your achievements.</p>
-            <select id="gamesSelect" onchange="getAchievements();">
-                <option>Loading ...</option>
-            </select><img id="loadingAchievements" class="loading" src="images/ajax-loader.gif"
-                alt="Loading..." />
+            <img id="loadingGames" class="loading" src="images/ajax-loader.gif" alt="Loading..." />
         </div>
-        <div id="achievementsDiv">
+        <div id="gamesDiv" class="games">
         </div>
     </fieldset>
     <div id="log" class="fberrorbox" style="display: none;">
@@ -62,13 +57,5 @@
     </div>
 
     <script type="text/javascript" src="default.js"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function()
-        {
-            init();
-            getGames();
-        });
-    </script>
 
 </asp:Content>

@@ -4,26 +4,59 @@
 var _serviceBase = "Services/Achievement.svc/";
 var _log = false;
 
+$(document).ready(function()
+{
+    init();
+    getGames();
+});
+
 function init()
 {
     $("img.loading").hide();
+
+    $("#updateSteamIdButton").click(function()
+    {
+        var result = updateSteamUserId();
+
+        if (result == false)
+        {
+            return false;
+        }
+
+        getGames();
+    });
+
+    $("#updateAchievementsButton").click(function()
+    {
+        updateAchievements(); 
+        return false; 
+    });
 }
 
 function getGames()
 {
+    if (!validateSteamUserId())
+    {
+        return false;
+    }
+
     var ondone = function(data)
     {
-        var games = data;
-        var gamesHtml = "<option value=''>[select a game]</option>";
+        var gamesHtml = "\n";
+        var steamId = $("#steamIdTextBox").val();
 
-        for (var i = 0; i < games.length; i++)
+        $(data).each(function(index, game)
         {
-            var a = games[i];
-            gamesHtml += "<option value='" + a.Id + "'>" + a.Name + "</option>";
-        }
+            var url = "http://steamcommunity.com/id/" + steamId + "/stats/" + game.Abbreviation + "/";
+            var aStart = "<a target='_blank' href='" + url + "'>";
+            gamesHtml += "<div class='game'>";
+            gamesHtml += aStart + "<img src='" + game.ImageUrl + "' alt='" + game.Name + "' /></a>";
+            gamesHtml += aStart + "View Achievements</a>\n";
+            gamesHtml += "</div>";
+        });
 
         log(gamesHtml);
-        $("#gamesSelect").html(gamesHtml);
+        $("#gamesDiv").html(gamesHtml);
     };
 
     callAjax("GetGames", {}, ondone);
@@ -50,52 +83,6 @@ function updateSteamUserId()
 
     var parameters = { "facebookUserId": faceBookUserId, "steamUserId": steamUserId };
     callAjax("UpdateSteamUserId", parameters, ondone);
-}
-
-function getAchievements()
-{
-    if (!validateSteamUserId())
-    {
-        return false;
-    }
-
-    var steamUserId = $("#steamIdTextBox").val();
-    var gameId = $("#gamesSelect").val();
-
-    if (gameId == null || gameId == "")
-    {
-        return false;
-    }
-
-    var $achievements = $("#achievementsDiv");
-    var loadingSelector = "#loadingAchievements";
-    showLoading(loadingSelector);
-
-    var ondone = function(data)
-    {
-        var achievementsHtml = "";
-
-        for (var i = 0; i < data.length; i++)
-        {
-            var a = data[i];
-            achievementsHtml += "<div class='achievement'>";
-            achievementsHtml += "<div class='achievementImage'><img src='" + a.ImageUrl + "' alt='missing' /></div>";
-            achievementsHtml += "<div><h3>" + a.Name + "</h3><p>" + a.Description + "</p></div>";
-            achievementsHtml += "<br class='clear'/></div>";
-        }
-
-        if (achievementsHtml == "")
-        {
-            achievementsHtml = "You haven't earned any achievements for this game yet!";
-        }
-
-        log(achievementsHtml);
-        $achievements.html(achievementsHtml);
-        hideLoading(loadingSelector);
-    };
-
-    var parameters = { "steamUserId": steamUserId, "gameId": gameId };
-    callAjax("GetAchievements", parameters, ondone);
 }
 
 function updateAchievements()
@@ -130,7 +117,7 @@ function updateAchievements()
     {
         hideLoading(updatingSelector);
         
-        showMessage("#achievementsUpdateFailure", false);
+        showMessage("#achievementsUpdateFailure");
     }
 
     var parameters = { "steamUserId": steamUserId };
@@ -221,19 +208,9 @@ function hideLoading(selector)
     $(selector).fadeOut("slow");
 }
 
-function showMessage(selector, fadeOut)
+function showMessage(selector)
 {
-    if (fadeOut == null)
-    {
-        fadeOut = true;
-    }
-
     $(selector).show("normal");
-
-    if (fadeOut)
-    {
-        setTimeout("$('" + selector + "').hide('slow');", 5000);
-    }
 }
 
 function log(message)
