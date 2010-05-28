@@ -70,7 +70,14 @@ namespace SteamAchievements.Services
         public List<SimpleGame> GetGames()
         {
             return (from game in _achievementManager.GetGames()
-                    select new SimpleGame {Id = game.Id.ToString(), Name = game.Name}).ToList();
+                    select new SimpleGame
+                    {
+                        Id = game.Id.ToString(),
+                        Name = game.Name,
+                        Abbreviation = game.Abbreviation,
+                        //TODO: game.ImageUrl
+                        ImageUrl = "http://media.steampowered.com/steamcommunity/public/images/apps/500/0f67ee504d8f04ecd83986dd7855821dc21f7a78.jpg"
+                    }).ToList();
         }
 
         /// <summary>

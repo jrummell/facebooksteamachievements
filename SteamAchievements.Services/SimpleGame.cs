@@ -34,5 +34,17 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <value>The name.</value>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the abbreviation.
+        /// </summary>
+        /// <value>The abbereviation.</value>
+        public string Abbreviation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image URL.
+        /// </summary>
+        /// <value>The image URL.</value>
+        public string ImageUrl { get; set; }
     }
 }
