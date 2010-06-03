@@ -14,7 +14,7 @@
 
         <script type="text/javascript" src='<%= ResolveUrl("~/js/json2.js") %>'></script>
 
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 
         <div style="margin-bottom: 1em">
             <steam:GoogleAds ID="ads" runat="server" />
@@ -24,7 +24,7 @@
         </div>
         <asp:ContentPlaceHolder ID="body" runat="server">
         </asp:ContentPlaceHolder>
-        <div style="color: #999; margin-top: 1em;">
+        <div class="footer">
             <steam:Disclaimer ID="disclaimer" runat="server" />
 
             <script type="text/javascript" src="http://www.ohloh.net/p/483250/widgets/project_thin_badge.js"></script>

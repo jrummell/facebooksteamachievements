@@ -8,7 +8,7 @@
     <fieldset>
         <legend>Steam Community Custom URL</legend>
         <input id="facebookUserIdHidden" type="hidden" value="<%= FacebookUserId %>" />
-        <div id="steamIdUpdateSuccess" class="fbinfobox" style="display: none;">
+        <div id="steamIdUpdateSuccess" class="fbinfobox message" style="display: none;">
             Your URL has been updated.</div>
         <div>
             <p>
@@ -26,9 +26,9 @@
     </fieldset>
     <fieldset>
         <legend>Update</legend>
-        <div id="achievementsUpdateSuccess" class="fbinfobox" style="display: none;">
+        <div id="achievementsUpdateSuccess" class="fbinfobox message" style="display: none;">
             Your achievements have been updated (<span id="newAchievementCount"></span> new).</div>
-        <div id="achievementsUpdateFailure" class="fberrorbox" style="display: none;">
+        <div id="achievementsUpdateFailure" class="fberrorbox message" style="display: none;">
             Your achievements could not be updated. Please verify that your Custom Url is correct
             and that your Steam Community Profile is public. <a href="Help.aspx?<%= Request.QueryString %>">
                 Help</a>

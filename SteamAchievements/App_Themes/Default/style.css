@@ -30,10 +30,26 @@ fieldset
     clear: both;
 }
 
+.message
+{
+}
+
+.message .dismiss
+{
+    font-weight: normal;
+    color: #999;
+}
+
 .error
 {
     background-color: #ffebe8;
     color: #333333;
+}
+
+.footer
+{
+    color: #999; 
+    margin-top: 1em;
 }
 
 div.form label

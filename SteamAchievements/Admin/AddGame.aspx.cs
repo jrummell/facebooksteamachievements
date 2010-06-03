@@ -39,7 +39,8 @@ namespace SteamAchievements.Admin
             Game game = new Game
                             {
                                 Abbreviation = abbreviationTextBox.Text,
-                                Name = nameTextBox.Text
+                                Name = nameTextBox.Text,
+                                ImageUrl = imageTextBox.Text
                             };
 
             using (SteamCommunityManager community = new SteamCommunityManager())

@@ -26,9 +26,7 @@ namespace SteamAchievements.Data.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SQLEXPRESS;AttachDbFilename=\"C:\\Users\\John\\Documents\\Visual Studio " +
-            "2008\\Projects\\FacebookSteamAchievements\\SteamAchievements\\App_Data\\Steam.mdf\";In" +
-            "tegrated Security=True;Connect Timeout=30;User Instance=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost\\SQLEXPRESS;Initial Catalog=Steam;Integrated Security=True")]
         public string steamConnectionString {
             get {
                 return ((string)(this["steamConnectionString"]));

@@ -185,6 +185,19 @@ namespace SteamAchievements.Data
         }
 
         /// <summary>
+        /// Gets the games for the given steam user id.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns></returns>
+        public IEnumerable<Game> GetGames(string steamUserId)
+        {
+            return (from userAchievement in _repository.UserAchievements
+                   where userAchievement.SteamUserId == steamUserId
+                   orderby userAchievement.Achievement.Game.Name
+                   select userAchievement.Achievement.Game).Distinct();
+        }
+
+        /// <summary>
         /// Updates the steam user id.
         /// </summary>
         /// <param name="facebookUserId">The facebook user id.</param>

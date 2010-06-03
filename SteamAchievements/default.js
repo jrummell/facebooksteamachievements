@@ -14,6 +14,11 @@ function init()
 {
     $("img.loading").hide();
 
+    $("div.message").append(" <span class='dismiss'>Click to dismiss.</span>").click(function()
+    {
+        $(this).hide('normal');
+    });
+
     $("#updateSteamIdButton").click(function()
     {
         var result = updateSteamUserId();
@@ -28,8 +33,8 @@ function init()
 
     $("#updateAchievementsButton").click(function()
     {
-        updateAchievements(); 
-        return false; 
+        updateAchievements();
+        return false;
     });
 }
 
@@ -39,6 +44,11 @@ function getGames()
     {
         return false;
     }
+
+    var updatingSelector = "#updatingGames";
+    showLoading(updatingSelector);
+
+    var steamId = $("#steamIdTextBox").val();
 
     var ondone = function(data)
     {
@@ -50,16 +60,18 @@ function getGames()
             var url = "http://steamcommunity.com/id/" + steamId + "/stats/" + game.Abbreviation + "/";
             var aStart = "<a target='_blank' href='" + url + "'>";
             gamesHtml += "<div class='game'>";
-            gamesHtml += aStart + "<img src='" + game.ImageUrl + "' alt='" + game.Name + "' /></a>";
+            gamesHtml += aStart + "<img src='" + game.ImageUrl + "' alt='" + game.Name + "' title='" + game.Name + "' /></a>";
             gamesHtml += aStart + "View Achievements</a>\n";
             gamesHtml += "</div>";
         });
 
-        log(gamesHtml);
         $("#gamesDiv").html(gamesHtml);
+        
+        log(gamesHtml);
+        hideLoading(updatingSelector);
     };
 
-    callAjax("GetGames", {}, ondone);
+    callAjax("GetGames", { steamUserId: steamId }, ondone);
 }
 
 function updateSteamUserId()
@@ -88,7 +100,7 @@ function updateSteamUserId()
 function updateAchievements()
 {
     $("#achievementsUpdateFailure").hide();
-    
+
     if (!validateSteamUserId())
     {
         return false;
@@ -103,7 +115,7 @@ function updateAchievements()
     {
         hideLoading(updatingSelector);
 
-        getAchievements();
+        getGames();
 
         publishLatestAchievements(steamUserId);
 
@@ -116,7 +128,7 @@ function updateAchievements()
     var onerror = function()
     {
         hideLoading(updatingSelector);
-        
+
         showMessage("#achievementsUpdateFailure");
     }
 
