@@ -392,8 +392,6 @@ namespace SteamAchievements.Data
 		
 		private EntityRef<Achievement> _steam_Achievement;
 		
-		private EntityRef<User> _User;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -446,10 +444,6 @@ namespace SteamAchievements.Data
 			{
 				if ((this._SteamUserId != value))
 				{
-					if (this._User.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnSteamUserIdChanging(value);
 					this.SendPropertyChanging();
 					this._SteamUserId = value;
@@ -539,40 +533,6 @@ namespace SteamAchievements.Data
 			}
 		}
 		
-		[Association(Name="User_UserAchievement", Storage="_User", ThisKey="SteamUserId", OtherKey="SteamUserId", IsForeignKey=true)]
-		public User User
-		{
-			get
-			{
-				return this._User.Entity;
-			}
-			set
-			{
-				User previousValue = this._User.Entity;
-				if (((previousValue != value) 
-							|| (this._User.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._User.Entity = null;
-						previousValue.UserAchievements.Remove(this);
-					}
-					this._User.Entity = value;
-					if ((value != null))
-					{
-						value.UserAchievements.Add(this);
-						this._SteamUserId = value.SteamUserId;
-					}
-					else
-					{
-						this._SteamUserId = default(string);
-					}
-					this.SendPropertyChanged("User");
-				}
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -596,7 +556,6 @@ namespace SteamAchievements.Data
 		private void Initialize()
 		{
 			this._steam_Achievement = default(EntityRef<Achievement>);
-			this._User = default(EntityRef<User>);
 			OnCreated();
 		}
 		
@@ -820,10 +779,6 @@ namespace SteamAchievements.Data
 		
 		private string _SteamUserId;
 		
-		private EntitySet<UserAchievement> _UserAchievements;
-		
-		private bool serializing;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -881,25 +836,6 @@ namespace SteamAchievements.Data
 			}
 		}
 		
-		[Association(Name="User_UserAchievement", Storage="_UserAchievements", ThisKey="SteamUserId", OtherKey="SteamUserId")]
-		[DataMember(Order=3, EmitDefaultValue=false)]
-		public EntitySet<UserAchievement> UserAchievements
-		{
-			get
-			{
-				if ((this.serializing 
-							&& (this._UserAchievements.HasLoadedOrAssignedValues == false)))
-				{
-					return null;
-				}
-				return this._UserAchievements;
-			}
-			set
-			{
-				this._UserAchievements.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -920,21 +856,8 @@ namespace SteamAchievements.Data
 			}
 		}
 		
-		private void attach_UserAchievements(UserAchievement entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = this;
-		}
-		
-		private void detach_UserAchievements(UserAchievement entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = null;
-		}
-		
 		private void Initialize()
 		{
-			this._UserAchievements = new EntitySet<UserAchievement>(new Action<UserAchievement>(this.attach_UserAchievements), new Action<UserAchievement>(this.detach_UserAchievements));
 			OnCreated();
 		}
 		
@@ -943,20 +866,6 @@ namespace SteamAchievements.Data
 		public void OnDeserializing(StreamingContext context)
 		{
 			this.Initialize();
-		}
-		
-		[OnSerializing()]
-		[System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnSerializing(StreamingContext context)
-		{
-			this.serializing = true;
-		}
-		
-		[OnSerialized()]
-		[System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnSerialized(StreamingContext context)
-		{
-			this.serializing = false;
 		}
 	}
 }
