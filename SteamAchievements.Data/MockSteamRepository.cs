@@ -1,24 +1,3 @@
-#region License
-
-// Copyright 2010 John Rummell
-// 
-// This file is part of SteamAchievements.
-// 
-//     SteamAchievements is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     SteamAchievements is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-// 
-//     You should have received a copy of the GNU General Public License
-//     along with SteamAchievements.  If not, see <http://www.gnu.org/licenses/>.
-
-#endregion
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -149,10 +128,36 @@ namespace SteamAchievements.Data
             }
         }
 
+        public void Dispose()
+        {
+            // nothing to dispose
+        }
+
         #endregion
 
         private void Init()
         {
+            IQueryable<Game> games =
+                (new[]
+                     {
+                         new Game
+                             {
+                                 Id = 1,
+                                 Abbreviation = "l4d",
+                                 Name = "Left 4 Dead",
+                                 ImageUrl =
+                                     "http://media.steampowered.com/steamcommunity/public/images/apps/500/0f67ee504d8f04ecd83986dd7855821dc21f7a78.jpg"
+                             },
+                         new Game
+                             {
+                                 Id = 2,
+                                 Abbreviation = "l4d2",
+                                 Name = "Left 4 Dead 2",
+                                 ImageUrl =
+                                     "http://media.steampowered.com/steamcommunity/public/images/apps/550/205863cc21e751a576d6fff851984b3170684142.jpg"
+                             }
+                     }).AsQueryable();
+
             IQueryable<Achievement> achievements =
                 (new[]
                      {
@@ -160,6 +165,7 @@ namespace SteamAchievements.Data
                              {
                                  Id = 1,
                                  GameId = 1,
+                                 Game = games.Single(g => g.Id == 1),
                                  Name = "Achievement 1 for Game 1",
                                  Description = "Achievement Description",
                                  ImageUrl = "http://example.com/image.png"
@@ -168,6 +174,7 @@ namespace SteamAchievements.Data
                              {
                                  Id = 2,
                                  GameId = 1,
+                                 Game = games.Single(g => g.Id == 1),
                                  Name = "Achievement 2 for Game 1",
                                  Description = "Achievement Description",
                                  ImageUrl = "http://example.com/image.png"
@@ -176,6 +183,7 @@ namespace SteamAchievements.Data
                              {
                                  Id = 3,
                                  GameId = 1,
+                                 Game = games.Single(g => g.Id == 1),
                                  Name = "Achievement 3 for Game 1",
                                  Description = "Achievement Description",
                                  ImageUrl = "http://example.com/image.png"
@@ -184,6 +192,7 @@ namespace SteamAchievements.Data
                              {
                                  Id = 4,
                                  GameId = 2,
+                                 Game = games.Single(g => g.Id == 2),
                                  Name = "Achievement 1 for Game 2",
                                  Description = "Achievement Description",
                                  ImageUrl = "http://example.com/image.png"
@@ -192,17 +201,11 @@ namespace SteamAchievements.Data
                              {
                                  Id = 5,
                                  GameId = 2,
+                                 Game = games.Single(g => g.Id == 2),
                                  Name = "Achievement 2 for Game 2",
                                  Description = "Achievement Description",
                                  ImageUrl = "http://example.com/image.png"
                              }
-                     }).AsQueryable();
-
-            IQueryable<Game> games =
-                (new[]
-                     {
-                         new Game {Id = 1, Abbreviation = "game1", Name = "Game 1"},
-                         new Game {Id = 2, Abbreviation = "game2", Name = "Game 2"}
                      }).AsQueryable();
 
             IQueryable<User> users =
@@ -239,6 +242,15 @@ namespace SteamAchievements.Data
                                  SteamUserId = "user1",
                                  Achievement = achievements.Single(a => a.Id == 3)
                              }
+                         ,
+                         new UserAchievement
+                             {
+                                 Id = 4,
+                                 AchievementId = 4,
+                                 Date = DateTime.Now,
+                                 SteamUserId = "user1",
+                                 Achievement = achievements.Single(a => a.Id == 4)
+                             }
                      }).AsQueryable();
 
             Achievements = achievements;
@@ -246,15 +258,6 @@ namespace SteamAchievements.Data
             UserAchievements = userAchievements;
             Users = users;
         }
-
-        #region IDisposable Members
-
-        public void Dispose()
-        {
-            // nothing to dispose
-        }
-
-        #endregion
 
         #region Nested type: UserKey
 

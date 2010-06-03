@@ -67,16 +67,15 @@ namespace SteamAchievements.Services
         /// Gets the games.
         /// </summary>
         /// <returns>All <see cref="Game"/>s.</returns>
-        public List<SimpleGame> GetGames()
+        public List<SimpleGame> GetGames(string steamUserId)
         {
-            return (from game in _achievementManager.GetGames()
+            return (from game in _achievementManager.GetGames(steamUserId)
                     select new SimpleGame
                     {
                         Id = game.Id.ToString(),
                         Name = game.Name,
                         Abbreviation = game.Abbreviation,
-                        //TODO: game.ImageUrl
-                        ImageUrl = "http://media.steampowered.com/steamcommunity/public/images/apps/500/0f67ee504d8f04ecd83986dd7855821dc21f7a78.jpg"
+                        ImageUrl = game.ImageUrl
                     }).ToList();
         }
 

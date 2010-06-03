@@ -46,11 +46,14 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Gets the games.
         /// </summary>
-        /// <returns>All <see cref="Game"/>s.</returns>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns>
+        /// 	<see cref="Game"/>s for the givem steam user id.
+        /// </returns>
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        List<SimpleGame> GetGames();
+        List<SimpleGame> GetGames(string steamUserId);
 
         /// <summary>
         /// Updates the achievements.
