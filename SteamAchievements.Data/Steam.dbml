@@ -19,7 +19,6 @@
       <Column Name="AchievementId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Date" Type="System.DateTime" DbType="datetime not null" CanBeNull="false" />
       <Association Name="Achievement_UserAchievement" Member="Achievement" Storage="_steam_Achievement" ThisKey="AchievementId" OtherKey="Id" Type="Achievement" IsForeignKey="true" />
-      <Association Name="User_UserAchievement" Member="User" ThisKey="SteamUserId" OtherKey="SteamUserId" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.steam_Game" Member="Games">
@@ -27,7 +26,7 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Abbreviation" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Member="ImageUrl" Type="System.String" DbType="varchar(250) not null" CanBeNull="false" />
+      <Column Name="ImageUrl" Type="System.String" DbType="varchar(250) not null" CanBeNull="false" />
       <Association Name="Game_Achievement" Member="Achievements" Storage="_steam_Achievements" ThisKey="Id" OtherKey="GameId" Type="Achievement" />
     </Type>
   </Table>
@@ -35,7 +34,6 @@
     <Type Name="User">
       <Column Name="FacebookUserId" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="SteamUserId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="User_UserAchievement" Member="UserAchievements" ThisKey="SteamUserId" OtherKey="SteamUserId" Type="UserAchievement" />
     </Type>
   </Table>
 </Database>

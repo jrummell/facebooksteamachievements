@@ -365,7 +365,7 @@ namespace SteamAchievements.Data
                 throw new ArgumentNullException("game");
             }
 
-            if (!_repository.Games.Where(g => g.Abbreviation == game.Abbreviation).Any())
+            if (!_repository.Games.Where(g => g.Abbreviation.ToUpper() == game.Abbreviation.ToUpper()).Any())
             {
                 _repository.InsertOnSubmit(game);
                 _repository.SubmitChanges();
@@ -388,7 +388,8 @@ namespace SteamAchievements.Data
             {
                 achievement.GameId = gameId;
 
-                if (!_repository.Achievements.Where(a => a.GameId == gameId && a.Name == achievement.Name).Any())
+                string name = achievement.Name;
+                if (!_repository.Achievements.Where(a => a.GameId == gameId && a.Name.ToUpper() == name.ToUpper()).Any())
                 {
                     _repository.InsertOnSubmit(achievement);
                 }
