@@ -47,6 +47,9 @@
     <fieldset>
         <legend>Games</legend>
         <div>
+            <p>
+                These are the games that you have earned achievements for. You must update your
+                achievements before they appear below.</p>
             <img id="loadingGames" class="loading" src="images/ajax-loader.gif" alt="Loading..." />
         </div>
         <div id="gamesDiv" class="games">
