@@ -140,6 +140,13 @@
     <Compile Include="Controls\Logo.ascx.designer.cs">
       <DependentUpon>Logo.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\UserVoice.ascx.cs">
+      <DependentUpon>UserVoice.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\UserVoice.ascx.designer.cs">
+      <DependentUpon>UserVoice.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Help.aspx.cs">
       <DependentUpon>Help.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -223,6 +230,7 @@
     <Content Include="Controls\Disclaimer.ascx" />
     <Content Include="Controls\GoogleAnalytics.ascx" />
     <Content Include="Controls\Logo.ascx" />
+    <Content Include="Controls\UserVoice.ascx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />

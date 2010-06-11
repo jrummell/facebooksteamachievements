@@ -32,5 +32,6 @@
         </div>
     </div>
     <steam:GoogleAnalytics ID="tracker" runat="server" />
+    <steam:UserVoice ID="userVoice" runat="server" />
 </body>
 </html>
