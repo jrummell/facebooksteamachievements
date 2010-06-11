@@ -11,18 +11,13 @@ p
 
 fieldset
 {
-    margin: 5px 5px 5px 5px;
+    margin: 5px 5px 5px 0px;
     padding: 5px 5px 5px 5px;
 }
 
 .game
 {
     padding: 5px;
-}
-
-.game a
-{
-    display: block;
 }
 
 .clear
@@ -73,6 +68,11 @@ h1
 h4, h5
 {
     font-size: 11px;
+}
+
+.fbbody
+{
+    padding-left: 28px;
 }
 
 /* Default Facebook CSS */

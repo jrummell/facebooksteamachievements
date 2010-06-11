@@ -9,7 +9,7 @@
         forum: '<%= UserVoiceForum %>',
         showTab: true,
         /* optional */
-        alignment: 'right',
+        alignment: 'left',
         background_color: '#f00',
         text_color: 'white',
         hover_color: '#06C',
