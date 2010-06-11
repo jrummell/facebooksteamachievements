@@ -14,6 +14,7 @@ function init()
 {
     $("img.loading").hide();
 
+    // hide messages on click
     $("div.message").append(" <span class='dismiss'>Click to dismiss.</span>").click(function()
     {
         $(this).hide('normal');
@@ -55,12 +56,13 @@ function getGames()
         var gamesHtml = "\n";
         var steamId = $("#steamIdTextBox").val();
 
+        // build the games list html
         $(data).each(function(index, game)
         {
-            var url = "http://steamcommunity.com/id/" + steamId + "/stats/" + game.Abbreviation + "/";
+            var url = "http://steamcommunity.com/id/" + steamId + "/stats/" + game.Abbreviation + "/?tab=achievements";
             var aStart = "<a target='_blank' href='" + url + "'>";
             gamesHtml += "<div class='game'>";
-            gamesHtml += aStart + "<img src='" + game.ImageUrl + "' alt='" + game.Name + "' title='" + game.Name + "' /></a>";
+            gamesHtml += aStart + "<img src='" + game.ImageUrl + "' alt='" + game.Name + "' title='" + game.Name + "' /></a><br/>";
             gamesHtml += aStart + "View Achievements</a>\n";
             gamesHtml += "</div>";
         });
@@ -122,6 +124,7 @@ function updateAchievements()
 
         showMessage("#achievementsUpdateSuccess");
 
+        // only publish if there are new achievements
         if (updateCount > 0)
         {
             publishLatestAchievements(steamUserId);
