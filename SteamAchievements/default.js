@@ -111,18 +111,21 @@ function updateAchievements()
 
     var steamUserId = $("#steamIdTextBox").val();
 
-    var ondone = function(data)
+    var ondone = function(updateCount)
     {
         hideLoading(updatingSelector);
 
         getGames();
 
-        publishLatestAchievements(steamUserId);
-
         // set the new achievement count
-        $("#newAchievementCount").text(data);
+        $("#newAchievementCount").text(updateCount);
 
         showMessage("#achievementsUpdateSuccess");
+
+        if (updateCount > 0)
+        {
+            publishLatestAchievements(steamUserId);
+        }
     };
 
     var onerror = function()
