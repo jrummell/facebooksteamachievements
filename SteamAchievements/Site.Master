@@ -10,15 +10,15 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
+    <div style="margin-bottom: 1em">
+        <steam:GoogleAds ID="ads" runat="server" />
+    </div>
     <div class="fbbody">
 
         <script type="text/javascript" src='<%= ResolveUrl("~/js/json2.js") %>'></script>
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 
-        <div style="margin-bottom: 1em">
-            <steam:GoogleAds ID="ads" runat="server" />
-        </div>
         <div>
             <steam:Logo ID="logo" runat="server" />
         </div>
