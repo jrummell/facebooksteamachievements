@@ -1,4 +1,10 @@
-﻿img
+﻿body
+{
+    padding: 0px;
+    margin: 0px;
+}
+
+img
 {
     border-style: none;
 }
@@ -73,7 +79,7 @@ h4, h5
 .fbbody
 {
     width: 720px;
-    padding-left: 25px;
+    padding-left: 28px;
 }
 
 /* Default Facebook CSS */
