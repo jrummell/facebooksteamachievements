@@ -26,36 +26,30 @@ using SteamAchievements.Data;
 
 namespace SteamAchievements.Services.Tests
 {
-    [TestFixture]
+    [TestFixture, Explicit("Requires internet connection")]
     public class SteamCommunityManagerFixture
     {
+        [Test]
+        public void GetGames()
+        {
+            SteamCommunityManager manager = new SteamCommunityManager();
+
+            IEnumerable<Game> games = manager.GetGames("nullreference");
+
+            Assert.That(games.Any());
+            Assert.That(games.Any(game => game.Name == "Left 4 Dead"));
+            Assert.That(games.Any(game => game.Name == "Left 4 Dead 2"));
+        }
+
         [Test]
         public void GetAchievements()
         {
             SteamCommunityManager manager = new SteamCommunityManager();
 
-            IEnumerable<Game> games = new[]
-                                          {
-                                              new Game {Id = 1, Name = "Left 4 Dead", Abbreviation = "l4d"},
-                                              new Game {Id = 2, Name = "Left 4 Dead 2", Abbreviation = "l4d2"}
-                                          };
-            IEnumerable<Achievement> achievements = manager.GetAchievements("nullreference", games);
-            Assert.That(achievements.Any());
-
-            Assert.That(achievements.SingleOrDefault(a => a.Name == "Acid Reflex"), Is.Not.Null);
-        }
-
-        [Test]
-        public void GetGameAchievements()
-        {
-            SteamCommunityManager manager = new SteamCommunityManager();
-
-            Game game = new Game { Id = 1, Name = "Left 4 Dead", Abbreviation = "l4d" };
-
-            IEnumerable<Achievement> achievements = manager.GetAchievements("nullreference", game);
+            IEnumerable<Achievement> achievements = manager.GetAchievements("nullreference");
 
             Assert.That(achievements.Any());
-            Assert.That(achievements.All(a => a.GameId == game.Id));
+            Assert.That(achievements.Any(a => a.Name == "Acid Reflex"));
         }
     }
 }

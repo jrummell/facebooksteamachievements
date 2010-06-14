@@ -56,19 +56,6 @@ namespace SteamAchievements.Data
         IEnumerable<Achievement> GetLatestAchievements(string steamUserId);
 
         /// <summary>
-        /// Gets the games.
-        /// </summary>
-        /// <returns></returns>
-        IEnumerable<Game> GetGames();
-
-        /// <summary>
-        /// Gets the games for the given steam user id.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <returns></returns>
-        IEnumerable<Game> GetGames(string steamUserId);
-
-        /// <summary>
         /// Updates the steam user id.
         /// </summary>
         /// <param name="facebookUserId">The facebook user id.</param>

@@ -27,7 +27,7 @@ namespace SteamAchievements.Services
         /// Gets or sets the id.
         /// </summary>
         /// <value>The id.</value>
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
@@ -36,15 +36,21 @@ namespace SteamAchievements.Services
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the abbreviation.
-        /// </summary>
-        /// <value>The abbereviation.</value>
-        public string Abbreviation { get; set; }
-
-        /// <summary>
         /// Gets or sets the image URL.
         /// </summary>
         /// <value>The image URL.</value>
         public string ImageUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the stats URL.
+        /// </summary>
+        /// <value>The stats URL.</value>
+        public string StatsUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the store URL.
+        /// </summary>
+        /// <value>The store URL.</value>
+        public string StoreUrl { get; set; }
     }
 }

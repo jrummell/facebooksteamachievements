@@ -9,7 +9,6 @@
       <Column Name="Description" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="ImageUrl" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
       <Association Name="Achievement_UserAchievement" Member="UserAchievements" Storage="_steam_UserAchievements" ThisKey="Id" OtherKey="AchievementId" Type="UserAchievement" />
-      <Association Name="Game_Achievement" Member="Game" Storage="_steam_Game" ThisKey="GameId" OtherKey="Id" Type="Game" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.steam_UserAchievement" Member="UserAchievements">
@@ -19,15 +18,6 @@
       <Column Name="AchievementId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Date" Type="System.DateTime" DbType="datetime not null" CanBeNull="false" />
       <Association Name="Achievement_UserAchievement" Member="Achievement" Storage="_steam_Achievement" ThisKey="AchievementId" OtherKey="Id" Type="Achievement" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.steam_Game" Member="Games">
-    <Type Name="Game">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Abbreviation" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="ImageUrl" Type="System.String" DbType="varchar(250) not null" CanBeNull="false" />
-      <Association Name="Game_Achievement" Member="Achievements" Storage="_steam_Achievements" ThisKey="Id" OtherKey="GameId" Type="Achievement" />
     </Type>
   </Table>
   <Table Name="dbo.steam_User" Member="Users">

@@ -69,13 +69,14 @@ namespace SteamAchievements.Services
         /// <returns>All <see cref="Game"/>s.</returns>
         public List<SimpleGame> GetGames(string steamUserId)
         {
-            return (from game in _achievementManager.GetGames(steamUserId)
+            return (from game in _communityService.GetGames(steamUserId)
                     select new SimpleGame
                     {
-                        Id = game.Id.ToString(),
+                        Id = game.Id,
                         Name = game.Name,
-                        Abbreviation = game.Abbreviation,
-                        ImageUrl = game.ImageUrl
+                        ImageUrl = game.ImageUrl.ToString(),
+                        StatsUrl = game.StatsUrl.ToString(),
+                        StoreUrl = game.StoreUrl.ToString()
                     }).ToList();
         }
 
@@ -92,10 +93,17 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            IEnumerable<Achievement> achievements = _communityService.GetAchievements(steamUserId,
-                                                                                      _achievementManager.GetGames());
+            IEnumerable<Achievement> achievements = _communityService.GetAchievements(steamUserId);
+            IEnumerable<Data.Achievement> achievementEntities =
+                from achievement in achievements
+                select new Data.Achievement 
+                {
+                    Name = achievement.Name,
+                    Description = achievement.Description,
+                    ImageUrl = achievement.ImageUrl.ToString()
+                };
 
-            int updated = _achievementManager.UpdateAchievements(steamUserId, achievements);
+            int updated = _achievementManager.UpdateAchievements(steamUserId, achievementEntities);
 
             return updated;
         }
@@ -132,12 +140,13 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            IEnumerable<Achievement> achievements = _achievementManager.GetLatestAchievements(steamUserId);
+            IEnumerable<Data.Achievement> achievements = _achievementManager.GetLatestAchievements(steamUserId);
 
             if (achievements.Any())
             {
                 AchievementsPublisher publisher = new AchievementsPublisher();
-                publisher.Publish(achievements, steamUserId, facebookUserId);
+                //TODO: publish
+                //publisher.Publish(achievements, steamUserId, facebookUserId);
             }
 
             return true;

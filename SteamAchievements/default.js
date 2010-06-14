@@ -59,11 +59,9 @@ function getGames()
         // build the games list html
         $(data).each(function(index, game)
         {
-            var url = "http://steamcommunity.com/id/" + steamId + "/stats/" + game.Abbreviation + "/?tab=achievements";
-            var aStart = "<a target='_blank' href='" + url + "'>";
             gamesHtml += "<div class='game'>";
-            gamesHtml += aStart + "<img src='" + game.ImageUrl + "' alt='" + game.Name + "' title='" + game.Name + "' /></a><br/>";
-            gamesHtml += aStart + "View Achievements</a>\n";
+            gamesHtml += "<a target='_blank' href='" + game.StoreUrl + "'><img src='" + game.ImageUrl + "' alt='" + game.Name + "' title='" + game.Name + "' /></a><br/>";
+            gamesHtml += "<a target='_blank' href='" + game.StatsUrl + "?tab=achievements'>View Achievements</a>\n";
             gamesHtml += "</div>";
         });
 

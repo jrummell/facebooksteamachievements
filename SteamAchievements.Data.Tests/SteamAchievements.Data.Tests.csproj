@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CFB2A390-12F2-47C6-A656-686B4590B245}</ProjectGuid>
+    <ProjectGuid>{35747624-FAE1-4D7F-A7A7-DCB192DA7279}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SteamAchievements.Services.Tests</RootNamespace>
-    <AssemblyName>SteamAchievements.Services.Tests</AssemblyName>
+    <RootNamespace>SteamAchievements.Data.Tests</RootNamespace>
+    <AssemblyName>SteamAchievements.Data.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -35,10 +35,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.mocks, Version=2.5.2.9222, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\nunit.mocks.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -46,38 +42,21 @@
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameXmlParserFixture.cs" />
-    <Compile Include="SteamCommunityManagerFixture.cs" />
-    <Compile Include="AchievementXmlParserFixture.cs" />
+    <Compile Include="AchievementManagerFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="achievements.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="games.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SteamAchievements.Data\SteamAchievements.Data.csproj">
       <Project>{D654EA50-07D2-42FF-B420-17373D0B4C74}</Project>
       <Name>SteamAchievements.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SteamAchievements.Services\SteamAchievements.Services.csproj">
-      <Project>{097473AA-B8FB-4A5E-889E-00559C65C660}</Project>
-      <Name>SteamAchievements.Services</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SteamAchievements.Services.Tests.nunit" />
+    <None Include="SteamAchievements.Data.Tests.nunit" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

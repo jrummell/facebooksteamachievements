@@ -24,41 +24,50 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
-using SteamAchievements.Data;
+using System;
 
 namespace SteamAchievements.Services
 {
-    public class AchievementXmlParser
+    public class AchievementXmlParser : IXmlParser<Achievement>
     {
         private readonly TextInfo _textInfo = Thread.CurrentThread.CurrentCulture.TextInfo;
 
         /// <summary>
         /// Returns a collection of <see cref="Achievement"/>s from the given xml and gameId.
         /// </summary>
-        /// <param name="gameId">The game id.</param>
+        public IEnumerable<Achievement> Parse(string xml)
+        {
+            return Parse(xml, false);
+        }
+
+        /// <summary>
+        /// Returns a collection of closed <see cref="Achievement"/>s from the given xml.
+        /// </summary>
+        public IEnumerable<Achievement> ParseClosed(string xml)
+        {
+            return Parse(xml, true);
+        }
+
+        /// <summary>
+        /// Returns a collection of <see cref="Achievement"/>s from the given xml.
+        /// </summary>
         /// <param name="xml">The XML.</param>
         /// <param name="closedOnly">If true, get only closed achievements, else get all achievements.</param>
         /// <returns></returns>
-        public IEnumerable<Achievement> Parse(string xml, int gameId, bool closedOnly)
+        private IEnumerable<Achievement> Parse(string xml, bool closedOnly)
         {
             XDocument document = XDocument.Parse(xml);
 
             var achievements =
                 from element in document.Descendants("achievement")
-                let closed = element.Attribute("closed")
-                let name = element.Element("name")
-                let description = element.Element("description")
-                let image = element.Element("iconClosed")
-                where closed != null && name != null
-                    && description != null && image != null
                 select new
-                        {
-                            closed = closed.Value == "1",
-                            // name is in all caps - fix it
-                            name = _textInfo.ToTitleCase(name.Value.ToLower()),
-                            description = description.Value,
-                            image = image.Value
-                        };
+                {
+                    closed = element.Attribute("closed").Value == "1",
+                    // name is in all caps - fix it
+                    name = _textInfo.ToTitleCase(element.Element("name").Value.ToLower()),
+                    description = element.Element("description").Value,
+                    image = element.Element("iconClosed").Value
+                };
 
             if (closedOnly)
             {
@@ -70,12 +79,12 @@ namespace SteamAchievements.Services
 
             return from achievement in achievements
                    select new Achievement
-                              {
-                                  GameId = gameId,
-                                  Name = achievement.name,
-                                  Description = achievement.description,
-                                  ImageUrl = achievement.image
-                              };
+                   {
+                       Name = achievement.name,
+                       Description = achievement.description,
+                       ImageUrl = new Uri(achievement.image, UriKind.Absolute),
+                       Closed = achievement.closed
+                   };
         }
     }
 }

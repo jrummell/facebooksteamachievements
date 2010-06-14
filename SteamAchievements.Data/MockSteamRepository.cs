@@ -13,7 +13,6 @@ namespace SteamAchievements.Data
     public class MockSteamRepository : ISteamRepository
     {
         private Dictionary<int, Achievement> _achievements;
-        private Dictionary<int, Game> _games;
         private Dictionary<int, UserAchievement> _userAchievements;
         private Dictionary<UserKey, User> _users;
 
@@ -45,16 +44,6 @@ namespace SteamAchievements.Data
         }
 
         /// <summary>
-        /// Gets the games.
-        /// </summary>
-        /// <value>The games.</value>
-        public IQueryable<Game> Games
-        {
-            get { return _games.Values.AsQueryable(); }
-            set { _games = value.ToDictionary(x => x.Id, x => x); }
-        }
-
-        /// <summary>
         /// Gets the users.
         /// </summary>
         /// <value>The users.</value>
@@ -71,16 +60,6 @@ namespace SteamAchievements.Data
         public void InsertOnSubmit(User user)
         {
             _users.Add(new UserKey(user), user);
-        }
-
-        /// <summary>
-        /// Inserts the game on submit.
-        /// </summary>
-        /// <param name="game">The game.</param>
-        public void InsertOnSubmit(Game game)
-        {
-            game.Id = _games.Values.Max(a => a.Id) + 1;
-            _games.Add(game.Id, game);
         }
 
         /// <summary>
@@ -137,27 +116,6 @@ namespace SteamAchievements.Data
 
         private void Init()
         {
-            IQueryable<Game> games =
-                (new[]
-                     {
-                         new Game
-                             {
-                                 Id = 1,
-                                 Abbreviation = "l4d",
-                                 Name = "Left 4 Dead",
-                                 ImageUrl =
-                                     "http://media.steampowered.com/steamcommunity/public/images/apps/500/0f67ee504d8f04ecd83986dd7855821dc21f7a78.jpg"
-                             },
-                         new Game
-                             {
-                                 Id = 2,
-                                 Abbreviation = "l4d2",
-                                 Name = "Left 4 Dead 2",
-                                 ImageUrl =
-                                     "http://media.steampowered.com/steamcommunity/public/images/apps/550/205863cc21e751a576d6fff851984b3170684142.jpg"
-                             }
-                     }).AsQueryable();
-
             IQueryable<Achievement> achievements =
                 (new[]
                      {
@@ -165,7 +123,6 @@ namespace SteamAchievements.Data
                              {
                                  Id = 1,
                                  GameId = 1,
-                                 Game = games.Single(g => g.Id == 1),
                                  Name = "Achievement 1 for Game 1",
                                  Description = "Achievement Description",
                                  ImageUrl = "http://example.com/image.png"
@@ -174,7 +131,6 @@ namespace SteamAchievements.Data
                              {
                                  Id = 2,
                                  GameId = 1,
-                                 Game = games.Single(g => g.Id == 1),
                                  Name = "Achievement 2 for Game 1",
                                  Description = "Achievement Description",
                                  ImageUrl = "http://example.com/image.png"
@@ -183,7 +139,6 @@ namespace SteamAchievements.Data
                              {
                                  Id = 3,
                                  GameId = 1,
-                                 Game = games.Single(g => g.Id == 1),
                                  Name = "Achievement 3 for Game 1",
                                  Description = "Achievement Description",
                                  ImageUrl = "http://example.com/image.png"
@@ -192,7 +147,6 @@ namespace SteamAchievements.Data
                              {
                                  Id = 4,
                                  GameId = 2,
-                                 Game = games.Single(g => g.Id == 2),
                                  Name = "Achievement 1 for Game 2",
                                  Description = "Achievement Description",
                                  ImageUrl = "http://example.com/image.png"
@@ -201,7 +155,6 @@ namespace SteamAchievements.Data
                              {
                                  Id = 5,
                                  GameId = 2,
-                                 Game = games.Single(g => g.Id == 2),
                                  Name = "Achievement 2 for Game 2",
                                  Description = "Achievement Description",
                                  ImageUrl = "http://example.com/image.png"
@@ -254,7 +207,6 @@ namespace SteamAchievements.Data
                      }).AsQueryable();
 
             Achievements = achievements;
-            Games = games;
             UserAchievements = userAchievements;
             Users = users;
         }

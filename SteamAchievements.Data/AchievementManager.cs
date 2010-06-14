@@ -174,30 +174,6 @@ namespace SteamAchievements.Data
         }
 
         /// <summary>
-        /// Gets the games.
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Game> GetGames()
-        {
-            return from game in _repository.Games
-                   orderby game.Name
-                   select game;
-        }
-
-        /// <summary>
-        /// Gets the games for the given steam user id.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <returns></returns>
-        public IEnumerable<Game> GetGames(string steamUserId)
-        {
-            return (from userAchievement in _repository.UserAchievements
-                   where userAchievement.SteamUserId == steamUserId
-                   orderby userAchievement.Achievement.Game.Name
-                   select userAchievement.Achievement.Game).Distinct();
-        }
-
-        /// <summary>
         /// Updates the steam user id.
         /// </summary>
         /// <param name="facebookUserId">The facebook user id.</param>
@@ -352,24 +328,6 @@ namespace SteamAchievements.Data
                             dbAchievement.GameId == achievement.GameId &&
                             dbAchievement.Name.ToUpper() == achievement.Name.ToUpper())
                    select achievement;
-        }
-
-        /// <summary>
-        /// Adds the game.
-        /// </summary>
-        /// <param name="game">The game.</param>
-        public void AddGame(Game game)
-        {
-            if (game == null)
-            {
-                throw new ArgumentNullException("game");
-            }
-
-            if (!_repository.Games.Where(g => g.Abbreviation.ToUpper() == game.Abbreviation.ToUpper()).Any())
-            {
-                _repository.InsertOnSubmit(game);
-                _repository.SubmitChanges();
-            }
         }
 
         /// <summary>
