@@ -47,15 +47,6 @@ namespace SteamAchievements.Data
         }
 
         /// <summary>
-        /// Gets the games.
-        /// </summary>
-        /// <value>The games.</value>
-        IQueryable<Game> ISteamRepository.Games
-        {
-            get { return Games; }
-        }
-
-        /// <summary>
         /// Gets the users.
         /// </summary>
         /// <value>The users.</value>
@@ -89,15 +80,6 @@ namespace SteamAchievements.Data
         public void InsertOnSubmit(Achievement achievement)
         {
             Achievements.InsertOnSubmit(achievement);
-        }
-
-        /// <summary>
-        /// Inserts the achievement on submit.
-        /// </summary>
-        /// <param name="achievement">The achievement.</param>
-        public void InsertOnSubmit(Game game)
-        {
-            Games.InsertOnSubmit(game);
         }
 
         /// <summary>

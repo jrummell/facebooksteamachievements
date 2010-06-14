@@ -8,8 +8,6 @@
     <h1>
         Admin Home</h1>
     <p>
-        <a href="AddGame.aspx">Add a new game</a></p>
-    <p>
         <a href="elmah.axd">Error Log</a>
     </p>
     <p>

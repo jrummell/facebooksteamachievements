@@ -40,5 +40,11 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <value>The description.</value>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the game.
+        /// </summary>
+        /// <value>The game.</value>
+        public SimpleGame Game { get; set; }
     }
 }

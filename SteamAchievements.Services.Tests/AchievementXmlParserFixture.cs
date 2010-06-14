@@ -36,22 +36,7 @@ namespace SteamAchievements.Services.Tests
         {
             AchievementXmlParser parser = new AchievementXmlParser();
 
-            Assert.Throws<XmlException>(() => parser.Parse("asdf asdf asdf asdf", 1, true));
-        }
-
-        [Test]
-        public void ParseTf2MagnakayDeathFromAboveNotClosed()
-        {
-            string xml = File.ReadAllText("achievements2.xml");
-
-            AchievementXmlParser parser = new AchievementXmlParser();
-            IEnumerable<Achievement> achievements = parser.Parse(xml, 2, true);
-
-            // does not contain Death from Above
-            Assert.That(achievements.Any(a => a.Id == 273), Is.False);
-
-            // does not contain First Blood
-            Assert.That(achievements.Any(a => a.Id == 270), Is.False);
+            Assert.Throws<XmlException>(() => parser.Parse("asdf asdf asdf asdf"));
         }
 
         [Test]
@@ -60,9 +45,24 @@ namespace SteamAchievements.Services.Tests
             string xml = File.ReadAllText("achievements.xml");
 
             AchievementXmlParser parser = new AchievementXmlParser();
-            IEnumerable<Achievement> achievements = parser.Parse(xml, 1, true);
+            IEnumerable<Achievement> achievements = parser.Parse(xml);
 
             Assert.That(achievements.Any());
+            Assert.That(achievements.Any(a => a.Name == "Fried Piper" && a.Closed));
+            Assert.That(achievements.Any(a => a.Name == "Cl0wnd" && !a.Closed));
+        }
+
+        [Test]
+        public void ParseClosedValid()
+        {
+            string xml = File.ReadAllText("achievements.xml");
+
+            AchievementXmlParser parser = new AchievementXmlParser();
+            IEnumerable<Achievement> achievements = parser.ParseClosed(xml);
+
+            Assert.That(achievements.Any());
+            Assert.That(achievements.Any(a => a.Name == "Fried Piper" && a.Closed));
+            Assert.That(!achievements.Any(a => !a.Closed));
         }
     }
 }

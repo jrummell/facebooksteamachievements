@@ -57,7 +57,7 @@ namespace SteamAchievements.Services
         /// <param name="achievements">The achievements.</param>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="facebookUserId">The facebook user id.</param>
-        public void Publish(IEnumerable<Achievement> achievements, string steamUserId, long facebookUserId)
+        public void Publish(IEnumerable<SimpleAchievement> achievements, string steamUserId, long facebookUserId)
         {
             if (steamUserId == null)
             {
@@ -69,15 +69,12 @@ namespace SteamAchievements.Services
                 return;
             }
 
-            foreach (Achievement achievement in achievements)
+            foreach (SimpleAchievement achievement in achievements)
             {
                 string description = String.Format("earned the {0} achievement in {1}.", achievement.Name,
                                                    achievement.Game.Name);
 
-                string gameStatsLink = String.Format(
-                    "http://steamcommunity.com/id/{0}/stats/{1}",
-                    steamUserId, achievement.Game.Abbreviation);
-
+                string gameStatsLink = achievement.Game.StatsUrl;
                 string gameAchievementsLink = gameStatsLink + "?tab=achievements";
 
                 attachment attachment = new attachment
@@ -99,7 +96,7 @@ namespace SteamAchievements.Services
                                               {
                                                   new action_link
                                                       {
-                                                          text = achievement.Game.Abbreviation + " stats",
+                                                          text = achievement.Game.Name + " stats",
                                                           href = gameStatsLink
                                                       }
                                               };

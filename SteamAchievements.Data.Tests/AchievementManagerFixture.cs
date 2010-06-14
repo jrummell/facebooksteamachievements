@@ -50,13 +50,6 @@ namespace SteamAchievements.Services.Tests
                              {Id = 5, GameId = 2, Name = "Achievement 2 for Game 2"}
                      }).AsQueryable();
 
-            IQueryable<Game> games =
-                (new[]
-                     {
-                         new Game {Id = 1, Abbreviation = "game1", Name = "Game 1"},
-                         new Game {Id = 2, Abbreviation = "game2", Name = "Game 2"}
-                     }).AsQueryable();
-
             IQueryable<User> users =
                 (new[]
                      {
@@ -93,7 +86,6 @@ namespace SteamAchievements.Services.Tests
             _repository = new MockSteamRepository
                               {
                                   Achievements = achievements,
-                                  Games = games,
                                   Users = users,
                                   UserAchievements = userAchievements
                               };
@@ -239,17 +231,6 @@ namespace SteamAchievements.Services.Tests
             Assert.That(_repository.Users.Single(u => u.FacebookUserId == facebookUserId).SteamUserId,
                         Is.EqualTo(steamUserId));
             Assert.That(!_repository.UserAchievements.Any(ua => ua.SteamUserId == steamUserId));
-        }
-
-        [Test]
-        public void AddGame()
-        {
-            Game newGame = new Game { Abbreviation = "NewGame", Name = "New Game" };
-            _manager.AddGame(newGame);
-
-            Assert.That(newGame.Id, Is.GreaterThan(0));
-
-            Assert.That(_repository.Games.Count(game => game.Id == newGame.Id), Is.EqualTo(1));
         }
 
         [Test]

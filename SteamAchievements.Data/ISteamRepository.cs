@@ -40,12 +40,6 @@ namespace SteamAchievements.Data
         IQueryable<UserAchievement> UserAchievements { get; }
 
         /// <summary>
-        /// Gets the games.
-        /// </summary>
-        /// <value>The games.</value>
-        IQueryable<Game> Games { get; }
-
-        /// <summary>
         /// Gets the users.
         /// </summary>
         /// <value>The users.</value>
@@ -79,11 +73,5 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="achievements">The achievements.</param>
         void InsertAllOnSubmit(IEnumerable<UserAchievement> achievements);
-
-        /// <summary>
-        /// Inserts the game on submit.
-        /// </summary>
-        /// <param name="game">The game.</param>
-        void InsertOnSubmit(Game game);
     }
 }
