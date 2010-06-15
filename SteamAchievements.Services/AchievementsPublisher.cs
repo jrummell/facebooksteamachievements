@@ -56,7 +56,7 @@ namespace SteamAchievements.Services
         /// <param name="achievements">The achievements.</param>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="facebookUserId">The facebook user id.</param>
-        public void Publish(IEnumerable<SimpleAchievement> achievements, string steamUserId, long facebookUserId)
+        public void Publish(IEnumerable<Achievement> achievements, string steamUserId, long facebookUserId)
         {
             if (steamUserId == null)
             {
@@ -68,12 +68,12 @@ namespace SteamAchievements.Services
                 return;
             }
 
-            foreach (SimpleAchievement achievement in achievements)
+            foreach (Achievement achievement in achievements)
             {
                 string description = String.Format("earned the {0} achievement in {1}.", achievement.Name,
                                                    achievement.Game.Name);
 
-                string gameStatsLink = achievement.Game.StatsUrl;
+                string gameStatsLink = achievement.Game.StatsUrl.ToString();
                 string gameAchievementsLink = gameStatsLink + "?tab=achievements";
 
                 attachment attachment = new attachment
@@ -85,7 +85,7 @@ namespace SteamAchievements.Services
                                                             {
                                                                 new attachment_media_image
                                                                     {
-                                                                        src = achievement.ImageUrl,
+                                                                        src = achievement.ImageUrl.ToString(),
                                                                         href = gameAchievementsLink
                                                                     }
                                                             }

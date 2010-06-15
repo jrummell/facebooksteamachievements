@@ -140,13 +140,26 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            IEnumerable<Data.Achievement> achievements = _achievementManager.GetLatestAchievements(steamUserId);
+            IEnumerable<Data.Achievement> dataAchievements = _achievementManager.GetLatestAchievements(steamUserId);
+            IEnumerable<Game> games = _communityService.GetGames(steamUserId);
 
-            if (achievements.Any())
+            if (dataAchievements.Any())
             {
+                IEnumerable<Achievement> achievements =
+                    from achievement in dataAchievements
+                    from game in games
+                    where achievement.GameId == game.Id
+                    select new Achievement
+                               {
+                                   Name = achievement.Name,
+                                   Description = achievement.Description,
+                                   ImageUrl = new Uri(achievement.ImageUrl, UriKind.Absolute),
+                                   Closed = true,
+                                   Game = game
+                               };
+
                 AchievementsPublisher publisher = new AchievementsPublisher();
-                //TODO: publish
-                //publisher.Publish(achievements, steamUserId, facebookUserId);
+                publisher.Publish(achievements, steamUserId, facebookUserId);
             }
 
             return true;
