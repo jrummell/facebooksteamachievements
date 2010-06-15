@@ -22,13 +22,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using SteamAchievements.Data;
 
 namespace SteamAchievements.Services.Tests
 {
     [TestFixture, Explicit("Requires internet connection")]
     public class SteamCommunityManagerFixture
     {
+        [Test]
+        public void GetAchievements()
+        {
+            SteamCommunityManager manager = new SteamCommunityManager();
+
+            IEnumerable<Achievement> achievements = manager.GetAchievements("nullreference");
+
+            Assert.That(achievements.Any());
+            Assert.That(achievements.Any(a => a.Name == "Acid Reflex"));
+        }
+
         [Test]
         public void GetGames()
         {
@@ -39,17 +49,6 @@ namespace SteamAchievements.Services.Tests
             Assert.That(games.Any());
             Assert.That(games.Any(game => game.Name == "Left 4 Dead"));
             Assert.That(games.Any(game => game.Name == "Left 4 Dead 2"));
-        }
-
-        [Test]
-        public void GetAchievements()
-        {
-            SteamCommunityManager manager = new SteamCommunityManager();
-
-            IEnumerable<Achievement> achievements = manager.GetAchievements("nullreference");
-
-            Assert.That(achievements.Any());
-            Assert.That(achievements.Any(a => a.Name == "Acid Reflex"));
         }
     }
 }

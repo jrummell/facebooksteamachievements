@@ -19,18 +19,20 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
-using System;
 
 namespace SteamAchievements.Services
 {
     public class AchievementXmlParser : IXmlParser<Achievement>
     {
         private readonly TextInfo _textInfo = Thread.CurrentThread.CurrentCulture.TextInfo;
+
+        #region IXmlParser<Achievement> Members
 
         /// <summary>
         /// Returns a collection of <see cref="Achievement"/>s from the given xml and gameId.
@@ -39,6 +41,8 @@ namespace SteamAchievements.Services
         {
             return Parse(xml, false);
         }
+
+        #endregion
 
         /// <summary>
         /// Returns a collection of closed <see cref="Achievement"/>s from the given xml.
@@ -61,13 +65,13 @@ namespace SteamAchievements.Services
             var achievements =
                 from element in document.Descendants("achievement")
                 select new
-                {
-                    closed = element.Attribute("closed").Value == "1",
-                    // name is in all caps - fix it
-                    name = _textInfo.ToTitleCase(element.Element("name").Value.ToLower()),
-                    description = element.Element("description").Value,
-                    image = element.Element("iconClosed").Value
-                };
+                           {
+                               closed = element.Attribute("closed").Value == "1",
+                               // name is in all caps - fix it
+                               name = _textInfo.ToTitleCase(element.Element("name").Value.ToLower()),
+                               description = element.Element("description").Value,
+                               image = element.Element("iconClosed").Value
+                           };
 
             if (closedOnly)
             {
@@ -79,12 +83,12 @@ namespace SteamAchievements.Services
 
             return from achievement in achievements
                    select new Achievement
-                   {
-                       Name = achievement.name,
-                       Description = achievement.description,
-                       ImageUrl = new Uri(achievement.image, UriKind.Absolute),
-                       Closed = achievement.closed
-                   };
+                              {
+                                  Name = achievement.name,
+                                  Description = achievement.description,
+                                  ImageUrl = new Uri(achievement.image, UriKind.Absolute),
+                                  Closed = achievement.closed
+                              };
         }
     }
 }

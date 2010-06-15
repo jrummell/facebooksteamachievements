@@ -19,11 +19,10 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using SteamAchievements.Data;
-using System;
 
 namespace SteamAchievements.Services
 {

@@ -26,11 +26,19 @@ namespace SteamAchievements.Controls
 {
     public partial class UserVoice : UserControl
     {
+        /// <summary>
+        /// Gets the user voice key.
+        /// </summary>
+        /// <value>The user voice key.</value>
         protected string UserVoiceKey
         {
             get { return WebConfigurationManager.AppSettings["UserVoiceKey"]; }
         }
 
+        /// <summary>
+        /// Gets the user voice forum.
+        /// </summary>
+        /// <value>The user voice forum.</value>
         protected string UserVoiceForum
         {
             get { return WebConfigurationManager.AppSettings["UserVoiceForum"]; }

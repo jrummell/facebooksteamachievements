@@ -37,5 +37,5 @@
         Note: If you change your Steam Community Custom URL, you'll need to also update
         it in the Steam Achievements application and then update your achievements.</p>
     <p>
-        <a href="Default.aspx?<%= Request.QueryString %>">Back to Steam Achievements</a></p>
+        <a href="Default.aspx?<%=Request.QueryString%>">Back to Steam Achievements</a></p>
 </asp:Content>

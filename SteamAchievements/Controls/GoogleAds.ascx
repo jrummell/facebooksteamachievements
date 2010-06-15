@@ -3,10 +3,10 @@
 
 <script type="text/javascript">
 <!--
-    google_ad_client = "<%= AdClient %>";
-    google_ad_slot = "<%= AdSlot %>";
-    google_ad_width = parseInt("<%= Width %>");
-    google_ad_height = parseInt("<%= Height %>");
+    google_ad_client = "<%=AdClient%>";
+    google_ad_slot = "<%=AdSlot%>";
+    google_ad_width = parseInt("<%=Width%>");
+    google_ad_height = parseInt("<%=Height%>");
 //-->
 </script>
 

@@ -8,7 +8,7 @@
 
 <script type="text/javascript">
         try {
-            var pageTracker = _gat._getTracker("<%= Code %>");
+            var pageTracker = _gat._getTracker("<%=Code%>");
             pageTracker._trackPageview();
         } catch (err) { }
 </script>

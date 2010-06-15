@@ -7,17 +7,17 @@
 <asp:Content runat="server" ID="Content2" ContentPlaceHolderID="body">
     <fieldset>
         <legend>Steam Community Custom URL</legend>
-        <input id="facebookUserIdHidden" type="hidden" value="<%= FacebookUserId %>" />
+        <input id="facebookUserIdHidden" type="hidden" value="<%=FacebookUserId%>" />
         <div id="steamIdUpdateSuccess" class="fbinfobox message" style="display: none;">
             Your URL has been updated.</div>
         <div>
             <p>
                 http://steamcommunity.com/id/
-                <input id="steamIdTextBox" value="<%= SteamUserId %>" />
+                <input id="steamIdTextBox" value="<%=SteamUserId%>" />
                 <span id="steamIdError" class="error" style="display: none;">Required</span> <a id="updateSteamIdButton"
                     class="button" href="#">
                     <img src="images/disk.png" alt="" />
-                    Update URL</a> <a class="button" href="Help.aspx?<%= Request.QueryString %>">
+                    Update URL</a> <a class="button" href="Help.aspx?<%=Request.QueryString%>">
                         <img src="images/help.png" alt="Help" align="middle" />
                         Help</a>
                 <img id="updatingSteamUserId" class="loading" src="images/ajax-loader.gif" alt="Updating..." />
@@ -30,7 +30,7 @@
             Your achievements have been updated (<span id="newAchievementCount"></span> new).</div>
         <div id="achievementsUpdateFailure" class="fberrorbox message" style="display: none;">
             Your achievements could not be updated. Please verify that your Custom Url is correct
-            and that your Steam Community Profile is public. <a href="Help.aspx?<%= Request.QueryString %>">
+            and that your Steam Community Profile is public. <a href="Help.aspx?<%=Request.QueryString%>">
                 Help</a>
         </div>
         <div>

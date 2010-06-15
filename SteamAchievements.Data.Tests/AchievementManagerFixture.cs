@@ -23,9 +23,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using SteamAchievements.Data;
 
-namespace SteamAchievements.Services.Tests
+namespace SteamAchievements.Data.Tests
 {
     [TestFixture]
     public class AchievementManagerFixture
@@ -103,6 +102,27 @@ namespace SteamAchievements.Services.Tests
 
         private AchievementManager _manager;
         private MockSteamRepository _repository;
+
+        [Test]
+        public void AddGameAchievements()
+        {
+            int gameId = 99;
+            List<Achievement> gameAchievements = new List<Achievement>();
+            for (int i = 0; i < 10; i++)
+            {
+                Achievement achievement = new Achievement
+                                              {
+                                                  Name = "Achievement " + i,
+                                                  Description = "Achievement " + i,
+                                                  ImageUrl = "http://example.com/achievement" + i + ".gif"
+                                              };
+                gameAchievements.Add(achievement);
+            }
+
+            _manager.AddAchievements(99, gameAchievements);
+
+            Assert.That(_repository.Achievements.Count(a => a.GameId == gameId), Is.EqualTo(10));
+        }
 
         [Test]
         public void AssignAchievements()
@@ -231,22 +251,6 @@ namespace SteamAchievements.Services.Tests
             Assert.That(_repository.Users.Single(u => u.FacebookUserId == facebookUserId).SteamUserId,
                         Is.EqualTo(steamUserId));
             Assert.That(!_repository.UserAchievements.Any(ua => ua.SteamUserId == steamUserId));
-        }
-
-        [Test]
-        public void AddGameAchievements()
-        {
-            int gameId = 99;
-            List<Achievement> gameAchievements = new List<Achievement>();
-            for (int i = 0; i < 10; i++)
-            {
-                Achievement achievement = new Achievement { Name = "Achievement " + i, Description = "Achievement " + i, ImageUrl = "http://example.com/achievement" + i + ".gif" };
-                gameAchievements.Add(achievement);
-            }
-
-            _manager.AddAchievements(99, gameAchievements);
-
-            Assert.That(_repository.Achievements.Count(a => a.GameId == gameId), Is.EqualTo(10));
         }
     }
 }

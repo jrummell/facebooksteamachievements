@@ -25,7 +25,6 @@ using System.Web.Configuration;
 using Facebook.Rest;
 using Facebook.Schema;
 using Facebook.Session;
-using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {

@@ -23,22 +23,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using SteamAchievements.Data;
 using System.Xml;
+using Elmah;
 
 namespace SteamAchievements.Services
 {
     public class SteamCommunityManager : IDisposable
     {
-        private readonly WebClient _webClient = new WebClient();
         private readonly AchievementXmlParser _achievementParser = new AchievementXmlParser();
         private readonly GameXmlParser _gamesParser = new GameXmlParser();
+        private readonly WebClient _webClient = new WebClient();
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            _webClient.Dispose();
+        }
+
+        #endregion
 
         /// <summary>
         /// Gets the closed achievements from http://steamcommunity.com/id/[customurl]/statsfeed/[game]/?xml=1.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
-        /// <param name="games">The games.</param>
         /// <returns></returns>
         public IEnumerable<Achievement> GetAchievements(string steamUserId)
         {
@@ -53,8 +61,6 @@ namespace SteamAchievements.Services
             foreach (Game game in games)
             {
                 string statsUrl = game.StatsUrl.ToString();
-                int lastIndexOfSlash = statsUrl.LastIndexOf("/");
-                string gameAbbreviation = statsUrl.Substring(lastIndexOfSlash + 1);
                 string xmlStatsUrl = statsUrl + "/?xml=1";
 
                 string xml = _webClient.DownloadString(xmlStatsUrl);
@@ -66,14 +72,22 @@ namespace SteamAchievements.Services
                 }
                 catch (XmlException ex)
                 {
-                    //throw new InvalidOperationException("Invalid xml for " + game.Name + " stats: " + statsUrl, ex);
+                    ErrorSignal signal = ErrorSignal.FromCurrentContext();
+                    if (signal != null)
+                    {
+                        string message = "Invalid xml for " + game.Name + " stats: " + statsUrl;
+                        Exception exception = new InvalidOperationException(message, ex);
+                        signal.Raise(exception);
+                    }
+
                     continue;
                 }
 
                 if (gameAchievements.Any())
                 {
                     List<Achievement> achievementList = gameAchievements.ToList();
-                    achievementList.ForEach(a => a.Game = game);
+                    Game game1 = game;
+                    achievementList.ForEach(a => a.Game = game1);
 
                     achievements.AddRange(achievementList);
                 }
@@ -100,14 +114,5 @@ namespace SteamAchievements.Services
         {
             return String.Format("http://steamcommunity.com/id/{0}/games/?xml=1", steamUserId);
         }
-
-        #region IDisposable Members
-
-        public void Dispose()
-        {
-            _webClient.Dispose();
-        }
-
-        #endregion
     }
 }

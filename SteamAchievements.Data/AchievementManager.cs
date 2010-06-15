@@ -221,6 +221,11 @@ namespace SteamAchievements.Data
             }
         }
 
+        public void Dispose()
+        {
+            _repository.Dispose();
+        }
+
         #endregion
 
         /// <summary>
@@ -355,14 +360,5 @@ namespace SteamAchievements.Data
 
             _repository.SubmitChanges();
         }
-
-        #region IDisposable Members
-
-        public void Dispose()
-        {
-            _repository.Dispose();
-        }
-
-        #endregion
     }
 }
