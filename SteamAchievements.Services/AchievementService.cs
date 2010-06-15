@@ -100,7 +100,8 @@ namespace SteamAchievements.Services
                            {
                                Name = achievement.Name,
                                Description = achievement.Description,
-                               ImageUrl = achievement.ImageUrl.ToString()
+                               ImageUrl = achievement.ImageUrl.ToString(),
+                               GameId = achievement.Game.Id
                            };
 
             int updated = _achievementManager.UpdateAchievements(steamUserId, achievementEntities);
