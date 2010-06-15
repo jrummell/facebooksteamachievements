@@ -71,13 +71,13 @@ namespace SteamAchievements.Services
         {
             return (from game in _communityService.GetGames(steamUserId)
                     select new SimpleGame
-                    {
-                        Id = game.Id,
-                        Name = game.Name,
-                        ImageUrl = game.ImageUrl.ToString(),
-                        StatsUrl = game.StatsUrl.ToString(),
-                        StoreUrl = game.StoreUrl.ToString()
-                    }).ToList();
+                               {
+                                   Id = game.Id,
+                                   Name = game.Name,
+                                   ImageUrl = game.ImageUrl.ToString(),
+                                   StatsUrl = game.StatsUrl.ToString(),
+                                   StoreUrl = game.StoreUrl.ToString()
+                               }).ToList();
         }
 
         /// <summary>
@@ -96,12 +96,12 @@ namespace SteamAchievements.Services
             IEnumerable<Achievement> achievements = _communityService.GetAchievements(steamUserId);
             IEnumerable<Data.Achievement> achievementEntities =
                 from achievement in achievements
-                select new Data.Achievement 
-                {
-                    Name = achievement.Name,
-                    Description = achievement.Description,
-                    ImageUrl = achievement.ImageUrl.ToString()
-                };
+                select new Data.Achievement
+                           {
+                               Name = achievement.Name,
+                               Description = achievement.Description,
+                               ImageUrl = achievement.ImageUrl.ToString()
+                           };
 
             int updated = _achievementManager.UpdateAchievements(steamUserId, achievementEntities);
 
@@ -151,10 +151,6 @@ namespace SteamAchievements.Services
 
             return true;
         }
-
-        #endregion
-
-        #region IDisposable Members
 
         public void Dispose()
         {

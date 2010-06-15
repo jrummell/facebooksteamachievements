@@ -24,13 +24,25 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using NUnit.Framework;
-using SteamAchievements.Data;
 
 namespace SteamAchievements.Services.Tests
 {
     [TestFixture]
     public class AchievementXmlParserFixture
     {
+        [Test]
+        public void ParseClosedValid()
+        {
+            string xml = File.ReadAllText("achievements.xml");
+
+            AchievementXmlParser parser = new AchievementXmlParser();
+            IEnumerable<Achievement> achievements = parser.ParseClosed(xml);
+
+            Assert.That(achievements.Any());
+            Assert.That(achievements.Any(a => a.Name == "Fried Piper" && a.Closed));
+            Assert.That(!achievements.Any(a => !a.Closed));
+        }
+
         [Test]
         public void ParseNotValid()
         {
@@ -50,19 +62,6 @@ namespace SteamAchievements.Services.Tests
             Assert.That(achievements.Any());
             Assert.That(achievements.Any(a => a.Name == "Fried Piper" && a.Closed));
             Assert.That(achievements.Any(a => a.Name == "Cl0wnd" && !a.Closed));
-        }
-
-        [Test]
-        public void ParseClosedValid()
-        {
-            string xml = File.ReadAllText("achievements.xml");
-
-            AchievementXmlParser parser = new AchievementXmlParser();
-            IEnumerable<Achievement> achievements = parser.ParseClosed(xml);
-
-            Assert.That(achievements.Any());
-            Assert.That(achievements.Any(a => a.Name == "Fried Piper" && a.Closed));
-            Assert.That(!achievements.Any(a => !a.Closed));
         }
     }
 }

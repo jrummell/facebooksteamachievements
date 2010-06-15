@@ -4,9 +4,9 @@
 <script type="text/javascript">
     var uservoiceOptions = {
         /* required */
-        key: '<%= UserVoiceKey %>',
-        host: '<%= UserVoiceKey %>.uservoice.com',
-        forum: '<%= UserVoiceForum %>',
+        key: '<%=UserVoiceKey%>',
+        host: '<%=UserVoiceKey%>.uservoice.com',
+        forum: '<%=UserVoiceForum%>',
         showTab: true,
         /* optional */
         alignment: 'left',
