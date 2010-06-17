@@ -219,6 +219,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\Site.Master" />
+    <Content Include="app_online.htm" />
     <Content Include="Controls\Disclaimer.ascx" />
     <Content Include="Controls\GoogleAnalytics.ascx" />
     <Content Include="Controls\Logo.ascx" />
