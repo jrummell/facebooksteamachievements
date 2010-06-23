@@ -13,6 +13,10 @@
 
     <Target Name="Deploy">
         <MSBuild Projects="$(SolutionName)" ContinueOnError="false"
-                 Properties="Platform=$(Platform);Configuration=$(Configuration);DeployOnBuild=true;DeployTarget=Package;PackageLocation=Output\$(Configuration);PackageAsSingleFile=False"/>
+                 Properties="Configuration=$(Configuration);
+							 DeployOnBuild=true;
+							 DeployTarget=Package;
+							 PackageLocation=Output\$(Configuration);
+							 PackageAsSingleFile=False" />
     </Target>
 </Project>
