@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
+
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <NUnitToolPath>C:\Program Files\NUnit 2.5.2\bin</NUnitToolPath>
+        <SolutionName>SteamAchievements.sln</SolutionName>
+    </PropertyGroup>
+
+    <Target Name="Build" DependsOnTargets="Clean;Deploy" />
+    <!-- DependsOnTargets="Clean;Deploy;Test" -->
+
+    <Target Name="Clean">
+        <MSBuild Projects="$(SolutionName)" ContinueOnError="false" Targets="Clean" Properties="Configuration=$(Configuration)" />
+    </Target>
+
+    <Target Name="Test" DependsOnTargets="BuildTestProjects;CopyNUnitAddins;RunTests" />
+
+  <Target Name="CopyNUnitAddins">
+    <ItemGroup>
+      <NUnitAddinFiles Include="$(teamcity_dotnet_nunitaddin)-2.5.2.*" />
+    </ItemGroup>
+
+    <MakeDir Directories="$(NUnitAddinsDir)\addins" />
+
+    <Copy SourceFiles="@(NUnitAddinFiles)" DestinationFolder="$(NUnitAddinsDir)\addins" />
+  </Target>
+
+  <Target Name="BuildTestProjects">
+    <ItemGroup>
+      <TestProjects Include="SteamAchievements.Data.Tests\SteamAchievements.Data.Tests.csproj" />
+      <TestProjects Include="SteamAchievements.Services.Tests\SteamAchievements.Services.Tests.csproj" />
+    </ItemGroup>
+
+    <MSBuild Projects="@(TestProjects)" ContinueOnError="false" Properties="Configuration=$(Configuration)" />
+  </Target>
+
+  <Target Name="RunTests">
+    <CreateItem Include="**\Bin\$(Configuration)\*.Tests.dll">
+      <Output TaskParameter="Include" ItemName="TestAssemblies" />
+    </CreateItem>
+    <NUnit ToolPath="$(NUnitToolPath)" Assemblies="@(TestAssemblies)" DisableShadowCopy="true" />
+  </Target>
+
+    <Target Name="Deploy">
+        <MSBuild Projects="$(SolutionName)" ContinueOnError="false"
+                 Properties="Platform=$(Platform);Configuration=$(Configuration);DeployOnBuild=true;DeployTarget=Package;PackageLocation=Output\$(Configuration);PackageAsSingleFile=False"/>
+    </Target>
+
+</Project>
