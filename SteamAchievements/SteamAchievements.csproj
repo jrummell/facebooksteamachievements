@@ -155,6 +155,13 @@
     <Compile Include="Help.aspx.designer.cs">
       <DependentUpon>Help.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PublishDialogTest.aspx.cs">
+      <DependentUpon>PublishDialogTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PublishDialogTest.aspx.designer.cs">
+      <DependentUpon>PublishDialogTest.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -173,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AchievementServiceTest.htm" />
+    <Content Include="PublishDialogTest.aspx" />
     <Content Include="Site.Master" />
     <Content Include="Default.aspx" />
   </ItemGroup>
