@@ -22,8 +22,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Xml;
 using NUnit.Framework;
+using System.Runtime.Serialization;
+using System;
 
 namespace SteamAchievements.Services.Tests
 {
@@ -47,6 +50,36 @@ namespace SteamAchievements.Services.Tests
             IEnumerable<Game> games = parser.Parse(xml);
 
             Assert.That(games.Any());
+        }
+
+        [Test, Explicit]
+        public void SerializeGames()
+        {
+            FileInfo file = new FileInfo("UnimatrixeroGames.xml");
+            string xml = File.ReadAllText(file.FullName);
+
+            GameXmlParser parser = new GameXmlParser();
+            List<Game> games = parser.Parse(xml).ToList();
+
+            Assert.That(games.Count, Is.GreaterThan(0));
+
+            DataContractSerializer serializer = new DataContractSerializer(typeof(Game), new[]{typeof(List<Game>)});
+            StringBuilder builder = new StringBuilder();
+            using (XmlWriter writer = XmlWriter.Create(builder))
+            {
+                serializer.WriteObject(writer, games);
+            }
+            
+            string serializedGamesXml = builder.ToString();
+
+            string solutionDirectoryPath = file.Directory.Parent.Parent.Parent.FullName;
+
+            Console.WriteLine(solutionDirectoryPath);
+
+            string dataTestProjectPath = Path.Combine(solutionDirectoryPath, "SteamAchievements.Data.Tests");
+            string serializedGamesFileName = Path.Combine(dataTestProjectPath, "UnimatrixeroGameEntities.xml");
+
+            File.WriteAllText(serializedGamesFileName, serializedGamesXml);
         }
     }
 }
