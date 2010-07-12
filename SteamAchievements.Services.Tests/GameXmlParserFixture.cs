@@ -19,14 +19,14 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
 using NUnit.Framework;
-using System.Runtime.Serialization;
-using System;
 
 namespace SteamAchievements.Services.Tests
 {
@@ -63,13 +63,13 @@ namespace SteamAchievements.Services.Tests
 
             Assert.That(games.Count, Is.GreaterThan(0));
 
-            DataContractSerializer serializer = new DataContractSerializer(typeof(Game), new[]{typeof(List<Game>)});
+            DataContractSerializer serializer = new DataContractSerializer(typeof (Game), new[] {typeof (List<Game>)});
             StringBuilder builder = new StringBuilder();
             using (XmlWriter writer = XmlWriter.Create(builder))
             {
                 serializer.WriteObject(writer, games);
             }
-            
+
             string serializedGamesXml = builder.ToString();
 
             string solutionDirectoryPath = file.Directory.Parent.Parent.Parent.FullName;

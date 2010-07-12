@@ -329,9 +329,9 @@ namespace SteamAchievements.Data
             return from achievement in communityAchievements
                    where
                        !_repository.Achievements.Any(
-                            dbAchievement =>
-                            dbAchievement.GameId == achievement.GameId &&
-                            dbAchievement.Name.ToUpper() == achievement.Name.ToUpper())
+                           dbAchievement =>
+                           dbAchievement.GameId == achievement.GameId &&
+                           dbAchievement.Name.ToUpper() == achievement.Name.ToUpper())
                    select achievement;
         }
 
