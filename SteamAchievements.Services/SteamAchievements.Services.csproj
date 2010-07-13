@@ -74,6 +74,7 @@
     <Compile Include="AchievementXmlParser.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameXmlParser.cs" />
+    <Compile Include="HttpErrorHandler.cs" />
     <Compile Include="IAchievementService.cs" />
     <Compile Include="IXmlParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -82,6 +83,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ServiceErrorBehaviourAttribute.cs" />
     <Compile Include="SimpleAchievement.cs" />
     <Compile Include="SimpleGame.cs" />
     <Compile Include="SteamCommunityManager.cs" />
