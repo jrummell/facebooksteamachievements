@@ -26,6 +26,7 @@ using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
+    [ServiceErrorBehaviour(typeof(HttpErrorHandler))]
     public class AchievementService : IAchievementService
     {
         private readonly IAchievementManager _achievementManager;
