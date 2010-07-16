@@ -48,7 +48,8 @@
         <legend>Games</legend>
         <div>
             <p>
-                Your Steam games that have achievements.</p>
+                Your games. This list includes all Steam games that you own (including some free
+                Source Mods) that support achievements.</p>
             <img id="loadingGames" class="loading" src="images/ajax-loader.gif" alt="Loading..." />
         </div>
         <div id="gamesDiv" class="games">
@@ -57,7 +58,5 @@
     <div id="log" class="fberrorbox" style="display: none;">
         <asp:Literal ID="errorLiteral" runat="server" />
     </div>
-
     <script type="text/javascript" src="default.js"></script>
-
 </asp:Content>
