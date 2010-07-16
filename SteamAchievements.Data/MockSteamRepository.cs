@@ -37,6 +37,11 @@ namespace SteamAchievements.Data
         private Dictionary<int, UserAchievement> _userAchievements;
         private Dictionary<UserKey, User> _users;
 
+        private List<Achievement> _achievementsToInsertOnSubmit = new List<Achievement>();
+        private List<UserAchievement> _userAchievementsToInsertOnSubmit = new List<UserAchievement>();
+        private List<UserAchievement> _userAchievementsToDeleteOnSubmit = new List<UserAchievement>();
+        private List<User> _usersToInsertOnSubmit = new List<User>();
+
         public MockSteamRepository()
         {
             Init();
@@ -80,7 +85,7 @@ namespace SteamAchievements.Data
         /// <param name="user">The user.</param>
         public void InsertOnSubmit(User user)
         {
-            _users.Add(new UserKey(user), user);
+            _usersToInsertOnSubmit.Add(user);
         }
 
         /// <summary>
@@ -89,10 +94,7 @@ namespace SteamAchievements.Data
         /// <param name="achievements">The achievements.</param>
         public void DeleteAllOnSubmit(IEnumerable<UserAchievement> achievements)
         {
-            foreach (UserAchievement userAchievement in achievements)
-            {
-                _userAchievements.Remove(userAchievement.Id);
-            }
+            _userAchievementsToDeleteOnSubmit.AddRange(achievements);
         }
 
         /// <summary>
@@ -100,6 +102,54 @@ namespace SteamAchievements.Data
         /// </summary>
         public void SubmitChanges()
         {
+            // UserAchievements
+            int maxUserAchievementId = 0;
+            if (_userAchievements.Any())
+            {
+                maxUserAchievementId = _userAchievements.Values.Max(ua => ua.Id);
+            }
+
+            foreach (UserAchievement userAchievement in _userAchievementsToInsertOnSubmit)
+            {
+                userAchievement.Id = ++maxUserAchievementId;
+                _userAchievements.Add(userAchievement.Id, userAchievement);
+            }
+            _userAchievementsToInsertOnSubmit.Clear();
+
+            // Achievements
+            int maxAchievementId = 0;
+            if (_achievements.Any())
+            {
+                maxAchievementId = _achievements.Values.Max(a => a.Id);
+            }
+
+            foreach (Achievement achievement in _achievementsToInsertOnSubmit)
+            {
+                // mimic the unique index on GameId, Name, Description
+                if (_achievements.Values.Where(a => a.Name == achievement.Name && a.GameId == achievement.GameId && a.Description == achievement.Description).Any())
+                {
+
+                    throw new InvalidOperationException("Cannot insert duplicate key row in object 'dbo.steam_Achievement' with unique index 'IX_steam_Achievement.\r\nGameId: "
+                        + achievement.GameId + " Name: " + achievement.Name + " Description: " + achievement.Description);
+                }
+
+                achievement.Id = ++maxAchievementId;
+                _achievements.Add(achievement.Id, achievement);
+            }
+            _achievementsToInsertOnSubmit.Clear();
+
+            // Users
+            foreach (User user in _usersToInsertOnSubmit)
+            {
+                _users.Add(new UserKey(user), user);
+            }
+            _usersToInsertOnSubmit.Clear();
+
+            foreach (UserAchievement userAchievement in _userAchievementsToDeleteOnSubmit)
+            {
+                _userAchievements.Remove(userAchievement.Id);
+            }
+            _userAchievementsToDeleteOnSubmit.Clear();
         }
 
         /// <summary>
@@ -108,8 +158,7 @@ namespace SteamAchievements.Data
         /// <param name="achievement">The achievement.</param>
         public void InsertOnSubmit(Achievement achievement)
         {
-            achievement.Id = _achievements.Values.Max(a => a.Id) + 1;
-            _achievements.Add(achievement.Id, achievement);
+            _achievementsToInsertOnSubmit.Add(achievement);
         }
 
         /// <summary>
@@ -118,14 +167,7 @@ namespace SteamAchievements.Data
         /// <param name="achievements">The achievements.</param>
         public void InsertAllOnSubmit(IEnumerable<UserAchievement> achievements)
         {
-            int maxId = _userAchievements.Values.Max(ua => ua.Id);
-
-            foreach (UserAchievement userAchievement in achievements)
-            {
-                userAchievement.Id = ++maxId;
-
-                _userAchievements.Add(userAchievement.Id, userAchievement);
-            }
+            _userAchievementsToInsertOnSubmit.AddRange(achievements);
         }
 
         public void Dispose()
@@ -278,18 +320,18 @@ namespace SteamAchievements.Data
                 {
                     return true;
                 }
-                if (obj.GetType() != typeof (UserKey))
+                if (obj.GetType() != typeof(UserKey))
                 {
                     return false;
                 }
-                return Equals((UserKey) obj);
+                return Equals((UserKey)obj);
             }
 
             public override int GetHashCode()
             {
                 unchecked
                 {
-                    return (int) ((FacebookUserId*397) ^ (SteamUserId != null ? SteamUserId.GetHashCode() : 0));
+                    return (int)((FacebookUserId * 397) ^ (SteamUserId != null ? SteamUserId.GetHashCode() : 0));
                 }
             }
 
