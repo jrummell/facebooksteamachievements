@@ -83,6 +83,9 @@ namespace SteamAchievements.Services.Tests
             return achievements;
         }
 
+        /// <summary>
+        /// http://code.google.com/p/facebooksteamachievements/issues/detail?id=37
+        /// </summary>
         [Test, Explicit]
         public void Issue37()
         {
@@ -96,9 +99,10 @@ namespace SteamAchievements.Services.Tests
             IEnumerable<Game> games = gameXmlParser.Parse(File.ReadAllText("UnimatrixeroGames.xml"));
 
             AchievementManager manager = new AchievementManager(repository);
-            manager.UpdateAchievements("AchievementManager", GetCommunityAchievements());
+            IEnumerable<Data.Achievement> achievements = GetCommunityAchievements();
 
-            //TODO: Assert
+            // should not throw InvalidOperationException
+            manager.UpdateAchievements("Unimatrixero", achievements);
         }
 
         [Test, Explicit]
