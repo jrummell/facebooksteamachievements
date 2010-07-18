@@ -20,11 +20,15 @@
 #endregion
 
 using System;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web;
 using System.Web.Configuration;
+using System.Web.UI;
 
 namespace SteamAchievements
 {
-    public partial class PublishDialogTest : System.Web.UI.Page
+    public partial class PublishDialogTest : Page
     {
         protected string FacebookClientId
         {
@@ -36,18 +40,55 @@ namespace SteamAchievements
             get { return WebConfigurationManager.AppSettings["Callback"]; }
         }
 
+        protected bool IsLoggedIn { get; set; }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
 
-            if (String.IsNullOrEmpty(Request["access_token"]))
-            {
-                string redirectUrl = "https://graph.facebook.com/oauth/authorize?client_id="
-                                     + FacebookClientId + "&redirect_uri=" + FacebookCallbackUrl +
-                                     "&type=user_agent&display=popup";
+            HttpCookie cookie = GetCookie();
+            IsLoggedIn = cookie != null;
+        }
 
-                Response.Redirect(redirectUrl);
+        private HttpCookie GetCookie()
+        {
+            // based on the php example at http://developers.facebook.com/docs/authentication/
+            HttpCookie cookie = Request.Cookies["fbs_" + FacebookClientId];
+            StringBuilder payload = new StringBuilder();
+            if (cookie != null)
+            {
+                foreach (string key in cookie.Values.Keys)
+                {
+                    if (key != "sig")
+                    {
+                        payload.Append(key + "=" + cookie.Values[key]);
+                    }
+                }
+
+                string sig = cookie.Values["sig"];
+
+                if (sig == GetMD5Hash(payload.ToString()))
+                {
+                    return cookie;
+                }
             }
+
+            return null;
+        }
+
+        public string GetMD5Hash(string input)
+        {
+            MD5CryptoServiceProvider cryptoServiceProvider = new MD5CryptoServiceProvider();
+            byte[] bytes = Encoding.UTF8.GetBytes(input);
+            bytes = cryptoServiceProvider.ComputeHash(bytes);
+            StringBuilder s = new StringBuilder();
+
+            foreach (byte b in bytes)
+            {
+                s.Append(b.ToString("x2").ToLower());
+            }
+
+            return s.ToString();
         }
     }
 }
