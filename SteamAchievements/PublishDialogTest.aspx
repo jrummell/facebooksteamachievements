@@ -1,10 +1,52 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="false"
-    CodeBehind="PublishDialogTest.aspx.cs" Inherits="SteamAchievements.PublishDialogTest" %>
+﻿<%@ Page Title="" Language="C#" AutoEventWireup="false" CodeBehind="PublishDialogTest.aspx.cs"
+    Inherits="SteamAchievements.PublishDialogTest" %>
 
-<asp:Content ContentPlaceHolderID="body" runat="server">
-    <input type="button" value="Publish" onclick="publishTest();" />
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head runat="server">
+    <title></title>
+</head>
+<body>
+    <div id="fb-root">
+    </div>
+    <input id="publishButton" type="button" value="Publish" onclick="publishTest();" />
+    <% if (!IsLoggedIn)
+       {%>
+    <div id="facebookLogin">
+        <fb:login-button></fb:login-button>
+    </div>
+    <%
+       }%>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     <script src="http://connect.facebook.net/en_US/all.js" type="text/javascript"></script>
     <script type="text/javascript">
+        FB.init(
+        {
+            appId: "<%= FacebookClientId %>",
+            cookie: true,
+            status: true,
+            xfbml: true
+        });
+
+        FB.Event.subscribe('auth.login', function (response)
+        {
+            window.location.reload();
+        });
+
+        FB.Event.subscribe('auth.sessionChange', function (response)
+        {
+            if (response.session)
+            {
+                // A user has logged in, and a new cookie has been saved
+                window.location.reload();
+            }
+            else
+            {
+                // The user has logged out, and the cookie has been cleared
+                $("#publishButton").hide();
+            }
+        });
+
         function publishTest()
         {
             var images = [
@@ -26,23 +68,13 @@
                     name: 'Test',
                     caption: 'A test caption',
                     description: 'Testing steam.publish from Steam Achievements Test',
-                    href: 'http://apps.facebook.com/steamachievementsxt/'
-                },
-                media: images
+                    href: 'http://apps.facebook.com/steamachievementsxt/',
+                    media: images
+                }
             };
 
-            FB.ui(publishParams, publishCallback);
-        }
-
-        function publishCallback(response)
-        {
-            if (response && response.post_id)
-            {
-                alert('Post was published.');
-            } else
-            {
-                alert('Post was not published.');
-            }
+            FB.ui(publishParams);
         }
     </script>
-</asp:Content>
+</body>
+</html>
