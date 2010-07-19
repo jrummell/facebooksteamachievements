@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Database Name="steam" Class="SteamDataContext" AccessModifier="Internal" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="steam" Class="SteamDataContext" AccessModifier="Internal" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=Steam;Integrated Security=True" SettingsObjectName="SteamAchievements.Data.Properties.Settings" SettingsPropertyName="steamConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.steam_Achievement" Member="Achievements">
     <Type Name="Achievement">
@@ -17,6 +16,7 @@
       <Column Name="SteamUserId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="AchievementId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Date" Type="System.DateTime" DbType="datetime not null" CanBeNull="false" />
+      <Column Name="Published" Type="System.Boolean" DbType="bit not null" CanBeNull="false" />
       <Association Name="Achievement_UserAchievement" Member="Achievement" Storage="_steam_Achievement" ThisKey="AchievementId" OtherKey="Id" Type="Achievement" IsForeignKey="true" />
     </Type>
   </Table>

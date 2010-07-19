@@ -338,6 +338,8 @@ namespace SteamAchievements.Data
 		
 		private System.DateTime _Date;
 		
+		private bool _Published;
+		
 		private EntityRef<Achievement> _steam_Achievement;
 		
     #region Extensibility Method Definitions
@@ -352,6 +354,8 @@ namespace SteamAchievements.Data
     partial void OnAchievementIdChanged();
     partial void OnDateChanging(System.DateTime value);
     partial void OnDateChanged();
+    partial void OnPublishedChanging(bool value);
+    partial void OnPublishedChanged();
     #endregion
 		
 		public UserAchievement()
@@ -443,6 +447,27 @@ namespace SteamAchievements.Data
 					this._Date = value;
 					this.SendPropertyChanged("Date");
 					this.OnDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Published", DbType="bit not null")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+		public bool Published
+		{
+			get
+			{
+				return this._Published;
+			}
+			set
+			{
+				if ((this._Published != value))
+				{
+					this.OnPublishedChanging(value);
+					this.SendPropertyChanging();
+					this._Published = value;
+					this.SendPropertyChanged("Published");
+					this.OnPublishedChanged();
 				}
 			}
 		}

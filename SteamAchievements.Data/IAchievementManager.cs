@@ -61,5 +61,12 @@ namespace SteamAchievements.Data
         /// <param name="facebookUserId">The facebook user id.</param>
         /// <param name="steamUserId">The steam user id.</param>
         void UpdateSteamUserId(long facebookUserId, string steamUserId);
+
+        /// <summary>
+        /// Updates the published flag on the given achievements.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="dataAchievements">The achievements.</param>
+        void UpdatePublished(string steamUserId, IEnumerable<Achievement> achievements);
     }
 }

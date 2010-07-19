@@ -162,6 +162,8 @@ namespace SteamAchievements.Services
 
                 AchievementsPublisher publisher = new AchievementsPublisher();
                 publisher.Publish(achievements, steamUserId, facebookUserId);
+
+                _achievementManager.UpdatePublished(steamUserId, dataAchievements);
             }
 
             return true;
