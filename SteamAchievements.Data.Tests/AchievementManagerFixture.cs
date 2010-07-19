@@ -252,5 +252,11 @@ namespace SteamAchievements.Data.Tests
                         Is.EqualTo(steamUserId));
             Assert.That(!_repository.UserAchievements.Any(ua => ua.SteamUserId == steamUserId));
         }
+
+        [Test]
+        public void UpdatePublished()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

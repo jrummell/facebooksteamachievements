@@ -2,25 +2,25 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="DB">
   <DataContextMoniker Name="/SteamDataContext" />
   <nestedChildShapes>
-    <classShape Id="2dcc0f69-cc50-4fd9-ad86-525245aa5442" absoluteBounds="0.75, 0.875, 2, 1.5891951497395833">
+    <classShape Id="2dcc0f69-cc50-4fd9-ad86-525245aa5442" absoluteBounds="0.75, 0.875, 2, 1.7708968098958331">
       <DataClassMoniker Name="/SteamDataContext/Achievement" />
       <nestedChildShapes>
-        <elementListCompartment Id="8f72d994-5cca-4fc8-86ab-d6c4abd07e8c" absoluteBounds="0.76500000059604645, 1.3350000008940697, 1.9700000000000002, 1.0291951497395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="8f72d994-5cca-4fc8-86ab-d6c4abd07e8c" absoluteBounds="0.76500000059604645, 1.3350000008940697, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="5dac97ac-82be-431c-acff-18008bc70c67" absoluteBounds="3.5, 1, 2, 1.4248478190104172">
+    <classShape Id="5dac97ac-82be-431c-acff-18008bc70c67" absoluteBounds="3.5, 1, 2, 1.7708968098958331">
       <DataClassMoniker Name="/SteamDataContext/UserAchievement" />
       <nestedChildShapes>
-        <elementListCompartment Id="3c87657b-e98c-4922-9549-047bffd1ff0e" absoluteBounds="3.5150000005960464, 1.4600000008940697, 1.9700000000000002, 0.86484781901041663" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="3c87657b-e98c-4922-9549-047bffd1ff0e" absoluteBounds="3.5150000005960464, 1.4600000008940697, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="3f0aedf5-99f7-4f77-8ad1-b64bc9b7d376" absoluteBounds="0.75, 3.75, 2, 1.0961531575520827">
+    <classShape Id="3f0aedf5-99f7-4f77-8ad1-b64bc9b7d376" absoluteBounds="0.75, 3.75, 2, 1.1939925130208327">
       <DataClassMoniker Name="/SteamDataContext/User" />
       <nestedChildShapes>
-        <elementListCompartment Id="8381f61b-507f-4ea8-8dcb-5d3d7221deb1" absoluteBounds="0.76500000000000012, 4.21, 1.9700000000000002, 0.53615315755208326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="8381f61b-507f-4ea8-8dcb-5d3d7221deb1" absoluteBounds="0.76500000000000012, 4.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.75 : 1.71242390950521); (3.5 : 1.71242390950521)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 1.82294840494792); (3.5 : 1.82294840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/SteamDataContext/Achievement/Achievement_UserAchievement" />
       <nodes>
         <classShapeMoniker Id="2dcc0f69-cc50-4fd9-ad86-525245aa5442" />

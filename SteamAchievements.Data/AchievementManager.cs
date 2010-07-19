@@ -164,6 +164,7 @@ namespace SteamAchievements.Data
 
             DateTime fiveMinutesAgo = DateTime.Now.AddMinutes(-5);
 
+            //TODO: replace 5 minutes ago with Published = false
             IQueryable<Achievement> achievements =
                 from userAchievement in _repository.UserAchievements
                 where userAchievement.SteamUserId == steamUserId && userAchievement.Date > fiveMinutesAgo
@@ -356,6 +357,43 @@ namespace SteamAchievements.Data
                 {
                     _repository.InsertOnSubmit(achievement);
                 }
+            }
+
+            _repository.SubmitChanges();
+        }
+
+        /// <summary>
+        /// Updates the published flag of the given achievements.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="achievements">The achievements.</param>
+        public void UpdatePublished(string steamUserId, IEnumerable<Achievement> achievements)
+        {
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            if (achievements == null)
+            {
+                throw new ArgumentNullException("achievements");
+            }
+
+            if (!achievements.Any())
+            {
+                return;
+            }
+
+            IEnumerable<int> ids = achievements.Select(a => a.Id);
+
+            var achievementsToUpdate =
+                from achievement in _repository.UserAchievements
+                where achievement.SteamUserId == steamUserId && ids.Contains(achievement.AchievementId)
+                select achievement;
+
+            foreach (UserAchievement achievement in achievementsToUpdate)
+            {
+                achievement.Published = true;
             }
 
             _repository.SubmitChanges();
