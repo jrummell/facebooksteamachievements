@@ -176,5 +176,16 @@ namespace SteamAchievements.Services
         }
 
         #endregion
+
+
+        public List<SimpleAchievement> GetNewAchievements(string steamUserId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool PublishAchievements(long facebookUserId, IEnumerable<int> achievementIds)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

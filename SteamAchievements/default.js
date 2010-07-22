@@ -1,6 +1,5 @@
 ﻿/// <reference path="js/jquery-vsdoc.js" />
 /// <reference path="js/json2.js" />
-/// <reference path="js/FeatureLoader.js" />
 var _serviceBase = "Services/Achievement.svc/";
 var _log = false;
 

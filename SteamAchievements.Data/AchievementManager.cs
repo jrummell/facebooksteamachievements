@@ -237,20 +237,20 @@ namespace SteamAchievements.Data
         public int AssignAchievements(string steamUserId, IEnumerable<Achievement> achievements)
         {
             // get the achievement ids for the games in the given achievements
-            IEnumerable<int> unassignedAchievementIds = GetUnassignedAchievementIds(steamUserId, achievements);
+            IEnumerable<Achievement> unassignedAchievements = GetUnassignedAchievements(steamUserId, achievements);
 
-            if (!unassignedAchievementIds.Any())
+            if (!unassignedAchievements.Any())
             {
                 return 0;
             }
 
             // create the unassigned achievements and insert them
             IEnumerable<UserAchievement> newUserAchievements =
-                from id in unassignedAchievementIds
+                from achievement in unassignedAchievements
                 select new UserAchievement
                            {
                                SteamUserId = steamUserId,
-                               AchievementId = id,
+                               AchievementId = achievement.Id,
                                Date = DateTime.Now
                            };
 
@@ -264,34 +264,58 @@ namespace SteamAchievements.Data
         /// Gets the unassigned achievement ids.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
-        /// <param name="allAchievements">All achievements.</param>
+        /// <param name="allAchievements">All achievements. These will not necessarily have an Id set.</param>
         /// <returns></returns>
-        public IEnumerable<int> GetUnassignedAchievementIds(string steamUserId, IEnumerable<Achievement> allAchievements)
+        public IEnumerable<Achievement> GetUnassignedAchievements(string steamUserId, IEnumerable<Achievement> allAchievements)
         {
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            if (allAchievements == null)
+            {
+                throw new ArgumentNullException("allAchievements");
+            }
+
+            if (!allAchievements.Any())
+            {
+                return new Achievement[0];
+            }
+
             IEnumerable<int> gameIds = (from a in allAchievements
                                         select a.GameId).Distinct();
 
-            IEnumerable<string> achievementNames = from a in allAchievements
-                                                   where gameIds.Contains(a.GameId)
-                                                   select a.Name;
+            IEnumerable<string> achievementNames = (from a in allAchievements
+                                                    where gameIds.Contains(a.GameId)
+                                                    select a.Name).Distinct();
 
-            IEnumerable<int> achievementIds = (from a in _repository.Achievements
-                                               where achievementNames.Contains(a.Name)
-                                               select a.Id).ToList();
+            // get the possible achievements by name
+            IEnumerable<Achievement> possibleAchievements = (from a in _repository.Achievements
+                                                             where achievementNames.Contains(a.Name)
+                                                             select a).ToList();
 
-            if (!achievementIds.Any())
+            if (!possibleAchievements.Any())
             {
-                return new int[0];
+                return new Achievement[0];
             }
+            
+            // get all assigned achievements
+            IEnumerable<Achievement> assignedAchievements = (from a in _repository.UserAchievements
+                                                             where a.SteamUserId == steamUserId
+                                                             select a.Achievement).ToList();
 
-            // get the unassigned achievement ids
-            IEnumerable<int> assignedAchievementIds = (from a in _repository.UserAchievements
-                                                       where a.SteamUserId == steamUserId
-                                                       select a.AchievementId).ToList();
-
-            return from id in achievementIds
-                   where !assignedAchievementIds.Contains(id)
-                   select id;
+            // return the unassigned achievements. I'm not hitting the database at this point since that could 
+            // add a great deal of complexity to the following query.
+            return from achievement in allAchievements
+            	   join possibleAchievement in possibleAchievements
+                        on new { achievement.GameId, achievement.Name, achievement.Description }
+                        equals new { possibleAchievement.GameId, possibleAchievement.Name, possibleAchievement.Description }
+                   join assignedAchievement in assignedAchievements
+                   		on possibleAchievement.Id equals assignedAchievement.Id into joinedAssignedAchievements
+                   from joinedAssignedAchievement in joinedAssignedAchievements.DefaultIfEmpty()
+                   where joinedAssignedAchievement == null
+                   select possibleAchievement;
         }
 
         /// <summary>
