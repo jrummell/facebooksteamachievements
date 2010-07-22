@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+# SharpDevelop 3.2.0.5777
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamAchievements.Data", "SteamAchievements.Data\SteamAchievements.Data.csproj", "{D654EA50-07D2-42FF-B420-17373D0B4C74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamAchievements.Data.Tests", "SteamAchievements.Data.Tests\SteamAchievements.Data.Tests.csproj", "{35747624-FAE1-4D7F-A7A7-DCB192DA7279}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamAchievements.Services", "SteamAchievements.Services\SteamAchievements.Services.csproj", "{097473AA-B8FB-4A5E-889E-00559C65C660}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamAchievements.Services.Tests", "SteamAchievements.Services.Tests\SteamAchievements.Services.Tests.csproj", "{CFB2A390-12F2-47C6-A656-686B4590B245}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamAchievements", "SteamAchievements\SteamAchievements.csproj", "{255FFFAF-4FED-461D-B8B6-496C4B9C77A8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D654EA50-07D2-42FF-B420-17373D0B4C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D654EA50-07D2-42FF-B420-17373D0B4C74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D654EA50-07D2-42FF-B420-17373D0B4C74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D654EA50-07D2-42FF-B420-17373D0B4C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35747624-FAE1-4D7F-A7A7-DCB192DA7279}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35747624-FAE1-4D7F-A7A7-DCB192DA7279}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35747624-FAE1-4D7F-A7A7-DCB192DA7279}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35747624-FAE1-4D7F-A7A7-DCB192DA7279}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{097473AA-B8FB-4A5E-889E-00559C65C660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{097473AA-B8FB-4A5E-889E-00559C65C660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{097473AA-B8FB-4A5E-889E-00559C65C660}.Release|Any CPU.Build.0 = Release|Any CPU
+		{097473AA-B8FB-4A5E-889E-00559C65C660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFB2A390-12F2-47C6-A656-686B4590B245}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFB2A390-12F2-47C6-A656-686B4590B245}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFB2A390-12F2-47C6-A656-686B4590B245}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFB2A390-12F2-47C6-A656-686B4590B245}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{255FFFAF-4FED-461D-B8B6-496C4B9C77A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{255FFFAF-4FED-461D-B8B6-496C4B9C77A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{255FFFAF-4FED-461D-B8B6-496C4B9C77A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{255FFFAF-4FED-461D-B8B6-496C4B9C77A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal

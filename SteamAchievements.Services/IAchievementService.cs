@@ -40,7 +40,20 @@ namespace SteamAchievements.Services
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        [Obsolete("GetNewAchievements()")]
         List<SimpleAchievement> GetAchievements(string steamUserId, int gameId);
+
+        /// <summary>
+        /// Gets the new achievements.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns>
+        /// The new achievements that haven't been stored yet.
+        /// </returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        List<SimpleAchievement> GetNewAchievements(string steamUserId);
 
         /// <summary>
         /// Gets the games.
@@ -62,6 +75,7 @@ namespace SteamAchievements.Services
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        [Obsolete("GetNewAchievements() and PublishAchievements()")]
         int UpdateAchievements(string steamUserId);
 
         /// <summary>
@@ -86,6 +100,19 @@ namespace SteamAchievements.Services
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        [Obsolete("PublishAchievements()")]
         bool PublishLatestAchievements(long facebookUserId, string steamUserId);
+
+        /// <summary>
+        /// Publishes the given achievements for the given user.
+        /// </summary>
+        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="achievementIds">The ids of the achievements to publish.</param>
+        /// <returns>true if successful, else false.</returns>
+        /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
+        [OperationContract]
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        bool PublishAchievements(long facebookUserId, IEnumerable<int> achievementIds);
     }
 }

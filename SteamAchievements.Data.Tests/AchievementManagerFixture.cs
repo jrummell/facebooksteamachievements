@@ -38,15 +38,15 @@ namespace SteamAchievements.Data.Tests
                 (new[]
                      {
                          new Achievement
-                             {Id = 1, GameId = 1, Name = "Achievement 1 for Game 1"},
+                             {Id = 1, GameId = 1, Name = "Achievement 1 for Game 1", Description = ""},
                          new Achievement
-                             {Id = 2, GameId = 1, Name = "Achievement 2 for Game 1"},
+                             {Id = 2, GameId = 1, Name = "Achievement 2 for Game 1", Description = ""},
                          new Achievement
-                             {Id = 3, GameId = 1, Name = "Achievement 3 for Game 1"},
+                             {Id = 3, GameId = 1, Name = "Achievement 3 for Game 1", Description = ""},
                          new Achievement
-                             {Id = 4, GameId = 2, Name = "Achievement 1 for Game 2"},
+                             {Id = 4, GameId = 2, Name = "Achievement 1 for Game 2", Description = ""},
                          new Achievement
-                             {Id = 5, GameId = 2, Name = "Achievement 2 for Game 2"}
+                             {Id = 5, GameId = 2, Name = "Achievement 2 for Game 2", Description = ""}
                      }).AsQueryable();
 
             IQueryable<User> users =
@@ -131,14 +131,8 @@ namespace SteamAchievements.Data.Tests
         public void AssignAchievements()
         {
             const string steamUserId = "user1";
-            IEnumerable<int> achievementIds = _manager.GetUnassignedAchievementIds(steamUserId, _repository.Achievements);
-            Assert.That(achievementIds.Any());
-
-            IEnumerable<Achievement> achievements =
-                from id in achievementIds
-                select _repository.Achievements.Single(a => a.Id == id);
-
-            Assert.That(achievementIds.Count(), Is.EqualTo(achievements.Count()));
+            IEnumerable<Achievement> achievements = _manager.GetUnassignedAchievements(steamUserId, _repository.Achievements);
+            Assert.That(achievements.Any());
 
             _manager.AssignAchievements(steamUserId, achievements);
 
@@ -177,12 +171,13 @@ namespace SteamAchievements.Data.Tests
         }
 
         [Test]
-        public void GetUnassignedAchievementIds()
+        public void GetUnassignedAchievements()
         {
-            IEnumerable<int> achievementIds = _manager.GetUnassignedAchievementIds("user1", _repository.Achievements);
+            IEnumerable<Achievement> achievements = _manager.GetUnassignedAchievements("user1", _repository.Achievements);
 
-            Assert.That(achievementIds.Contains(4));
-            Assert.That(achievementIds.Contains(5));
+            Assert.That(achievements.Count(), Is.EqualTo(2));
+            Assert.That(achievements.Count(a => a.Id == 4), Is.EqualTo(1));
+            Assert.That(achievements.Count(a => a.Id == 5), Is.EqualTo(1));
         }
 
         [Test]
@@ -204,23 +199,21 @@ namespace SteamAchievements.Data.Tests
                 new[]
                     {
                         new Achievement
-                            {Id = 1, GameId = 1, Name = "Achievement 1 for Game 1"},
+                            {Id = 1, GameId = 1, Name = "Achievement 1 for Game 1", Description = ""},
                         new Achievement
-                            {Id = 2, GameId = 1, Name = "Achievement 2 for Game 1"},
+                            {Id = 2, GameId = 1, Name = "Achievement 2 for Game 1", Description = ""},
                         new Achievement
-                            {Id = 3, GameId = 1, Name = "Achievement 3 for Game 1"},
+                            {Id = 3, GameId = 1, Name = "Achievement 3 for Game 1", Description = ""},
                         new Achievement
-                            {Id = 4, GameId = 2, Name = "Achievement 1 for Game 2"},
+                            {Id = 4, GameId = 2, Name = "Achievement 1 for Game 2", Description = ""},
                         new Achievement
-                            {Id = 5, GameId = 2, Name = "Achievement 2 for Game 2"},
+                            {Id = 5, GameId = 2, Name = "Achievement 2 for Game 2", Description = ""},
                         new Achievement
-                            {Id = 6, GameId = 2, Name = "Achievement 3 for Game 2"},
-                        new Achievement
-                            {Id = 7, GameId = 2, Name = "Achievement 4 for Game 2"},
-                        new Achievement
-                            {Id = 8, GameId = 2, Name = "Achievement 5 for Game 2"},
-                        new Achievement
-                            {Id = 9, GameId = 2, Name = "Achievement 6 for Game 2"}
+                            {Id = 6, GameId = 3, Name = "Achievement for Game", Description = "Game 3 Achievement 1"},
+                         new Achievement
+                            {Id = 7, GameId = 3, Name = "Achievement for Game", Description = "Game 3 Achievement 2"},
+                         new Achievement
+                            {Id = 8, GameId = 4, Name = "Achievement for Game", Description = "Game 4 Achievement 1"}
                     };
 
             const string steamUserId = "user1";
@@ -232,8 +225,9 @@ namespace SteamAchievements.Data.Tests
                 int achievementId = achievement.Id;
                 int gameId = achievement.GameId;
                 string name = achievement.Name;
+                string description = achievement.Description;
                 int achievementCount =
-                    _repository.Achievements.Count(a => a.Id == achievementId && a.GameId == gameId && a.Name == name);
+                    _repository.Achievements.Count(a => a.Id == achievementId && a.GameId == gameId && a.Name == name && a.Description == description);
                 Assert.That(achievementCount, Is.EqualTo(1));
 
                 // assert that the new achievements were assigned
