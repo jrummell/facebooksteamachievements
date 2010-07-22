@@ -3,7 +3,8 @@ CREATE TABLE [dbo].[steam_UserAchievement]
 [Id] [int] NOT NULL IDENTITY(1, 1),
 [SteamUserId] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 [AchievementId] [int] NOT NULL,
-[Date] [datetime] NOT NULL
+[Date] [datetime] NOT NULL,
+[Published] [bit] NOT NULL
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[steam_UserAchievement] ADD CONSTRAINT [PK_steam_UserAchievement] PRIMARY KEY CLUSTERED  ([Id]) ON [PRIMARY]
