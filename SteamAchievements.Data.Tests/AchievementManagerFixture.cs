@@ -64,21 +64,24 @@ namespace SteamAchievements.Data.Tests
                                  Id = 1,
                                  AchievementId = 1,
                                  Date = DateTime.Now,
-                                 SteamUserId = "user1"
+                                 SteamUserId = "user1",
+                                 Achievement = achievements.Single(achievement => achievement.Id == 1)
                              },
                          new UserAchievement
                              {
                                  Id = 2,
                                  AchievementId = 2,
                                  Date = DateTime.Now,
-                                 SteamUserId = "user1"
+                                 SteamUserId = "user1",
+                                 Achievement = achievements.Single(achievement => achievement.Id == 2)
                              },
                          new UserAchievement
                              {
                                  Id = 3,
                                  AchievementId = 3,
                                  Date = DateTime.Now,
-                                 SteamUserId = "user1"
+                                 SteamUserId = "user1",
+                                 Achievement = achievements.Single(achievement => achievement.Id == 3)
                              }
                      }).AsQueryable();
 
@@ -256,7 +259,19 @@ namespace SteamAchievements.Data.Tests
         [Test]
         public void UpdatePublished()
         {
-            throw new NotImplementedException();
+            const string steamUserId = "user1";
+            const int gameId = 1;
+            IEnumerable<Achievement> achievements = _manager.GetAchievements(steamUserId, gameId);
+            _manager.UpdatePublished(steamUserId, achievements);
+
+            IEnumerable<int> achievementIds = from achievement in achievements
+                                              select achievement.Id;
+            IEnumerable<UserAchievement> userAchievements =
+                from achievement in _repository.UserAchievements
+                where achievement.SteamUserId == steamUserId && achievementIds.Contains(achievement.AchievementId)
+                select achievement;
+
+            Assert.That(userAchievements.Any(achievement => !achievement.Published), Is.False);
         }
     }
 }
