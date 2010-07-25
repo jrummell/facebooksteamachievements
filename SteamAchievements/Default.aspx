@@ -17,9 +17,8 @@
                 <span id="steamIdError" class="error" style="display: none;">Required</span> <a id="updateSteamIdButton"
                     class="button" href="#">
                     <img src="images/disk.png" alt="" />
-                    Update URL</a> <a class="button" href="Help.aspx?<%=Request.QueryString%>">
-                        <img src="images/help.png" alt="Help" align="middle" />
-                        Help</a>
+                    Update URL</a>
+                <steam:HelpLink ID="steamHelpLink" runat="server" HelpAnchor="steam" />
                 <img id="updatingSteamUserId" class="loading" src="images/ajax-loader.gif" alt="Updating..." />
             </p>
         </div>
@@ -49,7 +48,9 @@
         <div>
             <p>
                 Your games. This list includes all Steam games that you own (including some free
-                Source Mods) that support achievements.</p>
+                Source Mods) that support achievements.
+                <steam:HelpLink ID="gamesHelpLink" runat="server" HelpAnchor="games" />
+            </p>
             <img id="loadingGames" class="loading" src="images/ajax-loader.gif" alt="Loading..." />
         </div>
         <div id="gamesDiv" class="games">
