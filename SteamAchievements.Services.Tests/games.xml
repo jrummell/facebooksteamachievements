@@ -9,7 +9,8 @@
 			<storeLink><![CDATA[http://store.steampowered.com/app/12900]]></storeLink>
 			<statsLink><![CDATA[http://steamcommunity.com/id/nullreference/stats/AudioSurf]]></statsLink>
 			<globalStatsLink><![CDATA[http://steamcommunity.com/stats/AudioSurf/achievements/]]></globalStatsLink>
-		</game>
+            <hoursLast2Weeks>0.6</hoursLast2Weeks>
+        </game>
 		<game>
 			<appID>7670</appID>
 			<name><![CDATA[BioShock]]></name>
@@ -24,7 +25,8 @@
 			<hoursOnRecord>7.9</hoursOnRecord>
 			<statsLink><![CDATA[http://steamcommunity.com/id/nullreference/stats/ModernWarfare2]]></statsLink>
 			<globalStatsLink><![CDATA[http://steamcommunity.com/stats/ModernWarfare2/achievements/]]></globalStatsLink>
-		</game>
+            <hoursLast2Weeks>0.1</hoursLast2Weeks>
+        </game>
 		<game>
 			<appID>10190</appID>
 			<name><![CDATA[Call of Duty: Modern Warfare 2 - Multiplayer]]></name>

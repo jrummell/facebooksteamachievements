@@ -50,6 +50,7 @@ namespace SteamAchievements.Services.Tests
             IEnumerable<Game> games = parser.Parse(xml);
 
             Assert.That(games.Any());
+            Assert.That(games.Count(game => game.PlayedRecently), Is.EqualTo(2));
         }
 
         [Test, Explicit]
