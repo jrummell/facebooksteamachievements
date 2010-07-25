@@ -46,7 +46,8 @@ namespace SteamAchievements.Services
                                name = element.Element("name").Value,
                                logo = element.Element("logo").Value,
                                statsLink = element.Element("statsLink").Value,
-                               storeLink = element.Element("storeLink").Value
+                               storeLink = element.Element("storeLink").Value,
+                               playedRecently = element.Element("hoursLast2Weeks") != null
                            };
 
             return from game in games
@@ -56,7 +57,8 @@ namespace SteamAchievements.Services
                                   Name = game.name,
                                   ImageUrl = new Uri(game.logo, UriKind.Absolute),
                                   StatsUrl = new Uri(game.statsLink, UriKind.Absolute),
-                                  StoreUrl = new Uri(game.storeLink, UriKind.Absolute)
+                                  StoreUrl = new Uri(game.storeLink, UriKind.Absolute),
+                                  PlayedRecently = game.playedRecently
                               };
         }
 

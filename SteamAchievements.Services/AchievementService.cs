@@ -143,7 +143,9 @@ namespace SteamAchievements.Services
             }
 
             IEnumerable<Data.Achievement> dataAchievements = _achievementManager.GetLatestAchievements(steamUserId);
-            IEnumerable<Game> games = _communityService.GetGames(steamUserId);
+            IEnumerable<Game> games = from game in _communityService.GetGames(steamUserId)
+                                      where game.PlayedRecently
+                                      select game;
 
             if (dataAchievements.Any())
             {

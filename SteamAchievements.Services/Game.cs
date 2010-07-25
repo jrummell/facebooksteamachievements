@@ -54,5 +54,10 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <value>The store URL.</value>
         public Uri StoreUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the game was played recently.
+        /// </summary>
+        public bool PlayedRecently { get; set; }
     }
 }
