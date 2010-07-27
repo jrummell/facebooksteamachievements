@@ -30,6 +30,8 @@ namespace SteamAchievements
 {
     public partial class PublishDialogTest : Page
     {
+        //TODO: use the example at http://developers.facebook.com/docs/guides/canvas/#canvas for authentication
+        
         protected string FacebookClientId
         {
             get { return WebConfigurationManager.AppSettings["APIKey"]; }
