@@ -36,7 +36,7 @@
         FB.Event.subscribe('auth.login', function (response)
         {
             // Reload the application in the logged-in state
-            window.top.location = 'http://apps.facebook.com/<%= FacebookUrlSuffix %>/';
+            window.top.location = 'http://apps.facebook.com/<%= FacebookUrlSuffix %>/PublishDialogTest.aspx';
         });
 
         function publishTest()
