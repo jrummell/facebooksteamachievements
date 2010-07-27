@@ -9,14 +9,19 @@
 <body>
     <div id="fb-root">
     </div>
+    <% if (IsLoggedIn)
+       {%>
     <input id="publishButton" type="button" value="Publish" onclick="publishTest();" />
-    <% if (!IsLoggedIn)
+    <%
+        }
+       else
        {%>
     <div id="facebookLogin">
-        <fb:login-button></fb:login-button>
+        <fb:login-button>
+        </fb:login-button>
     </div>
     <%
-       }%>
+        }%>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     <script src="http://connect.facebook.net/en_US/all.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -30,21 +35,8 @@
 
         FB.Event.subscribe('auth.login', function (response)
         {
-            window.location.reload();
-        });
-
-        FB.Event.subscribe('auth.sessionChange', function (response)
-        {
-            if (response.session)
-            {
-                // A user has logged in, and a new cookie has been saved
-                window.location.reload();
-            }
-            else
-            {
-                // The user has logged out, and the cookie has been cleared
-                $("#publishButton").hide();
-            }
+            // Reload the application in the logged-in state
+            window.top.location = 'http://apps.facebook.com/<%= FacebookUrlSuffix %>/';
         });
 
         function publishTest()

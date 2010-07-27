@@ -30,8 +30,6 @@ namespace SteamAchievements
 {
     public partial class PublishDialogTest : Page
     {
-        //TODO: use the example at http://developers.facebook.com/docs/guides/canvas/#canvas for authentication
-        
         protected string FacebookClientId
         {
             get { return WebConfigurationManager.AppSettings["APIKey"]; }
@@ -44,6 +42,11 @@ namespace SteamAchievements
 
         protected bool IsLoggedIn { get; set; }
 
+        protected string FacebookUrlSuffix
+        {
+            get { return WebConfigurationManager.AppSettings["Suffix"]; }
+        }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -54,16 +57,22 @@ namespace SteamAchievements
 
         private HttpCookie GetCookie()
         {
-            // based on the php example at http://developers.facebook.com/docs/authentication/
+            // based on the php example at http://developers.facebook.com/docs/guides/canvas/#canvas
             HttpCookie cookie = Request.Cookies["fbs_" + FacebookClientId];
             StringBuilder payload = new StringBuilder();
             if (cookie != null)
             {
-                foreach (string key in cookie.Values.Keys)
+                // the cookie value is formatted like a query string
+                string[] valuePairs = cookie.Value.Trim('\\', '"').Split('&');
+                Array.Sort(valuePairs);
+                foreach (string keyValuePair in valuePairs)
                 {
+                    string[] keyAndValue = keyValuePair.Split('=');
+                    string key = keyAndValue[0].Trim('\\', '"');
+                    string value = keyAndValue[1].Trim('\\', '"');
                     if (key != "sig")
                     {
-                        payload.Append(key + "=" + cookie.Values[key]);
+                        payload.Append(key + "=" + cookie.Values[value]);
                     }
                 }
 
