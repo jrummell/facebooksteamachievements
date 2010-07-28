@@ -20,6 +20,8 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -47,6 +49,11 @@ namespace SteamAchievements
             get { return WebConfigurationManager.AppSettings["Suffix"]; }
         }
 
+        private string FacebookSecret
+        {
+            get { return WebConfigurationManager.AppSettings["Secret"]; }
+        }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -59,26 +66,35 @@ namespace SteamAchievements
         {
             // based on the php example at http://developers.facebook.com/docs/guides/canvas/#canvas
             HttpCookie cookie = Request.Cookies["fbs_" + FacebookClientId];
-            StringBuilder payload = new StringBuilder();
             if (cookie != null)
             {
-                // the cookie value is formatted like a query string
-                string[] valuePairs = cookie.Value.Trim('\\', '"').Split('&');
-                Array.Sort(valuePairs);
-                foreach (string keyValuePair in valuePairs)
+                var pairs = from pair in cookie.Value.Trim('"', '\\').Split('&')
+                            let indexOfEquals = pair.IndexOf('=')
+                            orderby pair
+                            select new
+                                       {
+                                           Key = pair.Substring(0, indexOfEquals).Trim(),
+                                           Value = pair.Substring(indexOfEquals + 1).Trim()
+                                       };
+
+                IDictionary<string, string> cookieValues =
+                    pairs.ToDictionary(pair => pair.Key, pair => Server.UrlDecode(pair.Value));
+
+                StringBuilder payload = new StringBuilder();
+                foreach (KeyValuePair<string, string> pair in cookieValues)
                 {
-                    string[] keyAndValue = keyValuePair.Split('=');
-                    string key = keyAndValue[0].Trim('\\', '"');
-                    string value = keyAndValue[1].Trim('\\', '"');
-                    if (key != "sig")
+                    Response.Write(pair.Key + ": " + pair.Value + "<br/>\n");
+
+                    if (pair.Key != "sig")
                     {
-                        payload.Append(key + "=" + cookie.Values[value]);
+                        payload.Append(pair.Key + "=" + pair.Value);
                     }
                 }
 
-                string sig = cookie.Values["sig"];
+                string sig = cookieValues["sig"];
+                string hash = GetMd5Hash(payload + FacebookSecret);
 
-                if (sig == GetMD5Hash(payload.ToString()))
+                if (sig == hash)
                 {
                     return cookie;
                 }
@@ -87,16 +103,16 @@ namespace SteamAchievements
             return null;
         }
 
-        public string GetMD5Hash(string input)
+        private static string GetMd5Hash(string input)
         {
             MD5CryptoServiceProvider cryptoServiceProvider = new MD5CryptoServiceProvider();
-            byte[] bytes = Encoding.UTF8.GetBytes(input);
-            bytes = cryptoServiceProvider.ComputeHash(bytes);
-            StringBuilder s = new StringBuilder();
+            byte[] bytes = Encoding.Default.GetBytes(input);
+            byte[] hash = cryptoServiceProvider.ComputeHash(bytes);
 
-            foreach (byte b in bytes)
+            StringBuilder s = new StringBuilder();
+            foreach (byte b in hash)
             {
-                s.Append(b.ToString("x2").ToLower());
+                s.Append(b.ToString("x2"));
             }
 
             return s.ToString();
