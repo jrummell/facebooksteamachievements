@@ -183,6 +183,7 @@
   <ItemGroup>
     <Content Include="AchievementServiceTest.htm" />
     <Content Include="Controls\HelpLink.ascx" />
+    <Content Include="images\logo-banner710.png" />
     <Content Include="PublishDialogTest.aspx" />
     <Content Include="Site.Master" />
     <Content Include="Default.aspx" />
@@ -209,9 +210,6 @@
     <Content Include="js\jquery-vsdoc.js" />
     <Content Include="js\json2.js" />
     <Content Include="Web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="images\logo.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ReadMe.txt" />
