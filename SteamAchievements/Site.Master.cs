@@ -24,6 +24,8 @@ using System.Collections.Generic;
 using System.Web.Configuration;
 using Facebook.Schema;
 using Facebook.Web;
+using System.Web.UI;
+using SteamAchievements.Properties;
 
 namespace SteamAchievements
 {
@@ -42,6 +44,18 @@ namespace SteamAchievements
                 RequireLogin = true;
                 RequiredPermissions = new List<Enums.ExtendedPermissions> {Enums.ExtendedPermissions.publish_stream};
             }
+        }
+
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+
+            Load += Page_Load;
+        }
+
+        private void Page_Load(object sender, EventArgs args)
+        {
+            adMarkup.Controls.Add(new LiteralControl(Settings.Default.AdMarkup));
         }
     }
 }
