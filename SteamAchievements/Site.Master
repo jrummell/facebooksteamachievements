@@ -11,14 +11,11 @@
 </head>
 <body>
     <div style="margin-bottom: 1em">
-        <steam:GoogleAds ID="ads" runat="server" />
+        <asp:PlaceHolder ID="adMarkup" runat="server" />
     </div>
     <div class="fbbody">
-
         <script type="text/javascript" src='<%=ResolveUrl("~/js/json2.js")%>'></script>
-
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-
         <div>
             <steam:Logo ID="logo" runat="server" />
         </div>
@@ -26,9 +23,7 @@
         </asp:ContentPlaceHolder>
         <div class="footer">
             <steam:Disclaimer ID="disclaimer" runat="server" />
-
             <script type="text/javascript" src="http://www.ohloh.net/p/483250/widgets/project_thin_badge.js"></script>
-
         </div>
     </div>
     <steam:GoogleAnalytics ID="tracker" runat="server" />
