@@ -20,16 +20,12 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Web.Configuration;
-using Facebook.Schema;
-using Facebook.Web;
 using System.Web.UI;
 using SteamAchievements.Properties;
 
 namespace SteamAchievements
 {
-    public partial class Site : CanvasIFrameMasterPage
+    public partial class Site : MasterPage
     {
         protected override void OnInit(EventArgs e)
         {
