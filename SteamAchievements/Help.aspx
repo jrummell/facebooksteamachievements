@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="false"
+﻿<%@ Page Title="Help" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="false"
     CodeBehind="Help.aspx.cs" Inherits="SteamAchievements.Help" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -16,8 +16,6 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
-    <p>
-        <a href="Default.aspx?<%=Request.QueryString%>">Back to Steam Achievements</a></p>
     <h1>
         How to use Steam Achievements</h1>
     <br />
@@ -69,8 +67,6 @@
             visit <a target="_blank" href="http://steamcommunity.com/stats/">http://steamcommunity.com/stats/</a>.
             Please note that this list <strong>does not</strong> include <em>Games for Windows Live</em>
             titles purchased from Steam as these games use the Xbox Live network.</p>
-        <p>
-            <a href="Default.aspx?<%=Request.QueryString%>">Back to Steam Achievements</a></p>
     </div>
     <script type="text/javascript">
         $(document).ready(function ()

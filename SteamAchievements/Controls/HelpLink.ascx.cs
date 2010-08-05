@@ -31,5 +31,12 @@ namespace SteamAchievements.Controls
             get { return (string)ViewState["HelpAnchor"] ?? String.Empty; }
             set { ViewState["HelpAnchor"] = value; }
         }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+
+            helpLink.NavigateUrl = "~/Help.aspx#" + HelpAnchor;
+        }
     }
 }

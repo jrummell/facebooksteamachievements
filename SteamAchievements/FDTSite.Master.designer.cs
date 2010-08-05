@@ -10,54 +10,69 @@
 namespace SteamAchievements {
     
     
-    public partial class Default {
+    public partial class FDTSite {
         
         /// <summary>
-        /// steamHelpLink control.
+        /// head control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SteamAchievements.Controls.HelpLink steamHelpLink;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
         
         /// <summary>
-        /// updateFailedHelpLink control.
+        /// adMarkup control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SteamAchievements.Controls.HelpLink updateFailedHelpLink;
+        protected global::System.Web.UI.WebControls.PlaceHolder adMarkup;
         
         /// <summary>
-        /// gamesHelpLink control.
+        /// logo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SteamAchievements.Controls.HelpLink gamesHelpLink;
+        protected global::SteamAchievements.Controls.Logo logo;
         
         /// <summary>
-        /// errorLiteral control.
+        /// body control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal errorLiteral;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder body;
         
         /// <summary>
-        /// Master property.
+        /// disclaimer control.
         /// </summary>
         /// <remarks>
-        /// Auto-generated property.
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        public new SteamAchievements.FDTSite Master {
-            get {
-                return ((SteamAchievements.FDTSite)(base.Master));
-            }
-        }
+        protected global::SteamAchievements.Controls.Disclaimer disclaimer;
+        
+        /// <summary>
+        /// tracker control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SteamAchievements.Controls.GoogleAnalytics tracker;
+        
+        /// <summary>
+        /// userVoice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SteamAchievements.Controls.UserVoice userVoice;
     }
 }
