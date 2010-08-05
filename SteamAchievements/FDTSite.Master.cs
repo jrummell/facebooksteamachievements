@@ -29,8 +29,23 @@ using SteamAchievements.Properties;
 
 namespace SteamAchievements
 {
-    public partial class Site : CanvasIFrameMasterPage
+    public partial class FDTSite : CanvasIFrameMasterPage
     {
+        // helper for testing
+        public readonly bool TestMode;
+
+        public FDTSite()
+        {
+            string testModeValue = WebConfigurationManager.AppSettings["TestMode"] ?? true.ToString();
+            TestMode = Convert.ToBoolean(testModeValue);
+
+            if (!TestMode)
+            {
+                RequireLogin = true;
+                RequiredPermissions = new List<Enums.ExtendedPermissions> {Enums.ExtendedPermissions.publish_stream};
+            }
+        }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);

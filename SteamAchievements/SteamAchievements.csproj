@@ -143,6 +143,13 @@
     <Compile Include="Controls\UserVoice.ascx.designer.cs">
       <DependentUpon>UserVoice.ascx</DependentUpon>
     </Compile>
+    <Compile Include="FDTSite.Master.cs">
+      <DependentUpon>FDTSite.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FDTSite.Master.designer.cs">
+      <DependentUpon>FDTSite.Master</DependentUpon>
+    </Compile>
     <Compile Include="Help.aspx.cs">
       <DependentUpon>Help.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -250,6 +257,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FDTSite.Master" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

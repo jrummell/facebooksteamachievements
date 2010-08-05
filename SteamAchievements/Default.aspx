@@ -1,7 +1,7 @@
-<%@ Page Language="C#" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="Default.aspx.cs"
-    Inherits="SteamAchievements.Default" %>
+<%@ Page Title="Home" Language="C#" AutoEventWireup="false" MasterPageFile="~/FDTSite.Master"
+    CodeBehind="Default.aspx.cs" Inherits="SteamAchievements.Default" %>
 
-<%@ MasterType VirtualPath="~/Site.Master" %>
+<%@ MasterType VirtualPath="~/FDTSite.Master" %>
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="head">
 </asp:Content>
 <asp:Content runat="server" ID="Content2" ContentPlaceHolderID="body">
@@ -29,8 +29,8 @@
             Your achievements have been updated (<span id="newAchievementCount"></span> new).</div>
         <div id="achievementsUpdateFailure" class="fberrorbox message" style="display: none;">
             Your achievements could not be updated. Please verify that your Custom Url is correct
-            and that your Steam Community Profile is public. <a href="Help.aspx?<%=Request.QueryString%>">
-                Help</a>
+            and that your Steam Community Profile is public.
+            <steam:HelpLink ID="updateFailedHelpLink" runat="server" HelpAnchor="steam" />
         </div>
         <div>
             <p>

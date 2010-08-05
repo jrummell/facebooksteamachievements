@@ -13,6 +13,15 @@ namespace SteamAchievements.Controls {
     public partial class HelpLink {
         
         /// <summary>
+        /// helpLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink helpLink;
+        
+        /// <summary>
         /// helpImage control.
         /// </summary>
         /// <remarks>

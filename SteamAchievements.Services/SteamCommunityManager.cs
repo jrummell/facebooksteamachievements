@@ -58,7 +58,7 @@ namespace SteamAchievements.Services
             List<Achievement> achievements = new List<Achievement>();
 
             IEnumerable<Game> games = GetGames(steamUserId);
-            foreach (Game game in games)
+            foreach (Game game in games.Where(g => g.PlayedRecently))
             {
                 string statsUrl = game.StatsUrl.ToString();
                 string xmlStatsUrl = statsUrl + "/?xml=1";
