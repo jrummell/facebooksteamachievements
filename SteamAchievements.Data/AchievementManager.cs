@@ -390,29 +390,27 @@ namespace SteamAchievements.Data
         /// Updates the published flag of the given achievements.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
-        /// <param name="achievements">The achievements.</param>
-        public void UpdatePublished(string steamUserId, IEnumerable<Achievement> achievements)
+        /// <param name="achievementIds">The achievement ids.</param>
+        public void UpdatePublished(string steamUserId, IEnumerable<int> achievementIds)
         {
             if (steamUserId == null)
             {
                 throw new ArgumentNullException("steamUserId");
             }
 
-            if (achievements == null)
+            if (achievementIds == null)
             {
                 throw new ArgumentNullException("achievements");
             }
 
-            if (!achievements.Any())
+            if (!achievementIds.Any())
             {
                 return;
             }
 
-            IEnumerable<int> ids = achievements.Select(a => a.Id);
-
             var achievementsToUpdate =
                 from achievement in _repository.UserAchievements
-                where achievement.SteamUserId == steamUserId && ids.Contains(achievement.AchievementId)
+                where achievement.SteamUserId == steamUserId && achievementIds.Contains(achievement.AchievementId)
                 select achievement;
 
             foreach (UserAchievement achievement in achievementsToUpdate)
@@ -421,6 +419,19 @@ namespace SteamAchievements.Data
             }
 
             _repository.SubmitChanges();
+        }
+
+
+        public IEnumerable<Achievement> GetUnpublishedAchievements(string steamUserId)
+        {
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            return from achievement in _repository.UserAchievements
+                   where achievement.SteamUserId == steamUserId && !achievement.Published
+                   select achievement.Achievement;
         }
     }
 }
