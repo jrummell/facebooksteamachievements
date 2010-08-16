@@ -70,10 +70,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Achievement.cs" />
+    <Compile Include="AchievementCollectionExtensions.cs" />
     <Compile Include="AchievementService.cs" />
     <Compile Include="AchievementsPublisher.cs" />
     <Compile Include="AchievementXmlParser.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GameCollectionExtensions.cs" />
     <Compile Include="GameXmlParser.cs" />
     <Compile Include="HttpErrorHandler.cs" />
     <Compile Include="IAchievementService.cs" />

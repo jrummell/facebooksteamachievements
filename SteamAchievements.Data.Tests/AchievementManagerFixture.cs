@@ -65,7 +65,8 @@ namespace SteamAchievements.Data.Tests
                                  AchievementId = 1,
                                  Date = DateTime.Now,
                                  SteamUserId = "user1",
-                                 Achievement = achievements.Single(achievement => achievement.Id == 1)
+                                 Achievement = achievements.Single(achievement => achievement.Id == 1),
+                                 Published = true
                              },
                          new UserAchievement
                              {
@@ -73,7 +74,8 @@ namespace SteamAchievements.Data.Tests
                                  AchievementId = 2,
                                  Date = DateTime.Now,
                                  SteamUserId = "user1",
-                                 Achievement = achievements.Single(achievement => achievement.Id == 2)
+                                 Achievement = achievements.Single(achievement => achievement.Id == 2),
+                                 Published = true
                              },
                          new UserAchievement
                              {
@@ -81,7 +83,8 @@ namespace SteamAchievements.Data.Tests
                                  AchievementId = 3,
                                  Date = DateTime.Now,
                                  SteamUserId = "user1",
-                                 Achievement = achievements.Single(achievement => achievement.Id == 3)
+                                 Achievement = achievements.Single(achievement => achievement.Id == 3),
+                                 Published = false
                              }
                      }).AsQueryable();
 
@@ -181,6 +184,15 @@ namespace SteamAchievements.Data.Tests
         }
 
         [Test]
+        public void GetUnpublishedAchievements()
+        {
+            IEnumerable<Achievement> achievements = _manager.GetUnpublishedAchievements("user1");
+
+            Assert.That(achievements.Count(), Is.EqualTo(1));
+            Assert.That(achievements.Count(a => a.Id == 3), Is.EqualTo(1));
+        }
+
+        [Test]
         public void InsertMissingAchievements()
         {
             Achievement achievement1Game5 = new Achievement {GameId = 5, Name = "Achievement 1 for Game 5"};
@@ -256,7 +268,7 @@ namespace SteamAchievements.Data.Tests
             const string steamUserId = "user1";
             const int gameId = 1;
             IEnumerable<Achievement> achievements = _manager.GetAchievements(steamUserId, gameId);
-            _manager.UpdatePublished(steamUserId, achievements);
+            _manager.UpdatePublished(steamUserId, achievements.Select(acheivement => acheivement.Id));
 
             IEnumerable<int> achievementIds = from achievement in achievements
                                               select achievement.Id;

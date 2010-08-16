@@ -55,13 +55,7 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            return (from achievement in _achievementManager.GetAchievements(steamUserId, gameId)
-                    select new SimpleAchievement
-                               {
-                                   ImageUrl = achievement.ImageUrl,
-                                   Name = achievement.Name,
-                                   Description = achievement.Description
-                               }).ToList();
+            return _achievementManager.GetAchievements(steamUserId, gameId).ToSimpleAchievementList();
         }
 
         /// <summary>
@@ -70,15 +64,12 @@ namespace SteamAchievements.Services
         /// <returns>All <see cref="Game"/>s.</returns>
         public List<SimpleGame> GetGames(string steamUserId)
         {
-            return (from game in _communityService.GetGames(steamUserId)
-                    select new SimpleGame
-                               {
-                                   Id = game.Id,
-                                   Name = game.Name,
-                                   ImageUrl = game.ImageUrl.ToString(),
-                                   StatsUrl = game.StatsUrl.ToString(),
-                                   StoreUrl = game.StoreUrl.ToString()
-                               }).ToList();
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            return _communityService.GetGames(steamUserId).ToSimpleGameList();
         }
 
         /// <summary>
@@ -95,17 +86,8 @@ namespace SteamAchievements.Services
             }
 
             IEnumerable<Achievement> achievements = _communityService.GetAchievements(steamUserId);
-            IEnumerable<Data.Achievement> achievementEntities =
-                from achievement in achievements
-                select new Data.Achievement
-                           {
-                               Name = achievement.Name,
-                               Description = achievement.Description,
-                               ImageUrl = achievement.ImageUrl.ToString(),
-                               GameId = achievement.Game.Id
-                           };
 
-            int updated = _achievementManager.UpdateAchievements(steamUserId, achievementEntities);
+            int updated = _achievementManager.UpdateAchievements(steamUserId, achievements.ToDataAchievements());
 
             return updated;
         }
@@ -149,23 +131,10 @@ namespace SteamAchievements.Services
 
             if (dataAchievements.Any())
             {
-                IEnumerable<Achievement> achievements =
-                    from achievement in dataAchievements
-                    from game in games
-                    where achievement.GameId == game.Id
-                    select new Achievement
-                               {
-                                   Name = achievement.Name,
-                                   Description = achievement.Description,
-                                   ImageUrl = new Uri(achievement.ImageUrl, UriKind.Absolute),
-                                   Closed = true,
-                                   Game = game
-                               };
-
                 AchievementsPublisher publisher = new AchievementsPublisher();
-                publisher.Publish(achievements, steamUserId, facebookUserId);
+                publisher.Publish(dataAchievements.ToAchievements(games), steamUserId, facebookUserId);
 
-                _achievementManager.UpdatePublished(steamUserId, dataAchievements);
+                _achievementManager.UpdatePublished(steamUserId, dataAchievements.Select(achievement => achievement.Id));
             }
 
             return true;
@@ -182,12 +151,29 @@ namespace SteamAchievements.Services
 
         public List<SimpleAchievement> GetNewAchievements(string steamUserId)
         {
-            throw new NotImplementedException();
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            return _achievementManager.GetUnpublishedAchievements(steamUserId).ToSimpleAchievementList();
         }
 
-        public bool PublishAchievements(long facebookUserId, IEnumerable<int> achievementIds)
+        public bool PublishAchievements(string steamUserId, IEnumerable<int> achievementIds)
         {
-            throw new NotImplementedException();
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            if (achievementIds == null)
+            {
+                throw new ArgumentNullException("achievementIds");
+            }
+
+            _achievementManager.UpdatePublished(steamUserId, achievementIds);
+
+            return true;
         }
     }
 }

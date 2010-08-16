@@ -104,15 +104,15 @@ namespace SteamAchievements.Services
         bool PublishLatestAchievements(long facebookUserId, string steamUserId);
 
         /// <summary>
-        /// Publishes the given achievements for the given user.
+        /// Updates the Published field for the given achievements for the given user.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="steamUserId">The steam user id.</param>
         /// <param name="achievementIds">The ids of the achievements to publish.</param>
         /// <returns>true if successful, else false.</returns>
         /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool PublishAchievements(long facebookUserId, IEnumerable<int> achievementIds);
+        bool PublishAchievements(string steamUserId, IEnumerable<int> achievementIds);
     }
 }

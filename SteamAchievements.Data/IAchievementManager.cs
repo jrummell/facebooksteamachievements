@@ -66,7 +66,13 @@ namespace SteamAchievements.Data
         /// Updates the published flag on the given achievements.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
-        /// <param name="dataAchievements">The achievements.</param>
-        void UpdatePublished(string steamUserId, IEnumerable<Achievement> achievements);
+        /// <param name="achievementIds">The achievement ids.</param>
+        void UpdatePublished(string steamUserId, IEnumerable<int> achievementIds);
+
+        /// <summary>
+        /// Gets the unpublished achievements
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        IEnumerable<Achievement> GetUnpublishedAchievements(string steamUserId);
     }
 }
