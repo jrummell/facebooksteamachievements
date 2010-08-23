@@ -31,50 +31,51 @@ namespace SteamAchievements.Services
         {
             return (from achievement in achievements
                     select new SimpleAchievement
-                    {
-                        ImageUrl = achievement.ImageUrl,
-                        Name = achievement.Name,
-                        Description = achievement.Description
-                    }).ToList();
+                               {
+                                   ImageUrl = achievement.ImageUrl,
+                                   Name = achievement.Name,
+                                   Description = achievement.Description
+                               }).ToList();
         }
 
-        public static IEnumerable<Achievement> ToAchievements(this IEnumerable<Data.Achievement> achievements, IEnumerable<Game> games)
+        public static IEnumerable<Achievement> ToAchievements(this IEnumerable<Data.Achievement> achievements,
+                                                              IEnumerable<Game> games)
         {
             return from achievement in achievements
                    from game in games
                    where achievement.GameId == game.Id
                    select new Achievement
-                   {
-                       Name = achievement.Name,
-                       Description = achievement.Description,
-                       ImageUrl = new Uri(achievement.ImageUrl, UriKind.Absolute),
-                       Closed = true,
-                       Game = game
-                   };
+                              {
+                                  Name = achievement.Name,
+                                  Description = achievement.Description,
+                                  ImageUrl = new Uri(achievement.ImageUrl, UriKind.Absolute),
+                                  Closed = true,
+                                  Game = game
+                              };
         }
 
         public static IEnumerable<Achievement> ToAchievements(this IEnumerable<Data.Achievement> achievements)
         {
             return from achievement in achievements
                    select new Achievement
-                   {
-                       Name = achievement.Name,
-                       Description = achievement.Description,
-                       ImageUrl = new Uri(achievement.ImageUrl, UriKind.Absolute),
-                       Closed = true
-                   };
+                              {
+                                  Name = achievement.Name,
+                                  Description = achievement.Description,
+                                  ImageUrl = new Uri(achievement.ImageUrl, UriKind.Absolute),
+                                  Closed = true
+                              };
         }
 
         public static IEnumerable<Data.Achievement> ToDataAchievements(this IEnumerable<Achievement> achievements)
         {
             return from achievement in achievements
                    select new Data.Achievement
-                   {
-                       Name = achievement.Name,
-                       Description = achievement.Description,
-                       ImageUrl = achievement.ImageUrl.ToString(),
-                       GameId = achievement.Game.Id
-                   };
+                              {
+                                  Name = achievement.Name,
+                                  Description = achievement.Description,
+                                  ImageUrl = achievement.ImageUrl.ToString(),
+                                  GameId = achievement.Game.Id
+                              };
         }
     }
 }

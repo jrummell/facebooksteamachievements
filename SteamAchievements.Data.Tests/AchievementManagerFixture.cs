@@ -134,7 +134,8 @@ namespace SteamAchievements.Data.Tests
         public void AssignAchievements()
         {
             const string steamUserId = "user1";
-            IEnumerable<Achievement> achievements = _manager.GetUnassignedAchievements(steamUserId, _repository.Achievements);
+            IEnumerable<Achievement> achievements = _manager.GetUnassignedAchievements(steamUserId,
+                                                                                       _repository.Achievements);
             Assert.That(achievements.Any());
 
             _manager.AssignAchievements(steamUserId, achievements);
@@ -222,9 +223,9 @@ namespace SteamAchievements.Data.Tests
                             {Id = 5, GameId = 2, Name = "Achievement 2 for Game 2", Description = ""},
                         new Achievement
                             {Id = 6, GameId = 3, Name = "Achievement for Game", Description = "Game 3 Achievement 1"},
-                         new Achievement
+                        new Achievement
                             {Id = 7, GameId = 3, Name = "Achievement for Game", Description = "Game 3 Achievement 2"},
-                         new Achievement
+                        new Achievement
                             {Id = 8, GameId = 4, Name = "Achievement for Game", Description = "Game 4 Achievement 1"}
                     };
 
@@ -239,7 +240,9 @@ namespace SteamAchievements.Data.Tests
                 string name = achievement.Name;
                 string description = achievement.Description;
                 int achievementCount =
-                    _repository.Achievements.Count(a => a.Id == achievementId && a.GameId == gameId && a.Name == name && a.Description == description);
+                    _repository.Achievements.Count(
+                        a =>
+                        a.Id == achievementId && a.GameId == gameId && a.Name == name && a.Description == description);
                 Assert.That(achievementCount, Is.EqualTo(1));
 
                 // assert that the new achievements were assigned
@@ -248,18 +251,6 @@ namespace SteamAchievements.Data.Tests
                         ua => ua.SteamUserId == steamUserId && ua.AchievementId == achievementId);
                 Assert.That(userAchievementCount, Is.EqualTo(1));
             }
-        }
-
-        [Test]
-        public void UpdateSteamUserId()
-        {
-            const string steamUserId = "userxxx";
-            const int facebookUserId = 1234567890;
-            _manager.UpdateSteamUserId(facebookUserId, steamUserId);
-
-            Assert.That(_repository.Users.Single(u => u.FacebookUserId == facebookUserId).SteamUserId,
-                        Is.EqualTo(steamUserId));
-            Assert.That(!_repository.UserAchievements.Any(ua => ua.SteamUserId == steamUserId));
         }
 
         [Test]
@@ -278,6 +269,18 @@ namespace SteamAchievements.Data.Tests
                 select achievement;
 
             Assert.That(userAchievements.Any(achievement => !achievement.Published), Is.False);
+        }
+
+        [Test]
+        public void UpdateSteamUserId()
+        {
+            const string steamUserId = "userxxx";
+            const int facebookUserId = 1234567890;
+            _manager.UpdateSteamUserId(facebookUserId, steamUserId);
+
+            Assert.That(_repository.Users.Single(u => u.FacebookUserId == facebookUserId).SteamUserId,
+                        Is.EqualTo(steamUserId));
+            Assert.That(!_repository.UserAchievements.Any(ua => ua.SteamUserId == steamUserId));
         }
     }
 }

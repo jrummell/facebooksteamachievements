@@ -30,13 +30,13 @@ namespace SteamAchievements.Services
         {
             return (from game in games
                     select new SimpleGame
-                    {
-                        Id = game.Id,
-                        Name = game.Name,
-                        ImageUrl = game.ImageUrl.ToString(),
-                        StatsUrl = game.StatsUrl.ToString(),
-                        StoreUrl = game.StoreUrl.ToString()
-                    }).ToList();
+                               {
+                                   Id = game.Id,
+                                   Name = game.Name,
+                                   ImageUrl = game.ImageUrl.ToString(),
+                                   StatsUrl = game.StatsUrl.ToString(),
+                                   StoreUrl = game.StoreUrl.ToString()
+                               }).ToList();
         }
     }
 }

@@ -22,9 +22,9 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Configuration;
+using System.Web.UI;
 using Facebook.Schema;
 using Facebook.Web;
-using System.Web.UI;
 using SteamAchievements.Properties;
 
 namespace SteamAchievements
