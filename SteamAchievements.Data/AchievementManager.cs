@@ -227,6 +227,54 @@ namespace SteamAchievements.Data
             _repository.Dispose();
         }
 
+        /// <summary>
+        /// Updates the published flag of the given achievements.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="achievementIds">The achievement ids.</param>
+        public void UpdatePublished(string steamUserId, IEnumerable<int> achievementIds)
+        {
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            if (achievementIds == null)
+            {
+                throw new ArgumentNullException("achievements");
+            }
+
+            if (!achievementIds.Any())
+            {
+                return;
+            }
+
+            IQueryable<UserAchievement> achievementsToUpdate =
+                from achievement in _repository.UserAchievements
+                where achievement.SteamUserId == steamUserId && achievementIds.Contains(achievement.AchievementId)
+                select achievement;
+
+            foreach (UserAchievement achievement in achievementsToUpdate)
+            {
+                achievement.Published = true;
+            }
+
+            _repository.SubmitChanges();
+        }
+
+
+        public IEnumerable<Achievement> GetUnpublishedAchievements(string steamUserId)
+        {
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            return from achievement in _repository.UserAchievements
+                   where achievement.SteamUserId == steamUserId && !achievement.Published
+                   select achievement.Achievement;
+        }
+
         #endregion
 
         /// <summary>
@@ -266,7 +314,8 @@ namespace SteamAchievements.Data
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="allAchievements">All achievements. These will not necessarily have an Id set.</param>
         /// <returns></returns>
-        public IEnumerable<Achievement> GetUnassignedAchievements(string steamUserId, IEnumerable<Achievement> allAchievements)
+        public IEnumerable<Achievement> GetUnassignedAchievements(string steamUserId,
+                                                                  IEnumerable<Achievement> allAchievements)
         {
             if (steamUserId == null)
             {
@@ -299,7 +348,7 @@ namespace SteamAchievements.Data
             {
                 return new Achievement[0];
             }
-            
+
             // get all assigned achievements
             IEnumerable<Achievement> assignedAchievements = (from a in _repository.UserAchievements
                                                              where a.SteamUserId == steamUserId
@@ -308,11 +357,12 @@ namespace SteamAchievements.Data
             // return the unassigned achievements. I'm not hitting the database at this point since that could 
             // add a great deal of complexity to the following query.
             return from achievement in allAchievements
-            	   join possibleAchievement in possibleAchievements
-                        on new { achievement.GameId, achievement.Name, achievement.Description }
-                        equals new { possibleAchievement.GameId, possibleAchievement.Name, possibleAchievement.Description }
+                   join possibleAchievement in possibleAchievements
+                       on new {achievement.GameId, achievement.Name, achievement.Description}
+                       equals
+                       new {possibleAchievement.GameId, possibleAchievement.Name, possibleAchievement.Description}
                    join assignedAchievement in assignedAchievements
-                   		on possibleAchievement.Id equals assignedAchievement.Id into joinedAssignedAchievements
+                       on possibleAchievement.Id equals assignedAchievement.Id into joinedAssignedAchievements
                    from joinedAssignedAchievement in joinedAssignedAchievements.DefaultIfEmpty()
                    where joinedAssignedAchievement == null
                    select possibleAchievement;
@@ -384,54 +434,6 @@ namespace SteamAchievements.Data
             }
 
             _repository.SubmitChanges();
-        }
-
-        /// <summary>
-        /// Updates the published flag of the given achievements.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <param name="achievementIds">The achievement ids.</param>
-        public void UpdatePublished(string steamUserId, IEnumerable<int> achievementIds)
-        {
-            if (steamUserId == null)
-            {
-                throw new ArgumentNullException("steamUserId");
-            }
-
-            if (achievementIds == null)
-            {
-                throw new ArgumentNullException("achievements");
-            }
-
-            if (!achievementIds.Any())
-            {
-                return;
-            }
-
-            var achievementsToUpdate =
-                from achievement in _repository.UserAchievements
-                where achievement.SteamUserId == steamUserId && achievementIds.Contains(achievement.AchievementId)
-                select achievement;
-
-            foreach (UserAchievement achievement in achievementsToUpdate)
-            {
-                achievement.Published = true;
-            }
-
-            _repository.SubmitChanges();
-        }
-
-
-        public IEnumerable<Achievement> GetUnpublishedAchievements(string steamUserId)
-        {
-            if (steamUserId == null)
-            {
-                throw new ArgumentNullException("steamUserId");
-            }
-
-            return from achievement in _repository.UserAchievements
-                   where achievement.SteamUserId == steamUserId && !achievement.Published
-                   select achievement.Achievement;
         }
     }
 }

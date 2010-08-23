@@ -28,7 +28,7 @@ namespace SteamAchievements.Controls
     {
         public string HelpAnchor
         {
-            get { return (string)ViewState["HelpAnchor"] ?? String.Empty; }
+            get { return (string) ViewState["HelpAnchor"] ?? String.Empty; }
             set { ViewState["HelpAnchor"] = value; }
         }
 

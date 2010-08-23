@@ -26,7 +26,7 @@ using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
-    [ServiceErrorBehaviour(typeof(HttpErrorHandler))]
+    [ServiceErrorBehaviour(typeof (HttpErrorHandler))]
     public class AchievementService : IAchievementService
     {
         private readonly IAchievementManager _achievementManager;
@@ -146,9 +146,6 @@ namespace SteamAchievements.Services
             _communityService.Dispose();
         }
 
-        #endregion
-
-
         public List<SimpleAchievement> GetNewAchievements(string steamUserId)
         {
             if (steamUserId == null)
@@ -175,5 +172,7 @@ namespace SteamAchievements.Services
 
             return true;
         }
+
+        #endregion
     }
 }

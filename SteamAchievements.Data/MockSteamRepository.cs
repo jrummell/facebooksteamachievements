@@ -33,14 +33,13 @@ namespace SteamAchievements.Data
     /// </remarks>
     public class MockSteamRepository : ISteamRepository
     {
+        private readonly List<Achievement> _achievementsToInsertOnSubmit = new List<Achievement>();
+        private readonly List<UserAchievement> _userAchievementsToDeleteOnSubmit = new List<UserAchievement>();
+        private readonly List<UserAchievement> _userAchievementsToInsertOnSubmit = new List<UserAchievement>();
+        private readonly List<User> _usersToInsertOnSubmit = new List<User>();
         private Dictionary<int, Achievement> _achievements;
         private Dictionary<int, UserAchievement> _userAchievements;
         private Dictionary<UserKey, User> _users;
-
-        private List<Achievement> _achievementsToInsertOnSubmit = new List<Achievement>();
-        private List<UserAchievement> _userAchievementsToInsertOnSubmit = new List<UserAchievement>();
-        private List<UserAchievement> _userAchievementsToDeleteOnSubmit = new List<UserAchievement>();
-        private List<User> _usersToInsertOnSubmit = new List<User>();
 
         public MockSteamRepository()
         {
@@ -126,11 +125,15 @@ namespace SteamAchievements.Data
             foreach (Achievement achievement in _achievementsToInsertOnSubmit)
             {
                 // mimic the unique index on GameId, Name, Description
-                if (_achievements.Values.Where(a => a.Name == achievement.Name && a.GameId == achievement.GameId && a.Description == achievement.Description).Any())
+                if (
+                    _achievements.Values.Where(
+                        a =>
+                        a.Name == achievement.Name && a.GameId == achievement.GameId &&
+                        a.Description == achievement.Description).Any())
                 {
-
                     throw new InvalidOperationException("Cannot insert duplicate key row in object 'dbo.steam_Achievement' with unique index 'IX_steam_Achievement.\r\nGameId: "
-                        + achievement.GameId + " Name: " + achievement.Name + " Description: " + achievement.Description);
+                                                        + achievement.GameId + " Name: " + achievement.Name +
+                                                        " Description: " + achievement.Description);
                 }
 
                 achievement.Id = ++maxAchievementId;
@@ -320,18 +323,18 @@ namespace SteamAchievements.Data
                 {
                     return true;
                 }
-                if (obj.GetType() != typeof(UserKey))
+                if (obj.GetType() != typeof (UserKey))
                 {
                     return false;
                 }
-                return Equals((UserKey)obj);
+                return Equals((UserKey) obj);
             }
 
             public override int GetHashCode()
             {
                 unchecked
                 {
-                    return (int)((FacebookUserId * 397) ^ (SteamUserId != null ? SteamUserId.GetHashCode() : 0));
+                    return (int) ((FacebookUserId*397) ^ (SteamUserId != null ? SteamUserId.GetHashCode() : 0));
                 }
             }
 
