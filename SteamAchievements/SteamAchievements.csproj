@@ -188,7 +188,7 @@
   <ItemGroup>
     <Content Include="AchievementServiceTest.htm" />
     <Content Include="Controls\HelpLink.ascx" />
-    <Content Include="images\logo-banner710.png" />
+    <Content Include="images\banner-light.png" />
     <Content Include="PublishDialogTest.aspx" />
     <Content Include="Site.Master" />
     <Content Include="Default.aspx" />
