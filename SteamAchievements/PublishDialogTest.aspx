@@ -11,7 +11,12 @@
     </div>
     <% if (IsLoggedIn)
        {%>
-    <input id="publishButton" type="button" value="Publish" onclick="publishTest();" />
+    <input id="publishButton" type="button" value="Publish Test" onclick="publishTest();" />
+
+    <input id="getNewAchievementsButton" type="button" value="Get New Achievements" />
+    <div id="New Achievements"></div>
+    <input id="publishSelectedButton" type="button" value="Publish Selected" style="display:none;" />
+
     <%
         }
        else
@@ -22,6 +27,8 @@
     </div>
     <%
         }%>
+    <div id="log">
+    </div>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     <script src="http://connect.facebook.net/en_US/all.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -66,6 +73,71 @@
             };
 
             FB.ui(publishParams);
+        }
+
+        function getNewAchievements(callback)
+        {
+            callAjax("GetNewAchievements", { steamUserId: "<%= SteamUserId %>" }, function (result) { publishAchievements(result); });
+        }
+
+        function displayAchievements(achievements)
+        {
+            //TODO: display list of new achievements that the user can select (up to 5?) and then publish with the dialog
+        }
+
+        function publishAchievements(achievements)
+        {
+            //TODO: display publish dialog. on successful publish, update published field on each published achievement.
+        }
+
+        function callAjax(method, query, ondone, onerror)
+        {
+            if (onerror == null)
+            {
+                onerror = function (m)
+                {
+                    $("#log").text(m.Message).show();
+                };
+            }
+
+            $.ajax({
+                url: _serviceBase + method,
+                data: JSON.stringify(query),
+                type: "POST",
+                processData: true,
+                contentType: "application/json",
+                timeout: 120000, // 2 minutes
+                dataType: "json",
+                success: ondone,
+                error: function (xhr)
+                {
+                    if (!onerror)
+                    {
+                        return;
+                    }
+
+                    if (xhr.responseText)
+                    {
+                        try
+                        {
+                            var err = JSON.parse(xhr.responseText);
+                            if (err)
+                            {
+                                onerror(err);
+                            }
+                            else
+                            {
+                                onerror({ Message: "Unknown server error." });
+                            }
+                        }
+                        catch (e)
+                        {
+                            onerror({ Message: "Unknown server error." });
+                        }
+                    }
+                    return;
+                }
+            });
         }
     </script>
 </body>

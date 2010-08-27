@@ -27,6 +27,7 @@ using System.Text;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
+using SteamAchievements.Data;
 
 namespace SteamAchievements
 {
@@ -54,12 +55,26 @@ namespace SteamAchievements
             get { return WebConfigurationManager.AppSettings["Secret"]; }
         }
 
+        protected long FacebookUserId { get; private set; }
+
+        protected string SteamUserId { get; private set; }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
 
             HttpCookie cookie = GetCookie();
             IsLoggedIn = cookie != null;
+
+            if (IsLoggedIn)
+            {
+                FacebookUserId = Convert.ToInt64(cookie["uid"]);
+
+                using (AchievementManager manager = new AchievementManager())
+                {
+                    SteamUserId = manager.GetSteamUserId(FacebookUserId);
+                }
+            }
         }
 
         private HttpCookie GetCookie()
