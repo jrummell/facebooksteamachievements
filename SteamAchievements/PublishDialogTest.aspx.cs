@@ -43,7 +43,7 @@ namespace SteamAchievements
             get { return WebConfigurationManager.AppSettings["Callback"]; }
         }
 
-        protected bool IsLoggedIn { get; set; }
+        protected bool IsLoggedIn { get { return FacebookUserId > 0; } }
 
         protected string FacebookUrlSuffix
         {
@@ -63,13 +63,10 @@ namespace SteamAchievements
         {
             base.OnInit(e);
 
-            HttpCookie cookie = GetCookie();
-            IsLoggedIn = cookie != null;
+            FacebookUserId = GetFacebookUserId();
 
             if (IsLoggedIn)
             {
-                FacebookUserId = Convert.ToInt64(cookie["uid"]);
-
                 using (AchievementManager manager = new AchievementManager())
                 {
                     SteamUserId = manager.GetSteamUserId(FacebookUserId);
@@ -77,8 +74,10 @@ namespace SteamAchievements
             }
         }
 
-        private HttpCookie GetCookie()
+        private long GetFacebookUserId()
         {
+            //TODO: why doesn't this work in IE8?
+
             // based on the php example at http://developers.facebook.com/docs/guides/canvas/#canvas
             HttpCookie cookie = Request.Cookies["fbs_" + FacebookClientId];
             if (cookie != null)
@@ -96,9 +95,10 @@ namespace SteamAchievements
                     pairs.ToDictionary(pair => pair.Key, pair => Server.UrlDecode(pair.Value));
 
                 StringBuilder payload = new StringBuilder();
+                StringBuilder placeHolder = new StringBuilder();
                 foreach (KeyValuePair<string, string> pair in cookieValues)
                 {
-                    Response.Write(pair.Key + ": " + pair.Value + "<br/>\n");
+                    placeHolder.AppendLine(pair.Key + ": " + pair.Value);
 
                     if (pair.Key != "sig")
                     {
@@ -106,16 +106,18 @@ namespace SteamAchievements
                     }
                 }
 
+                cookieValuesPlaceHolder.Controls.Add(new LiteralControl(placeHolder.ToString()));
+
                 string sig = cookieValues["sig"];
                 string hash = GetMd5Hash(payload + FacebookSecret);
 
                 if (sig == hash)
                 {
-                    return cookie;
+                    return Convert.ToInt64(cookieValues["uid"]);
                 }
             }
 
-            return null;
+            return 0;
         }
 
         private static string GetMd5Hash(string input)

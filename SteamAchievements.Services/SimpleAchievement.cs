@@ -24,6 +24,11 @@ namespace SteamAchievements.Services
     public class SimpleAchievement
     {
         /// <summary>
+        /// Gets or sets the id.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// Gets or sets the image URL.
         /// </summary>
         /// <value>The image URL.</value>

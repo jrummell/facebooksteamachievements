@@ -5,18 +5,49 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head runat="server">
     <title></title>
+    <style type="text/css">
+        #newAchievements .achievement
+        {
+            height: 70px;
+            padding: 0px;
+            margin: 5px;
+            border: 1px solid #fff;
+        }
+        #newAchievements .selected
+        {
+            background-color: #fff9d7;
+            border: 1px solid #e2c822;
+        }
+        #newAchievements .achievement input
+        {
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+        #newAchievements .achievement img
+        {
+            vertical-align: middle;
+        }
+        #newAchievements .achievement .description
+        {
+            vertical-align: middle;
+            margin-left: 0.5em;
+        }
+    </style>
 </head>
 <body>
+    <!-- 
+        <asp:PlaceHolder ID="cookieValuesPlaceHolder" runat="server" />
+    -->
     <div id="fb-root">
     </div>
     <% if (IsLoggedIn)
        {%>
-    <input id="publishButton" type="button" value="Publish Test" onclick="publishTest();" />
-
+    <form action="PublishDialogTest.aspx">
     <input id="getNewAchievementsButton" type="button" value="Get New Achievements" />
-    <div id="New Achievements"></div>
-    <input id="publishSelectedButton" type="button" value="Publish Selected" style="display:none;" />
-
+    <div id="newAchievements">
+    </div>
+    <input id="publishSelectedButton" type="button" value="Publish Selected" style="display: none;" />
+    </form>
     <%
         }
        else
@@ -44,6 +75,11 @@
         {
             // Reload the application in the logged-in state
             window.top.location = 'http://apps.facebook.com/<%= FacebookUrlSuffix %>/PublishDialogTest.aspx';
+        });
+
+        $(document).ready(function ()
+        {
+            $("#getNewAchievementsButton").click(getNewAchievements);
         });
 
         function publishTest()
@@ -75,14 +111,40 @@
             FB.ui(publishParams);
         }
 
+        var _steamUserId = "<%= SteamUserId %>";
         function getNewAchievements(callback)
         {
-            callAjax("GetNewAchievements", { steamUserId: "<%= SteamUserId %>" }, function (result) { publishAchievements(result); });
+            callAjax("UpdateAchievements", { steamUserId: _steamUserId }, function (updateCount)
+            {
+                callAjax("GetNewAchievements", { steamUserId: _steamUserId },
+                        function (achievements) { displayAchievements(achievements); });
+            });
         }
 
         function displayAchievements(achievements)
         {
-            //TODO: display list of new achievements that the user can select (up to 5?) and then publish with the dialog
+            var achievementHtml = "\n";
+
+            $(achievements).each(function (i)
+            {
+                var achievement = achievements[i];
+
+                achievementHtml += "<div class='achievement'><input value='" + achievement.Id + "' type='checkbox' \/>";
+                achievementHtml += "<img src='" + achievement.ImageUrl + "' alt='" + achievement.Description + "' \/>";
+                achievementHtml += "<span class='description'>" + achievement.Description + "<\/span><\/div>\n";
+            });
+
+            $("#newAchievements").html(achievementHtml);
+
+            $("#newAchievements .achievement input, #newAchievements .achievement img").click(function ()
+            {
+                $(this).parents(".achievement").toggleClass("selected");
+                if (this.tagName == "IMG")
+                {
+                    var checkbox = $(this).prev()[0];
+                    checkbox.checked = !checkbox.checked;
+                }
+            });
         }
 
         function publishAchievements(achievements)
@@ -90,6 +152,7 @@
             //TODO: display publish dialog. on successful publish, update published field on each published achievement.
         }
 
+        var _serviceBase = "Services/Achievement.svc/";
         function callAjax(method, query, ondone, onerror)
         {
             if (onerror == null)
