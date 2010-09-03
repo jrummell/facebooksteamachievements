@@ -32,6 +32,7 @@ namespace SteamAchievements.Services
             return (from achievement in achievements
                     select new SimpleAchievement
                                {
+                                   Id = achievement.Id,
                                    ImageUrl = achievement.ImageUrl,
                                    Name = achievement.Name,
                                    Description = achievement.Description
