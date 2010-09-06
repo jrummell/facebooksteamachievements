@@ -27,15 +27,25 @@ namespace SteamAchievements.Services
 {
     internal static class AchievementCollectionExtensions
     {
-        public static List<SimpleAchievement> ToSimpleAchievementList(this IEnumerable<Data.Achievement> achievements)
+        public static List<SimpleAchievement> ToSimpleAchievementList(this IEnumerable<Data.Achievement> achievements, IEnumerable<Game> games)
         {
-            return (from achievement in achievements
+            return (from game in games
+                    from achievement in achievements
+                    where achievement.GameId == game.Id
                     select new SimpleAchievement
                                {
                                    Id = achievement.Id,
                                    ImageUrl = achievement.ImageUrl,
                                    Name = achievement.Name,
-                                   Description = achievement.Description
+                                   Description = achievement.Description,
+                                   Game = new SimpleGame 
+                                              { 
+                                                  Id = game.Id, 
+                                                  Name = game.Name, 
+                                                  ImageUrl = game.ImageUrl.ToString(), 
+                                                  StatsUrl = game.StatsUrl.ToString(), 
+                                                  StoreUrl = game.StoreUrl.ToString() 
+                                              }
                                }).ToList();
         }
 
