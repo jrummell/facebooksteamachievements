@@ -80,36 +80,30 @@
         $(document).ready(function ()
         {
             $("#getNewAchievementsButton").click(getNewAchievements);
-        });
 
-        function publishTest()
-        {
-            var images = [
+            $("#publishSelectedButton").click(function ()
             {
-                type: 'image',
-                src: 'http://media.steampowered.com/steamcommunity/public/images/apps/240/7bbd09bac4ebe17b84e8fb0eb5d9e3351fcb4bc0.jpg',
-                href: 'http://steamcommunity.com/id/nullreference/stats/CS:S?tab=achievements'
-            },
-            {
-                type: 'image',
-                src: 'http://media.steampowered.com/steamcommunity/public/images/apps/240/a646cdeba4eb3590fb1b16241949daec306df333.jpg',
-                href: 'http://steamcommunity.com/id/nullreference/stats/CS:S?tab=achievements'
-            }];
+                var achievementsToPublish = new Array();
+                $("#newAchievements input:checked").each(function ()
+                {
+                    var achievementId = this.value;
+                    var matched = $.grep(_newAchievements, function (achievement, i)
+                    {
+                        return achievement.Id == achievementId;
+                    });
 
-            var publishParams = {
-                method: 'stream.publish',
-                message: 'Steam Achievements Test',
-                attachment: {
-                    name: 'Test',
-                    caption: 'A test caption',
-                    description: 'Testing steam.publish from Steam Achievements Test',
-                    href: 'http://apps.facebook.com/steamachievementsxt/',
-                    media: images
+                    $.each(matched, function (i, achievement)
+                    {
+                        achievementsToPublish.push(achievement);
+                    });
+                });
+
+                if (achievementsToPublish.length > 0)
+                {
+                    publishAchievements(achievementsToPublish);
                 }
-            };
-
-            FB.ui(publishParams);
-        }
+            });
+        });
 
         var _steamUserId = "<%= SteamUserId %>";
         function getNewAchievements(callback)
@@ -121,13 +115,16 @@
             });
         }
 
+        var _newAchievements = new Array();
         function displayAchievements(achievements)
         {
+            _newAchievements = new Array();
             var achievementHtml = "\n";
 
             $(achievements).each(function (i)
             {
                 var achievement = achievements[i];
+                _newAchievements.push(achievement);
 
                 achievementHtml += "<div class='achievement'><input value='" + achievement.Id + "' type='checkbox' \/>";
                 achievementHtml += "<img src='" + achievement.ImageUrl + "' alt='" + achievement.Description + "' \/>";
@@ -136,6 +133,7 @@
 
             $("#newAchievements").html(achievementHtml);
 
+            //TODO: allow user to select only 5 achievements since only 5 images can be displayed at a time?
             $("#newAchievements .achievement input, #newAchievements .achievement img").click(function ()
             {
                 $(this).parents(".achievement").toggleClass("selected");
@@ -145,11 +143,39 @@
                     checkbox.checked = !checkbox.checked;
                 }
             });
+
+            $("#publishSelectedButton").show();
         }
 
         function publishAchievements(achievements)
         {
             //TODO: display publish dialog. on successful publish, update published field on each published achievement.
+
+            var images = new Array();
+
+            $.each(achievements, function (i)
+            {
+                var achievement = achievements[i];
+                images.push({
+                    type: 'image',
+                    src: achievement.ImageUrl,
+                    href: achievement.Game.StatsUrl
+                });
+            });
+
+            var publishParams = {
+                method: 'stream.publish',
+                message: 'Steam Achievements',
+                attachment: {
+                    name: 'Test',
+                    caption: 'A test caption',
+                    description: 'Testing steam.publish from Steam Achievements Test',
+                    href: 'http://apps.facebook.com/steamachievementsx/',
+                    media: images
+                }
+            };
+
+            FB.ui(publishParams);
         }
 
         var _serviceBase = "Services/Achievement.svc/";

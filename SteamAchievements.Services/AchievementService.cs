@@ -55,7 +55,9 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            return _achievementManager.GetAchievements(steamUserId, gameId).ToSimpleAchievementList();
+            IEnumerable<Game> games = _communityService.GetGames(steamUserId).Where(game => game.Id == gameId);
+
+            return _achievementManager.GetAchievements(steamUserId, gameId).ToSimpleAchievementList(games);
         }
 
         /// <summary>
@@ -153,7 +155,9 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            return _achievementManager.GetUnpublishedAchievements(steamUserId).ToSimpleAchievementList();
+            IEnumerable<Game> games = _communityService.GetGames(steamUserId);
+
+            return _achievementManager.GetUnpublishedAchievements(steamUserId).ToSimpleAchievementList(games);
         }
 
         public bool PublishAchievements(string steamUserId, IEnumerable<int> achievementIds)
