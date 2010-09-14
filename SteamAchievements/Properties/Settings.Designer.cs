@@ -31,5 +31,77 @@ namespace SteamAchievements.Properties {
                 return ((string)(this["AdMarkup"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("yoururlsuffix")]
+        public string CanvasPageUrlSuffix {
+            get {
+                return ((string)(this["CanvasPageUrlSuffix"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("yourapikey")]
+        public string APIKey {
+            get {
+                return ((string)(this["APIKey"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://your.canvas/url")]
+        public global::System.Uri CanvasUrl {
+            get {
+                return ((global::System.Uri)(this["CanvasUrl"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TestMode {
+            get {
+                return ((bool)(this["TestMode"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("youruservoicekey")]
+        public string UserVoiceKey {
+            get {
+                return ((string)(this["UserVoiceKey"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("youruservoiceforum")]
+        public string UserVoiceForum {
+            get {
+                return ((string)(this["UserVoiceForum"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("youranalyticscode")]
+        public string GoogleAnalyticsCode {
+            get {
+                return ((string)(this["GoogleAnalyticsCode"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("yourapplicationsecret")]
+        public string ApplicationSecret {
+            get {
+                return ((string)(this["ApplicationSecret"]));
+            }
+        }
     }
 }

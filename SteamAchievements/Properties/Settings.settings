@@ -5,5 +5,29 @@
     <Setting Name="AdMarkup" Type="System.String" Scope="Application">
       <Value Profile="(Default)">&lt;p&gt;your ad code here&lt;/p&gt;</Value>
     </Setting>
+    <Setting Name="CanvasPageUrlSuffix" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">yoururlsuffix</Value>
+    </Setting>
+    <Setting Name="APIKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">yourapikey</Value>
+    </Setting>
+    <Setting Name="CanvasUrl" Type="System.Uri" Scope="Application">
+      <Value Profile="(Default)">http://your.canvas/url</Value>
+    </Setting>
+    <Setting Name="TestMode" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="UserVoiceKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">youruservoicekey</Value>
+    </Setting>
+    <Setting Name="UserVoiceForum" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">youruservoiceforum</Value>
+    </Setting>
+    <Setting Name="GoogleAnalyticsCode" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">youranalyticscode</Value>
+    </Setting>
+    <Setting Name="ApplicationSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">yourapplicationsecret</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

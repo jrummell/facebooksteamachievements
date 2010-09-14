@@ -28,6 +28,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
 using SteamAchievements.Data;
+using SteamAchievements.Properties;
 
 namespace SteamAchievements
 {
@@ -35,24 +36,24 @@ namespace SteamAchievements
     {
         protected string FacebookClientId
         {
-            get { return WebConfigurationManager.AppSettings["APIKey"]; }
+            get { return Settings.Default.APIKey; }
         }
 
         protected string FacebookCallbackUrl
         {
-            get { return WebConfigurationManager.AppSettings["Callback"]; }
+            get { return Settings.Default.CanvasUrl.ToString(); }
         }
 
         protected bool IsLoggedIn { get { return FacebookUserId > 0; } }
 
         protected string FacebookUrlSuffix
         {
-            get { return WebConfigurationManager.AppSettings["Suffix"]; }
+            get { return Settings.Default.CanvasPageUrlSuffix; }
         }
 
         private string FacebookSecret
         {
-            get { return WebConfigurationManager.AppSettings["Secret"]; }
+            get { return Settings.Default.ApplicationSecret; }
         }
 
         protected long FacebookUserId { get; private set; }

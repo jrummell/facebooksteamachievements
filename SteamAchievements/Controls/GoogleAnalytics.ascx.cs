@@ -21,6 +21,7 @@
 
 using System.Web.Configuration;
 using System.Web.UI;
+using SteamAchievements.Properties;
 
 namespace SteamAchievements.Controls
 {
@@ -32,7 +33,7 @@ namespace SteamAchievements.Controls
         /// <value>The code.</value>
         protected string Code
         {
-            get { return WebConfigurationManager.AppSettings["GoogleAnalyticsCode"]; }
+            get { return Settings.Default.GoogleAnalyticsCode; }
         }
     }
 }
