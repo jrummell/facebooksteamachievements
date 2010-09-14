@@ -36,8 +36,7 @@ namespace SteamAchievements
 
         public FDTSite()
         {
-            string testModeValue = WebConfigurationManager.AppSettings["TestMode"] ?? true.ToString();
-            TestMode = Convert.ToBoolean(testModeValue);
+            TestMode = Settings.Default.TestMode;
 
             if (!TestMode)
             {
