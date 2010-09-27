@@ -142,6 +142,13 @@
                     var checkbox = $(this).prev()[0];
                     checkbox.checked = !checkbox.checked;
                 }
+
+                var $checked = $("#newAchievements :checked");
+                var disableUnchecked = $checked.length >= 5;
+                $("#newAchievements :unchecked").each(function ()
+                {
+                    this.disabled = disableUnchecked;
+                });
             });
 
             $("#publishSelectedButton").show();
