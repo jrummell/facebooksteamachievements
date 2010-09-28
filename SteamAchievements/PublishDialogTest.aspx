@@ -36,7 +36,7 @@
 </head>
 <body>
     <!-- 
-        <asp:PlaceHolder ID="cookieValuesPlaceHolder" runat="server" />
+        <asp:PlaceHolder ID="cookieValuesPlaceHolder" runat="server" Visible="false" />
     -->
     <div id="fb-root">
     </div>

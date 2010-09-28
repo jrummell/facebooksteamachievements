@@ -74,11 +74,16 @@ namespace SteamAchievements
                     SteamUserId = manager.GetSteamUserId(FacebookUserId);
                 }
             }
+
+#if DEBUG
+            cookieValuesPlaceHolder.Visible = true;
+#endif
         }
 
         private long GetFacebookUserId()
         {
             //TODO: why doesn't this work in IE8?
+            //P3P See http://code.google.com/p/facebooksteamachievements/issues/detail?id=53
 
             // based on the php example at http://developers.facebook.com/docs/guides/canvas/#canvas
             HttpCookie cookie = Request.Cookies["fbs_" + FacebookClientId];
