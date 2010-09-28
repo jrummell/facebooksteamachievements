@@ -25,6 +25,7 @@ using System.Web.Configuration;
 using Facebook.Rest;
 using Facebook.Schema;
 using Facebook.Session;
+using SteamAchievements.Services.Properties;
 
 namespace SteamAchievements.Services
 {
@@ -38,16 +39,11 @@ namespace SteamAchievements.Services
         /// </summary>
         public AchievementsPublisher()
         {
-            string testModeValue = WebConfigurationManager.AppSettings["TestMode"] ?? true.ToString();
-            _testMode = Convert.ToBoolean(testModeValue);
-
-            string appKey = WebConfigurationManager.AppSettings["APIKey"];
-            string appSecret = WebConfigurationManager.AppSettings["Secret"];
+            _testMode = Settings.Default.TestMode;
 
             List<Enums.ExtendedPermissions> permissions =
                 new List<Enums.ExtendedPermissions> {Enums.ExtendedPermissions.publish_stream};
-            CanvasSession session = new IFrameCanvasSession(appKey, appSecret, permissions, false);
-            _api = new Api(session);
+            _api = FacebookApiFactory.CreateInstance(permissions);
         }
 
         /// <summary>
@@ -100,7 +96,6 @@ namespace SteamAchievements.Services
                                                       }
                                               };
 
-                // Normally, facebookUserId wouldn't be required if this was called from a normal page, but we're calling it from a WCF service.
                 _api.Stream.Publish(description, attachment, links, null, facebookUserId);
             }
         }

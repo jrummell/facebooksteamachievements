@@ -19,42 +19,26 @@
 
 #endregion
 
-using System;
 using System.Collections.Generic;
-using System.Web.Configuration;
-using System.Web.UI;
+using System.Linq;
+using Facebook.Rest;
 using Facebook.Schema;
-using Facebook.Web;
-using SteamAchievements.Properties;
+using Facebook.Session;
+using SteamAchievements.Services.Properties;
 
-namespace SteamAchievements
+namespace SteamAchievements.Services
 {
-    public partial class FDTSite : CanvasIFrameMasterPage
+    public static class FacebookApiFactory
     {
-        // helper for testing
-        public readonly bool TestMode;
-
-        public FDTSite()
+        public static Api CreateInstance(IEnumerable<Enums.ExtendedPermissions> permissions)
         {
-            TestMode = Settings.Default.TestMode;
+            string appKey = Settings.Default.APIKey;
+            string appSecret = Settings.Default.ApplicationSecret;
 
-            if (!TestMode)
-            {
-                RequireLogin = true;
-                RequiredPermissions = new List<Enums.ExtendedPermissions> {Enums.ExtendedPermissions.publish_stream};
-            }
-        }
+            List<Enums.ExtendedPermissions> list = permissions == null ? new List<Enums.ExtendedPermissions>() : permissions.ToList();
 
-        protected override void OnInit(EventArgs e)
-        {
-            base.OnInit(e);
-
-            Load += Page_Load;
-        }
-
-        private void Page_Load(object sender, EventArgs args)
-        {
-            adMarkup.Controls.Add(new LiteralControl(Settings.Default.AdMarkup));
+            CanvasSession session = new IFrameCanvasSession(appKey, appSecret, list, false);
+            return new Api(session);
         }
     }
 }

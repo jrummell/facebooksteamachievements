@@ -74,6 +74,7 @@
     <Compile Include="AchievementService.cs" />
     <Compile Include="AchievementsPublisher.cs" />
     <Compile Include="AchievementXmlParser.cs" />
+    <Compile Include="FacebookApiFactory.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameCollectionExtensions.cs" />
     <Compile Include="GameXmlParser.cs" />
@@ -87,6 +88,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="ServiceErrorBehaviourAttribute.cs" />
+    <Compile Include="Properties\Settings.cs" />
     <Compile Include="SimpleAchievement.cs" />
     <Compile Include="SimpleGame.cs" />
     <Compile Include="SteamCommunityManager.cs" />
