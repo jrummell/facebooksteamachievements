@@ -29,6 +29,7 @@ using System.Web.Configuration;
 using System.Web.UI;
 using SteamAchievements.Data;
 using SteamAchievements.Properties;
+using SteamAchievements.Services.Properties;
 
 namespace SteamAchievements
 {
@@ -36,7 +37,7 @@ namespace SteamAchievements
     {
         protected string FacebookClientId
         {
-            get { return Settings.Default.APIKey; }
+            get { return ServiceSettings.APIKey; }
         }
 
         protected string FacebookCallbackUrl
@@ -53,7 +54,7 @@ namespace SteamAchievements
 
         private string FacebookSecret
         {
-            get { return Settings.Default.ApplicationSecret; }
+            get { return ServiceSettings.ApplicationSecret; }
         }
 
         protected long FacebookUserId { get; private set; }

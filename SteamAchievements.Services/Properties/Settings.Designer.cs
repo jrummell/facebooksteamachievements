@@ -31,5 +31,32 @@ namespace SteamAchievements.Services.Properties {
                 return ((string)(this["AchievementManagerType"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TestMode {
+            get {
+                return ((bool)(this["TestMode"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("yourapikey")]
+        public string APIKey {
+            get {
+                return ((string)(this["APIKey"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("yourapplicationsecret")]
+        public string ApplicationSecret {
+            get {
+                return ((string)(this["ApplicationSecret"]));
+            }
+        }
     }
 }

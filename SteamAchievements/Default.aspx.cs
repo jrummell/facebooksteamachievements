@@ -22,6 +22,10 @@
 using System;
 using System.Web.UI;
 using SteamAchievements.Data;
+using Facebook.Rest;
+using SteamAchievements.Services;
+using Facebook.Schema;
+using SteamAchievements.Services.Properties;
 
 namespace SteamAchievements
 {
@@ -48,7 +52,7 @@ namespace SteamAchievements
 
         private void Page_Load(object sender, EventArgs e)
         {
-            if (Master.TestMode)
+            if (ServiceSettings.TestMode)
             {
                 return;
             }
@@ -56,7 +60,9 @@ namespace SteamAchievements
             // set FacebookUserId and SteamUserId
             try
             {
-                FacebookUserId = Master.Api.Session.UserId;
+                Api api = FacebookApiFactory.CreateInstance(
+                    new[] { Enums.ExtendedPermissions.publish_stream });
+                FacebookUserId = api.Session.UserId;
 
                 using (AchievementManager manager = new AchievementManager())
                 {

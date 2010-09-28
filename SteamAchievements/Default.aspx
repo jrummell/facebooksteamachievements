@@ -1,7 +1,6 @@
-<%@ Page Title="Home" Language="C#" AutoEventWireup="false" MasterPageFile="~/FDTSite.Master"
+<%@ Page Title="Home" Language="C#" AutoEventWireup="false" MasterPageFile="~/Site.Master"
     CodeBehind="Default.aspx.cs" Inherits="SteamAchievements.Default" %>
 
-<%@ MasterType VirtualPath="~/FDTSite.Master" %>
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="head">
 </asp:Content>
 <asp:Content runat="server" ID="Content2" ContentPlaceHolderID="body">
