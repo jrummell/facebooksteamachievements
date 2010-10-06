@@ -19,50 +19,35 @@
 
 #endregion
 
-using System;
 using System.Web.UI;
-using SteamAchievements.Data;
 using SteamAchievements.Properties;
+using SteamAchievements.Services;
 using SteamAchievements.Services.Properties;
 
-namespace SteamAchievements
+namespace SteamAchievements.Controls
 {
-    public partial class PublishDialogTest : Page
+    public partial class FacebookLogin : UserControl
     {
         protected string FacebookClientId
         {
             get { return ServiceSettings.APIKey; }
         }
 
-        protected string FacebookCallbackUrl
-        {
-            get { return Settings.Default.CanvasUrl.ToString(); }
-        }
-
-        protected bool IsLoggedIn { get { return FacebookUserId > 0; } }
+        public bool IsLoggedIn { get { return FacebookUserId > 0; } }
 
         protected string FacebookUrlSuffix
         {
             get { return Settings.Default.CanvasPageUrlSuffix; }
         }
 
-        protected long FacebookUserId { get; private set; }
+        public long FacebookUserId { get; private set; }
 
-        protected string SteamUserId { get; private set; }
-
-        protected override void OnInit(EventArgs e)
+        protected override void OnInit(System.EventArgs e)
         {
             base.OnInit(e);
 
-            FacebookUserId = login.FacebookUserId;
-
-            if (IsLoggedIn)
-            {
-                using (AchievementManager manager = new AchievementManager())
-                {
-                    SteamUserId = manager.GetSteamUserId(FacebookUserId);
-                }
-            }
+            FacebookCookieParser cookieParser = new FacebookCookieParser(Context);
+            FacebookUserId = cookieParser.GetUserId();
         }
     }
 }
