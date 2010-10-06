@@ -250,6 +250,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="p3p.xml" />
+    <None Include="policy.htm" />
+    <None Include="policy.txt" />
+    <None Include="policy.xml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
