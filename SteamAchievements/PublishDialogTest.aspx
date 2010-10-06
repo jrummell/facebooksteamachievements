@@ -35,12 +35,10 @@
     </style>
 </head>
 <body>
-    <!-- 
-        <asp:PlaceHolder ID="cookieValuesPlaceHolder" runat="server" Visible="false" />
-    -->
     <div id="fb-root">
     </div>
-    <% if (IsLoggedIn)
+    <steam:FacebookLogin ID="login" runat="server" />
+    <% if (login.IsLoggedIn)
        {%>
     <form action="PublishDialogTest.aspx">
     <input id="getNewAchievementsButton" type="button" value="Get New Achievements" />
@@ -49,34 +47,11 @@
     <input id="publishSelectedButton" type="button" value="Publish Selected" style="display: none;" />
     </form>
     <%
-        }
-       else
-       {%>
-    <div id="facebookLogin">
-        <fb:login-button>
-        </fb:login-button>
-    </div>
-    <%
         }%>
     <div id="log">
     </div>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-    <script src="http://connect.facebook.net/en_US/all.js" type="text/javascript"></script>
     <script type="text/javascript">
-        FB.init(
-        {
-            appId: "<%= FacebookClientId %>",
-            cookie: true,
-            status: true,
-            xfbml: true
-        });
-
-        FB.Event.subscribe('auth.login', function (response)
-        {
-            // Reload the application in the logged-in state
-            window.top.location = 'http://apps.facebook.com/<%= FacebookUrlSuffix %>/PublishDialogTest.aspx';
-        });
-
         $(document).ready(function ()
         {
             $("#getNewAchievementsButton").click(getNewAchievements);

@@ -75,6 +75,7 @@
     <Compile Include="AchievementsPublisher.cs" />
     <Compile Include="AchievementXmlParser.cs" />
     <Compile Include="FacebookApiFactory.cs" />
+    <Compile Include="FacebookCookieParser.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameCollectionExtensions.cs" />
     <Compile Include="GameXmlParser.cs" />

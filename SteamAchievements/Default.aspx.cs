@@ -22,9 +22,6 @@
 using System;
 using System.Web.UI;
 using SteamAchievements.Data;
-using Facebook.Rest;
-using SteamAchievements.Services;
-using Facebook.Schema;
 using SteamAchievements.Services.Properties;
 
 namespace SteamAchievements
@@ -58,12 +55,10 @@ namespace SteamAchievements
             }
 
             // set FacebookUserId and SteamUserId
+            FacebookUserId = login.FacebookUserId;
+
             try
             {
-                Api api = FacebookApiFactory.CreateInstance(
-                    new[] { Enums.ExtendedPermissions.publish_stream });
-                FacebookUserId = api.Session.UserId;
-
                 using (AchievementManager manager = new AchievementManager())
                 {
                     SteamUserId = manager.GetSteamUserId(FacebookUserId);

@@ -4,6 +4,11 @@
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="head">
 </asp:Content>
 <asp:Content runat="server" ID="Content2" ContentPlaceHolderID="body">
+    <div id="fb-root">
+    </div>
+    <steam:FacebookLogin ID="login" runat="server" />
+    <% if (login.IsLoggedIn)
+       { %>
     <fieldset>
         <legend>Steam Community Custom URL</legend>
         <input id="facebookUserIdHidden" type="hidden" value="<%=FacebookUserId%>" />
@@ -59,4 +64,5 @@
         <asp:Literal ID="errorLiteral" runat="server" />
     </div>
     <script type="text/javascript" src="default.js"></script>
+    <% } %>
 </asp:Content>
