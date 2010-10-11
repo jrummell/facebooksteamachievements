@@ -63,5 +63,14 @@ namespace SteamAchievements.Services.Tests
             Assert.That(achievements.Any(a => a.Name == "Fried Piper" && a.Closed));
             Assert.That(achievements.Any(a => a.Name == "Cl0wnd" && !a.Closed));
         }
+
+        [Test]
+        public void ParseHL2Achievements()
+        {
+            string xml = File.ReadAllText("hl2Achievements.xml");
+
+            AchievementXmlParser parser = new AchievementXmlParser();
+            IEnumerable<Achievement> achievements = parser.Parse(xml);
+        }
     }
 }
