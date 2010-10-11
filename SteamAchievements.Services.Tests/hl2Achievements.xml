@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><playerstats>
+	<privacyState>public</privacyState>
+	<visibilityState>3</visibilityState>
+	<game>
+		<gameFriendlyName><![CDATA[HL2]]></gameFriendlyName>
+		<gameName><![CDATA[Half-Life 2]]></gameName>
+		<gameLink><![CDATA[http://store.steampowered.com/app/220]]></gameLink>
+		<gameIcon><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/fcfb366051782b8ebf2aa297f3b746395858cb62.jpg]]></gameIcon>
+		<gameLogo><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/e4ad9cf1b7dc8475c1118625daf9abd4bdcbcad0.jpg]]></gameLogo>
+		<gameLogoSmall><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/c2e409b1d9313648a4865b8aff9aba98fc6b4f04.jpg]]></gameLogoSmall>
+	</game>
+	<player>
+		<steamID64>76561198010297554</steamID64>
+		<customURL><![CDATA[richardmstallman]]></customURL>
+	</player>
+	<stats>
+		<hoursPlayed>1.9</hoursPlayed>
+	</stats>
+	<achievements>
+		<achievement closed="1">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_put_canintrash.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_put_canintrash_bw.jpg]]></iconOpen>
+			<name><![CDATA[Submissive]]></name>
+			<description><![CDATA[Put the can in the trash.]]></description>
+			<unlockTimestamp>1283731824</unlockTimestamp>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_hit_cancop_withcan.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_hit_cancop_withcan_bw.jpg]]></iconOpen>
+			<name><![CDATA[Defiant]]></name>
+			<description><![CDATA[Hit the trashcan cop with the can.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_escape_apartmentraid.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_escape_apartmentraid_bw.jpg]]></iconOpen>
+			<name><![CDATA[Malcontent]]></name>
+			<description><![CDATA[Escape the apartment block raid.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_break_miniteleporter.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_break_miniteleporter_bw.jpg]]></iconOpen>
+			<name><![CDATA[What cat?]]></name>
+			<description><![CDATA[Break the mini-teleporter in Kleiner's lab.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_get_crowbar.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_get_crowbar_bw.jpg]]></iconOpen>
+			<name><![CDATA[Trusty Hardware]]></name>
+			<description><![CDATA[Get the crowbar.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_kill_barnacleswithbarrel.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_kill_barnacleswithbarrel_bw.jpg]]></iconOpen>
+			<name><![CDATA[Barnacle Bowling]]></name>
+			<description><![CDATA[Kill five barnacles with one barrel.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_get_airboat.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_get_airboat_bw.jpg]]></iconOpen>
+			<name><![CDATA[Anchor's Aweigh!]]></name>
+			<description><![CDATA[Get the airboat.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_get_airboatgun.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_get_airboatgun_bw.jpg]]></iconOpen>
+			<name><![CDATA[Heavy Weapons]]></name>
+			<description><![CDATA[Get the airboat's mounted gun.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_find_vortigauntcave.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_find_vortigauntcave_bw.jpg]]></iconOpen>
+			<name><![CDATA[Vorticough]]></name>
+			<description><![CDATA[Discover the hidden singing vortigaunt cave in chapter Water Hazard.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_kill_chopper.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_kill_chopper_bw.jpg]]></iconOpen>
+			<name><![CDATA[Revenge!]]></name>
+			<description><![CDATA[Destroy the hunter-chopper in Half-Life 2.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_find_hevfaceplate.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_find_hevfaceplate_bw.jpg]]></iconOpen>
+			<name><![CDATA[Blast from the Past]]></name>
+			<description><![CDATA[Find the HEV Suit Charger faceplate in Eli's scrapyard.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_get_gravitygun.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_get_gravitygun_bw.jpg]]></iconOpen>
+			<name><![CDATA[Zero-Point Energy]]></name>
+			<description><![CDATA[Get the Gravity Gun in Black Mesa East.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_makeabasket.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_makeabasket_bw.jpg]]></iconOpen>
+			<name><![CDATA[Two Points]]></name>
+			<description><![CDATA[Use DOG's ball to make a basket in Eli's scrapyard.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_ravenholm_noweapons.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_ravenholm_noweapons_bw.jpg]]></iconOpen>
+			<name><![CDATA[Zombie Chopper]]></name>
+			<description><![CDATA[Play through Ravenholm using only the Gravity Gun.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_cemetery.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_cemetery_bw.jpg]]></iconOpen>
+			<name><![CDATA[Hallowed Ground]]></name>
+			<description><![CDATA[Escort Gregori safely through the church cemetery.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_kill_enemies_withcrane.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_kill_enemies_withcrane_bw.jpg]]></iconOpen>
+			<name><![CDATA[OSHA Violation]]></name>
+			<description><![CDATA[Kill 3 enemies using the crane.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_pin_soldier_tobillboard.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_pin_soldier_tobillboard_bw.jpg]]></iconOpen>
+			<name><![CDATA[Targetted Advertising]]></name>
+			<description><![CDATA[Pin a soldier to the billboard in chapter Highway 17.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_kill_odessagunship.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_kill_odessagunship_bw.jpg]]></iconOpen>
+			<name><![CDATA[Where Cubbage Fears to Tread]]></name>
+			<description><![CDATA[Defend Little Odessa from the gunship attack.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_kill_threegunships.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_kill_threegunships_bw.jpg]]></iconOpen>
+			<name><![CDATA[One Man Army]]></name>
+			<description><![CDATA[Destroy six gunships in Half-Life 2.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_donttouchsand.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_donttouchsand_bw.jpg]]></iconOpen>
+			<name><![CDATA[Keep Off the Sand!]]></name>
+			<description><![CDATA[Cross the antlion beach in chapter Sandtraps without touching the sand.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_kill_enemies_withantlions.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_kill_enemies_withantlions_bw.jpg]]></iconOpen>
+			<name><![CDATA[Bug Hunt]]></name>
+			<description><![CDATA[Use the antlions to kill 50 enemies.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_kill_enemy_withtoilet.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_kill_enemy_withtoilet_bw.jpg]]></iconOpen>
+			<name><![CDATA[Flushed]]></name>
+			<description><![CDATA[Kill an enemy with a toilet.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_turretstandoff2.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_turretstandoff2_bw.jpg]]></iconOpen>
+			<name><![CDATA[Warden Freeman]]></name>
+			<description><![CDATA[Survive the second turret standoff in Nova Prospekt.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_followfreeman.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_followfreeman_bw.jpg]]></iconOpen>
+			<name><![CDATA[Follow Freeman]]></name>
+			<description><![CDATA[Gain command of a squad of rebels in the uprising.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_toxictunnel.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_toxictunnel_bw.jpg]]></iconOpen>
+			<name><![CDATA[Radiation Levels Detected]]></name>
+			<description><![CDATA[Get through the toxic tunnel under City 17 in Half-Life 2.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_plazastandoff.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_plazastandoff_bw.jpg]]></iconOpen>
+			<name><![CDATA[Plaza Defender]]></name>
+			<description><![CDATA[Survive the generator plaza standoff in chapter Anticitizen One.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_kill_allc1709snipers.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_kill_allc1709snipers_bw.jpg]]></iconOpen>
+			<name><![CDATA[Counter-Sniper]]></name>
+			<description><![CDATA[Kill all of the snipers in City 17.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_supressiondevice.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_supressiondevice_bw.jpg]]></iconOpen>
+			<name><![CDATA[Fight the Power]]></name>
+			<description><![CDATA[Shut down the supression device by disabling its generators.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_c1713striderstandoff.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_c1713striderstandoff_bw.jpg]]></iconOpen>
+			<name><![CDATA[Giant Killer]]></name>
+			<description><![CDATA[Survive the rooftop strider battle in the ruins of City 17.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_disintegrate_soldiersinfield.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_disintegrate_soldiersinfield_bw.jpg]]></iconOpen>
+			<name><![CDATA[Atomizer]]></name>
+			<description><![CDATA[Disintegrate 15 soldiers by throwing them into a Combine ball field.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_game.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_beat_game_bw.jpg]]></iconOpen>
+			<name><![CDATA[Singularity Collapse]]></name>
+			<description><![CDATA[Destroy the Citadel's reactor core.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_find_alllambdas.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_find_alllambdas_bw.jpg]]></iconOpen>
+			<name><![CDATA[Lambda Locator]]></name>
+			<description><![CDATA[Find all lambda caches in Half-Life 2.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hlx_kill_enemies_withmanhack.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/hlx_kill_enemies_withmanhack_bw.jpg]]></iconOpen>
+			<name><![CDATA[Hack Attack!]]></name>
+			<description><![CDATA[Kill five enemies with a Manhack.]]></description>
+		</achievement>
+	</achievements>
+</playerstats>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><gamesList>
+	<steamID64>76561198010297554</steamID64>
+	<steamID><![CDATA[dev (◕ ◡◡◡ ◕)]]></steamID>
+	<games>
+		<game>
+			<appID>7670</appID>
+			<name><![CDATA[BioShock]]></name>
+			<logo><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/7670/4c2a7f97e6556a95319eb346aed7beff9fe0535c.jpg]]></logo>
+			<storeLink><![CDATA[http://store.steampowered.com/app/7670]]></storeLink>
+			<hoursLast2Weeks>13.4</hoursLast2Weeks>
+			<hoursOnRecord>24.9</hoursOnRecord>
+		</game>
+		<game>
+			<appID>220</appID>
+			<name><![CDATA[Half-Life 2]]></name>
+			<logo><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/220/e4ad9cf1b7dc8475c1118625daf9abd4bdcbcad0.jpg]]></logo>
+			<storeLink><![CDATA[http://store.steampowered.com/app/220]]></storeLink>
+			<hoursLast2Weeks>1.9</hoursLast2Weeks>
+			<hoursOnRecord>1.9</hoursOnRecord>
+			<statsLink><![CDATA[http://steamcommunity.com/id/richardmstallman/stats/HL2]]></statsLink>
+			<globalStatsLink><![CDATA[http://steamcommunity.com/stats/HL2/achievements/]]></globalStatsLink>
+		</game>
+		<game>
+			<appID>24960</appID>
+			<name><![CDATA[Battlefield: Bad Company 2]]></name>
+			<logo><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/24960/969a07d20786b5f536122d70f2c3eedc1eca5ede.jpg]]></logo>
+			<storeLink><![CDATA[http://store.steampowered.com/app/24960]]></storeLink>
+			<hoursLast2Weeks>1.4</hoursLast2Weeks>
+			<hoursOnRecord>151.4</hoursOnRecord>
+		</game>
+		<game>
+			<appID>630</appID>
+			<name><![CDATA[Alien Swarm]]></name>
+			<logo><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/630/de3320a2c29b55b6f21d142dee26d9b044a29e97.jpg]]></logo>
+			<storeLink><![CDATA[http://store.steampowered.com/app/630]]></storeLink>
+			<hoursLast2Weeks>0.6</hoursLast2Weeks>
+			<hoursOnRecord>23.4</hoursOnRecord>
+			<statsLink><![CDATA[http://steamcommunity.com/id/richardmstallman/stats/AlienSwarm]]></statsLink>
+			<globalStatsLink><![CDATA[http://steamcommunity.com/stats/AlienSwarm/achievements/]]></globalStatsLink>
+		</game>
+		<game>
+			<appID>17510</appID>
+			<name><![CDATA[Age of Chivalry]]></name>
+			<logo><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/17510/e3176ec058428d97a424af5d577bed96c6e92528.jpg]]></logo>
+			<storeLink><![CDATA[http://store.steampowered.com/app/17510]]></storeLink>
+			<hoursOnRecord>0.9</hoursOnRecord>
+			<statsLink><![CDATA[http://steamcommunity.com/id/richardmstallman/stats/AgeOfChivalry]]></statsLink>
+			<globalStatsLink><![CDATA[http://steamcommunity.com/stats/AgeOfChivalry/achievements/]]></globalStatsLink>
+		</game>
+		<game>
+			<appID>320</appID>
+			<name><![CDATA[Half-Life 2: Deathmatch]]></name>
+			<logo><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/320/6dd9f66771300f2252d411e50739a1ceae9e5b30.jpg]]></logo>
+			<storeLink><![CDATA[http://store.steampowered.com/app/320]]></storeLink>
+			<hoursOnRecord>0.5</hoursOnRecord>
+		</game>
+		<game>
+			<appID>380</appID>
+			<name><![CDATA[Half-Life 2: Episode One]]></name>
+			<logo><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/380/b5a666a961d8b39896887abbed3b78c2b837c238.jpg]]></logo>
+			<storeLink><![CDATA[http://store.steampowered.com/app/380]]></storeLink>
+			<statsLink><![CDATA[http://steamcommunity.com/id/richardmstallman/stats/HL2:EP1]]></statsLink>
+			<globalStatsLink><![CDATA[http://steamcommunity.com/stats/HL2:EP1/achievements/]]></globalStatsLink>
+		</game>
+		<game>
+			<appID>340</appID>
+			<name><![CDATA[Half-Life 2: Lost Coast]]></name>
+			<logo><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/340/867cce5c4f37d5ed4aeffb57c60e220ddffe4134.jpg]]></logo>
+			<storeLink><![CDATA[http://store.steampowered.com/app/340]]></storeLink>
+		</game>
+		<game>
+			<appID>400</appID>
+			<name><![CDATA[Portal]]></name>
+			<logo><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/400/4184d4c0d915bd3a45210667f7b25361352acd8f.jpg]]></logo>
+			<storeLink><![CDATA[http://store.steampowered.com/app/400]]></storeLink>
+			<hoursOnRecord>15.1</hoursOnRecord>
+			<statsLink><![CDATA[http://steamcommunity.com/id/richardmstallman/stats/Portal]]></statsLink>
+			<globalStatsLink><![CDATA[http://steamcommunity.com/stats/Portal/achievements/]]></globalStatsLink>
+		</game>
+		<game>
+			<appID>4500</appID>
+			<name><![CDATA[S.T.A.L.K.E.R.: Shadow of Chernobyl]]></name>
+			<logo><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/4500/a4f810cb3cbfa8562493e6d9b4fa0afb9706aeb7.jpg]]></logo>
+			<storeLink><![CDATA[http://store.steampowered.com/app/4500]]></storeLink>
+			<hoursOnRecord>5.3</hoursOnRecord>
+		</game>
+		<game>
+			<appID>440</appID>
+			<name><![CDATA[Team Fortress 2]]></name>
+			<logo><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/440/07385eb55b5ba974aebbe74d3c99626bda7920b8.jpg]]></logo>
+			<storeLink><![CDATA[http://store.steampowered.com/app/440]]></storeLink>
+			<hoursOnRecord>818.3</hoursOnRecord>
+			<statsLink><![CDATA[http://steamcommunity.com/id/richardmstallman/stats/TF2]]></statsLink>
+			<globalStatsLink><![CDATA[http://steamcommunity.com/stats/TF2/achievements/]]></globalStatsLink>
+		</game>
+		<game>
+			<appID>17500</appID>
+			<name><![CDATA[Zombie Panic Source]]></name>
+			<logo><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/17500/ee7a8e6d50f6570451730a1bfb2f43a435e08a6c.jpg]]></logo>
+			<storeLink><![CDATA[http://store.steampowered.com/app/17500]]></storeLink>
+			<hoursOnRecord>1.3</hoursOnRecord>
+		</game>
+	</games>
+</gamesList>
