@@ -9,17 +9,40 @@
         xfbml: true
     });
 
-    FB.Event.subscribe('auth.login', function (response)
-    {
-        // Reload the application in the logged-in state
-        window.top.location = 'http://apps.facebook.com/<%= FacebookUrlSuffix %>/';
-    });
 </script>
 <% if (!IsLoggedIn)
    {%>
 <div id="facebookLogin">
-    <fb:login-button>
-    </fb:login-button>
+    <a id="loginButton" class="button" href="#">Login</a>
 </div>
+<script type="text/javascript">
+    $(document).ready(function ()
+    {
+        $("#loginButton").click(function ()
+        {
+            FB.login(function (response)
+            {
+                if (response.session)
+                {
+                    if (response.perms)
+                    {
+                        // user is logged in and granted some permissions.
+                        // perms is a comma separated list of granted permissions
+                        // Reload the application in the logged-in state
+                        window.top.location = 'http://apps.facebook.com/<%= FacebookUrlSuffix %>/';
+                    }
+                    else
+                    {
+                        // user is logged in, but did not grant any permissions
+                    }
+                }
+                else
+                {
+                    // user is not logged in
+                }
+            }, { perms: 'publish_stream,offline_access' });
+        });
+    });
+</script>
 <%
     }%>
