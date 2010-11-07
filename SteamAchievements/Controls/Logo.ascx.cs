@@ -20,17 +20,10 @@
 #endregion
 
 using System.Web.UI;
-using SteamAchievements.Properties;
 
 namespace SteamAchievements.Controls
 {
     public partial class Logo : UserControl
     {
-        protected override void OnInit(System.EventArgs e)
-        {
-            base.OnInit(e);
-
-            homeLink.NavigateUrl = "http://apps.facebook.com/" + Settings.Default.CanvasPageUrlSuffix;
-        }
     }
 }

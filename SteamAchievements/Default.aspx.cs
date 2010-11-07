@@ -59,7 +59,7 @@ namespace SteamAchievements
 
             try
             {
-                using (AchievementManager manager = new AchievementManager())
+                using (IAchievementManager manager = new AchievementManager())
                 {
                     SteamUserId = manager.GetSteamUserId(FacebookUserId);
                 }

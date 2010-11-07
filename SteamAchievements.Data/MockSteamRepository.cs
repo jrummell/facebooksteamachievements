@@ -125,11 +125,12 @@ namespace SteamAchievements.Data
             foreach (Achievement achievement in _achievementsToInsertOnSubmit)
             {
                 // mimic the unique index on GameId, Name, Description
+                Achievement achievement1 = achievement;
                 if (
                     _achievements.Values.Where(
                         a =>
-                        a.Name == achievement.Name && a.GameId == achievement.GameId &&
-                        a.Description == achievement.Description).Any())
+                        a.Name == achievement1.Name && a.GameId == achievement1.GameId &&
+                        a.Description == achievement1.Description).Any())
                 {
                     throw new InvalidOperationException("Cannot insert duplicate key row in object 'dbo.steam_Achievement' with unique index 'IX_steam_Achievement.\r\nGameId: "
                                                         + achievement.GameId + " Name: " + achievement.Name +
@@ -292,9 +293,9 @@ namespace SteamAchievements.Data
                 SteamUserId = user.SteamUserId;
             }
 
-            public long FacebookUserId { get; set; }
+            private long FacebookUserId { get; set; }
 
-            public string SteamUserId { get; set; }
+            private string SteamUserId { get; set; }
 
             #region IEquatable<UserKey> Members
 

@@ -27,7 +27,8 @@ namespace SteamAchievements.Services
 {
     internal static class AchievementCollectionExtensions
     {
-        public static List<SimpleAchievement> ToSimpleAchievementList(this IEnumerable<Data.Achievement> achievements, IEnumerable<Game> games)
+        public static List<SimpleAchievement> ToSimpleAchievementList(this IEnumerable<Data.Achievement> achievements,
+                                                                      IEnumerable<Game> games)
         {
             return (from game in games
                     from achievement in achievements
@@ -38,13 +39,13 @@ namespace SteamAchievements.Services
                                    ImageUrl = achievement.ImageUrl,
                                    Name = achievement.Name,
                                    Description = achievement.Description,
-                                   Game = new SimpleGame 
-                                              { 
-                                                  Id = game.Id, 
-                                                  Name = game.Name, 
-                                                  ImageUrl = game.ImageUrl.ToString(), 
-                                                  StatsUrl = game.StatsUrl.ToString(), 
-                                                  StoreUrl = game.StoreUrl.ToString() 
+                                   Game = new SimpleGame
+                                              {
+                                                  Id = game.Id,
+                                                  Name = game.Name,
+                                                  ImageUrl = game.ImageUrl.ToString(),
+                                                  StatsUrl = game.StatsUrl.ToString(),
+                                                  StoreUrl = game.StoreUrl.ToString()
                                               }
                                }).ToList();
         }
@@ -62,18 +63,6 @@ namespace SteamAchievements.Services
                                   ImageUrl = new Uri(achievement.ImageUrl, UriKind.Absolute),
                                   Closed = true,
                                   Game = game
-                              };
-        }
-
-        public static IEnumerable<Achievement> ToAchievements(this IEnumerable<Data.Achievement> achievements)
-        {
-            return from achievement in achievements
-                   select new Achievement
-                              {
-                                  Name = achievement.Name,
-                                  Description = achievement.Description,
-                                  ImageUrl = new Uri(achievement.ImageUrl, UriKind.Absolute),
-                                  Closed = true
                               };
         }
 

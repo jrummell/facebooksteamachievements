@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="Publish" Language="C#" AutoEventWireup="false" MasterPageFile="~/Site.Master"
-    CodeBehind="Publish.aspx.cs" Inherits="SteamAchievements.PublishDialogTest" %>
+    CodeBehind="Publish.aspx.cs" Inherits="SteamAchievements.Publish" %>
 
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="head">
     <style type="text/css">

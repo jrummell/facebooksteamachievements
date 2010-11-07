@@ -19,7 +19,6 @@
 
 #endregion
 
-using System.Web.Configuration;
 using System.Web.UI;
 using SteamAchievements.Properties;
 

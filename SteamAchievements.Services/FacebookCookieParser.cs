@@ -25,7 +25,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
-
 using SteamAchievements.Services.Properties;
 
 namespace SteamAchievements.Services
@@ -35,15 +34,15 @@ namespace SteamAchievements.Services
     /// </summary>
     public class FacebookCookieParser
     {
-        private readonly HttpServerUtility _serverUtility;
         private readonly HttpRequest _request;
-        
+        private readonly HttpServerUtility _serverUtility;
+
         public FacebookCookieParser(HttpContext context)
         {
             _serverUtility = context.Server;
             _request = context.Request;
         }
-        
+
         /// <summary>
         /// Gets the logged in user's id from the facebook cookie.
         /// </summary>
@@ -51,7 +50,7 @@ namespace SteamAchievements.Services
         public long GetUserId()
         {
             // IE requires a P3P policy since we're accessing a cookie from a different domain. See http://code.google.com/p/facebooksteamachievements/issues/detail?id=53
-            
+
             // based on the php example at http://developers.facebook.com/docs/guides/canvas/#canvas
             HttpCookie cookie = _request.Cookies["fbs_" + ServiceSettings.APIKey];
             if (cookie != null)

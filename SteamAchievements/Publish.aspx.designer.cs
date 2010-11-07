@@ -10,7 +10,7 @@
 namespace SteamAchievements {
     
     
-    public partial class PublishDialogTest {
+    public partial class Publish {
         
         /// <summary>
         /// login control.

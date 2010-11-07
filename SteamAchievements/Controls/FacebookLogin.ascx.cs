@@ -19,6 +19,7 @@
 
 #endregion
 
+using System;
 using System.Web.UI;
 using SteamAchievements.Properties;
 using SteamAchievements.Services;
@@ -33,7 +34,10 @@ namespace SteamAchievements.Controls
             get { return ServiceSettings.APIKey; }
         }
 
-        public bool IsLoggedIn { get { return FacebookUserId > 0; } }
+        public bool IsLoggedIn
+        {
+            get { return FacebookUserId > 0; }
+        }
 
         protected string FacebookUrlSuffix
         {
@@ -42,7 +46,7 @@ namespace SteamAchievements.Controls
 
         public long FacebookUserId { get; private set; }
 
-        protected override void OnInit(System.EventArgs e)
+        protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
 

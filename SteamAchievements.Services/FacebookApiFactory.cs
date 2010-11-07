@@ -35,7 +35,9 @@ namespace SteamAchievements.Services
             string appKey = Settings.Default.APIKey;
             string appSecret = Settings.Default.ApplicationSecret;
 
-            List<Enums.ExtendedPermissions> list = permissions == null ? new List<Enums.ExtendedPermissions>() : permissions.ToList();
+            List<Enums.ExtendedPermissions> list = permissions == null
+                                                       ? new List<Enums.ExtendedPermissions>()
+                                                       : permissions.ToList();
 
             CanvasSession session = new IFrameCanvasSession(appKey, appSecret, list, false);
             return new Api(session);
