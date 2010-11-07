@@ -154,12 +154,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="PublishDialogTest.aspx.cs">
-      <DependentUpon>PublishDialogTest.aspx</DependentUpon>
+    <Compile Include="Publish.aspx.cs">
+      <DependentUpon>Publish.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="PublishDialogTest.aspx.designer.cs">
-      <DependentUpon>PublishDialogTest.aspx</DependentUpon>
+    <Compile Include="Publish.aspx.designer.cs">
+      <DependentUpon>Publish.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -182,7 +182,8 @@
     <Content Include="Controls\FacebookLogin.ascx" />
     <Content Include="Controls\HelpLink.ascx" />
     <Content Include="images\banner-light.png" />
-    <Content Include="PublishDialogTest.aspx" />
+    <Content Include="Publish.aspx" />
+    <Content Include="publish.js" />
     <Content Include="Site.Master" />
     <Content Include="Default.aspx" />
   </ItemGroup>
