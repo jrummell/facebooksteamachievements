@@ -35,17 +35,17 @@ namespace SteamAchievements.Services.Tests
     {
         private static IEnumerable<Data.Achievement> GetCommunityAchievements()
         {
-            List<Services.Achievement> achievements;
+            List<Achievement> achievements;
             using (FileStream fs = new FileStream("SerializedUnimatrixeroAchievements.xml", FileMode.Open))
             {
                 using (XmlDictionaryReader reader =
                     XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas()))
                 {
                     DataContractSerializer serializer =
-                        new DataContractSerializer(typeof (Services.Achievement),
-                                                   new[] {typeof (List<Services.Achievement>)});
+                        new DataContractSerializer(typeof (Achievement),
+                                                   new[] {typeof (List<Achievement>)});
 
-                    achievements = (List<Services.Achievement>) serializer.ReadObject(reader, true);
+                    achievements = (List<Achievement>) serializer.ReadObject(reader, true);
                 }
             }
 
@@ -83,6 +83,39 @@ namespace SteamAchievements.Services.Tests
             return achievements;
         }
 
+        private void UpdateAchievements(string steamUserId)
+        {
+            MockSteamRepository repository = new MockSteamRepository();
+            repository.Achievements = GetDataAchievements().AsQueryable();
+            repository.Users =
+                new List<User> {new User {FacebookUserId = 0, SteamUserId = steamUserId}}.AsQueryable();
+            repository.UserAchievements = new List<UserAchievement>().AsQueryable();
+
+            AchievementManager manager = new AchievementManager(repository);
+            IEnumerable<Data.Achievement> achievements = GetCommunityAchievements();
+
+            // should not throw InvalidOperationException
+            manager.UpdateAchievements(steamUserId, achievements);
+        }
+
+        private void SerializeAchievements(string steamUserId)
+        {
+            SteamCommunityManager manager = new SteamCommunityManager();
+            List<Achievement> achievements = manager.GetAchievements(steamUserId).ToList();
+
+            FileInfo dll = new FileInfo("SteamAchievements.Services.Tests");
+            DirectoryInfo bin = new DirectoryInfo(dll.Directory.FullName);
+            string projectPath = bin.Parent.Parent.FullName;
+            string serializedFilePath = Path.Combine(projectPath, "Serialized" + steamUserId + "Achievements.xml");
+
+            DataContractSerializer serializer =
+                new DataContractSerializer(typeof (Achievement), new[] {typeof (List<Achievement>)});
+            using (FileStream writer = new FileStream(serializedFilePath, FileMode.Create))
+            {
+                serializer.WriteObject(writer, achievements);
+            }
+        }
+
         /// <summary>
         /// http://code.google.com/p/facebooksteamachievements/issues/detail?id=37
         /// </summary>
@@ -101,24 +134,6 @@ namespace SteamAchievements.Services.Tests
             UpdateAchievements("richardmstallman");
         }
 
-        private void UpdateAchievements(string steamUserId)
-        {
-            MockSteamRepository repository = new MockSteamRepository();
-            repository.Achievements = GetDataAchievements().AsQueryable();
-            repository.Users =
-                new List<User> { new User { FacebookUserId = 0, SteamUserId = steamUserId } }.AsQueryable();
-            repository.UserAchievements = new List<UserAchievement>().AsQueryable();
-
-            GameXmlParser gameXmlParser = new GameXmlParser();
-            IEnumerable<Game> games = gameXmlParser.Parse(File.ReadAllText(steamUserId + "Games.xml"));
-
-            AchievementManager manager = new AchievementManager(repository);
-            IEnumerable<Data.Achievement> achievements = GetCommunityAchievements();
-
-            // should not throw InvalidOperationException
-            manager.UpdateAchievements(steamUserId, achievements);
-        }
-
         [Test, Explicit]
         public void SerializeAchievementsForIssue37()
         {
@@ -129,24 +144,6 @@ namespace SteamAchievements.Services.Tests
         public void SerializeAchievementsForIssue51()
         {
             SerializeAchievements("richardmstallman");
-        }
-
-        private void SerializeAchievements(string steamUserId)
-        {
-            SteamCommunityManager manager = new SteamCommunityManager();
-            List<Services.Achievement> achievements = manager.GetAchievements(steamUserId).ToList();
-
-            FileInfo dll = new FileInfo("SteamAchievements.Services.Tests");
-            DirectoryInfo bin = new DirectoryInfo(dll.Directory.FullName);
-            string projectPath = bin.Parent.Parent.FullName;
-            string serializedFilePath = Path.Combine(projectPath, "Serialized" + steamUserId + "Achievements.xml");
-
-            DataContractSerializer serializer =
-                new DataContractSerializer(typeof(Services.Achievement), new[] { typeof(List<Services.Achievement>) });
-            using (FileStream writer = new FileStream(serializedFilePath, FileMode.Create))
-            {
-                serializer.WriteObject(writer, achievements);
-            }
         }
     }
 }

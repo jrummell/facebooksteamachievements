@@ -22,31 +22,17 @@
 using System;
 using System.Web.UI;
 using SteamAchievements.Data;
-using SteamAchievements.Properties;
-using SteamAchievements.Services.Properties;
 
 namespace SteamAchievements
 {
-    public partial class PublishDialogTest : Page
+    public partial class Publish : Page
     {
-        protected string FacebookClientId
+        private bool IsLoggedIn
         {
-            get { return ServiceSettings.APIKey; }
+            get { return FacebookUserId > 0; }
         }
 
-        protected string FacebookCallbackUrl
-        {
-            get { return Settings.Default.CanvasUrl.ToString(); }
-        }
-
-        protected bool IsLoggedIn { get { return FacebookUserId > 0; } }
-
-        protected string FacebookUrlSuffix
-        {
-            get { return Settings.Default.CanvasPageUrlSuffix; }
-        }
-
-        protected long FacebookUserId { get; private set; }
+        private long FacebookUserId { get; set; }
 
         protected string SteamUserId { get; private set; }
 
@@ -58,7 +44,7 @@ namespace SteamAchievements
 
             if (IsLoggedIn)
             {
-                using (AchievementManager manager = new AchievementManager())
+                using (IAchievementManager manager = new AchievementManager())
                 {
                     SteamUserId = manager.GetSteamUserId(FacebookUserId);
                 }

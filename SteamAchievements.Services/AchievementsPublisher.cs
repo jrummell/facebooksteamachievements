@@ -21,10 +21,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Web.Configuration;
 using Facebook.Rest;
 using Facebook.Schema;
-using Facebook.Session;
 using SteamAchievements.Services.Properties;
 
 namespace SteamAchievements.Services

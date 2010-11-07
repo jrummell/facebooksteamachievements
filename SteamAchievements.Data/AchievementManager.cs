@@ -241,7 +241,7 @@ namespace SteamAchievements.Data
 
             if (achievementIds == null)
             {
-                throw new ArgumentNullException("achievements");
+                throw new ArgumentNullException("achievementIds");
             }
 
             if (!achievementIds.Any())

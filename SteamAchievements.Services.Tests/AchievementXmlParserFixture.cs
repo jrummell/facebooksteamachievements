@@ -65,12 +65,12 @@ namespace SteamAchievements.Services.Tests
         }
 
         [Test]
-        public void ParseHL2Achievements()
+        public void ParseHl2Achievements()
         {
             string xml = File.ReadAllText("hl2Achievements.xml");
 
             AchievementXmlParser parser = new AchievementXmlParser();
-            IEnumerable<Achievement> achievements = parser.Parse(xml);
+            parser.Parse(xml);
         }
     }
 }
