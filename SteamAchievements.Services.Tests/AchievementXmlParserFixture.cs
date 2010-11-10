@@ -36,11 +36,13 @@ namespace SteamAchievements.Services.Tests
             string xml = File.ReadAllText("achievements.xml");
 
             AchievementXmlParser parser = new AchievementXmlParser();
-            IEnumerable<Achievement> achievements = parser.ParseClosed(xml);
+            IEnumerable<UserAchievement> achievements = parser.ParseClosed(xml);
 
             Assert.That(achievements.Any());
+            Assert.That(achievements.All(a => a.SteamUserId == "nullreference"));
             Assert.That(achievements.Any(a => a.Name == "Fried Piper" && a.Closed));
             Assert.That(!achievements.Any(a => !a.Closed));
+            Assert.That(achievements.Any(a => a.Name == "Midnight Rider" && a.Closed && a.Date.Ticks == 1261871228));
         }
 
         [Test]
@@ -57,9 +59,10 @@ namespace SteamAchievements.Services.Tests
             string xml = File.ReadAllText("achievements.xml");
 
             AchievementXmlParser parser = new AchievementXmlParser();
-            IEnumerable<Achievement> achievements = parser.Parse(xml);
+            IEnumerable<UserAchievement> achievements = parser.Parse(xml);
 
             Assert.That(achievements.Any());
+            Assert.That(achievements.All(a => a.SteamUserId == "nullreference"));
             Assert.That(achievements.Any(a => a.Name == "Fried Piper" && a.Closed));
             Assert.That(achievements.Any(a => a.Name == "Cl0wnd" && !a.Closed));
         }

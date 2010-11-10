@@ -33,30 +33,23 @@ namespace SteamAchievements.Services.Tests
     [TestFixture]
     public class AchievementServiceFixture
     {
-        private static IEnumerable<Data.Achievement> GetCommunityAchievements()
+        private static IEnumerable<Data.UserAchievement> GetCommunityAchievements(string steamUserId)
         {
-            List<Achievement> achievements;
-            using (FileStream fs = new FileStream("SerializedUnimatrixeroAchievements.xml", FileMode.Open))
+            List<UserAchievement> achievements;
+            using (FileStream fs = new FileStream("Serialized" + steamUserId + "Achievements.xml", FileMode.Open))
             {
                 using (XmlDictionaryReader reader =
                     XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas()))
                 {
                     DataContractSerializer serializer =
-                        new DataContractSerializer(typeof (Achievement),
-                                                   new[] {typeof (List<Achievement>)});
+                        new DataContractSerializer(typeof (UserAchievement),
+                                                   new[] {typeof (List<UserAchievement>)});
 
-                    achievements = (List<Achievement>) serializer.ReadObject(reader, true);
+                    achievements = (List<UserAchievement>)serializer.ReadObject(reader, true);
                 }
             }
 
-            return from achievement in achievements
-                   select new Data.Achievement
-                              {
-                                  Name = achievement.Name,
-                                  Description = achievement.Description,
-                                  ImageUrl = achievement.ImageUrl.ToString(),
-                                  GameId = achievement.Game.Id
-                              };
+            return achievements.ToDataAchievements();
         }
 
         private static List<Data.Achievement> GetDataAchievements()
@@ -89,19 +82,19 @@ namespace SteamAchievements.Services.Tests
             repository.Achievements = GetDataAchievements().AsQueryable();
             repository.Users =
                 new List<User> {new User {FacebookUserId = 0, SteamUserId = steamUserId}}.AsQueryable();
-            repository.UserAchievements = new List<UserAchievement>().AsQueryable();
+            repository.UserAchievements = new List<Data.UserAchievement>().AsQueryable();
 
             AchievementManager manager = new AchievementManager(repository);
-            IEnumerable<Data.Achievement> achievements = GetCommunityAchievements();
+            IEnumerable<Data.UserAchievement> achievements = GetCommunityAchievements(steamUserId);
 
             // should not throw InvalidOperationException
-            manager.UpdateAchievements(steamUserId, achievements);
+            manager.UpdateAchievements(achievements);
         }
 
         private void SerializeAchievements(string steamUserId)
         {
             SteamCommunityManager manager = new SteamCommunityManager();
-            List<Achievement> achievements = manager.GetAchievements(steamUserId).ToList();
+            List<UserAchievement> achievements = manager.GetAchievements(steamUserId).ToList();
 
             FileInfo dll = new FileInfo("SteamAchievements.Services.Tests");
             DirectoryInfo bin = new DirectoryInfo(dll.Directory.FullName);
@@ -109,7 +102,7 @@ namespace SteamAchievements.Services.Tests
             string serializedFilePath = Path.Combine(projectPath, "Serialized" + steamUserId + "Achievements.xml");
 
             DataContractSerializer serializer =
-                new DataContractSerializer(typeof (Achievement), new[] {typeof (List<Achievement>)});
+                new DataContractSerializer(typeof (UserAchievement), new[] {typeof (List<UserAchievement>)});
             using (FileStream writer = new FileStream(serializedFilePath, FileMode.Create))
             {
                 serializer.WriteObject(writer, achievements);

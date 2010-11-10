@@ -33,7 +33,7 @@ namespace SteamAchievements.Services.Tests
         {
             SteamCommunityManager manager = new SteamCommunityManager();
 
-            IEnumerable<Achievement> achievements = manager.GetAchievements("nullreference");
+            IEnumerable<UserAchievement> achievements = manager.GetAchievements("nullreference");
 
             Assert.That(achievements.Any());
             Assert.That(achievements.Any(a => a.Name == "Acid Reflex"));

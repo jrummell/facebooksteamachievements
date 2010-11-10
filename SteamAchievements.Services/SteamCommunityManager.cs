@@ -48,14 +48,14 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <returns></returns>
-        public IEnumerable<Achievement> GetAchievements(string steamUserId)
+        public IEnumerable<UserAchievement> GetAchievements(string steamUserId)
         {
             if (steamUserId == null)
             {
                 throw new ArgumentNullException("steamUserId");
             }
 
-            List<Achievement> achievements = new List<Achievement>();
+            List<UserAchievement> achievements = new List<UserAchievement>();
 
             IEnumerable<Game> games = GetGames(steamUserId);
             foreach (Game game in games.Where(g => g.PlayedRecently))
@@ -65,7 +65,7 @@ namespace SteamAchievements.Services
 
                 string xml = _webClient.DownloadString(xmlStatsUrl);
 
-                IEnumerable<Achievement> gameAchievements;
+                IEnumerable<UserAchievement> gameAchievements;
                 try
                 {
                     gameAchievements = _achievementParser.ParseClosed(xml);
@@ -85,7 +85,7 @@ namespace SteamAchievements.Services
 
                 if (gameAchievements.Any())
                 {
-                    List<Achievement> achievementList = gameAchievements.ToList();
+                    List<UserAchievement> achievementList = gameAchievements.ToList();
                     Game game1 = game;
                     achievementList.ForEach(a => a.Game = game1);
 

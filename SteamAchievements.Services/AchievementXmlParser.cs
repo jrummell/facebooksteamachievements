@@ -28,7 +28,7 @@ using System.Xml.Linq;
 
 namespace SteamAchievements.Services
 {
-    public class AchievementXmlParser : IXmlParser<Achievement>
+    public class AchievementXmlParser : IXmlParser<UserAchievement>
     {
         private readonly TextInfo _textInfo = Thread.CurrentThread.CurrentCulture.TextInfo;
 
@@ -37,7 +37,7 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Returns a collection of <see cref="Achievement"/>s from the given xml and gameId.
         /// </summary>
-        public IEnumerable<Achievement> Parse(string xml)
+        public IEnumerable<UserAchievement> Parse(string xml)
         {
             return Parse(xml, false);
         }
@@ -47,7 +47,7 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Returns a collection of closed <see cref="Achievement"/>s from the given xml.
         /// </summary>
-        public IEnumerable<Achievement> ParseClosed(string xml)
+        public IEnumerable<UserAchievement> ParseClosed(string xml)
         {
             return Parse(xml, true);
         }
@@ -58,19 +58,24 @@ namespace SteamAchievements.Services
         /// <param name="xml">The XML.</param>
         /// <param name="closedOnly">If true, get only closed achievements, else get all achievements.</param>
         /// <returns></returns>
-        private IEnumerable<Achievement> Parse(string xml, bool closedOnly)
+        private IEnumerable<UserAchievement> Parse(string xml, bool closedOnly)
         {
             XDocument document = XDocument.Parse(xml);
 
+            // xpath: player/customURL
+            var customUrlElement = document.Descendants("player").First().Element("customURL");
+
             var achievements =
                 from element in document.Descendants("achievement")
+                let dateElement = element.Element("unlockTimestamp")
                 select new
                            {
                                closed = element.Attribute("closed").Value == "1",
                                // name is in all caps - fix it
                                name = _textInfo.ToTitleCase(element.Element("name").Value.ToLower()),
                                description = element.Element("description").Value,
-                               image = element.Element("iconClosed").Value
+                               image = element.Element("iconClosed").Value,
+                               date = dateElement == null ? null : dateElement.Value
                            };
 
             if (closedOnly)
@@ -80,14 +85,15 @@ namespace SteamAchievements.Services
                                select achievement;
             }
 
-
             return from achievement in achievements
-                   select new Achievement
+                   select new UserAchievement
                               {
+                                  SteamUserId = customUrlElement.Value,
                                   Name = achievement.name,
                                   Description = achievement.description,
                                   ImageUrl = new Uri(achievement.image, UriKind.Absolute),
-                                  Closed = achievement.closed
+                                  Closed = achievement.closed,
+                                  Date = achievement.date == null ? DateTime.MinValue : new DateTime(Convert.ToInt32(achievement.date))
                               };
         }
     }

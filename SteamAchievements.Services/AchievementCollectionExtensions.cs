@@ -25,7 +25,7 @@ using System.Linq;
 
 namespace SteamAchievements.Services
 {
-    internal static class AchievementCollectionExtensions
+    public static class AchievementCollectionExtensions
     {
         public static List<SimpleAchievement> ToSimpleAchievementList(this IEnumerable<Data.Achievement> achievements,
                                                                       IEnumerable<Game> games)
@@ -50,13 +50,13 @@ namespace SteamAchievements.Services
                                }).ToList();
         }
 
-        public static IEnumerable<Achievement> ToAchievements(this IEnumerable<Data.Achievement> achievements,
+        public static IEnumerable<UserAchievement> ToAchievements(this IEnumerable<Data.Achievement> achievements,
                                                               IEnumerable<Game> games)
         {
             return from achievement in achievements
                    from game in games
                    where achievement.GameId == game.Id
-                   select new Achievement
+                   select new UserAchievement
                               {
                                   Name = achievement.Name,
                                   Description = achievement.Description,
@@ -66,15 +66,20 @@ namespace SteamAchievements.Services
                               };
         }
 
-        public static IEnumerable<Data.Achievement> ToDataAchievements(this IEnumerable<Achievement> achievements)
+        public static IEnumerable<Data.UserAchievement> ToDataAchievements(this IEnumerable<UserAchievement> achievements)
         {
             return from achievement in achievements
-                   select new Data.Achievement
+                   select new Data.UserAchievement
                               {
-                                  Name = achievement.Name,
-                                  Description = achievement.Description,
-                                  ImageUrl = achievement.ImageUrl.ToString(),
-                                  GameId = achievement.Game.Id
+                                  Date = achievement.Date,
+                                  SteamUserId = achievement.SteamUserId,
+                                  Achievement = new Data.Achievement
+                                  {
+                                      Name = achievement.Name,
+                                      Description = achievement.Description,
+                                      ImageUrl = achievement.ImageUrl.ToString(),
+                                      GameId = achievement.Game.Id
+                                  }
                               };
         }
     }

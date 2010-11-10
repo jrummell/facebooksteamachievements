@@ -119,18 +119,12 @@ namespace SteamAchievements.Data
         /// <summary>
         /// Updates the achievements.
         /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
         /// <param name="achievements">All achievements for the given user.</param>
         /// <remarks>
         /// Calls <see cref="InsertMissingAchievements"/> and <see cref="AssignAchievements"/>.
         /// </remarks>
-        public int UpdateAchievements(string steamUserId, IEnumerable<Achievement> achievements)
+        public int UpdateAchievements(IEnumerable<UserAchievement> achievements)
         {
-            if (steamUserId == null)
-            {
-                throw new ArgumentNullException("steamUserId");
-            }
-
             if (achievements == null)
             {
                 throw new ArgumentNullException("achievements");
@@ -141,13 +135,19 @@ namespace SteamAchievements.Data
                 return 0;
             }
 
-            IEnumerable<Achievement> missingAchievements = GetMissingAchievements(achievements);
+            string steamUserId = achievements.First().SteamUserId;
+            if (achievements.Any(achievement => achievement.SteamUserId != steamUserId))
+            {
+                throw new ArgumentException("All achievements must have the same SteamUserId", "achievements");
+            }
+
+            IEnumerable<Achievement> missingAchievements = GetMissingAchievements(achievements.Select(a => a.Achievement));
             if (missingAchievements.Any())
             {
                 InsertMissingAchievements(missingAchievements);
             }
 
-            return AssignAchievements(steamUserId, achievements);
+            return AssignAchievements(achievements);
         }
 
         /// <summary>
@@ -282,10 +282,22 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="achievements">All achievements for the given user.</param>
-        public int AssignAchievements(string steamUserId, IEnumerable<Achievement> achievements)
+        public int AssignAchievements(IEnumerable<UserAchievement> achievements)
         {
+            if (achievements == null)
+            {
+                throw new ArgumentNullException("achievements");
+            }
+
+            if (!achievements.Any())
+            {
+                return 0;
+            }
+
             // get the achievement ids for the games in the given achievements
-            IEnumerable<Achievement> unassignedAchievements = GetUnassignedAchievements(steamUserId, achievements);
+            string steamUserId = achievements.First().SteamUserId;
+            IEnumerable<Achievement> unassignedAchievements =
+                GetUnassignedAchievements(steamUserId, achievements.Select(achievement => achievement.Achievement));
 
             if (!unassignedAchievements.Any())
             {
@@ -299,7 +311,7 @@ namespace SteamAchievements.Data
                            {
                                SteamUserId = steamUserId,
                                AchievementId = achievement.Id,
-                               Date = DateTime.Now
+                               Date = DateTime.Now //TODO: use achievement date
                            };
 
             _repository.InsertAllOnSubmit(newUserAchievements);

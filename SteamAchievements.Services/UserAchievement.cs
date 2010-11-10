@@ -23,8 +23,14 @@ using System;
 
 namespace SteamAchievements.Services
 {
-    public class Achievement
+    public class UserAchievement
     {
+        /// <summary>
+        /// Gets or sets the steam user ID.
+        /// </summary>
+        /// <value>The user ID</value>
+        public string SteamUserId { get; set; }
+
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
@@ -54,5 +60,11 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <value>The game.</value>
         public Game Game { get; set; }
+
+        /// <summary>
+        /// Gets or sets the unlocked date.
+        /// </summary>
+        /// <value>The date the achievement was unlocked.</value>
+        public DateTime Date { get; set; }
     }
 }
