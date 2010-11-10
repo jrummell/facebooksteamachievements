@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<playerstats>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><playerstats>
 	<privacyState>public</privacyState>
 	<visibilityState>3</visibilityState>
 	<game>
@@ -23,180 +22,188 @@
 			<campaignimg><![CDATA[http://steamcommunity.com/public/images/gamestats/550/c1.jpg]]></campaignimg>
 			<campaignpct>0</campaignpct>
 			<character>Rochelle</character>
-			<characterpct>66</characterpct>
+			<characterpct>64</characterpct>
 			<weapon1>Pistol</weapon1>
 			<weapon1img><![CDATA[http://steamcommunity.com/public/images/gamestats/550/weapon_pistols.jpg]]></weapon1img>
-			<weapon1pct>41</weapon1pct>
-			<weapon2>Assault Rifle</weapon2>
-			<weapon2img><![CDATA[http://steamcommunity.com/public/images/gamestats/550/weapon_m16.jpg]]></weapon2img>
-			<weapon2pct>27</weapon2pct>
+			<weapon1pct>43</weapon1pct>
+			<weapon2>Desert Rifle</weapon2>
+			<weapon2img><![CDATA[http://steamcommunity.com/public/images/gamestats/550/weapon_rifle_desertcombat.jpg]]></weapon2img>
+			<weapon2pct>26</weapon2pct>
 		</favorites>
 		<lifetime>
-			<timeplayed>8h 34m 29s</timeplayed>
-			<gamesplayed>9</gamesplayed>
-			<finales>7</finales>
-			<finalespct>77.78</finalespct>
-			<infectedkilled>4163</infectedkilled>
-			<killsperhour>485.5</killsperhour>
-			<pillsused>3.666667</pillsused>
-			<pillsshared>0.666667</pillsshared>
-			<adrenalineused>1.000000</adrenalineused>
+			<timeplayed>10h 5m 30s</timeplayed>
+			<gamesplayed>12</gamesplayed>
+			<finales>8</finales>
+			<finalespct>66.67</finalespct>
+			<infectedkilled>4789</infectedkilled>
+			<killsperhour>474.55</killsperhour>
+			<pillsused>2.117647</pillsused>
+			<pillsshared>0.352941</pillsshared>
+			<adrenalineused>0.588235</adrenalineused>
 			<adrenalineshared>0.000000</adrenalineshared>
-			<kitsused>5.777778</kitsused>
-			<kitsshared>0.555556</kitsshared>
-			<defibrillatorsused>0.111111</defibrillatorsused>
+			<kitsused>3.294118</kitsused>
+			<kitsshared>0.294118</kitsshared>
+			<defibrillatorsused>0.058824</defibrillatorsused>
 		</lifetime>
 		<teamplay>
 			<revived>8</revived>
 			<reviveddiff>Easy</reviveddiff>
-			<revivedavg>2.555556</revivedavg>
-			<wasrevivedavg>2.666667</wasrevivedavg>
+			<revivedavg>1.411765</revivedavg>
+			<wasrevivedavg>1.470588</wasrevivedavg>
 			<protected>43</protected>
 			<protecteddiff>Easy</protecteddiff>
-			<protectedavg>18.777779</protectedavg>
-			<wasprotectedavg>23.333334</wasprotectedavg>
+			<protectedavg>11.176471</protectedavg>
+			<wasprotectedavg>13.647058</wasprotectedavg>
 			<ffdamage>224</ffdamage>
 			<ffdamagediff>Advanced</ffdamagediff>
-			<ffdamageavg>36.000000</ffdamageavg>
+			<ffdamageavg>29.000000</ffdamageavg>
 		</teamplay>
 		<weapons>
-			<pistolsPctDmg>17.3</pistolsPctDmg>
-			<meleePctDmg>28</meleePctDmg>
-			<shellsPctDmg>12</shellsPctDmg>
-			<bulletsPctDmg>41.3</bulletsPctDmg>
+			<pistolsPctDmg>20.6</pistolsPctDmg>
+			<meleePctDmg>24.5</meleePctDmg>
+			<shellsPctDmg>11.2</shellsPctDmg>
+			<bulletsPctDmg>41.9</bulletsPctDmg>
 			<pistol group="pistols">
-				<shots>1321</shots>
-				<kills>320</kills>
-				<damage>2778</damage>
-				<pctkills>7.32%</pctkills>
-				<accuracy>45%</accuracy>
-				<headshots>4%</headshots>
+				<shots>1902</shots>
+				<kills>385</kills>
+				<damage>3929</damage>
+				<pctkills>8.04%</pctkills>
+				<accuracy>42%</accuracy>
+				<headshots>3%</headshots>
 			</pistol>
 			<pistol_magnum group="pistols">
-				<shots>550</shots>
-				<kills>251</kills>
-				<damage>1150</damage>
-				<pctkills>5.74%</pctkills>
-				<accuracy>49%</accuracy>
-				<headshots>5%</headshots>
+				<shots>638</shots>
+				<kills>279</kills>
+				<damage>1631</damage>
+				<pctkills>5.83%</pctkills>
+				<accuracy>48%</accuracy>
+				<headshots>4%</headshots>
 			</pistol_magnum>
 			<smg group="lvl1">
 				<shots>678</shots>
 				<kills>54</kills>
 				<damage>759</damage>
-				<pctkills>1.24%</pctkills>
+				<pctkills>1.13%</pctkills>
 				<accuracy>31%</accuracy>
 				<headshots>2%</headshots>
 			</smg>
 			<smg_silenced group="lvl1">
-				<shots>821</shots>
-				<kills>166</kills>
-				<damage>827</damage>
-				<pctkills>3.8%</pctkills>
-				<accuracy>54%</accuracy>
+				<shots>965</shots>
+				<kills>175</kills>
+				<damage>1068</damage>
+				<pctkills>3.65%</pctkills>
+				<accuracy>48%</accuracy>
 				<headshots>3%</headshots>
 			</smg_silenced>
 			<pumpshotgun group="lvl1">
 				<shots>49</shots>
 				<kills>33</kills>
 				<damage>428</damage>
-				<pctkills>0.75%</pctkills>
+				<pctkills>0.69%</pctkills>
 				<accuracy>15%</accuracy>
 				<headshots>0%</headshots>
 			</pumpshotgun>
 			<shotgun_chrome group="lvl1">
-				<shots>271</shots>
-				<kills>194</kills>
-				<damage>1662</damage>
-				<pctkills>4.44%</pctkills>
-				<accuracy>26%</accuracy>
+				<shots>332</shots>
+				<kills>240</kills>
+				<damage>1760</damage>
+				<pctkills>5.01%</pctkills>
+				<accuracy>25%</accuracy>
 				<headshots>1%</headshots>
 			</shotgun_chrome>
 			<autoshotgun group="lvl2">
-				<shots>49</shots>
-				<kills>22</kills>
-				<damage>147</damage>
-				<pctkills>0.5%</pctkills>
-				<accuracy>12%</accuracy>
+				<shots>106</shots>
+				<kills>52</kills>
+				<damage>340</damage>
+				<pctkills>1.09%</pctkills>
+				<accuracy>18%</accuracy>
 				<headshots>0%</headshots>
 			</autoshotgun>
 			<shotgun_spas group="lvl2">
 				<shots>286</shots>
 				<kills>150</kills>
 				<damage>497</damage>
-				<pctkills>3.43%</pctkills>
+				<pctkills>3.13%</pctkills>
 				<accuracy>15%</accuracy>
 				<headshots>0%</headshots>
 			</shotgun_spas>
 			<rifle group="lvl2">
-				<shots>1063</shots>
-				<kills>347</kills>
-				<damage>1440</damage>
-				<pctkills>7.94%</pctkills>
-				<accuracy>95%</accuracy>
-				<headshots>6%</headshots>
+				<shots>1455</shots>
+				<kills>430</kills>
+				<damage>1954</damage>
+				<pctkills>8.98%</pctkills>
+				<accuracy>97%</accuracy>
+				<headshots>5%</headshots>
 			</rifle>
 			<rifle_desert group="lvl2">
-				<shots>2065</shots>
-				<kills>700</kills>
-				<damage>2897</damage>
-				<pctkills>16.01%</pctkills>
-				<accuracy>71%</accuracy>
+				<shots>2288</shots>
+				<kills>745</kills>
+				<damage>3200</damage>
+				<pctkills>15.56%</pctkills>
+				<accuracy>72%</accuracy>
 				<headshots>6%</headshots>
 			</rifle_desert>
 			<rifle_ak47 group="lvl2">
-				<shots>715</shots>
-				<kills>205</kills>
-				<damage>1165</damage>
-				<pctkills>4.69%</pctkills>
-				<accuracy>45%</accuracy>
-				<headshots>2%</headshots>
+				<shots>768</shots>
+				<kills>254</kills>
+				<damage>1362</damage>
+				<pctkills>5.3%</pctkills>
+				<accuracy>52%</accuracy>
+				<headshots>3%</headshots>
 			</rifle_ak47>
 			<hunting_rifle group="lvl2">
-				<shots>214</shots>
-				<kills>83</kills>
-				<damage>377</damage>
-				<pctkills>1.9%</pctkills>
-				<accuracy>55%</accuracy>
+				<shots>278</shots>
+				<kills>103</kills>
+				<damage>805</damage>
+				<pctkills>2.15%</pctkills>
+				<accuracy>63%</accuracy>
 				<headshots>6%</headshots>
 			</hunting_rifle>
 			<sniper_military group="lvl2">
-				<shots>1302</shots>
-				<kills>672</kills>
-				<damage>1909</damage>
-				<pctkills>15.37%</pctkills>
-				<accuracy>66%</accuracy>
+				<shots>1382</shots>
+				<kills>682</kills>
+				<damage>2161</damage>
+				<pctkills>14.24%</pctkills>
+				<accuracy>67%</accuracy>
 				<headshots>5%</headshots>
 			</sniper_military>
 			<grenade_launcher group="lvl2">
 				<shots>76</shots>
 				<kills>127</kills>
 				<damage>209</damage>
-				<pctkills>2.91%</pctkills>
+				<pctkills>2.65%</pctkills>
 				<accuracy>140%</accuracy>
 				<headshots>10%</headshots>
 			</grenade_launcher>
+			<rifle_m60 group="lvl2">
+				<shots>0</shots>
+				<kills>0</kills>
+				<damage>0</damage>
+				<pctkills>0%</pctkills>
+				<accuracy>0%</accuracy>
+				<headshots>0%</headshots>
+			</rifle_m60>
 			<machinegun group="minigun">
-				<shots>1</shots>
-				<kills>17</kills>
-				<damage>126</damage>
-				<pctkills>0.39%</pctkills>
-				<accuracy>2300%</accuracy>
+				<shots>133</shots>
+				<kills>29</kills>
+				<damage>261</damage>
+				<pctkills>0.61%</pctkills>
+				<accuracy>27%</accuracy>
 				<headshots>0%</headshots>
 			</machinegun>
 			<baseball_bat group="melee">
 				<shots>63</shots>
 				<kills>27</kills>
 				<damage>106</damage>
-				<pctkills>0.62%</pctkills>
+				<pctkills>0.56%</pctkills>
 				<accuracy>42%</accuracy>
 				<headshots>15%</headshots>
 			</baseball_bat>
 			<chainsaw group="melee">
-				<shots>916</shots>
-				<kills>113</kills>
-				<damage>927</damage>
-				<pctkills>2.59%</pctkills>
+				<shots>1078</shots>
+				<kills>134</kills>
+				<damage>1180</damage>
+				<pctkills>2.8%</pctkills>
 				<accuracy>18%</accuracy>
 				<headshots>0%</headshots>
 			</chainsaw>
@@ -204,7 +211,7 @@
 				<shots>15</shots>
 				<kills>10</kills>
 				<damage>121</damage>
-				<pctkills>0.23%</pctkills>
+				<pctkills>0.21%</pctkills>
 				<accuracy>66%</accuracy>
 				<headshots>6%</headshots>
 			</cricket_bat>
@@ -220,7 +227,7 @@
 				<shots>47</shots>
 				<kills>26</kills>
 				<damage>340</damage>
-				<pctkills>0.59%</pctkills>
+				<pctkills>0.54%</pctkills>
 				<accuracy>59%</accuracy>
 				<headshots>14%</headshots>
 			</electric_guitar>
@@ -228,7 +235,7 @@
 				<shots>56</shots>
 				<kills>32</kills>
 				<damage>733</damage>
-				<pctkills>0.73%</pctkills>
+				<pctkills>0.67%</pctkills>
 				<accuracy>58%</accuracy>
 				<headshots>25%</headshots>
 			</fireaxe>
@@ -236,7 +243,7 @@
 				<shots>6</shots>
 				<kills>3</kills>
 				<damage>150</damage>
-				<pctkills>0.07%</pctkills>
+				<pctkills>0.06%</pctkills>
 				<accuracy>50%</accuracy>
 				<headshots>0%</headshots>
 			</frying_pan>
@@ -244,7 +251,7 @@
 				<shots>998</shots>
 				<kills>646</kills>
 				<damage>2665</damage>
-				<pctkills>14.78%</pctkills>
+				<pctkills>13.49%</pctkills>
 				<accuracy>72%</accuracy>
 				<headshots>13%</headshots>
 			</katana>
@@ -252,7 +259,7 @@
 				<shots>307</shots>
 				<kills>164</kills>
 				<damage>1115</damage>
-				<pctkills>3.75%</pctkills>
+				<pctkills>3.42%</pctkills>
 				<accuracy>53%</accuracy>
 				<headshots>11%</headshots>
 			</machete>
@@ -260,21 +267,29 @@
 				<shots>18</shots>
 				<kills>8</kills>
 				<damage>144</damage>
-				<pctkills>0.18%</pctkills>
+				<pctkills>0.17%</pctkills>
 				<accuracy>44%</accuracy>
 				<headshots>5%</headshots>
 			</tonfa>
+			<golfclub group="melee">
+				<shots>0</shots>
+				<kills>0</kills>
+				<damage>0</damage>
+				<pctkills>0%</pctkills>
+				<accuracy>0%</accuracy>
+				<headshots>0%</headshots>
+			</golfclub>
 			<molotov>
-				<thrown>17</thrown>
-				<kills>181</kills>
+				<thrown>20</thrown>
+				<kills>225</kills>
 			</molotov>
 			<pipes>
-				<thrown>31</thrown>
-				<kills>261</kills>
+				<thrown>35</thrown>
+				<kills>301</kills>
 			</pipes>
 			<bilejars>
-				<thrown>6</thrown>
-				<kills>10</kills>
+				<thrown>8</thrown>
+				<kills>11</kills>
 			</bilejars>
 		</weapons>
 		<versus>
@@ -315,20 +330,31 @@
 			<goldmedals>0</goldmedals>
 			<silvermedals>0</silvermedals>
 			<bronzemedals>0</bronzemedals>
-			<roundsplayed>0</roundsplayed>
+			<roundsplayed>1</roundsplayed>
 			<besttime>0</besttime>
 			<maps>
 				<map>
-					<name>Burger Tank</name>
-					<leaderboardID>5590</leaderboardID>
-					<img><![CDATA[http://steamcommunity.com/public/images/gamestats/550/c4m1_burgertank.jpg]]></img>
-					<hasPlayed>0</hasPlayed>
-				</map>
-				<map>
-					<name>Sugar Mill</name>
-					<leaderboardID>5595</leaderboardID>
-					<img><![CDATA[http://steamcommunity.com/public/images/gamestats/550/c4m2_sugarmill_a.jpg]]></img>
-					<hasPlayed>0</hasPlayed>
+					<name>Plantation</name>
+					<leaderboardID>5596</leaderboardID>
+					<img><![CDATA[http://steamcommunity.com/public/images/gamestats/550/c3m4_plantation.jpg]]></img>
+					<hasPlayed>1</hasPlayed>
+					<besttimemilliseconds>209600</besttimemilliseconds>
+					<besttimeformat>03:29.600</besttimeformat>
+					<medal></medal>
+					<teammates>
+					</teammates>				
+					<kills_common>155</kills_common>
+					<kills_hunter>2</kills_hunter>
+					<kills_boomer>2</kills_boomer>
+					<kills_smoker>1</kills_smoker>
+					<kills_spitter>0</kills_spitter>
+					<kills_charger>1</kills_charger>
+					<kills_jockey>0</kills_jockey>
+					<kills_tank>1</kills_tank>
+					<items_medkits>0</items_medkits>
+					<items_pills>1</items_pills>
+					<items_defibs>0</items_defibs>
+					<items_adrenaline>0</items_adrenaline>
 				</map>
 				<map>
 					<name>Bus Depot</name>
@@ -343,15 +369,33 @@
 					<hasPlayed>0</hasPlayed>
 				</map>
 				<map>
-					<name>Plantation</name>
-					<leaderboardID>5596</leaderboardID>
-					<img><![CDATA[http://steamcommunity.com/public/images/gamestats/550/c3m4_plantation.jpg]]></img>
+					<name>Riverbank</name>
+					<leaderboardID>14498</leaderboardID>
+					<img><![CDATA[http://steamcommunity.com/public/images/gamestats/550/c6m1_riverbank.jpg]]></img>
 					<hasPlayed>0</hasPlayed>
 				</map>
 				<map>
-					<name>Gator Village</name>
-					<leaderboardID>5591</leaderboardID>
-					<img><![CDATA[http://steamcommunity.com/public/images/gamestats/550/c3m1_village.jpg]]></img>
+					<name>Port</name>
+					<leaderboardID>14501</leaderboardID>
+					<img><![CDATA[http://steamcommunity.com/public/images/gamestats/550/c6m3_port.jpg]]></img>
+					<hasPlayed>0</hasPlayed>
+				</map>
+				<map>
+					<name>Bedlam</name>
+					<leaderboardID>14499</leaderboardID>
+					<img><![CDATA[http://steamcommunity.com/public/images/gamestats/550/c6m2_bedlam.jpg]]></img>
+					<hasPlayed>0</hasPlayed>
+				</map>
+				<map>
+					<name>Sugar Mill</name>
+					<leaderboardID>5595</leaderboardID>
+					<img><![CDATA[http://steamcommunity.com/public/images/gamestats/550/c4m2_sugarmill_a.jpg]]></img>
+					<hasPlayed>0</hasPlayed>
+				</map>
+				<map>
+					<name>Burger Tank</name>
+					<leaderboardID>5590</leaderboardID>
+					<img><![CDATA[http://steamcommunity.com/public/images/gamestats/550/c4m1_burgertank.jpg]]></img>
 					<hasPlayed>0</hasPlayed>
 				</map>
 				<map>
@@ -370,6 +414,12 @@
 					<name>Concert</name>
 					<leaderboardID>5592</leaderboardID>
 					<img><![CDATA[http://steamcommunity.com/public/images/gamestats/550/c2m5_concert.jpg]]></img>
+					<hasPlayed>0</hasPlayed>
+				</map>
+				<map>
+					<name>Gator Village</name>
+					<leaderboardID>5591</leaderboardID>
+					<img><![CDATA[http://steamcommunity.com/public/images/gamestats/550/c3m1_village.jpg]]></img>
 					<hasPlayed>0</hasPlayed>
 				</map>
 				<map>
@@ -427,8 +477,26 @@
 			</infectedstats>
 			<mapstats>
 				<map>
-					<name>c4m2_sugarmill_a</name>
-					<fullname>Hard Rain - Sugar Mill</fullname>
+					<name>c6m1_riverbank</name>
+					<fullname>The Passing - Riverbank</fullname>
+					<roundsplayed>0</roundsplayed>
+					<roundswon>0</roundswon>
+					<highroundscore>0</highroundscore>
+					<highgamescore>0</highgamescore>
+					<avgscoreperround>0</avgscoreperround>
+				</map>
+				<map>
+					<name>c6m2_bedlam</name>
+					<fullname>The Passing - Bedlam</fullname>
+					<roundsplayed>0</roundsplayed>
+					<roundswon>0</roundswon>
+					<highroundscore>0</highroundscore>
+					<highgamescore>0</highgamescore>
+					<avgscoreperround>0</avgscoreperround>
+				</map>
+				<map>
+					<name>c6m3_port</name>
+					<fullname>The Passing - Port</fullname>
 					<roundsplayed>0</roundsplayed>
 					<roundswon>0</roundswon>
 					<highroundscore>0</highroundscore>
@@ -445,8 +513,17 @@
 					<avgscoreperround>0</avgscoreperround>
 				</map>
 				<map>
-					<name>c4m1_milltown_a</name>
-					<fullname>Hard Rain - Milltown</fullname>
+					<name>c4m2_sugarmill_a</name>
+					<fullname>Hard Rain - Sugar Mill</fullname>
+					<roundsplayed>0</roundsplayed>
+					<roundswon>0</roundswon>
+					<highroundscore>0</highroundscore>
+					<highgamescore>0</highgamescore>
+					<avgscoreperround>0</avgscoreperround>
+				</map>
+				<map>
+					<name>c2m1_highway</name>
+					<fullname>Dark Carnival - Motel</fullname>
 					<roundsplayed>0</roundsplayed>
 					<roundswon>0</roundswon>
 					<highroundscore>0</highroundscore>
@@ -463,8 +540,8 @@
 					<avgscoreperround>0</avgscoreperround>
 				</map>
 				<map>
-					<name>c2m1_highway</name>
-					<fullname>Dark Carnival - Motel</fullname>
+					<name>c4m1_milltown_a</name>
+					<fullname>Hard Rain - Milltown</fullname>
 					<roundsplayed>0</roundsplayed>
 					<roundswon>0</roundswon>
 					<highroundscore>0</highroundscore>
@@ -486,303 +563,397 @@
 	<achievements>
 		<achievement closed="1">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/8a1dbb0d78c8e288ed5ce990a20454073d01ba9b.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/d00f26828f010c50d2659f83acc2d07db37f716b.jpg]]></iconOpen>
 			<name><![CDATA[FRIED PIPER]]></name>
 			<description><![CDATA[Use a Molotov to burn a Clown leading at least 10 Common Infected.]]></description>
 		</achievement>
 		<achievement closed="1">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/8d94a8ffcb20fd11de547a6972bcef319fd93bf6.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/19c4af0f9bb24b719a086cbd3b63961d8348bf2b.jpg]]></iconOpen>
 			<name><![CDATA[ACID REFLEX]]></name>
 			<description><![CDATA[Kill a Spitter before she is able to spit.]]></description>
 		</achievement>
 		<achievement closed="1">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b1b772b233b812fd410aee1f175f8b1cb4fe4e43.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/1921292f1593086aa0dc7d29124e4c0c1119e084.jpg]]></iconOpen>
 			<name><![CDATA[CRASS MENAGERIE]]></name>
 			<description><![CDATA[Kill one of each Uncommon Infected.]]></description>
 		</achievement>
 		<achievement closed="1">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b65a6518c0680448e996e2190d1ed6b00ad14935.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/95bb3011848b129b4b7483017a970700a0a22bd1.jpg]]></iconOpen>
 			<name><![CDATA[A RIDE DENIED]]></name>
 			<description><![CDATA[Kill a Jockey within 2 seconds of it jumping on a Survivor.]]></description>
 		</achievement>
 		<achievement closed="1">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/bb9a6bbc403fd451045e679a2adf4a162f6c2446.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b63ffc00c2b049188ee91ba9c3ff32c2159f7d04.jpg]]></iconOpen>
 			<name><![CDATA[HEAD HONCHO]]></name>
 			<description><![CDATA[Decapitate 200 Infected with a melee weapon.]]></description>
 		</achievement>
 		<achievement closed="1">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/9e7ecbbed25f3088528f418206afb9e8dd873c27.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/e0629618e6c3a477592d641ebaf5a5667e1e3e4b.jpg]]></iconOpen>
+			<name><![CDATA[DEAD IN THE WATER]]></name>
+			<description><![CDATA[Kill 10 swampy Mudmen while they are in the water.]]></description>
+			<unlockTimestamp>1263863291</unlockTimestamp>
+		</achievement>
+		<achievement closed="1">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/dc576a47102bad1825bdc24962106f59dc6c9bbc.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b34eabc52f4f7838bc278ea589d35769cb9076e7.jpg]]></iconOpen>
 			<name><![CDATA[BURNING SENSATION]]></name>
 			<description><![CDATA[Ignite 50 Common Infected with incendiary ammo.]]></description>
 		</achievement>
 		<achievement closed="1">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/4eb2b093ce1dd442da4a62c9a0659602fbfc0d1e.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/4fc103dcb52ccc748b5bdea66924d1bf5c9e0705.jpg]]></iconOpen>
 			<name><![CDATA[ARMORY OF ONE]]></name>
 			<description><![CDATA[Deploy an ammo upgrade and have your team use it.]]></description>
 		</achievement>
 		<achievement closed="1">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/840e4eca8203f2344ad8d18cd1ac52e2726affef.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/36f24c393d869cdeb65145cf6bbb7f55dff865c4.jpg]]></iconOpen>
 			<name><![CDATA[CHAIN OF COMMAND]]></name>
 			<description><![CDATA[Kill 100 Common Infected with the chainsaw.]]></description>
+			<unlockTimestamp>1262052992</unlockTimestamp>
 		</achievement>
 		<achievement closed="1">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/6d61190a5e1d19c8dee6357477cd30aea8bd3605.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/518dbce4fed3b4dd422fad3bae8b3cdc137d4de3.jpg]]></iconOpen>
 			<name><![CDATA[CLUB DEAD]]></name>
 			<description><![CDATA[Use every melee weapon to kill Common Infected.]]></description>
 		</achievement>
 		<achievement closed="1">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/457f8cdaaafff9820a12d8509882b9c7a0f24463.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/e31d5069b2f3a7a416e71e9a717831952cdfb48e.jpg]]></iconOpen>
 			<name><![CDATA[PRICE CHOPPER]]></name>
 			<description><![CDATA[Survive the Dead Center campaign.]]></description>
 		</achievement>
 		<achievement closed="1">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/fcd648a35177e1e5a4d843a63fdd37f9ad89a2fb.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/9bbbf3144ae6bac3a2594b0e2b66677c30165ad9.jpg]]></iconOpen>
 			<name><![CDATA[MIDNIGHT RIDER]]></name>
 			<description><![CDATA[Survive the Dark Carnival campaign.]]></description>
+			<unlockTimestamp>1261871228</unlockTimestamp>
 		</achievement>
 		<achievement closed="1">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/9fc43fa7029f97328eddde4fcfd6ef308ab14e3a.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/dc3be052184ddfaa16373ce0604a46803eb33c3f.jpg]]></iconOpen>
 			<name><![CDATA[RAGIN' CAJUN]]></name>
 			<description><![CDATA[Survive the Swamp Fever campaign.]]></description>
 		</achievement>
 		<achievement closed="1">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/265b783c18fba0a17b892865e8f033f492317c14.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/cca4162f272aa5aa3315f3858c32164fd97771a0.jpg]]></iconOpen>
 			<name><![CDATA[WEATHERMAN]]></name>
 			<description><![CDATA[Survive the Hard Rain campaign.]]></description>
+			<unlockTimestamp>1261977001</unlockTimestamp>
 		</achievement>
 		<achievement closed="1">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/97787962cd04ec7140dea6503615c4735f913cfb.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/38a5a14ced1db48e96fcb8758f3c98a806dcee90.jpg]]></iconOpen>
 			<name><![CDATA[BRIDGE BURNER]]></name>
 			<description><![CDATA[Survive the Parish campaign.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/3e5f908b03356376b53cfc3ea3f7e9eda974be89.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/9378a26e8de03f3809eb75c835510a2399bd0684.jpg]]></iconOpen>
 			<name><![CDATA[CL0WND]]></name>
 			<description><![CDATA[Honk the noses of 10 Clowns.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/ef2d3b6a36844347dec901fb55785b306ab77b37.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/a5a8f254fe307e0d5627103cf7fc2166f9cecbb8.jpg]]></iconOpen>
 			<name><![CDATA[LEVEL A CHARGE]]></name>
 			<description><![CDATA[Kill a Charger with a melee weapon while they are charging someone.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/e5459cc284c03c7a5e1dc0a5d9a62aaec6145cc8.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/c66b04d717db3c2a75651d10eb569f80508865f2.jpg]]></iconOpen>
 			<name><![CDATA[CONFEDERACY OF CRUNCHES]]></name>
 			<description><![CDATA[Finish a campaign using only melee weapons.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/9da6a1b388219bcc4cded459d1daa7b4c5dbd438.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/a4bdfb01fbd1b4fd3904e007432bb1b0a4bfccf1.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/5f3d1cc262e72978d76ce4919129ee4a45e492bb.jpg]]></iconOpen>
 			<name><![CDATA[HEARTWARMER]]></name>
 			<description><![CDATA[In a Versus match, leave the saferoom to defibrillate a dead teammate.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/a23c4f24570f3f06581adb6d7f394a9924a3c319.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/9a7e041fa1870c1f23ed3d675f4c37058253c4a8.jpg]]></iconOpen>
 			<name><![CDATA[STILL SOMETHING TO PROVE]]></name>
 			<description><![CDATA[Survive all campaigns on Expert.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/bc3eca940acf4f2163582dfae4a5a4473b06c0ec.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/046105cc81ca728e67c0d379065bea2ef2ff6658.jpg]]></iconOpen>
 			<name><![CDATA[THE REAL DEAL]]></name>
 			<description><![CDATA[Survive a campaign on Expert difficulty with Realism mode enabled.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/6c7f33786f2cf8064fa04789810a99a767a24e51.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/a4bdfb01fbd1b4fd3904e007432bb1b0a4bfccf1.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/e48a5d0d3c51b5d93acec914d13b144228839f0c.jpg]]></iconOpen>
 			<name><![CDATA[STRENGTH IN NUMBERS]]></name>
 			<description><![CDATA[Form a team and beat an enemy team in 4v4 Versus or Scavenge.]]></description>
 		</achievement>
 		<achievement closed="0">
-			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/9e7ecbbed25f3088528f418206afb9e8dd873c27.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
-			<name><![CDATA[DEAD IN THE WATER]]></name>
-			<description><![CDATA[Kill 10 swampy Mudmen while they are in the water.]]></description>
-		</achievement>
-		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/99b8bd8f401ac4027e4b87db87bde32a8018516f.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b5876af218d7712bb76072a4f38574d71b477996.jpg]]></iconOpen>
 			<name><![CDATA[ROBBED ZOMBIE]]></name>
 			<description><![CDATA[Collect 10 vials of Boomer vomit from infected CEDA agents you have killed.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/84eb91fce20a93dc68f39c5a33bd4e67026daa50.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/97517cdbb479e1483601e7015763c34be40cb030.jpg]]></iconOpen>
 			<name><![CDATA[DISMEMBERMENT PLAN]]></name>
 			<description><![CDATA[Kill 15 Infected with a single grenade launcher blast.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/73fb6ba3ec8a48383624676439fc9d2455cdde1e.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/348a2c5c3a685cf160bb6c8bc645f0c4f446766a.jpg]]></iconOpen>
 			<name><![CDATA[SHOCK JOCK]]></name>
 			<description><![CDATA[Revive 10 dead Survivors with the defibrillator.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/4f15e814607e946dbbbbe6f9842e31fff86e20e5.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/ebc1b3ac888a061b3a6b2d9d7e3a0e55db334b45.jpg]]></iconOpen>
 			<name><![CDATA[THE QUICK AND THE DEAD]]></name>
 			<description><![CDATA[Revive 10 incapacitated Survivors while under the speed boosting effects of adrenaline.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/415db2343ce702f2ff1f60f25e62b856cd7d5827.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/31505f883ee5fd9e3b9548d882c2247e4bc6251b.jpg]]></iconOpen>
 			<name><![CDATA[SEPTIC TANK]]></name>
 			<description><![CDATA[Use a bile grenade on a Tank.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b3e4f949ba254d48138e65c97d787b8dc73a934a.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/81e782a537cafe94e13e6405a993244da4de0a4e.jpg]]></iconOpen>
 			<name><![CDATA[TANK BURGER]]></name>
 			<description><![CDATA[Kill a Tank with melee weapons.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/473bee78697b6ed5efc3887827bdf2aadaa9b72b.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/303cb6ac4cbaf3c3a344906d0304d8647f0f3de0.jpg]]></iconOpen>
 			<name><![CDATA[BRIDGE OVER TREBLED SLAUGHTER]]></name>
 			<description><![CDATA[Cross the bridge finale in less than 3 minutes.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/fa4fd2c60d65d296246176a2fed1f2437b249848.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/888e93e7f6e215ddef463fd55ef98e8ef7c37769.jpg]]></iconOpen>
 			<name><![CDATA[VIOLENCE IN SILENCE]]></name>
 			<description><![CDATA[Navigate the impound lot and reach the cemetary safe room without tripping any alarms.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/02d01200d3f14ba7a1145366397ff124c1a45464.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/7dfc0811aae1efb9271fb9de7314b53dcf0064c7.jpg]]></iconOpen>
 			<name><![CDATA[GUARDIN' GNOME]]></name>
 			<description><![CDATA[Rescue Gnome Chompski from the Carnival.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/9049f64a402884860aec2bd76d76f48e5f018c59.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/566c8f757acf3ed786f08a5919dd5349ecbbe143.jpg]]></iconOpen>
 			<name><![CDATA[SOB STORY]]></name>
 			<description><![CDATA[Navigate the sugar mill and reach the safe room without killing any Witches.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/5423cf8a3a82b596fd6329394a0fa77fc6ae22fa.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/da5f8409c6ab2ba90707d2347374ac3c6884a465.jpg]]></iconOpen>
 			<name><![CDATA[WING AND A PRAYER]]></name>
 			<description><![CDATA[Defend yourself at the crashed airliner without taking damage.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/09bb54c6930bc815b40930b228f63e897c6018b3.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/a4bdfb01fbd1b4fd3904e007432bb1b0a4bfccf1.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/7b5d3f04d803da4bbfc581d60a4e7b1f17a9211b.jpg]]></iconOpen>
 			<name><![CDATA[QUALIFIED RIDE]]></name>
 			<description><![CDATA[As the Jockey, ride a Survivor for more than 8 seconds.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/3a038d4447457dee981281742d1e1c5dfa29b16d.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/a4bdfb01fbd1b4fd3904e007432bb1b0a4bfccf1.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/429faf4b747738e71b46e0d352e9683dad019f33.jpg]]></iconOpen>
 			<name><![CDATA[BACK IN THE SADDLE]]></name>
 			<description><![CDATA[As the Jockey, ride the Survivors twice in a single life.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/7e7d9018a52b03503ac5e3c626932fb7056a9645.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/a4bdfb01fbd1b4fd3904e007432bb1b0a4bfccf1.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/91ae62212f163f234cc3589f9828cc3cf8a79045.jpg]]></iconOpen>
 			<name><![CDATA[RODE HARD, PUT AWAY WET]]></name>
 			<description><![CDATA[As the Jockey, ride a Survivor and steer them into a Spitter's acid patch.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/93aa9619d54a32b082f90d64c1449673beca86bd.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/a4bdfb01fbd1b4fd3904e007432bb1b0a4bfccf1.jpg]]></iconOpen>
-			<name><![CDATA[SPIT HAPPENS]]></name>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/77a1d314937d5dab636ca619943d80b94c694885.jpg]]></iconOpen>
+			<name><![CDATA[GREAT EXPECTORATIONS]]></name>
 			<description><![CDATA[As the Spitter, hit every Survivor with a single acid patch.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/c96663305f7b46e402faf2d61895a65602f9c07b.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/a4bdfb01fbd1b4fd3904e007432bb1b0a4bfccf1.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/d39e951ece9d695b3607957b204d153fa933fb36.jpg]]></iconOpen>
 			<name><![CDATA[A SPITTLE HELP FROM MY FRIENDS]]></name>
 			<description><![CDATA[As the Spitter, spit on a Survivor being choked by a Smoker.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/8d8890aaf47413abe0be0739a384d67bae6b9837.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/a4bdfb01fbd1b4fd3904e007432bb1b0a4bfccf1.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/8684fd523b07209a305217050caf38914bb63951.jpg]]></iconOpen>
 			<name><![CDATA[SCATTERING RAM]]></name>
 			<description><![CDATA[As the Charger, bowl through the entire enemy team in a single charge.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/1d360cbeb0ca83a259d5a58699d6fa5f1af6a642.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/a4bdfb01fbd1b4fd3904e007432bb1b0a4bfccf1.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/436d93a95a0a8f38193f28d892134d6407a9a6ee.jpg]]></iconOpen>
 			<name><![CDATA[MEAT TENDERIZER]]></name>
 			<description><![CDATA[As the Charger, grab a Survivor and smash them into the ground for a solid 15 seconds.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/9bf0d997a5efc72ff3d6b52c55af1496ad78ee95.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/a4bdfb01fbd1b4fd3904e007432bb1b0a4bfccf1.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/dbee4967cde609341c33dcb0fe1dc117ab2699c4.jpg]]></iconOpen>
 			<name><![CDATA[LONG DISTANCE CARRIER]]></name>
 			<description><![CDATA[As the Charger, grab a Survivor and carry them over 80 feet.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/57dbec70704ddf7f5bf445298c6f398d204e967c.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/8532f1ca6af161f2b64559edaa998a1c574fe1bb.jpg]]></iconOpen>
 			<name><![CDATA[BEAT THE RUSH]]></name>
 			<description><![CDATA[In a Survival match, get a medal only using melee weapons.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/9f3ae3bd65053f1794a8133b54c4552dcfbc382c.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/68aa2cc5d6f9983224030dbb1f92191af44201da.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/70e0b8b2610f285d705567a4bf73510da2dc6165.jpg]]></iconOpen>
 			<name><![CDATA[HUNTING PARTY]]></name>
 			<description><![CDATA[Win a game of Scavenge.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/653bcb30aa05f6bd1cff11a97cec034c392d8772.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/68aa2cc5d6f9983224030dbb1f92191af44201da.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/9f324dbd8188c56a55f777ba757d41360ae8e645.jpg]]></iconOpen>
 			<name><![CDATA[GAS GUZZLER]]></name>
 			<description><![CDATA[Collect 100 gas cans in Scavenge.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b2ea96290762db68eef39cb3dc8d415a2e5a81bc.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/68aa2cc5d6f9983224030dbb1f92191af44201da.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/a934ffb345e9bd1de18449b03a3bc9fc7bad31a1.jpg]]></iconOpen>
 			<name><![CDATA[CACHE AND CARRY]]></name>
 			<description><![CDATA[Collect 15 gas cans in a single Scavenge match.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/d7f453e01bd43a25108a6c8e7d65e4103ad03125.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/68aa2cc5d6f9983224030dbb1f92191af44201da.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/47a8c19257d34aee139890c81e774d924eeb53bb.jpg]]></iconOpen>
 			<name><![CDATA[SCAVENGER HUNT]]></name>
 			<description><![CDATA[Stop the enemy team from collecting any gas cans during a Scavenge match.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/8a635b65b64ffdc57d5b0069a8e20a64f6c4ee3b.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b98cad947f5c6dddd455a456bcbc734841c3afd4.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/1012628842f3bfbb47163c395a50f5ae2ca9bfec.jpg]]></iconOpen>
 			<name><![CDATA[GONG SHOW]]></name>
 			<description><![CDATA[Prove you are stronger than Moustachio.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/93f46bf0c5d4cb2a621b28b45868be0d48674498.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/68aa2cc5d6f9983224030dbb1f92191af44201da.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/8ca3f9aba07ab0236e4d77e05173d74bcfc15abe.jpg]]></iconOpen>
 			<name><![CDATA[FUEL CRISIS]]></name>
 			<description><![CDATA[Make a Survivor drop a gas can during overtime.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/e4a91f752fbfd12dd7cd11c2f23b4e2fb180136e.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/68aa2cc5d6f9983224030dbb1f92191af44201da.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/ef81c1dc25148d8269a078277dced1918195b40a.jpg]]></iconOpen>
 			<name><![CDATA[GAS SHORTAGE]]></name>
 			<description><![CDATA[Cause 25 gas can drops as a Special Infected.]]></description>
 		</achievement>
 		<achievement closed="0">
 			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/2ccd114beb1d85e727150fc02399818324ebb39b.jpg]]></iconClosed>
-			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/68aa2cc5d6f9983224030dbb1f92191af44201da.jpg]]></iconOpen>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b8c5628cf9dedf46322b725712495062a1c49902.jpg]]></iconOpen>
 			<name><![CDATA[STACHE WHACKER]]></name>
 			<description><![CDATA[Prove you are faster than Moustachio.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/6cea9fae601d782a48d08ed4559167f53f5f1c40.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b1daa342fcd4499719c7882815c6dbf7fd1f3a2f.jpg]]></iconOpen>
+			<name><![CDATA[TORCH BEARER]]></name>
+			<description><![CDATA[Survive The Passing Campaign.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/f471efbd31389e9c6d1bddd8a5ae3567b620329c.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/510442a1246290fd30488b05eb26c21165710787.jpg]]></iconOpen>
+			<name><![CDATA[WEDDING CRASHER]]></name>
+			<description><![CDATA[As the Charger, grab a Survivor and crash them through 8 chairs at the wedding.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/824c82c7b85d1ec69ef809043e0f21862b7ce44c.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/02fbc8d22d2b34f696c2106dd4d104bf67e99ceb.jpg]]></iconOpen>
+			<name><![CDATA[TIL IT GOES CLICK]]></name>
+			<description><![CDATA[Using the M60, kill 25 infected without letting go of the trigger.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/a048e792d0df632c22291d5f30395a22e15bf1de.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/b2038cfd740e403ea9970fe1db94a5a0a62d8749.jpg]]></iconOpen>
+			<name><![CDATA[GRAVE ROBBER]]></name>
+			<description><![CDATA[Collect 10 items dropped by a Fallen Survivor.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/4eb4dfc9bcd616659ac23b5b28038467d30224e6.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/50991a2f68a521900b113fef4d1d67afa7803ca0.jpg]]></iconOpen>
+			<name><![CDATA[MUTANT OVERLORD]]></name>
+			<description><![CDATA[Play 6 Mutations.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/4b7419de2cc8fb958218e2d5187e18b66801e8c8.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/9ec2df90465cf011994de77cdb60d6514cba1835.jpg]]></iconOpen>
+			<name><![CDATA[FORE!]]></name>
+			<description><![CDATA[Knock off the heads of 18 infected with the golf club.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/beefe7b7be67caff22365caf51580c784cf2a0ee.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/59513aa9a47fedbbdeccc6fb014edbefe9f6fbff.jpg]]></iconOpen>
+			<name><![CDATA[Killing Them Swiftly To This Song]]></name>
+			<description><![CDATA[Play the new Midnight Riders song on a jukebox.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/ed310cbf59963fdc57ebdf159b3315622ffa795c.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/0bb983bce633848cf075b610890f16f8ef2d52cb.jpg]]></iconOpen>
+			<name><![CDATA[Kite Like a Man]]></name>
+			<description><![CDATA[Kill a tank only with damage from the original Survivors.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/2b17304ac13f29f42a505460ee79e4619fd2be74.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/5ced11d4115529a48db5e2d7d58e2ef0e50b9260.jpg]]></iconOpen>
+			<name><![CDATA[Cache Grab]]></name>
+			<description><![CDATA[Open 5 foot lockers.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/4016cc9d60b347b8bf887e82e7df15b3e6d3466f.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/70ce71c534ae0575e1a3737c47bbbef016a40770.jpg]]></iconOpen>
+			<name><![CDATA[Port of Scavenge]]></name>
+			<description><![CDATA[Play 5 full games of Scavenge on The Port.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/e1b29a9aa7ca47415cc145963c05ddd387a4a039.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/435148df231e7cc00e1d53a71b146be63533b1c9.jpg]]></iconOpen>
+			<name><![CDATA[SUPREME SACRIFICE]]></name>
+			<description><![CDATA[Complete "The Sacrifice".]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/fbb1e6660ecd4ef8fd2f06fe64acd76a99840f8b.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/1266047f89bdf0ad35fb2a02e40cc94315568a60.jpg]]></iconOpen>
+			<name><![CDATA[KILL BILL]]></name>
+			<description><![CDATA[Have Bill sacrifice himself for the team.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/e847360a1100eee33aeddbeca047361210c13677.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/5412a8db6f4d558e340f2e14ae6a246192b88587.jpg]]></iconOpen>
+			<name><![CDATA[BARREL ROLLED]]></name>
+			<description><![CDATA[Kill a Special Infected with an exploding barrel.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/1546a7a5e96f389cd7fd54b3cb20715809868392.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/5cf4780254b105605a53455faf1597a3efa3bdae.jpg]]></iconOpen>
+			<name><![CDATA[CHAOS GENERATOR]]></name>
+			<description><![CDATA[Have all 3 generators running at once in "The Sacrifice" finale.]]></description>
+		</achievement>
+		<achievement closed="0">
+			<iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/08a363043f2b5b4b7ae7813966db47793f551101.jpg]]></iconClosed>
+			<iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/550/20e52c5627b61e1c19f4f2d396484636f255e499.jpg]]></iconOpen>
+			<name><![CDATA[SACRIFIZZLE]]></name>
+			<description><![CDATA[As a Special Infected, incap someone who is trying to sacrifice themselves.]]></description>
 		</achievement>
 	</achievements>
 </playerstats>

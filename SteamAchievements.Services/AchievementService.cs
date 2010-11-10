@@ -87,9 +87,9 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            IEnumerable<Achievement> achievements = _communityService.GetAchievements(steamUserId);
+            IEnumerable<UserAchievement> achievements = _communityService.GetAchievements(steamUserId);
 
-            int updated = _achievementManager.UpdateAchievements(steamUserId, achievements.ToDataAchievements());
+            int updated = _achievementManager.UpdateAchievements(achievements.ToDataAchievements());
 
             return updated;
         }
@@ -134,7 +134,7 @@ namespace SteamAchievements.Services
             if (dataAchievements.Any())
             {
                 AchievementsPublisher publisher = new AchievementsPublisher();
-                publisher.Publish(dataAchievements.ToAchievements(games), steamUserId, facebookUserId);
+                publisher.Publish(dataAchievements.ToAchievements(games), facebookUserId);
 
                 _achievementManager.UpdatePublished(steamUserId, dataAchievements.Select(achievement => achievement.Id));
             }

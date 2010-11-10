@@ -50,19 +50,14 @@ namespace SteamAchievements.Services
         /// <param name="achievements">The achievements.</param>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="facebookUserId">The facebook user id.</param>
-        public void Publish(IEnumerable<Achievement> achievements, string steamUserId, long facebookUserId)
+        public void Publish(IEnumerable<UserAchievement> achievements, long facebookUserId)
         {
-            if (steamUserId == null)
-            {
-                throw new ArgumentNullException("steamUserId");
-            }
-
             if (_testMode)
             {
                 return;
             }
 
-            foreach (Achievement achievement in achievements)
+            foreach (UserAchievement achievement in achievements)
             {
                 string description = String.Format("earned the {0} achievement in {1}.", achievement.Name,
                                                    achievement.Game.Name);
