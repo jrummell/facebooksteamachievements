@@ -22,7 +22,7 @@
 using System;
 using System.Web.UI;
 using SteamAchievements.Data;
-using SteamAchievements.Services.Properties;
+using SteamAchievements.Properties;
 
 namespace SteamAchievements
 {
@@ -49,11 +49,6 @@ namespace SteamAchievements
 
         private void Page_Load(object sender, EventArgs e)
         {
-            if (ServiceSettings.TestMode)
-            {
-                return;
-            }
-
             // set FacebookUserId and SteamUserId
             FacebookUserId = login.FacebookUserId;
 
@@ -62,6 +57,8 @@ namespace SteamAchievements
                 using (IAchievementManager manager = new AchievementManager())
                 {
                     SteamUserId = manager.GetSteamUserId(FacebookUserId);
+
+                    Session["SteamUserId"] = SteamUserId;
                 }
             }
             catch (Exception ex)

@@ -27,11 +27,6 @@ namespace SteamAchievements
 {
     public partial class Publish : Page
     {
-        private bool IsLoggedIn
-        {
-            get { return FacebookUserId > 0; }
-        }
-
         private long FacebookUserId { get; set; }
 
         protected string SteamUserId { get; private set; }
@@ -40,15 +35,12 @@ namespace SteamAchievements
         {
             base.OnInit(e);
 
-            FacebookUserId = login.FacebookUserId;
+            Load += new EventHandler(Page_Load);
+        }
 
-            if (IsLoggedIn)
-            {
-                using (IAchievementManager manager = new AchievementManager())
-                {
-                    SteamUserId = manager.GetSteamUserId(FacebookUserId);
-                }
-            }
+        private void Page_Load(object sender, EventArgs e)
+        {
+            SteamUserId = (string) Session["SteamUserId"];
         }
     }
 }

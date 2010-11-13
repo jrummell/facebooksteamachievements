@@ -113,35 +113,6 @@ namespace SteamAchievements.Services
             return true;
         }
 
-        /// <summary>
-        /// Publishes the last 5 achievements added within the last 5 minutes for the given user.
-        /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <returns>true if successful, else false.</returns>
-        public bool PublishLatestAchievements(long facebookUserId, string steamUserId)
-        {
-            if (steamUserId == null)
-            {
-                throw new ArgumentNullException("steamUserId");
-            }
-
-            IEnumerable<Data.Achievement> dataAchievements = _achievementManager.GetLatestAchievements(steamUserId);
-            IEnumerable<Game> games = from game in _communityService.GetGames(steamUserId)
-                                      where game.PlayedRecently
-                                      select game;
-
-            if (dataAchievements.Any())
-            {
-                AchievementsPublisher publisher = new AchievementsPublisher();
-                publisher.Publish(dataAchievements.ToAchievements(games), facebookUserId);
-
-                _achievementManager.UpdatePublished(steamUserId, dataAchievements.Select(achievement => achievement.Id));
-            }
-
-            return true;
-        }
-
         public void Dispose()
         {
             _achievementManager.Dispose();

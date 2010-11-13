@@ -46,6 +46,8 @@
             <a id="publishSelectedButton" class="button" href="#" style="display: none;">Publish
                 Selected</a>
         </p>
+        <div id="noUnpublishedMessage" class="fbinfobox message" style="display: none;">
+            You have no unpublished achievements.</div>
         <img id="newAchievementsLoading" class="loading" src="images/ajax-loader.gif" alt="Getting unpublished achievements..." />
         <div id="newAchievements">
         </div>

@@ -29,8 +29,8 @@
     </fieldset>
     <fieldset>
         <legend>Update</legend>
-        <div id="achievementsUpdateSuccess" class="fbinfobox message" style="display: none;">
-            Your achievements have been updated (<span id="newAchievementCount"></span> new).</div>
+        <div id="noNewAchievementsMessage" class="fbinfobox message" style="display: none;">
+            You have no new achievements.</div>
         <div id="achievementsUpdateFailure" class="fberrorbox message" style="display: none;">
             Your achievements could not be updated. Please verify that your Custom Url is correct
             and that your Steam Community Profile is public.
@@ -46,7 +46,7 @@
                 <img id="updatingAchievements" class="loading" src="images/ajax-loader.gif" alt="Updating..." />
             </p>
             <div class="fbinfobox message">
-                Try the new <a href="Publish.aspx">publish dialog</a> preview page.
+                Try the new <a href="Publish.aspx">publish preview</a> page.
             </div>
         </div>
     </fieldset>

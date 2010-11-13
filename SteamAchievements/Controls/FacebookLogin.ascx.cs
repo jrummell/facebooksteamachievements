@@ -21,9 +21,8 @@
 
 using System;
 using System.Web.UI;
-using SteamAchievements.Properties;
-using SteamAchievements.Services;
-using SteamAchievements.Services.Properties;
+using Facebook;
+using Facebook.Web;
 
 namespace SteamAchievements.Controls
 {
@@ -31,17 +30,12 @@ namespace SteamAchievements.Controls
     {
         protected string FacebookClientId
         {
-            get { return ServiceSettings.APIKey; }
+            get { return FacebookSettings.Current.ApiKey; }
         }
 
         public bool IsLoggedIn
         {
-            get { return FacebookUserId > 0; }
-        }
-
-        protected string FacebookUrlSuffix
-        {
-            get { return Settings.Default.CanvasPageUrlSuffix; }
+            get; private set;
         }
 
         public long FacebookUserId { get; private set; }
@@ -50,8 +44,26 @@ namespace SteamAchievements.Controls
         {
             base.OnInit(e);
 
-            FacebookCookieParser cookieParser = new FacebookCookieParser(Context);
-            FacebookUserId = cookieParser.GetUserId();
+            if (Session["FacebookUserId"] == null)
+            {
+                FacebookApp facebookApp = new FacebookApp();
+                CanvasAuthorizer authorizor = new CanvasAuthorizer(facebookApp);
+                authorizor.Perms = "publish_stream"; //,offline_access
+                authorizor.Authorize(Request, Response);
+                IsLoggedIn = authorizor.IsAuthorized();
+
+                if (IsLoggedIn)
+                {
+                    Session["FacebookUserId"] = facebookApp.UserId;
+                }
+                else
+                {
+                    Session["FacebookUserId"] = 0;
+                }
+            }
+
+            FacebookUserId = (long) Session["FacebookUserId"];
+            IsLoggedIn = FacebookUserId > 0;
         }
     }
 }

@@ -62,7 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AchievementServiceFixture.cs" />
-    <Compile Include="CanvasAuthenticationFixture.cs" />
     <Compile Include="GameXmlParserFixture.cs" />
     <Compile Include="SteamCommunityManagerFixture.cs" />
     <Compile Include="AchievementXmlParserFixture.cs" />
