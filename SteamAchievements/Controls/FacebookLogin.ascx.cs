@@ -23,6 +23,7 @@ using System;
 using System.Web.UI;
 using Facebook;
 using Facebook.Web;
+using SteamAchievements.Properties;
 
 namespace SteamAchievements.Controls
 {
@@ -48,6 +49,7 @@ namespace SteamAchievements.Controls
             {
                 FacebookApp facebookApp = new FacebookApp();
                 CanvasAuthorizer authorizor = new CanvasAuthorizer(facebookApp);
+                authorizor.ReturnUrlPath = "default.aspx";
                 authorizor.Perms = "publish_stream"; //,offline_access
                 authorizor.Authorize(Request, Response);
                 IsLoggedIn = authorizor.IsAuthorized();
