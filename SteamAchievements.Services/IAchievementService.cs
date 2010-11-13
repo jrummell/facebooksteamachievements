@@ -91,19 +91,6 @@ namespace SteamAchievements.Services
         bool UpdateSteamUserId(long facebookUserId, string steamUserId);
 
         /// <summary>
-        /// Publishes the last 5 achievements added within the last hour for the given user.
-        /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <returns>true if successful, else false.</returns>
-        /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
-        [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        [Obsolete("PublishAchievements()")]
-        bool PublishLatestAchievements(long facebookUserId, string steamUserId);
-
-        /// <summary>
         /// Updates the Published field for the given achievements for the given user.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>

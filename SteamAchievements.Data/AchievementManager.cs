@@ -151,30 +151,6 @@ namespace SteamAchievements.Data
         }
 
         /// <summary>
-        /// Gets the last 5 achievements added in the last 5 minutes.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <returns></returns>
-        public IEnumerable<Achievement> GetLatestAchievements(string steamUserId)
-        {
-            if (steamUserId == null)
-            {
-                throw new ArgumentNullException("steamUserId");
-            }
-
-            DateTime fiveMinutesAgo = DateTime.Now.AddMinutes(-5);
-
-            //TODO: replace 5 minutes ago with Published = false
-            IQueryable<Achievement> achievements =
-                from userAchievement in _repository.UserAchievements
-                where userAchievement.SteamUserId == steamUserId && userAchievement.Date > fiveMinutesAgo
-                orderby userAchievement.Date descending
-                select userAchievement.Achievement;
-
-            return achievements.Take(5);
-        }
-
-        /// <summary>
         /// Updates the steam user id.
         /// </summary>
         /// <param name="facebookUserId">The facebook user id.</param>

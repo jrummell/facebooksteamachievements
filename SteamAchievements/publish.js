@@ -36,7 +36,10 @@ function getNewAchievements()
     callAjax("UpdateAchievements", { steamUserId: _steamUserId }, function (updateCount)
     {
         callAjax("GetNewAchievements", { steamUserId: _steamUserId },
-                        function (achievements) { displayAchievements(achievements); });
+                        function (achievements)
+                        {
+                            displayAchievements(achievements);
+                        });
     });
 }
 
@@ -82,7 +85,15 @@ function displayAchievements(achievements)
         }).attr("disabled", disableUnchecked);
     });
 
-    $("#publishSelectedButton").show();
+    if (achievements.length == 0)
+    {
+        $("#noUnpublishedMessage").show();
+    }
+    else
+    {
+        $("#publishSelectedButton").show();
+    }
+
     $("#newAchievementsLoading").hide();
 }
 

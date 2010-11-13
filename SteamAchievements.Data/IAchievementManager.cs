@@ -48,13 +48,6 @@ namespace SteamAchievements.Data
         int UpdateAchievements(IEnumerable<UserAchievement> achievements);
 
         /// <summary>
-        /// Gets the latest achievements.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <returns></returns>
-        IEnumerable<Achievement> GetLatestAchievements(string steamUserId);
-
-        /// <summary>
         /// Updates the steam user id.
         /// </summary>
         /// <param name="facebookUserId">The facebook user id.</param>
