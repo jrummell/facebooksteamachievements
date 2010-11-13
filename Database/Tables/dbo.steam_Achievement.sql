@@ -6,7 +6,9 @@ CREATE TABLE [dbo].[steam_Achievement]
 [Description] [varchar] (1000) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 [ImageUrl] [varchar] (500) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL
 ) ON [PRIMARY]
-CREATE UNIQUE NONCLUSTERED INDEX [IX_steam_Achievement] ON [dbo].[steam_Achievement] ([Name], [GameId]) ON [PRIMARY]
+CREATE NONCLUSTERED INDEX [IX_steam_Achievement] ON [dbo].[steam_Achievement] ([Name], [GameId]) ON [PRIMARY]
+
+
 
 GO
 ALTER TABLE [dbo].[steam_Achievement] ADD CONSTRAINT [PK_steam_Achievement] PRIMARY KEY CLUSTERED  ([Id]) ON [PRIMARY]
