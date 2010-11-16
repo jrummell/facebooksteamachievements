@@ -32,7 +32,7 @@ namespace SteamAchievements.Services
     {
         private readonly TextInfo _textInfo = Thread.CurrentThread.CurrentCulture.TextInfo;
 
-        #region IXmlParser<Achievement> Members
+        #region IXmlParser<UserAchievement> Members
 
         /// <summary>
         /// Returns a collection of <see cref="Achievement"/>s from the given xml and gameId.
@@ -63,7 +63,7 @@ namespace SteamAchievements.Services
             XDocument document = XDocument.Parse(xml);
 
             // xpath: player/customURL
-            var customUrlElement = document.Descendants("player").First().Element("customURL");
+            XElement customUrlElement = document.Descendants("player").First().Element("customURL");
 
             var achievements =
                 from element in document.Descendants("achievement")
@@ -93,7 +93,10 @@ namespace SteamAchievements.Services
                                   Description = achievement.description,
                                   ImageUrl = new Uri(achievement.image, UriKind.Absolute),
                                   Closed = achievement.closed,
-                                  Date = achievement.date == null ? DateTime.MinValue : new DateTime(Convert.ToInt32(achievement.date))
+                                  Date =
+                                      achievement.date == null
+                                          ? DateTime.MinValue
+                                          : new DateTime(Convert.ToInt32(achievement.date))
                               };
         }
     }

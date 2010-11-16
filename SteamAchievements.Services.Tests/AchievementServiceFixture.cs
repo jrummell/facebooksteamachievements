@@ -45,7 +45,7 @@ namespace SteamAchievements.Services.Tests
                         new DataContractSerializer(typeof (UserAchievement),
                                                    new[] {typeof (List<UserAchievement>)});
 
-                    achievements = (List<UserAchievement>)serializer.ReadObject(reader, true);
+                    achievements = (List<UserAchievement>) serializer.ReadObject(reader, true);
                 }
             }
 

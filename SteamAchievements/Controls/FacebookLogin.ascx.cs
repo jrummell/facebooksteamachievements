@@ -23,7 +23,6 @@ using System;
 using System.Web.UI;
 using Facebook;
 using Facebook.Web;
-using SteamAchievements.Properties;
 
 namespace SteamAchievements.Controls
 {
@@ -34,10 +33,7 @@ namespace SteamAchievements.Controls
             get { return FacebookSettings.Current.ApiKey; }
         }
 
-        public bool IsLoggedIn
-        {
-            get; private set;
-        }
+        public bool IsLoggedIn { get; private set; }
 
         public long FacebookUserId { get; private set; }
 

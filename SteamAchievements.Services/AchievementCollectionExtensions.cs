@@ -51,7 +51,7 @@ namespace SteamAchievements.Services
         }
 
         public static IEnumerable<UserAchievement> ToAchievements(this IEnumerable<Data.Achievement> achievements,
-                                                              IEnumerable<Game> games)
+                                                                  IEnumerable<Game> games)
         {
             return from achievement in achievements
                    from game in games
@@ -66,7 +66,8 @@ namespace SteamAchievements.Services
                               };
         }
 
-        public static IEnumerable<Data.UserAchievement> ToDataAchievements(this IEnumerable<UserAchievement> achievements)
+        public static IEnumerable<Data.UserAchievement> ToDataAchievements(
+            this IEnumerable<UserAchievement> achievements)
         {
             return from achievement in achievements
                    select new Data.UserAchievement
@@ -74,12 +75,12 @@ namespace SteamAchievements.Services
                                   Date = achievement.Date,
                                   SteamUserId = achievement.SteamUserId,
                                   Achievement = new Data.Achievement
-                                  {
-                                      Name = achievement.Name,
-                                      Description = achievement.Description,
-                                      ImageUrl = achievement.ImageUrl.ToString(),
-                                      GameId = achievement.Game.Id
-                                  }
+                                                    {
+                                                        Name = achievement.Name,
+                                                        Description = achievement.Description,
+                                                        ImageUrl = achievement.ImageUrl.ToString(),
+                                                        GameId = achievement.Game.Id
+                                                    }
                               };
         }
     }

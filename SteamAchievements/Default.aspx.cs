@@ -22,7 +22,6 @@
 using System;
 using System.Web.UI;
 using SteamAchievements.Data;
-using SteamAchievements.Properties;
 
 namespace SteamAchievements
 {

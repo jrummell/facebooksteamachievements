@@ -141,7 +141,8 @@ namespace SteamAchievements.Data
                 throw new ArgumentException("All achievements must have the same SteamUserId", "achievements");
             }
 
-            IEnumerable<Achievement> missingAchievements = GetMissingAchievements(achievements.Select(a => a.Achievement));
+            IEnumerable<Achievement> missingAchievements =
+                GetMissingAchievements(achievements.Select(a => a.Achievement));
             if (missingAchievements.Any())
             {
                 InsertMissingAchievements(missingAchievements);
@@ -256,8 +257,8 @@ namespace SteamAchievements.Data
         /// <summary>
         /// Assigns the new achievements.
         /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
         /// <param name="achievements">All achievements for the given user.</param>
+        /// <returns></returns>
         public int AssignAchievements(IEnumerable<UserAchievement> achievements)
         {
             if (achievements == null)
