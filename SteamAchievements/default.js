@@ -127,6 +127,12 @@ function updateAchievements()
                 }
                 else
                 {
+                    if (achievements.length > 5)
+                    {
+                        // publish at most 5 achievements
+                        achievements = achievements.slice(0, 5);
+                    }
+
                     publishAchievements(achievements);
                 }
             });
