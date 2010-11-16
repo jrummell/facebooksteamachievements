@@ -46,6 +46,15 @@ namespace SteamAchievements.Services.Tests
         }
 
         [Test]
+        public void ParseHl2Achievements()
+        {
+            string xml = File.ReadAllText("hl2Achievements.xml");
+
+            AchievementXmlParser parser = new AchievementXmlParser();
+            parser.Parse(xml);
+        }
+
+        [Test]
         public void ParseNotValid()
         {
             AchievementXmlParser parser = new AchievementXmlParser();
@@ -65,15 +74,6 @@ namespace SteamAchievements.Services.Tests
             Assert.That(achievements.All(a => a.SteamUserId == "nullreference"));
             Assert.That(achievements.Any(a => a.Name == "Fried Piper" && a.Closed));
             Assert.That(achievements.Any(a => a.Name == "Cl0wnd" && !a.Closed));
-        }
-
-        [Test]
-        public void ParseHl2Achievements()
-        {
-            string xml = File.ReadAllText("hl2Achievements.xml");
-
-            AchievementXmlParser parser = new AchievementXmlParser();
-            parser.Parse(xml);
         }
     }
 }

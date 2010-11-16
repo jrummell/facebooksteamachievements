@@ -141,10 +141,10 @@ namespace SteamAchievements.Data.Tests
             IEnumerable<UserAchievement> userAchievements =
                 from achievement in achievements
                 select new UserAchievement
-                {
-                    SteamUserId = steamUserId,
-                    Achievement = achievement
-                };
+                           {
+                               SteamUserId = steamUserId,
+                               Achievement = achievement
+                           };
 
             _manager.AssignAchievements(userAchievements);
 
@@ -161,8 +161,8 @@ namespace SteamAchievements.Data.Tests
         [Test]
         public void GetMissingAchievements()
         {
-            Achievement achievement1Game5 = new Achievement { GameId = 5, Name = "Achievement 1 for Game 5" };
-            Achievement achievement2Game5 = new Achievement { GameId = 5, Name = "Achievement 2 for Game 5" };
+            Achievement achievement1Game5 = new Achievement {GameId = 5, Name = "Achievement 1 for Game 5"};
+            Achievement achievement2Game5 = new Achievement {GameId = 5, Name = "Achievement 2 for Game 5"};
             IEnumerable<Achievement> communityAchievements =
                 new[]
                     {
@@ -204,10 +204,10 @@ namespace SteamAchievements.Data.Tests
         [Test]
         public void InsertMissingAchievements()
         {
-            Achievement achievement1Game5 = new Achievement { GameId = 5, Name = "Achievement 1 for Game 5" };
-            Achievement achievement2Game5 = new Achievement { GameId = 5, Name = "Achievement 2 for Game 5" };
+            Achievement achievement1Game5 = new Achievement {GameId = 5, Name = "Achievement 1 for Game 5"};
+            Achievement achievement2Game5 = new Achievement {GameId = 5, Name = "Achievement 2 for Game 5"};
 
-            _manager.InsertMissingAchievements(new[] { achievement1Game5, achievement2Game5 });
+            _manager.InsertMissingAchievements(new[] {achievement1Game5, achievement2Game5});
 
             Assert.That(_repository.Achievements.Count(a => a.Name == achievement1Game5.Name), Is.EqualTo(1));
             Assert.That(_repository.Achievements.Count(a => a.Name == achievement2Game5.Name), Is.EqualTo(1));
@@ -221,46 +221,94 @@ namespace SteamAchievements.Data.Tests
             IEnumerable<UserAchievement> achievements =
                 new[]
                     {
-                        new UserAchievement {
-                            SteamUserId = steamUserId,
-                            Achievement = new Achievement
-                            {Id = 1, GameId = 1, Name = "Achievement 1 for Game 1", Description = ""}
-                        },
-                        new UserAchievement {
-                            SteamUserId = steamUserId,
-                            Achievement =new Achievement
-                            {Id = 2, GameId = 1, Name = "Achievement 2 for Game 1", Description = ""}
-                        },
-                        new UserAchievement {
-                            SteamUserId = steamUserId,
-                            Achievement =new Achievement
-                            {Id = 3, GameId = 1, Name = "Achievement 3 for Game 1", Description = ""}
-                        },
-                        new UserAchievement {
-                            SteamUserId = steamUserId,
-                            Achievement =new Achievement
-                            {Id = 4, GameId = 2, Name = "Achievement 1 for Game 2", Description = ""}
-                        },
-                        new UserAchievement {
-                            SteamUserId = steamUserId,
-                            Achievement =new Achievement
-                            {Id = 5, GameId = 2, Name = "Achievement 2 for Game 2", Description = ""}
-                        },
-                        new UserAchievement {
-                            SteamUserId = steamUserId,
-                            Achievement =new Achievement
-                            {Id = 6, GameId = 3, Name = "Achievement for Game", Description = "Game 3 Achievement 1"}
-                        },
-                        new UserAchievement {
-                            SteamUserId = steamUserId,
-                            Achievement =new Achievement
-                            {Id = 7, GameId = 3, Name = "Achievement for Game", Description = "Game 3 Achievement 2"}
-                        },
-                        new UserAchievement {
-                            SteamUserId = steamUserId,
-                            Achievement =new Achievement
-                            {Id = 8, GameId = 4, Name = "Achievement for Game", Description = "Game 4 Achievement 1"}
-                        }
+                        new UserAchievement
+                            {
+                                SteamUserId = steamUserId,
+                                Achievement = new Achievement
+                                                  {
+                                                      Id = 1,
+                                                      GameId = 1,
+                                                      Name = "Achievement 1 for Game 1",
+                                                      Description = ""
+                                                  }
+                            },
+                        new UserAchievement
+                            {
+                                SteamUserId = steamUserId,
+                                Achievement = new Achievement
+                                                  {
+                                                      Id = 2,
+                                                      GameId = 1,
+                                                      Name = "Achievement 2 for Game 1",
+                                                      Description = ""
+                                                  }
+                            },
+                        new UserAchievement
+                            {
+                                SteamUserId = steamUserId,
+                                Achievement = new Achievement
+                                                  {
+                                                      Id = 3,
+                                                      GameId = 1,
+                                                      Name = "Achievement 3 for Game 1",
+                                                      Description = ""
+                                                  }
+                            },
+                        new UserAchievement
+                            {
+                                SteamUserId = steamUserId,
+                                Achievement = new Achievement
+                                                  {
+                                                      Id = 4,
+                                                      GameId = 2,
+                                                      Name = "Achievement 1 for Game 2",
+                                                      Description = ""
+                                                  }
+                            },
+                        new UserAchievement
+                            {
+                                SteamUserId = steamUserId,
+                                Achievement = new Achievement
+                                                  {
+                                                      Id = 5,
+                                                      GameId = 2,
+                                                      Name = "Achievement 2 for Game 2",
+                                                      Description = ""
+                                                  }
+                            },
+                        new UserAchievement
+                            {
+                                SteamUserId = steamUserId,
+                                Achievement = new Achievement
+                                                  {
+                                                      Id = 6,
+                                                      GameId = 3,
+                                                      Name = "Achievement for Game",
+                                                      Description = "Game 3 Achievement 1"
+                                                  }
+                            },
+                        new UserAchievement
+                            {
+                                SteamUserId = steamUserId,
+                                Achievement = new Achievement
+                                                  {
+                                                      Id = 7,
+                                                      GameId = 3,
+                                                      Name = "Achievement for Game",
+                                                      Description = "Game 3 Achievement 2"
+                                                  }
+                            },
+                        new UserAchievement
+                            {
+                                SteamUserId = steamUserId,
+                                Achievement = new Achievement
+                                                  {
+                                                      Id = 8,
+                                                      GameId = 4,
+                                                      Name = "Achievement for Game",
+                                                      Description = "Game 4 Achievement 1"
+                                                  }
+                            }
                     };
 
             _manager.UpdateAchievements(achievements);

@@ -21,7 +21,6 @@
 
 using System;
 using System.Web.UI;
-using SteamAchievements.Data;
 
 namespace SteamAchievements
 {
@@ -35,7 +34,7 @@ namespace SteamAchievements
         {
             base.OnInit(e);
 
-            Load += new EventHandler(Page_Load);
+            Load += Page_Load;
         }
 
         private void Page_Load(object sender, EventArgs e)
