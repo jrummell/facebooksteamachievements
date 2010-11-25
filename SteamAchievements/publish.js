@@ -143,7 +143,7 @@ function publishAchievements(achievements)
     var publishParams = {
         method: 'stream.publish',
         attachment: {
-            name: _steamUserId + " has earned new achievements",
+            name: _steamUserId + " earned new achievements",
             description: description,
             href: "http://steamcommunity.com/id/" + _steamUserId,
             media: images

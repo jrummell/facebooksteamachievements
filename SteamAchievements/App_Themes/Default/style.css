@@ -26,6 +26,15 @@ fieldset
     padding: 5px;
 }
 
+.game img 
+{
+    display: inline-block;
+    width: 184px;
+    height: 69px;
+    margin: 0px;
+    padding: 0px;
+}
+
 .clear
 {
     clear: both;
