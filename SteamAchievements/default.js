@@ -16,7 +16,7 @@ function init()
     // hide messages on click
     $("div.message").append(" <span class='dismiss'>Click to dismiss.</span>").click(function ()
     {
-        $(this).hide('normal');
+        $(this).hide('normal', updateSize);
     });
 
     $("#updateSteamIdButton").click(function ()
@@ -68,6 +68,8 @@ function getGames()
 
         log(gamesHtml);
         hideLoading(updatingSelector);
+
+        updateSize();
     };
 
     callAjax("GetGames", { steamUserId: steamId }, ondone);
@@ -197,12 +199,14 @@ function publishAchievements(achievements)
     var publishParams = {
         method: 'stream.publish',
         attachment: {
-            name: steamUserId + " has earned new achievements",
+            name: steamUserId + " earned new achievements",
             description: description,
             href: "http://steamcommunity.com/id/" + steamUserId,
             media: images
         }
     };
+
+    $("#steamIdTextBox").focus();
 
     FB.ui(publishParams, function (response)
     {
@@ -220,6 +224,17 @@ function publishAchievements(achievements)
             callAjax("PublishAchievements", data);
         }
     });
+
+    // scroll to the middle of the page so that the publish dialog will be visible
+    // permission denied since iframe is in a different domain that parent
+    //var height = parseFloat($(document).height());
+    //top.scrollTo(0, height / 2);
+
+    // focus on a game that is relatively close to the middle of the page
+    var $games = $("div.games .game");
+    var gameFocusIndex = parseInt($games.length / 3);
+    var $game = $($games.get(gameFocusIndex));
+    $game.find("a:first").focus();
 }
 
 // validate steam user id
@@ -291,17 +306,27 @@ function callAjax(method, query, ondone, onerror)
 
 function showLoading(selector)
 {
-    $(selector).show();
+    $(selector).show("normal", updateSize);
 }
 
 function hideLoading(selector)
 {
-    $(selector).fadeOut("slow");
+    $(selector).fadeOut("slow", updateSize);
+
+    updateSize();
 }
 
 function showMessage(selector)
 {
-    $(selector).show("normal");
+    $(selector).show("normal", updateSize);
+
+    updateSize();
+}
+
+function updateSize()
+{
+    // update the size of the iframe to match the content
+    FB.Canvas.setSize();
 }
 
 function log(message)

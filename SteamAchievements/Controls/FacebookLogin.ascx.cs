@@ -20,6 +20,7 @@
 #endregion
 
 using System;
+using System.Web;
 using System.Web.UI;
 using Facebook;
 using Facebook.Web;
@@ -28,40 +29,51 @@ namespace SteamAchievements.Controls
 {
     public partial class FacebookLogin : UserControl
     {
+        private FacebookApp _facebookApp;
+        private CanvasAuthorizer _authorizer;
+
+        public FacebookLogin()
+        {
+            _facebookApp = new FacebookApp();
+            _authorizer = new CanvasAuthorizer(_facebookApp);
+            _authorizer.Perms = "publish_stream"; //"publish_stream,offline_access";
+        }
+
+        public string AccessToken { get; set; }
+
         protected string FacebookClientId
         {
             get { return FacebookSettings.Current.ApiKey; }
         }
 
-        public bool IsLoggedIn { get; private set; }
-
         public long FacebookUserId { get; private set; }
+
+        public bool IsLoggedIn { get; private set; }
 
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
 
-            if (Session["FacebookUserId"] == null)
+            IsLoggedIn = _authorizer.IsAuthorized();
+
+            if (!IsLoggedIn)
             {
-                FacebookApp facebookApp = new FacebookApp();
-                CanvasAuthorizer authorizor = new CanvasAuthorizer(facebookApp);
-                authorizor.ReturnUrlPath = "default.aspx";
-                authorizor.Perms = "publish_stream"; //,offline_access
-                authorizor.Authorize(Request, Response);
-                IsLoggedIn = authorizor.IsAuthorized();
-
-                if (IsLoggedIn)
-                {
-                    Session["FacebookUserId"] = facebookApp.UserId;
-                }
-                else
-                {
-                    Session["FacebookUserId"] = 0;
-                }
+                Uri authurl = _authorizer.GetLoginUrl(new HttpRequestWrapper(Request));
+                CanvasRedirect(authurl.ToString());
             }
+            else
+            {
+                FacebookUserId = _facebookApp.UserId;
+                AccessToken = _facebookApp.Session.AccessToken;
+            }
+        }
 
-            FacebookUserId = (long) Session["FacebookUserId"];
-            IsLoggedIn = FacebookUserId > 0;
+        private void CanvasRedirect(string url)
+        {
+            string content = CanvasUrlBuilder.GetCanvasRedirectHtml(url);
+
+            Response.ContentType = "text/html";
+            Response.Write(content);
         }
     }
 }
