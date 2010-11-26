@@ -19,6 +19,13 @@
         <div>
             <steam:Logo ID="logo" runat="server" />
         </div>
+        <div class="menu">
+            <steam:CanvasLink ID="homeLink" runat="server" CanvasPage="" Text="Home" />
+            |
+            <steam:CanvasLink ID="publishLink" runat="server" CanvasPage="Publish.aspx" Text="Publish (Beta Preview)" />
+            |
+            <steam:CanvasLink ID="helpLink" runat="server" CanvasPage="Help.aspx" Text="Help" />
+        </div>
         <asp:ContentPlaceHolder ID="body" runat="server">
         </asp:ContentPlaceHolder>
         <div class="footer">
