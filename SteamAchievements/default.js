@@ -206,7 +206,21 @@ function publishAchievements(achievements)
         }
     };
 
-    $("#steamIdTextBox").focus();
+    // create and anchor in the middle of the page and focus on it so that the dialog will be visible to the user.
+    var $middleAnchor = $("#middleAnchor");
+    if ($middleAnchor.length == 0)
+    {
+        // add an anchor in the middle of the page
+        var middleX = $(document).width() / 2;
+        var middleY = $(document).height() / 2;
+
+        // Chrome requires that the anchor contains text so that focus will work
+        $("body").append("<a id='middleAnchor' href='#'>.<\/a>");
+        $middleAnchor = $("#middleAnchor");
+        $middleAnchor.css("left", middleX).css("top", middleY);
+    }
+
+    $middleAnchor.focus();
 
     FB.ui(publishParams, function (response)
     {
@@ -224,17 +238,6 @@ function publishAchievements(achievements)
             callAjax("PublishAchievements", data);
         }
     });
-
-    // scroll to the middle of the page so that the publish dialog will be visible
-    // permission denied since iframe is in a different domain that parent
-    //var height = parseFloat($(document).height());
-    //top.scrollTo(0, height / 2);
-
-    // focus on a game that is relatively close to the middle of the page
-    var $games = $("div.games .game");
-    var gameFocusIndex = parseInt($games.length / 3);
-    var $game = $($games.get(gameFocusIndex));
-    $game.find("a:first").focus();
 }
 
 // validate steam user id
