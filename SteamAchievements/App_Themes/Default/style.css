@@ -35,6 +35,14 @@ fieldset
     padding: 0px;
 }
 
+#middleAnchor
+{
+    position: absolute;
+    display: block;
+    text-decoration: none;
+    color: #fff;
+}
+
 .clear
 {
     clear: both;
