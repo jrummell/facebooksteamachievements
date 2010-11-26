@@ -64,6 +64,12 @@ fieldset
     color: #333333;
 }
 
+.menu
+{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
 .footer
 {
     color: #999; 

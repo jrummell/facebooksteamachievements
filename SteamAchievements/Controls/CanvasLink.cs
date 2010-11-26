@@ -20,23 +20,34 @@
 #endregion
 
 using System;
-using System.Web.UI;
+using System.Web.UI.WebControls;
+using Facebook.Web;
 
 namespace SteamAchievements.Controls
 {
-    public partial class HelpLink : UserControl
+    /// <summary>
+    /// A <see cref="HyperLink"/> that uses the absolute canvas url path.
+    /// </summary>
+    public class CanvasLink : HyperLink
     {
-        public string HelpAnchor
+        public string CanvasPage
         {
-            get { return (string) ViewState["HelpAnchor"] ?? String.Empty; }
-            set { ViewState["HelpAnchor"] = value; }
+            get { return (string)ViewState["CanvasPage"] ?? String.Empty; }
+            set { ViewState["CanvasPage"] = value; }
         }
 
-        protected override void OnPreRender(EventArgs e)
+        protected override void OnInit(EventArgs e)
         {
-            helpLink.CanvasPage = "Help.aspx#" + HelpAnchor;
+            base.OnInit(e);
 
-            base.OnPreRender(e);
+            Target = "_top";
+
+            PreRender += new EventHandler(CanvasLink_PreRender);
+        }
+
+        private void CanvasLink_PreRender(object sender, EventArgs e)
+        {
+            NavigateUrl = CanvasSettings.Current.CanvasPageUrl + CanvasPage;
         }
     }
 }

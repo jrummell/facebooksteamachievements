@@ -45,9 +45,6 @@
                 <a id="updateAchievementsButton" class="button" href="#">Update Achievements</a>
                 <img id="updatingAchievements" class="loading" src="images/ajax-loader.gif" alt="Updating..." />
             </p>
-            <div class="fbinfobox message">
-                Try the new <a href="Publish.aspx">publish preview</a> page.
-            </div>
         </div>
     </fieldset>
     <fieldset>

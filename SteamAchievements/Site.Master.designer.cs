@@ -40,6 +40,33 @@ namespace SteamAchievements {
         protected global::SteamAchievements.Controls.Logo logo;
         
         /// <summary>
+        /// homeLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SteamAchievements.Controls.CanvasLink homeLink;
+        
+        /// <summary>
+        /// publishLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SteamAchievements.Controls.CanvasLink publishLink;
+        
+        /// <summary>
+        /// helpLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SteamAchievements.Controls.CanvasLink helpLink;
+        
+        /// <summary>
         /// body control.
         /// </summary>
         /// <remarks>

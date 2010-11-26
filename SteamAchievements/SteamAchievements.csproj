@@ -108,6 +108,7 @@
     <Compile Include="Admin\Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CanvasLink.cs" />
     <Compile Include="Controls\Disclaimer.ascx.cs">
       <DependentUpon>Disclaimer.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
