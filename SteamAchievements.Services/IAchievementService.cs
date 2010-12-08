@@ -75,20 +75,7 @@ namespace SteamAchievements.Services
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        [Obsolete("GetNewAchievements() and PublishAchievements()")]
         int UpdateAchievements(string steamUserId);
-
-        /// <summary>
-        /// Updates the steam user id.
-        /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <returns>true if successful, else false.</returns>
-        /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
-        [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool UpdateSteamUserId(long facebookUserId, string steamUserId);
 
         /// <summary>
         /// Updates the Published field for the given achievements for the given user.

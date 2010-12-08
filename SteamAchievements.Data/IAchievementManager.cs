@@ -27,11 +27,11 @@ namespace SteamAchievements.Data
     public interface IAchievementManager : IDisposable
     {
         /// <summary>
-        /// Gets the steam user id.
+        /// Gets the user.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="steamUserId">The facebook user id.</param>
         /// <returns></returns>
-        string GetSteamUserId(long facebookUserId);
+        User GetUser(long facebookUserId);
 
         /// <summary>
         /// Gets the achievements.
@@ -42,17 +42,22 @@ namespace SteamAchievements.Data
         IEnumerable<Achievement> GetAchievements(string steamUserId, int gameId);
 
         /// <summary>
+        /// Gets the unpublished achievements.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        IEnumerable<Achievement> GetUnpublishedAchievements(string steamUserId);
+
+        /// <summary>
+        /// Gets the auto update users.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<User> GetAutoUpdateUsers();
+
+        /// <summary>
         /// Updates the achievements.
         /// </summary>
         /// <param name="achievements">The achievements.</param>
         int UpdateAchievements(IEnumerable<UserAchievement> achievements);
-
-        /// <summary>
-        /// Updates the steam user id.
-        /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
-        /// <param name="steamUserId">The steam user id.</param>
-        void UpdateSteamUserId(long facebookUserId, string steamUserId);
 
         /// <summary>
         /// Updates the published flag on the given achievements.
@@ -62,9 +67,9 @@ namespace SteamAchievements.Data
         void UpdatePublished(string steamUserId, IEnumerable<int> achievementIds);
 
         /// <summary>
-        /// Gets the unpublished achievements
+        /// Updates the user.
         /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        IEnumerable<Achievement> GetUnpublishedAchievements(string steamUserId);
+        /// <param name="user"></param>
+        void UpdateUser(User user);
     }
 }

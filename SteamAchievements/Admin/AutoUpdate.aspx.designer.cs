@@ -7,27 +7,36 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SteamAchievements.Controls {
+namespace SteamAchievements.Admin {
     
     
-    public partial class Logo {
+    public partial class AutoUpdate {
         
         /// <summary>
-        /// logoHomeLink control.
+        /// unauthorizedDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SteamAchievements.Controls.CanvasLink logoHomeLink;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl unauthorizedDiv;
         
         /// <summary>
-        /// logoImage control.
+        /// noUpdatesDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image logoImage;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl noUpdatesDiv;
+        
+        /// <summary>
+        /// userRepeater control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater userRepeater;
     }
 }

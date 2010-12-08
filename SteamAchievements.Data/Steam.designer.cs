@@ -342,6 +342,10 @@ namespace SteamAchievements.Data
 		
 		private EntityRef<Achievement> _steam_Achievement;
 		
+		private EntityRef<User> _User;
+		
+		private bool serializing;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -396,6 +400,10 @@ namespace SteamAchievements.Data
 			{
 				if ((this._SteamUserId != value))
 				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnSteamUserIdChanging(value);
 					this.SendPropertyChanging();
 					this._SteamUserId = value;
@@ -506,6 +514,30 @@ namespace SteamAchievements.Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserAchievement", Storage="_User", ThisKey="SteamUserId", OtherKey="SteamUserId", IsForeignKey=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6, EmitDefaultValue=false)]
+		public User User
+		{
+			get
+			{
+				if ((this.serializing 
+							&& (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					return null;
+				}
+				return this._User.Entity;
+			}
+			set
+			{
+				if ((this._User.Entity != value))
+				{
+					this.SendPropertyChanging();
+					this._User.Entity = value;
+					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -529,6 +561,7 @@ namespace SteamAchievements.Data
 		private void Initialize()
 		{
 			this._steam_Achievement = default(EntityRef<Achievement>);
+			this._User = default(EntityRef<User>);
 			OnCreated();
 		}
 		
@@ -537,6 +570,20 @@ namespace SteamAchievements.Data
 		public void OnDeserializing(StreamingContext context)
 		{
 			this.Initialize();
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerializing(StreamingContext context)
+		{
+			this.serializing = true;
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializedAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerialized(StreamingContext context)
+		{
+			this.serializing = false;
 		}
 	}
 	
@@ -551,6 +598,10 @@ namespace SteamAchievements.Data
 		
 		private string _SteamUserId;
 		
+		private string _AccessToken;
+		
+		private bool _AutoUpdate;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -559,6 +610,10 @@ namespace SteamAchievements.Data
     partial void OnFacebookUserIdChanged();
     partial void OnSteamUserIdChanging(string value);
     partial void OnSteamUserIdChanged();
+    partial void OnAccessTokenChanging(string value);
+    partial void OnAccessTokenChanged();
+    partial void OnAutoUpdateChanging(bool value);
+    partial void OnAutoUpdateChanged();
     #endregion
 		
 		public User()
@@ -604,6 +659,48 @@ namespace SteamAchievements.Data
 					this._SteamUserId = value;
 					this.SendPropertyChanged("SteamUserId");
 					this.OnSteamUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccessToken", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public string AccessToken
+		{
+			get
+			{
+				return this._AccessToken;
+			}
+			set
+			{
+				if ((this._AccessToken != value))
+				{
+					this.OnAccessTokenChanging(value);
+					this.SendPropertyChanging();
+					this._AccessToken = value;
+					this.SendPropertyChanged("AccessToken");
+					this.OnAccessTokenChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AutoUpdate", DbType="Bit NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public bool AutoUpdate
+		{
+			get
+			{
+				return this._AutoUpdate;
+			}
+			set
+			{
+				if ((this._AutoUpdate != value))
+				{
+					this.OnAutoUpdateChanging(value);
+					this.SendPropertyChanging();
+					this._AutoUpdate = value;
+					this.SendPropertyChanged("AutoUpdate");
+					this.OnAutoUpdateChanged();
 				}
 			}
 		}

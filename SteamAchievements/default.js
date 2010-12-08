@@ -1,7 +1,5 @@
 ﻿/// <reference path="js/jquery-vsdoc.js" />
-/// <reference path="js/json2.js" />
-var _serviceBase = "Services/Achievement.svc/";
-var _log = false;
+/// <reference path="js/achievements.js" />
 
 $(document).ready(function ()
 {
@@ -11,25 +9,9 @@ $(document).ready(function ()
 
 function init()
 {
-    $("img.loading").hide();
-
-    // hide messages on click
-    $("div.message").append(" <span class='dismiss'>Click to dismiss.</span>").click(function ()
-    {
-        $(this).hide('normal', updateSize);
-    });
-
-    $("#updateSteamIdButton").click(function ()
-    {
-        var result = updateSteamUserId();
-
-        if (result == false)
-        {
-            return false;
-        }
-
-        getGames();
-    });
+    var steamUserId = $("#steamUserIdHidden").val();
+    var logSelector = "#log";
+    $achievements.init(steamUserId, logSelector, false);
 
     $("#updateAchievementsButton").click(function ()
     {
@@ -46,17 +28,14 @@ function getGames()
     }
 
     var updatingSelector = "#updatingGames";
-    showLoading(updatingSelector);
+    $achievements.showLoading(updatingSelector);
 
-    var steamId = $("#steamIdTextBox").val();
-
-    var ondone = function (data)
+    var ondone = function (games)
     {
         var gamesHtml = "\n";
-        var steamId = $("#steamIdTextBox").val();
 
         // build the games list html
-        $(data).each(function (index, game)
+        $(games).each(function (index, game)
         {
             gamesHtml += "<div class='game'>";
             gamesHtml += "<a target='_blank' href='" + game.StoreUrl + "'><img src='" + game.ImageUrl + "' alt='" + game.Name + "' title='" + game.Name + "' /></a><br/>";
@@ -66,36 +45,13 @@ function getGames()
 
         $("#gamesDiv").html(gamesHtml);
 
-        log(gamesHtml);
-        hideLoading(updatingSelector);
+        $achievements.log(gamesHtml);
+        $achievements.hideLoading(updatingSelector);
 
-        updateSize();
+        $achievements.updateSize();
     };
 
-    callAjax("GetGames", { steamUserId: steamId }, ondone);
-}
-
-function updateSteamUserId()
-{
-    if (!validateSteamUserId())
-    {
-        return false;
-    }
-
-    var updatingSelector = "#updatingSteamUserId";
-    showLoading(updatingSelector);
-
-    var steamUserId = $("#steamIdTextBox").val();
-    var faceBookUserId = $("#facebookUserIdHidden").val();
-
-    var ondone = function (data)
-    {
-        hideLoading(updatingSelector);
-        showMessage("#steamIdUpdateSuccess");
-    };
-
-    var parameters = { "facebookUserId": faceBookUserId, "steamUserId": steamUserId };
-    callAjax("UpdateSteamUserId", parameters, ondone);
+    $achievements.getGames(ondone);
 }
 
 function updateAchievements()
@@ -108,136 +64,40 @@ function updateAchievements()
     }
 
     var updatingSelector = "#updatingAchievements";
-    showLoading(updatingSelector);
+    $achievements.showLoading(updatingSelector);
 
-    var steamUserId = $("#steamIdTextBox").val();
-
-    var ondone = function (updateCount)
+    var ondone = function (achievements)
     {
         getGames();
 
-        $("#newAchievementsLoading").show();
+        $achievements.showLoading("#newAchievementsLoading");
 
-        callAjax("GetNewAchievements", { steamUserId: steamUserId },
-            function (achievements)
+        $achievements.hideLoading(updatingSelector);
+
+        if (achievements.length == 0)
+        {
+            $achievements.showMessage("#noNewAchievementsMessage");
+        }
+        else
+        {
+            if (achievements.length > 5)
             {
-                hideLoading(updatingSelector);
+                // publish at most 5 achievements
+                achievements = achievements.slice(0, 5);
+            }
 
-                if (achievements.length == 0)
-                {
-                    showMessage("#noNewAchievementsMessage");
-                }
-                else
-                {
-                    if (achievements.length > 5)
-                    {
-                        // publish at most 5 achievements
-                        achievements = achievements.slice(0, 5);
-                    }
-
-                    publishAchievements(achievements);
-                }
-            });
+            $achievements.publishAchievements(achievements);
+        }
     };
 
     var onerror = function ()
     {
-        hideLoading(updatingSelector);
+        $achievements.hideLoading(updatingSelector);
 
-        showMessage("#achievementsUpdateFailure");
+        $achievements.showMessage("#achievementsUpdateFailure");
     }
 
-    var parameters = { "steamUserId": steamUserId };
-    callAjax("UpdateAchievements", parameters, ondone, onerror);
-}
-
-function publishAchievements(achievements)
-{
-    // display publish dialog
-
-    var images = new Array();
-    var description = new String();
-    var gameId = new String();
-
-    $.each(achievements, function (i)
-    {
-        var achievement = achievements[i];
-        images.push({
-            type: 'image',
-            src: achievement.ImageUrl,
-            href: achievement.Game.StatsUrl
-        });
-
-        if (gameId != achievement.Game.Id)
-        {
-            gameId = achievement.Game.Id;
-
-            if (i > 0 && description.length > 2)
-            {
-                // replace last comma with period
-                description = description.substring(0, description.length - 2);
-                description += ". ";
-            }
-
-            description += achievement.Game.Name + ": ";
-        }
-
-        description += achievement.Name;
-
-        if (i < achievements.length - 1)
-        {
-            description += ", ";
-        }
-        else
-        {
-            description += ".";
-        }
-    });
-
-    var steamUserId = $("#steamIdTextBox").val();
-
-    var publishParams = {
-        method: 'stream.publish',
-        attachment: {
-            name: steamUserId + " earned new achievements",
-            description: description,
-            href: "http://steamcommunity.com/id/" + steamUserId,
-            media: images
-        }
-    };
-
-    // create and anchor in the middle of the page and focus on it so that the dialog will be visible to the user.
-    var $middleAnchor = $("#middleAnchor");
-    if ($middleAnchor.length == 0)
-    {
-        // add an anchor in the middle of the page
-        var middleX = $(document).width() / 2;
-        var middleY = $(document).height() / 2;
-
-        // Chrome requires that the anchor contains text so that focus will work
-        $("body").append("<a id='middleAnchor' href='#'>.<\/a>");
-        $middleAnchor = $("#middleAnchor");
-        $middleAnchor.css("left", middleX).css("top", middleY);
-    }
-
-    $middleAnchor.focus();
-
-    FB.ui(publishParams, function (response)
-    {
-        if (response && response.post_id)
-        {
-            // on successful publish, update published field on each published achievement.
-
-            var achievementIds = new Array();
-            for (i = 0; i < achievements.length; i++)
-            {
-                achievementIds.push(achievements[i].Id);
-            }
-
-            var data = { steamUserId: steamUserId, achievementIds: achievementIds };
-            callAjax("PublishAchievements", data);
-        }
-    });
+    $achievements.updateAchievements(ondone, onerror);
 }
 
 // validate steam user id
@@ -246,96 +106,11 @@ function validateSteamUserId()
     var $steamIdError = $("#steamIdError");
     $steamIdError.hide();
 
-    var steamUserId = $("#steamIdTextBox").val();
-
-    if (steamUserId == null || steamUserId == "")
+    if ($achievements.steamUserId == null || $achievements.steamUserId == "")
     {
         $steamIdError.show();
         return false;
     }
 
     return true;
-}
-
-function callAjax(method, query, ondone, onerror)
-{
-    if (onerror == null)
-    {
-        onerror = function (m)
-        {
-            $("#log").text(m.Message).show();
-        };
-    }
-
-    $.ajax({
-        url: _serviceBase + method,
-        data: JSON.stringify(query),
-        type: "POST",
-        processData: true,
-        contentType: "application/json",
-        timeout: 120000, // 2 minutes
-        dataType: "json",
-        success: ondone,
-        error: function (xhr)
-        {
-            if (!onerror)
-            {
-                return;
-            }
-
-            if (xhr.responseText)
-            {
-                try
-                {
-                    var err = JSON.parse(xhr.responseText);
-                    if (err)
-                    {
-                        onerror(err);
-                    }
-                    else
-                    {
-                        onerror({ Message: "Unknown server error." });
-                    }
-                }
-                catch (e)
-                {
-                    onerror({ Message: "Unknown server error." });
-                }
-            }
-            return;
-        }
-    });
-}
-
-function showLoading(selector)
-{
-    $(selector).show("normal", updateSize);
-}
-
-function hideLoading(selector)
-{
-    $(selector).fadeOut("slow", updateSize);
-
-    updateSize();
-}
-
-function showMessage(selector)
-{
-    $(selector).show("normal", updateSize);
-
-    updateSize();
-}
-
-function updateSize()
-{
-    // update the size of the iframe to match the content
-    FB.Canvas.setSize();
-}
-
-function log(message)
-{
-    if (_log)
-    {
-        $("#log").append(message);
-    }
 }

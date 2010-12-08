@@ -19,3 +19,14 @@
 
 #endregion
 
+using System;
+namespace SteamAchievements.Data
+{
+    partial class User
+    {
+        public Uri GetSteamProfileUrl()
+        {
+            return new Uri("http://steamcommunity.com/id/" + SteamUserId, UriKind.Absolute);
+        }
+    }
+}

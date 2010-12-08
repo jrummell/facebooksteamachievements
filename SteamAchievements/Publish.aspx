@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="Publish" Language="C#" AutoEventWireup="false" MasterPageFile="~/Site.Master"
     CodeBehind="Publish.aspx.cs" Inherits="SteamAchievements.Publish" %>
 
+<%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="head">
     <style type="text/css">
         #newAchievements .achievement
@@ -32,12 +33,10 @@
     </style>
 </asp:Content>
 <asp:Content runat="server" ID="Content2" ContentPlaceHolderID="body">
-    <div id="fb-root">
-    </div>
-    <steam:FacebookLogin ID="login" runat="server" />
-    <% if (login.IsLoggedIn)
-       {%>
-    <form action="Publish.aspx">
+    <h1>
+        Publish</h1>
+    <form runat="server">
+    <asp:HiddenField ID="steamUserIdHidden" runat="server" />
     <fieldset>
         <legend>Unpublished Achievements</legend>
         <p>
@@ -53,13 +52,7 @@
         </div>
     </fieldset>
     </form>
-    <%
-        }%>
     <div id="log">
     </div>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-    <script type="text/javascript">
-        var _steamUserId = "<%= SteamUserId %>";
-    </script>
     <script type="text/javascript" src="publish.js"></script>
 </asp:Content>

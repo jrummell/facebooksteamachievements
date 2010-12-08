@@ -1,32 +1,15 @@
 <%@ Page Title="Home" Language="C#" AutoEventWireup="false" MasterPageFile="~/Site.Master"
     CodeBehind="Default.aspx.cs" Inherits="SteamAchievements.Default" %>
 
+<%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="head">
 </asp:Content>
 <asp:Content runat="server" ID="Content2" ContentPlaceHolderID="body">
-    <div id="fb-root">
-    </div>
-    <steam:FacebookLogin ID="login" runat="server" />
-    <% if (login.IsLoggedIn)
-       { %>
-    <fieldset>
-        <legend>Steam Community Custom URL</legend>
-        <input id="facebookUserIdHidden" type="hidden" value="<%=FacebookUserId%>" />
-        <div id="steamIdUpdateSuccess" class="fbinfobox message" style="display: none;">
-            Your URL has been updated.</div>
-        <div>
-            <p>
-                http://steamcommunity.com/id/
-                <input id="steamIdTextBox" value="<%=SteamUserId%>" />
-                <span id="steamIdError" class="error" style="display: none;">Required</span> <a id="updateSteamIdButton"
-                    class="button" href="#">
-                    <img src="images/disk.png" alt="" />
-                    Update URL</a>
-                <steam:HelpLink ID="steamHelpLink" runat="server" HelpAnchor="steam" />
-                <img id="updatingSteamUserId" class="loading" src="images/ajax-loader.gif" alt="Updating..." />
-            </p>
-        </div>
-    </fieldset>
+    <form runat="server">
+    <asp:HiddenField ID="steamUserIdHidden" runat="server" />
+    </form>
+    <h1>
+        Home</h1>
     <fieldset>
         <legend>Update</legend>
         <div id="noNewAchievementsMessage" class="fbinfobox message" style="display: none;">
@@ -64,5 +47,4 @@
         <asp:Literal ID="errorLiteral" runat="server" />
     </div>
     <script type="text/javascript" src="default.js"></script>
-    <% } %>
 </asp:Content>

@@ -19,13 +19,13 @@
 
 #endregion
 
-using System;
 using System.Web.UI;
+using System;
 using SteamAchievements.Data;
 
 namespace SteamAchievements
 {
-    public partial class Default : Page
+    public partial class Settings : Page
     {
         protected override void OnInit(EventArgs e)
         {
@@ -36,25 +36,39 @@ namespace SteamAchievements
 
         private void Page_Load(object sender, EventArgs e)
         {
-            steamUserIdHidden.Value = Master.SteamUserId;
-
-            try
+            if (!IsPostBack)
             {
-                if (Master.IsLoggedIn)
-                {
-                    using (IAchievementManager manager = new AchievementManager())
-                    {
-                        User user = manager.GetUser(Master.FacebookUserId);
-                        user.AccessToken = Master.AccessToken;
+                steamIdTextBox.Text = Master.SteamUserId;
 
-                        manager.UpdateUser(user);
+                using (IAchievementManager manager = new AchievementManager())
+                {
+                    User user = manager.GetUser(Master.FacebookUserId);
+
+                    if (user != null)
+                    {
+                        autoUpdateCheckBox.Checked = user.AutoUpdate;
                     }
                 }
             }
-            catch (Exception ex)
+        }
+
+        protected void SaveSettingsButtonClick(object sender, EventArgs e)
+        {
+            if (!IsValid)
             {
-                errorLiteral.Text = ex.Message;
+                return;
             }
+
+            using (IAchievementManager manager = new AchievementManager())
+            {
+                User user = manager.GetUser(Master.FacebookUserId);
+                user.SteamUserId = steamIdTextBox.Text;
+                user.AutoUpdate = autoUpdateCheckBox.Checked;
+
+                manager.UpdateUser(user);
+            }
+
+            saveSuccessScript.Visible = true;
         }
     }
 }

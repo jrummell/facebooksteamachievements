@@ -76,5 +76,14 @@ namespace SteamAchievements.Properties {
                 return ((string)(this["GoogleAnalyticsCode"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("yourautoupdateauthkey")]
+        public string AutoUpdateAuthKey {
+            get {
+                return ((string)(this["AutoUpdateAuthKey"]));
+            }
+        }
     }
 }

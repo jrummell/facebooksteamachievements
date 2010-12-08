@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin/Site.Master" AutoEventWireup="false"
+﻿<%@ Page Title="Admin Home" Language="C#" MasterPageFile="~/Admin/Site.Master" AutoEventWireup="false"
     CodeBehind="Default.aspx.cs" Inherits="SteamAchievements.Admin.Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -11,7 +11,7 @@
         <a href="elmah.axd">Error Log</a>
     </p>
     <p>
-        <asp:Button ID="updateAchievementsButton" runat="server" Text="Update Game Achievements"
-            OnClick="updateAchievementsButton_Click" /></p>
+        <a href="AutoUpdate.aspx?auth=<%= AutoUpdateAuthKey %>">Auto Update</a>
+    </p>
     </form>
 </asp:Content>

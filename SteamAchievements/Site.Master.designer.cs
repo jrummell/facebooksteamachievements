@@ -31,6 +31,15 @@ namespace SteamAchievements {
         protected global::System.Web.UI.WebControls.PlaceHolder adMarkup;
         
         /// <summary>
+        /// login control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SteamAchievements.Controls.FacebookLogin login;
+        
+        /// <summary>
         /// logo control.
         /// </summary>
         /// <remarks>
@@ -56,6 +65,15 @@ namespace SteamAchievements {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::SteamAchievements.Controls.CanvasLink publishLink;
+        
+        /// <summary>
+        /// settingsLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SteamAchievements.Controls.CanvasLink settingsLink;
         
         /// <summary>
         /// helpLink control.
