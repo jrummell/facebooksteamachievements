@@ -1,5 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="false" CodeBehind="Site.Master.cs" Inherits="SteamAchievements.Site"
-    EnableTheming="false" %>
+    EnableTheming="true" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -16,6 +16,10 @@
     <div class="fbbody">
         <script type="text/javascript" src='<%=ResolveUrl("~/js/json2.js")%>'></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/achievements.js"></script>
+        <div id="fb-root">
+        </div>
+        <steam:FacebookLogin ID="login" runat="server" />
         <div>
             <steam:Logo ID="logo" runat="server" />
         </div>
@@ -23,6 +27,8 @@
             <steam:CanvasLink ID="homeLink" runat="server" CanvasPage="" Text="Home" />
             |
             <steam:CanvasLink ID="publishLink" runat="server" CanvasPage="Publish.aspx" Text="Publish (Beta Preview)" />
+            |
+            <steam:CanvasLink ID="settingsLink" runat="server" CanvasPage="Settings.aspx" Text="Settings" />
             |
             <steam:CanvasLink ID="helpLink" runat="server" CanvasPage="Help.aspx" Text="Help" />
         </div>

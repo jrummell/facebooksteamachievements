@@ -34,7 +34,7 @@ namespace SteamAchievements.Controls
 
         protected override void OnPreRender(EventArgs e)
         {
-            helpLink.CanvasPage = "Help.aspx#" + HelpAnchor;
+            helpLink.CanvasPage = String.Format("Help.aspx?topic={0}#{0}", HelpAnchor);
 
             base.OnPreRender(e);
         }

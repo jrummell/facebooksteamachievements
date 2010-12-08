@@ -21,6 +21,7 @@
 
 using System.Web.UI;
 using SteamAchievements.Properties;
+using AppSettings = SteamAchievements.Properties.Settings;
 
 namespace SteamAchievements.Controls
 {
@@ -32,7 +33,7 @@ namespace SteamAchievements.Controls
         /// <value>The user voice key.</value>
         protected string UserVoiceKey
         {
-            get { return Settings.Default.UserVoiceKey; }
+            get { return AppSettings.Default.UserVoiceKey; }
         }
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace SteamAchievements.Controls
         /// <value>The user voice forum.</value>
         protected string UserVoiceForum
         {
-            get { return Settings.Default.UserVoiceForum; }
+            get { return AppSettings.Default.UserVoiceForum; }
         }
     }
 }

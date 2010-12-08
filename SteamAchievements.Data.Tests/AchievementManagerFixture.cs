@@ -354,15 +354,20 @@ namespace SteamAchievements.Data.Tests
         }
 
         [Test]
-        public void UpdateSteamUserId()
+        public void UpdateUser()
         {
             const string steamUserId = "userxxx";
             const int facebookUserId = 1234567890;
-            _manager.UpdateSteamUserId(facebookUserId, steamUserId);
+
+            int achievmentCount = _manager.GetAchievements("user1", 1).Count();
+
+            User user = new User { SteamUserId = steamUserId, FacebookUserId = facebookUserId };
+            _manager.UpdateUser(user);
 
             Assert.That(_repository.Users.Single(u => u.FacebookUserId == facebookUserId).SteamUserId,
                         Is.EqualTo(steamUserId));
-            Assert.That(!_repository.UserAchievements.Any(ua => ua.SteamUserId == steamUserId));
+
+            Assert.That(_repository.UserAchievements.Where(ua => ua.SteamUserId == steamUserId).Count(), Is.EqualTo(achievmentCount));
         }
     }
 }

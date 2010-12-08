@@ -21,6 +21,7 @@
 
 using System.Web.UI;
 using SteamAchievements.Properties;
+using AppSettings = SteamAchievements.Properties.Settings;
 
 namespace SteamAchievements.Controls
 {
@@ -32,7 +33,7 @@ namespace SteamAchievements.Controls
         /// <value>The code.</value>
         protected string Code
         {
-            get { return Settings.Default.GoogleAnalyticsCode; }
+            get { return AppSettings.Default.GoogleAnalyticsCode; }
         }
     }
 }

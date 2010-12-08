@@ -94,6 +94,13 @@
     <Compile Include="AdminLogin.aspx.designer.cs">
       <DependentUpon>AdminLogin.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\AutoUpdate.aspx.cs">
+      <DependentUpon>AutoUpdate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\AutoUpdate.aspx.designer.cs">
+      <DependentUpon>AutoUpdate.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -170,6 +177,13 @@
     <Compile Include="Publish.aspx.designer.cs">
       <DependentUpon>Publish.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Settings.aspx.cs">
+      <DependentUpon>Settings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Settings.aspx.designer.cs">
+      <DependentUpon>Settings.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -188,11 +202,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AchievementServiceTest.htm" />
+    <Content Include="Admin\AutoUpdate.aspx" />
     <Content Include="Controls\FacebookLogin.ascx" />
     <Content Include="Controls\HelpLink.ascx" />
     <Content Include="images\banner-light.png" />
+    <Content Include="js\achievements.js" />
     <Content Include="Publish.aspx" />
     <Content Include="publish.js" />
+    <Content Include="Settings.aspx" />
     <Content Include="Site.Master" />
     <Content Include="Default.aspx" />
   </ItemGroup>
@@ -260,6 +277,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Themes\Default\Site.skin" />
     <None Include="p3p.xml" />
     <None Include="policy.htm" />
     <None Include="policy.txt" />

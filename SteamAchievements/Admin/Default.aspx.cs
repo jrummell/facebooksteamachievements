@@ -19,16 +19,15 @@
 
 #endregion
 
-using System;
 using System.Web.UI;
 
 namespace SteamAchievements.Admin
 {
     public partial class Default : Page
     {
-        protected void updateAchievementsButton_Click(object sender, EventArgs e)
+        protected string AutoUpdateAuthKey
         {
-            //TODO: update achievements for all games
+            get { return SteamAchievements.Properties.Settings.Default.AutoUpdateAuthKey; }
         }
     }
 }

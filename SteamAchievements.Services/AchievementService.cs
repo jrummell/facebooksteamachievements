@@ -94,31 +94,6 @@ namespace SteamAchievements.Services
             return updated;
         }
 
-        /// <summary>
-        /// Updates the steam user id.
-        /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <returns>true if successful, else false.</returns>
-        /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
-        public bool UpdateSteamUserId(long facebookUserId, string steamUserId)
-        {
-            if (steamUserId == null)
-            {
-                throw new ArgumentNullException("steamUserId");
-            }
-
-            _achievementManager.UpdateSteamUserId(facebookUserId, steamUserId);
-
-            return true;
-        }
-
-        public void Dispose()
-        {
-            _achievementManager.Dispose();
-            _communityService.Dispose();
-        }
-
         public List<SimpleAchievement> GetNewAchievements(string steamUserId)
         {
             if (steamUserId == null)
@@ -146,6 +121,24 @@ namespace SteamAchievements.Services
             _achievementManager.UpdatePublished(steamUserId, achievementIds);
 
             return true;
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            lock (this)
+            {
+                if (disposing)
+                {
+                    _achievementManager.Dispose();
+                    _communityService.Dispose();
+                }
+            }
         }
 
         #endregion

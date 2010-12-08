@@ -24,6 +24,7 @@ using System.Web;
 using System.Web.UI;
 using Facebook;
 using Facebook.Web;
+using SteamAchievements.Data;
 
 namespace SteamAchievements.Controls
 {
@@ -36,19 +37,37 @@ namespace SteamAchievements.Controls
         {
             _facebookApp = new FacebookApp();
             _authorizer = new CanvasAuthorizer(_facebookApp);
-            _authorizer.Perms = "publish_stream"; //"publish_stream,offline_access";
+            _authorizer.Perms = "publish_stream,offline_access";
         }
 
-        public string AccessToken { get; set; }
+        public string AccessToken
+        {
+            get { return (string)ViewState["AccessToken"] ?? String.Empty; }
+            private set { ViewState["AccessToken"] = value; }
+        }
 
         protected string FacebookClientId
         {
             get { return FacebookSettings.Current.ApiKey; }
         }
 
-        public long FacebookUserId { get; private set; }
+        public long FacebookUserId
+        {
+            get { return (long)(ViewState["FacebookUserId"] ?? 0); }
+            private set { ViewState["FacebookUserId"] = value; }
+        }
 
-        public bool IsLoggedIn { get; private set; }
+        public bool IsLoggedIn
+        {
+            get { return (bool)(ViewState["IsLoggedIn"] ?? false); }
+            private set { ViewState["IsLoggedIn"] = value; }
+        }
+
+        public string SteamUserId
+        {
+            get { return (string)ViewState["SteamUserId"] ?? String.Empty; }
+            private set { ViewState["SteamUserId"] = value; }
+        }
 
         protected override void OnInit(EventArgs e)
         {
@@ -65,6 +84,15 @@ namespace SteamAchievements.Controls
             {
                 FacebookUserId = _facebookApp.UserId;
                 AccessToken = _facebookApp.Session.AccessToken;
+
+                using (IAchievementManager manager = new AchievementManager())
+                {
+                    User user = manager.GetUser(FacebookUserId);
+                    if (user != null)
+                    {
+                        SteamUserId = user.SteamUserId;
+                    }
+                }
             }
         }
 

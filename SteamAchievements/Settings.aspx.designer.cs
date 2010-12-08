@@ -10,43 +10,61 @@
 namespace SteamAchievements {
     
     
-    public partial class Default {
+    public partial class Settings {
         
         /// <summary>
-        /// steamUserIdHidden control.
+        /// steamIdTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField steamUserIdHidden;
+        protected global::System.Web.UI.WebControls.TextBox steamIdTextBox;
         
         /// <summary>
-        /// updateFailedHelpLink control.
+        /// steamIdRequiredValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SteamAchievements.Controls.HelpLink updateFailedHelpLink;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator steamIdRequiredValidator;
         
         /// <summary>
-        /// gamesHelpLink control.
+        /// steamHelpLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SteamAchievements.Controls.HelpLink gamesHelpLink;
+        protected global::SteamAchievements.Controls.HelpLink steamHelpLink;
         
         /// <summary>
-        /// errorLiteral control.
+        /// autoUpdateCheckBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal errorLiteral;
+        protected global::System.Web.UI.WebControls.CheckBox autoUpdateCheckBox;
+        
+        /// <summary>
+        /// saveSettingsButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton saveSettingsButton;
+        
+        /// <summary>
+        /// saveSuccessScript control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder saveSuccessScript;
         
         /// <summary>
         /// Master property.

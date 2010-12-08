@@ -26,10 +26,6 @@ namespace SteamAchievements
 {
     public partial class Publish : Page
     {
-        private long FacebookUserId { get; set; }
-
-        protected string SteamUserId { get; private set; }
-
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -39,7 +35,7 @@ namespace SteamAchievements
 
         private void Page_Load(object sender, EventArgs e)
         {
-            SteamUserId = (string) Session["SteamUserId"];
+            steamUserIdHidden.Value = Master.SteamUserId;
         }
     }
 }

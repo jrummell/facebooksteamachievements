@@ -18,12 +18,15 @@
       <Column Name="Date" Type="System.DateTime" DbType="datetime not null" CanBeNull="false" />
       <Column Name="Published" Type="System.Boolean" DbType="bit not null" CanBeNull="false" />
       <Association Name="Achievement_UserAchievement" Member="Achievement" Storage="_steam_Achievement" ThisKey="AchievementId" OtherKey="Id" Type="Achievement" IsForeignKey="true" />
+      <Association Name="User_UserAchievement" Member="User" ThisKey="SteamUserId" OtherKey="SteamUserId" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.steam_User" Member="Users">
     <Type Name="User">
       <Column Name="FacebookUserId" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="SteamUserId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="AccessToken" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="AutoUpdate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

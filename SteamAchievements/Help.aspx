@@ -13,11 +13,16 @@
             padding-left: 1em;
             display: block;
         }
+        #helpContents h2 a
+        {
+            color: #000;
+            text-decoration: none;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <h1>
-        How to use Steam Achievements</h1>
+        Help</h1>
     <br />
     <div>
         <h2>
@@ -27,7 +32,7 @@
     </div>
     <div id="helpContents">
         <h2>
-            <a id="steam"></a>Configure your Steam Community profile</h2>
+            <a id="steam">Configure your Steam Community profile</a></h2>
         <p>
             You need to first configure your Steam Community profile at <a href="https://steamcommunity.com/"
                 target="_blank">https://steamcommunity.com/</a>. There is a <a href="https://support.steampowered.com/kb_article.php?ref=8882-BMXL-0801"
@@ -38,14 +43,14 @@
             <img src="images/profilecustomurl.png" alt="http://steamcommunity.com/id/[custom url suffix]" />
         </p>
         <h2>
-            <a id="app"></a>Configure Steam Achievements</h2>
+            <a id="app">Configure Steam Achievements</a></h2>
         <p>
             On the Steam Achievements application page, complete your Custom URL and hit <b>Update
                 URL</b>.<br />
             <img src="images/appcustomurl.png" alt="http://steamcommunity.com/id/[custom url suffix]" />
         </p>
         <h2>
-            <a id="update"></a>Update Your Achievements</h2>
+            <a id="update">Update Your Achievements</a></h2>
         <p>
             Update your achievements by clicking <b>Update Achievements</b> in the Update box.
             This will update the achievements that Steam Achievements knows about. It will also
@@ -53,7 +58,7 @@
         <p>
             <img src="images/achievements.png" alt="" /></p>
         <h2>
-            <a id="view"></a>View Your Achievements</h2>
+            <a id="view">View Your Achievements</a></h2>
         <p>
             Click the <b>View Achievements</b> link under any game in the Games box to view
             your achievements.</p>
@@ -61,7 +66,7 @@
             Note: If you change your Steam Community Custom URL, you'll need to also update
             it in the Steam Achievements application and then update your achievements.</p>
         <h2>
-            <a id="games"></a>Supported Games</h2>
+            <a id="games">Supported Games</a></h2>
         <p>
             All Steam games that have Steam achievements are supported. For a full list, please
             visit <a target="_blank" href="http://steamcommunity.com/stats/">http://steamcommunity.com/stats/</a>.
@@ -76,6 +81,14 @@
                 var $this = $(this);
                 $("#toc").append("<a href='#" + $this.attr("id") + "'>" + $this.parent().text() + "<\/a>");
             });
+
+            $achievements.updateSize();
+
+            var topic = '<%= Request["topic"] ?? String.Empty %>';
+            if (topic != "")
+            {
+                $("#" + topic).focus();
+            }
         });
     </script>
 </asp:Content>

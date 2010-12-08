@@ -13,12 +13,24 @@ namespace SteamAchievements {
     public partial class Publish {
         
         /// <summary>
-        /// login control.
+        /// steamUserIdHidden control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SteamAchievements.Controls.FacebookLogin login;
+        protected global::System.Web.UI.WebControls.HiddenField steamUserIdHidden;
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new SteamAchievements.Site Master {
+            get {
+                return ((SteamAchievements.Site)(base.Master));
+            }
+        }
     }
 }
