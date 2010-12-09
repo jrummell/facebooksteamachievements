@@ -24,13 +24,7 @@
             <steam:Logo ID="logo" runat="server" />
         </div>
         <div class="menu">
-            <steam:CanvasLink ID="homeLink" runat="server" CanvasPage="" Text="Home" />
-            |
-            <steam:CanvasLink ID="publishLink" runat="server" CanvasPage="Publish.aspx" Text="Publish" />
-            |
-            <steam:CanvasLink ID="settingsLink" runat="server" CanvasPage="Settings.aspx" Text="Settings" />
-            |
-            <steam:CanvasLink ID="helpLink" runat="server" CanvasPage="Help.aspx" Text="Help" />
+            <steam:Navigation ID="nav" runat="server" />
         </div>
         <asp:ContentPlaceHolder ID="body" runat="server">
         </asp:ContentPlaceHolder>

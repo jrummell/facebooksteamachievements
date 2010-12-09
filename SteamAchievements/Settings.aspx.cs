@@ -61,11 +61,10 @@ namespace SteamAchievements
 
             using (IAchievementManager manager = new AchievementManager())
             {
-                User user = manager.GetUser(Master.FacebookUserId);
-                User updatedUser = new Data.User 
+                User updatedUser = new User 
                                     {
-                                        FacebookUserId = user.FacebookUserId,
-                                        AccessToken = user.AccessToken,
+                                        FacebookUserId = Master.FacebookUserId,
+                                        AccessToken = Master.AccessToken,
                                         AutoUpdate = autoUpdateCheckBox.Checked,
                                         SteamUserId = steamIdTextBox.Text
                                     };
