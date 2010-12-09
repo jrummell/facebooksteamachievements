@@ -22,13 +22,31 @@ namespace SteamAchievements {
         protected global::System.Web.UI.WebControls.HiddenField steamUserIdHidden;
         
         /// <summary>
-        /// updateFailedHelpLink control.
+        /// steamIdErrorSettingsLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SteamAchievements.Controls.HelpLink updateFailedHelpLink;
+        protected global::SteamAchievements.Controls.CanvasLink steamIdErrorSettingsLink;
+        
+        /// <summary>
+        /// steamIdErrorHelpLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SteamAchievements.Controls.HelpLink steamIdErrorHelpLink;
+        
+        /// <summary>
+        /// publishPageMessageLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SteamAchievements.Controls.CanvasLink publishPageMessageLink;
         
         /// <summary>
         /// gamesHelpLink control.

@@ -37,6 +37,18 @@
         Publish</h1>
     <form runat="server">
     <asp:HiddenField ID="steamUserIdHidden" runat="server" />
+    <div id="steamIdError" class="fberrorbox message" style="display: none;">
+        You haven't set your Steam Community Profile URL. Please set it on the
+        <steam:CanvasLink ID="steamIdErrorSettingsLink" runat="server" CanvasPage="Settings.aspx"
+            Text="settings" />
+        page.
+        <steam:HelpLink ID="steamIdErrorHelpLink" runat="server" HelpAnchor="steam" />
+    </div>
+    <div id="achievementsUpdateFailure" class="fberrorbox message" style="display: none;">
+        Your achievements could not be updated. Please verify that your Custom Url is correct
+        and that your Steam Community Profile is public.
+        <steam:HelpLink ID="updateFailedHelpLink" runat="server" HelpAnchor="steam" />
+    </div>
     <fieldset>
         <legend>Unpublished Achievements</legend>
         <p>

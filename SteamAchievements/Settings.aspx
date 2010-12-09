@@ -26,12 +26,12 @@
         <legend>Auto Update</legend>
         <asp:CheckBox ID="autoUpdateCheckBox" runat="server" />
         <label for="autoUpdateCheckBox">
-            Update and publish my achievements automatically.</label>
+            Update and publish my achievements automatically (Beta).</label>
     </fieldset>
     <p>
         <asp:LinkButton ID="saveSettingsButton" runat="server" OnClick="SaveSettingsButtonClick">
-            <asp:Image ID="helpImage" runat="server" ImageUrl="~/images/disk.png" AlternateText="Save"
-                ImageAlign="Middle" />
+            <asp:Image ID="steamUserIdHelpImage" runat="server" ImageUrl="~/images/disk.png"
+                AlternateText="Save" ImageAlign="Middle" />
             Save</asp:LinkButton>
         <img id="saveImage" class="loading" src="images/ajax-loader.gif" alt="Saving..."
             style="display: none" />

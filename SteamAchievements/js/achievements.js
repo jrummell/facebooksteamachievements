@@ -31,18 +31,18 @@ var $achievements =
         this.callAjax("GetGames", { steamUserId: this.steamUserId }, callback, errorCallback);
     },
 
-    updateAchievements: function (callback)
+    updateAchievements: function (callback, errorCallback)
     {
         var ondone = function (updateCount)
         {
-            $achievements.callAjax("GetNewAchievements", { steamUserId: $achievements.steamUserId }, callback);
+            $achievements.callAjax("GetNewAchievements", { steamUserId: $achievements.steamUserId }, callback, errorCallback);
         };
 
         var parameters = { "steamUserId": this.steamUserId };
-        this.callAjax("UpdateAchievements", parameters, ondone);
+        this.callAjax("UpdateAchievements", parameters, ondone, errorCallback);
     },
 
-    publishAchievements: function (achievements, callback)
+    publishAchievements: function (achievements, callback, errorCallback)
     {
         // display publish dialog
 
@@ -124,9 +124,25 @@ var $achievements =
                 }
 
                 var data = { steamUserId: $achievements.steamUserId, achievementIds: achievementIds };
-                $achievements.callAjax("PublishAchievements", data, callback);
+                $achievements.callAjax("PublishAchievements", data, callback, errorCallback);
             }
         });
+    },
+
+    validateSteamUserId: function (errorMessageSelector)
+    {
+        var valid = true;
+        if (this.steamUserId == null || this.steamUserId == "")
+        {
+            valid = false;
+        }
+
+        if (!valid)
+        {
+            this.showMessage(errorMessageSelector);
+        }
+
+        return valid;
     },
 
     callAjax: function (method, query, ondone, onerror)

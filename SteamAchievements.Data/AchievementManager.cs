@@ -53,7 +53,7 @@ namespace SteamAchievements.Data
                 string message =
                     String.Format(
                         "Could not create an instance of {0} from the SteamAchievements.Data.Properties.Settings.SteamRepositoryType value: {1}",
-                        typeof (ISteamRepository), Settings.Default.SteamRepositoryType);
+                        typeof(ISteamRepository), Settings.Default.SteamRepositoryType);
                 throw new InvalidOperationException(message);
             }
 
@@ -87,8 +87,8 @@ namespace SteamAchievements.Data
         public User GetUser(long facebookUserId)
         {
             IQueryable<User> query = from user in _repository.Users
-                                       where user.FacebookUserId == facebookUserId
-                                       select user;
+                                     where user.FacebookUserId == facebookUserId
+                                     select user;
 
             return query.SingleOrDefault();
         }
@@ -162,44 +162,85 @@ namespace SteamAchievements.Data
                 throw new ArgumentNullException("user");
             }
 
-            IQueryable<User> query = from u in _repository.Users
-                                     where u.FacebookUserId == user.FacebookUserId
-                                     select u;
+            if (String.IsNullOrEmpty(user.SteamUserId))
+            {
+                throw new ArgumentException("user.SteamUserId cannot be null or empty", "user");
+            }
 
-            User existingUser = query.SingleOrDefault();
+            if (user.FacebookUserId == 0)
+            {
+                throw new ArgumentException("user.FacebookUserId cannot be 0", "user");
+            }
 
-            if (existingUser == null)
+            bool exists = _repository.Users.Where(u => u.FacebookUserId == user.FacebookUserId).Any();
+            
+            if (!exists)
             {
                 // the user does not exist, create a new one.
-                existingUser = new User
+                User newUser = new User
                         {
                             FacebookUserId = user.FacebookUserId,
                             SteamUserId = user.SteamUserId,
-                            AccessToken = String.Empty,
-                            AutoUpdate = false
+                            AccessToken = user.AccessToken,
+                            AutoUpdate = user.AutoUpdate
                         };
 
-                _repository.InsertOnSubmit(existingUser);
+                _repository.InsertOnSubmit(newUser);
                 _repository.SubmitChanges();
-            }
-            else
-            {
-                // update the user's achievements with the new user id
-                List<UserAchievement> userAchievements = (from u in _repository.UserAchievements
-                                                          where u.SteamUserId == existingUser.SteamUserId
-                                                          select u).ToList();
 
-                if (userAchievements.Any())
+                return;
+            }
+
+            User existingUser = _repository.Users.Where(u => u.FacebookUserId == user.FacebookUserId).Single();
+
+            string existingSteamUserId = existingUser.SteamUserId;
+            bool steamIdChanged = existingSteamUserId.ToUpper() != user.SteamUserId.ToUpper();
+            bool hasAchievements = false;
+            List<UserAchievement> userAchievements = null;
+            if (steamIdChanged)
+            {
+                // delete the user's acheivements
+                userAchievements = (from u in _repository.UserAchievements
+                                    where u.SteamUserId.ToUpper() == existingSteamUserId.ToUpper()
+                                    select u).ToList();
+
+                hasAchievements = userAchievements.Any();
+                if (hasAchievements)
                 {
-                    userAchievements.ForEach(a => a.SteamUserId = user.SteamUserId);
+                    _repository.DeleteAllOnSubmit(userAchievements);
                     _repository.SubmitChanges();
                 }
+            }
 
-                // update
-                existingUser.AccessToken = user.AccessToken;
-                existingUser.AutoUpdate = user.AutoUpdate;
-                existingUser.SteamUserId = user.SteamUserId;
+            // update
+            existingUser = _repository.Users.Where(u => u.FacebookUserId == user.FacebookUserId).Single();
+            existingUser.AccessToken = user.AccessToken;
+            existingUser.AutoUpdate = user.AutoUpdate;
+            existingUser.SteamUserId = user.SteamUserId;
 
+            _repository.SubmitChanges();
+
+            if (steamIdChanged && hasAchievements)
+            {
+                // insert the user's updated achievements
+                List<UserAchievement> updatedUserAchievements = new List<UserAchievement>();
+
+                foreach (UserAchievement userAchievement in userAchievements)
+                {
+                    UserAchievement updated =
+                        new UserAchievement
+                            {
+                                AchievementId = userAchievement.AchievementId,
+                                Date = userAchievement.Date,
+                                Id = userAchievement.Id,
+                                Published = userAchievement.Published,
+                                SteamUserId = user.SteamUserId
+                            };
+
+                    updatedUserAchievements.Add(updated);
+                }
+
+                _repository.InsertAllOnSubmit(updatedUserAchievements);
                 _repository.SubmitChanges();
             }
         }
@@ -351,9 +392,9 @@ namespace SteamAchievements.Data
             // add a great deal of complexity to the following query.
             return from achievement in allAchievements
                    join possibleAchievement in possibleAchievements
-                       on new {achievement.GameId, achievement.Name, achievement.Description}
+                       on new { achievement.GameId, achievement.Name, achievement.Description }
                        equals
-                       new {possibleAchievement.GameId, possibleAchievement.Name, possibleAchievement.Description}
+                       new { possibleAchievement.GameId, possibleAchievement.Name, possibleAchievement.Description }
                    join assignedAchievement in assignedAchievements
                        on possibleAchievement.Id equals assignedAchievement.Id into joinedAssignedAchievements
                    from joinedAssignedAchievement in joinedAssignedAchievements.DefaultIfEmpty()
