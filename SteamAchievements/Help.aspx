@@ -32,29 +32,34 @@
     </div>
     <div id="helpContents">
         <h2>
-            <a id="steam">Configure your Steam Community profile</a></h2>
+            <a id="steam">Configure your Steam Community Profile</a></h2>
         <p>
             You need to first configure your Steam Community profile at <a href="https://steamcommunity.com/"
                 target="_blank">https://steamcommunity.com/</a>. There is a <a href="https://support.steampowered.com/kb_article.php?ref=8882-BMXL-0801"
-                    target="_blank">Steam Community KB article</a> with detailed instructions
-            and a video on how to do this. You must also set your Profile Status to Public.</p>
+                    target="_blank">Steam Community KB article</a> with more information. You
+            must also set your Profile Status to Public.</p>
         <p>
             Make a note of your Custom URL suffix:<br />
             <img src="images/profilecustomurl.png" alt="http://steamcommunity.com/id/[custom url suffix]" />
         </p>
+        <p>
+            Note: If you change your Steam Community Custom URL, you'll need to also update
+            it in the Steam Achievements application.</p>
         <h2>
             <a id="app">Configure Steam Achievements</a></h2>
         <p>
-            On the Steam Achievements application page, complete your Custom URL and hit <b>Update
-                URL</b>.<br />
+            On the Settings page, complete your Custom URL and hit <b>Save</b>.<br />
             <img src="images/appcustomurl.png" alt="http://steamcommunity.com/id/[custom url suffix]" />
         </p>
-        <h2>
-            <a id="update">Update Your Achievements</a></h2>
         <p>
-            Update your achievements by clicking <b>Update Achievements</b> in the Update box.
-            This will update the achievements that Steam Achievements knows about. It will also
-            post up to five of your updated achievements to your profile:</p>
+            To have your achievements published automatically, check the <b>Auto Update</b>
+            box and hit <b>Save</b>. This will publish any new achievements you have earned
+            once a day.</p>
+        <h2>
+            <a id="update">Publish Your Achievements</a></h2>
+        <p>
+            Publish your achievements on the <b>Publish</b> page. Select up to five achievements
+            and click <b>Publish Selected</b>. The post on your wall will look like this:</p>
         <p>
             <img src="images/achievements.png" alt="" /></p>
         <h2>
@@ -62,9 +67,6 @@
         <p>
             Click the <b>View Achievements</b> link under any game in the Games box to view
             your achievements.</p>
-        <p>
-            Note: If you change your Steam Community Custom URL, you'll need to also update
-            it in the Steam Achievements application and then update your achievements.</p>
         <h2>
             <a id="games">Supported Games</a></h2>
         <p>
