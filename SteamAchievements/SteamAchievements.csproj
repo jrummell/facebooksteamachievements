@@ -151,12 +151,26 @@
     <Compile Include="Controls\Logo.ascx.designer.cs">
       <DependentUpon>Logo.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Navigation.ascx.cs">
+      <DependentUpon>Navigation.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Navigation.ascx.designer.cs">
+      <DependentUpon>Navigation.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Controls\UserVoice.ascx.cs">
       <DependentUpon>UserVoice.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controls\UserVoice.ascx.designer.cs">
       <DependentUpon>UserVoice.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
     <Compile Include="Help.aspx.cs">
       <DependentUpon>Help.aspx</DependentUpon>
@@ -205,6 +219,8 @@
     <Content Include="Admin\AutoUpdate.aspx" />
     <Content Include="Controls\FacebookLogin.ascx" />
     <Content Include="Controls\HelpLink.ascx" />
+    <Content Include="Controls\Navigation.ascx" />
+    <Content Include="Error.aspx" />
     <Content Include="images\banner-light.png" />
     <Content Include="js\achievements.js" />
     <Content Include="js\default.js" />

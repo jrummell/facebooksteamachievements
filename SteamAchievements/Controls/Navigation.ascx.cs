@@ -19,29 +19,12 @@
 
 #endregion
 
-using System;
-using System.Reflection;
 using System.Web.UI;
 
 namespace SteamAchievements.Controls
 {
-    public partial class Disclaimer : UserControl
+    public partial class Navigation : UserControl
     {
-        protected string UserVoiceKey { get { return SteamAchievements.Properties.Settings.Default.UserVoiceKey; } }
-
-        protected override void OnInit(EventArgs e)
-        {
-            base.OnInit(e);
-
-            Load += Page_Load;
-        }
-
-        private void Page_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
-            {
-                appVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
-        }
+        
     }
 }

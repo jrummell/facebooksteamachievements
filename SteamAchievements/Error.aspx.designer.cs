@@ -10,34 +10,25 @@
 namespace SteamAchievements {
     
     
-    public partial class Site {
+    public partial class Error {
         
         /// <summary>
-        /// head control.
+        /// faviconLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        protected global::System.Web.UI.HtmlControls.HtmlLink faviconLink;
         
         /// <summary>
-        /// adMarkup control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder adMarkup;
-        
-        /// <summary>
-        /// login control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::SteamAchievements.Controls.FacebookLogin login;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
         /// logo control.
@@ -58,15 +49,6 @@ namespace SteamAchievements {
         protected global::SteamAchievements.Controls.Navigation nav;
         
         /// <summary>
-        /// body control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder body;
-        
-        /// <summary>
         /// disclaimer control.
         /// </summary>
         /// <remarks>
@@ -74,23 +56,5 @@ namespace SteamAchievements {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::SteamAchievements.Controls.Disclaimer disclaimer;
-        
-        /// <summary>
-        /// tracker control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::SteamAchievements.Controls.GoogleAnalytics tracker;
-        
-        /// <summary>
-        /// userVoice control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::SteamAchievements.Controls.UserVoice userVoice;
     }
 }
