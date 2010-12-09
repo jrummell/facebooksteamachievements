@@ -3,6 +3,13 @@
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="head">
+    <style type="text/css">
+        #steamUserIdHeading
+        {
+            text-align: center;
+            font-size: 200%;
+        }
+    </style>
 </asp:Content>
 <asp:Content runat="server" ID="Content2" ContentPlaceHolderID="body">
     <form runat="server">
@@ -10,26 +17,20 @@
     </form>
     <h1>
         Home</h1>
-    <fieldset>
-        <legend>Update</legend>
-        <div id="noNewAchievementsMessage" class="fbinfobox message" style="display: none;">
-            You have no new achievements.</div>
-        <div id="achievementsUpdateFailure" class="fberrorbox message" style="display: none;">
-            Your achievements could not be updated. Please verify that your Custom Url is correct
-            and that your Steam Community Profile is public.
-            <steam:HelpLink ID="updateFailedHelpLink" runat="server" HelpAnchor="steam" />
-        </div>
-        <div>
-            <p>
-                Update your achievements and publish new ones on your wall. This won't publish more
-                than five at a time.
-            </p>
-            <p>
-                <a id="updateAchievementsButton" class="button" href="#">Update Achievements</a>
-                <img id="updatingAchievements" class="loading" src="images/ajax-loader.gif" alt="Updating..." />
-            </p>
-        </div>
-    </fieldset>
+    <div id="steamIdError" class="fberrorbox message" style="display: none;">
+        You haven't set your Steam Community Profile URL. Please set it on the
+        <steam:CanvasLink ID="steamIdErrorSettingsLink" runat="server" CanvasPage="Settings.aspx"
+            Text="settings" />
+        page.
+        <steam:HelpLink ID="steamIdErrorHelpLink" runat="server" HelpAnchor="steam" />
+    </div>
+    <h1 id="steamUserIdHeading">
+    </h1>
+    <div id="publishPageMessage" class="fbinfobox message">
+        Use the
+        <steam:CanvasLink ID="publishPageMessageLink" runat="server" Text="publish" CanvasPage="Publish.aspx" />
+        page to update and publish new achievements to your profile.
+    </div>
     <fieldset>
         <legend>Games</legend>
         <div>

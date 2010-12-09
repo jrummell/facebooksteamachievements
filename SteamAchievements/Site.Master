@@ -26,7 +26,7 @@
         <div class="menu">
             <steam:CanvasLink ID="homeLink" runat="server" CanvasPage="" Text="Home" />
             |
-            <steam:CanvasLink ID="publishLink" runat="server" CanvasPage="Publish.aspx" Text="Publish (Beta Preview)" />
+            <steam:CanvasLink ID="publishLink" runat="server" CanvasPage="Publish.aspx" Text="Publish" />
             |
             <steam:CanvasLink ID="settingsLink" runat="server" CanvasPage="Settings.aspx" Text="Settings" />
             |

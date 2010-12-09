@@ -7,6 +7,12 @@ $(document).ready(function ()
     var logSelector = "#log";
     $achievements.init(steamUserId, logSelector, false);
 
+    var valid = $achievements.validateSteamUserId("#steamIdError");
+    if (!valid)
+    {
+        return;
+    }
+
     getNewAchievements();
 
     $("#publishSelectedButton").click(function ()
@@ -40,7 +46,7 @@ function getNewAchievements()
 {
     $achievements.showLoading("#newAchievementsLoading");
 
-    $achievements.updateAchievements(displayAchievements);
+    $achievements.updateAchievements(displayAchievements, displayError);
 }
 
 var _newAchievements = new Array();
@@ -95,4 +101,9 @@ function displayAchievements(achievements)
     }
 
     $achievements.hideLoading("#newAchievementsLoading");
+}
+
+function displayError()
+{
+    $achievements.showMessage("#achievementsUpdateFailure");
 }
