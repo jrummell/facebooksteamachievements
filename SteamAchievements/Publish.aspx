@@ -54,5 +54,5 @@
     </form>
     <div id="log">
     </div>
-    <script type="text/javascript" src="publish.js"></script>
+    <script type="text/javascript" src="js/publish.js"></script>
 </asp:Content>

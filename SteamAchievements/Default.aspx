@@ -46,5 +46,5 @@
     <div id="log" class="fberrorbox" style="display: none;">
         <asp:Literal ID="errorLiteral" runat="server" />
     </div>
-    <script type="text/javascript" src="default.js"></script>
+    <script type="text/javascript" src="js/default.js"></script>
 </asp:Content>

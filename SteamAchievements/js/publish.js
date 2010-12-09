@@ -1,5 +1,5 @@
-﻿/// <reference path="js/jquery-vsdoc.js" />
-/// <reference path="js/achievements.js" />
+﻿/// <reference path="jquery-vsdoc.js" />
+/// <reference path="achievements.js" />
 
 $(document).ready(function ()
 {

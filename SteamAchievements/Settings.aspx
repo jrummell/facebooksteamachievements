@@ -6,10 +6,10 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <form runat="server">
-    <div id="saveSuccess" class="fbinfobox message" style="display: none;">
-        Your settings have been saved successfully.</div>
     <h1>
         Settings</h1>
+    <div id="saveSuccess" class="fbinfobox message" style="display: none;">
+        Your settings have been saved successfully.</div>
     <fieldset>
         <legend>Steam Community Custom URL</legend>
         <div>
@@ -24,31 +24,39 @@
     </fieldset>
     <fieldset>
         <legend>Auto Update</legend>
-        <asp:CheckBox ID="autoUpdateCheckBox" runat="server" /><label for="autoUpdateCheckBox">Update
-            and publish my achievements automatically.</label>
+        <asp:CheckBox ID="autoUpdateCheckBox" runat="server" />
+        <label for="autoUpdateCheckBox">
+            Update and publish my achievements automatically.</label>
     </fieldset>
     <p>
-        <asp:LinkButton ID="saveSettingsButton" runat="server" Text="Save" OnClick="SaveSettingsButtonClick" />
+        <asp:LinkButton ID="saveSettingsButton" runat="server" OnClick="SaveSettingsButtonClick">
+            <asp:Image ID="helpImage" runat="server" ImageUrl="~/images/disk.png" AlternateText="Save"
+                ImageAlign="Middle" />
+            Save</asp:LinkButton>
         <img id="saveImage" class="loading" src="images/ajax-loader.gif" alt="Saving..."
             style="display: none" />
     </p>
     </form>
-    <script type="text/javascript" src="default.js"></script>
     <script type="text/javascript">
         $(document).ready(function ()
         {
+            $achievements.init();
+
             $("#saveSettingsButton").click(function ()
             {
                 if (Page_ClientValidate())
                 {
-                    $("#saveSettingsButton").show();
+                    $("#saveImage").show();
                 }
             });
         });
     </script>
     <asp:PlaceHolder ID="saveSuccessScript" runat="server" Visible="false">
         <script type="text/javascript">
-            $achievements.showMessage("#saveSuccess");
+            $(document).ready(function ()
+            {
+                $achievements.showMessage("#saveSuccess");
+            });
         </script>
     </asp:PlaceHolder>
 </asp:Content>
