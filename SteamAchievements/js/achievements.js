@@ -73,7 +73,7 @@ var $achievements =
                 description += achievement.Game.Name + ": ";
             }
 
-            description += achievement.Name;
+            description += achievement.Name + " (" + achievement.Description + ")";
 
             if (i < achievements.length - 1)
             {

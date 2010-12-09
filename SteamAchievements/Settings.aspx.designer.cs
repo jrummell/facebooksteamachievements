@@ -58,6 +58,15 @@ namespace SteamAchievements {
         protected global::System.Web.UI.WebControls.LinkButton saveSettingsButton;
         
         /// <summary>
+        /// helpImage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image helpImage;
+        
+        /// <summary>
         /// saveSuccessScript control.
         /// </summary>
         /// <remarks>

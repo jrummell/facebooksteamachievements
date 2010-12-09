@@ -207,8 +207,9 @@
     <Content Include="Controls\HelpLink.ascx" />
     <Content Include="images\banner-light.png" />
     <Content Include="js\achievements.js" />
+    <Content Include="js\default.js" />
+    <Content Include="js\publish.js" />
     <Content Include="Publish.aspx" />
-    <Content Include="publish.js" />
     <Content Include="Settings.aspx" />
     <Content Include="Site.Master" />
     <Content Include="Default.aspx" />
@@ -231,7 +232,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Themes\Default\style.css" />
-    <Content Include="default.js" />
     <Content Include="js\jquery-vsdoc.js" />
     <Content Include="js\json2.js" />
     <Content Include="Web.config" />
