@@ -27,11 +27,15 @@ using System.Web.UI;
 using Facebook;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
+using System.Text;
+using System.IO;
 
 namespace SteamAchievements.Admin
 {
     public partial class AutoUpdate : Page
     {
+        private StringBuilder _log = new StringBuilder();
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -41,21 +45,38 @@ namespace SteamAchievements.Admin
 
         private void Page_Load(object sender, EventArgs e)
         {
-            if (Request["auth"] != SteamAchievements.Properties.Settings.Default.AutoUpdateAuthKey)
+            Log("Auto Update start");
+
+            bool authorized = Request["auth"] == SteamAchievements.Properties.Settings.Default.AutoUpdateAuthKey;
+            if (!authorized)
             {
+                Log("Invalid auth key");
                 unauthorizedDiv.Visible = true;
-                return;
             }
-
-            List<Result> results = UpdateAchievements();
-
-            userRepeater.DataSource = results;
-            userRepeater.DataBind();
-
-            if (results.Count == 0)
+            else
             {
-                noUpdatesDiv.Visible = true;
+                List<Result> results = UpdateAchievements();
+
+                userRepeater.DataSource = results;
+                userRepeater.DataBind();
+
+                if (results.Count == 0)
+                {
+                    Log("No users had new unpublished achievements");
+
+                    noUpdatesDiv.Visible = true;
+                }
             }
+
+            Log("Done");
+
+            // save the log
+            string appPath = Server.MapPath(Request.ApplicationPath);
+            string logPath = Path.Combine(appPath, "App_Data\\AutoUpdate");
+            string logFileName = DateTime.UtcNow.Ticks + ".log";
+            string fullPath = Path.Combine(logPath, logFileName);
+
+            File.WriteAllText(fullPath, _log.ToString());
         }
 
         private List<Result> UpdateAchievements()
@@ -74,8 +95,12 @@ namespace SteamAchievements.Admin
             {
                 foreach (User user in users)
                 {
+                    Log("User: " + user.SteamUserId + " ( " + user.FacebookUserId + ")");
+
                     if (String.IsNullOrEmpty(user.AccessToken))
                     {
+                        Log("Empty AccessToken");
+
                         // if there is no access token, the user hasn't given the app offline_access
                         continue;
                     }
@@ -85,6 +110,8 @@ namespace SteamAchievements.Admin
 
                     if (updated == 0)
                     {
+                        Log("No updated achievements");
+
                         continue;
                     }
 
@@ -93,6 +120,8 @@ namespace SteamAchievements.Admin
 
                     if (!achievements.Any())
                     {
+                        Log("No unpublished achievements");
+
                         continue;
                     }
 
@@ -112,6 +141,8 @@ namespace SteamAchievements.Admin
                         parameters.name = achievement.Name;
                         parameters.description = achievement.Description;
                         parameters.picture = achievement.ImageUrl;
+
+                        Log(message);
 
                         Result result = new Result
                                         {
@@ -134,17 +165,26 @@ namespace SteamAchievements.Admin
                             {
                                 result.ExceptionMessage += Environment.NewLine + ", Inner Exception: " + ex.InnerException.Message;
                             }
+
+                            Log(result.ExceptionMessage);
                         }
 
                         results.Add(result);
-
-                        // update the published flag
-                        service.PublishAchievements(user.SteamUserId, publishedAchievements);
                     }
+
+                    // update the published flag
+                    service.PublishAchievements(user.SteamUserId, publishedAchievements);
+
+                    Log("User achievements published");
                 }
             }
 
             return results;
+        }
+
+        private void Log(string message)
+        {
+            _log.AppendFormat("{0} {1}{2}", DateTime.UtcNow, message, Environment.NewLine);
         }
 
         private class Result
