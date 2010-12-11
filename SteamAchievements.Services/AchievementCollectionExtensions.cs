@@ -73,7 +73,7 @@ namespace SteamAchievements.Services
                    select new Data.UserAchievement
                               {
                                   Date = achievement.Date,
-                                  SteamUserId = achievement.SteamUserId,
+                                  FacebookUserId = achievement.FacebookUserId,
                                   Achievement = new Data.Achievement
                                                     {
                                                         Name = achievement.Name,

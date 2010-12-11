@@ -66,5 +66,10 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <value>The date the achievement was unlocked.</value>
         public DateTime Date { get; set; }
+
+        /// <summary>
+        /// Gets or sets the facebook user id.
+        /// </summary>
+        public long FacebookUserId { get; set; }
     }
 }

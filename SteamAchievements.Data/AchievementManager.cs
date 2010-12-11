@@ -106,9 +106,11 @@ namespace SteamAchievements.Data
                 throw new ArgumentNullException("steamUserId");
             }
 
+            long facebookUserId = GetFacebookUserId(steamUserId);
+
             IQueryable<Achievement> achievements =
                 from userAchievement in _repository.UserAchievements
-                where userAchievement.SteamUserId == steamUserId
+                where userAchievement.FacebookUserId == facebookUserId
                       && userAchievement.Achievement.GameId == gameId
                 orderby userAchievement.Date
                 select userAchievement.Achievement;
@@ -135,8 +137,8 @@ namespace SteamAchievements.Data
                 return 0;
             }
 
-            string steamUserId = achievements.First().SteamUserId;
-            if (achievements.Any(achievement => achievement.SteamUserId != steamUserId))
+            long facebookUserId = achievements.First().FacebookUserId;
+            if (achievements.Any(achievement => achievement.FacebookUserId != facebookUserId))
             {
                 throw new ArgumentException("All achievements must have the same SteamUserId", "achievements");
             }
@@ -191,58 +193,13 @@ namespace SteamAchievements.Data
                 return;
             }
 
-            User existingUser = _repository.Users.Where(u => u.FacebookUserId == user.FacebookUserId).Single();
-
-            string existingSteamUserId = existingUser.SteamUserId;
-            bool steamIdChanged = existingSteamUserId.ToUpper() != user.SteamUserId.ToUpper();
-            bool hasAchievements = false;
-            List<UserAchievement> userAchievements = null;
-            if (steamIdChanged)
-            {
-                // delete the user's acheivements
-                userAchievements = (from u in _repository.UserAchievements
-                                    where u.SteamUserId.ToUpper() == existingSteamUserId.ToUpper()
-                                    select u).ToList();
-
-                hasAchievements = userAchievements.Any();
-                if (hasAchievements)
-                {
-                    _repository.DeleteAllOnSubmit(userAchievements);
-                    _repository.SubmitChanges();
-                }
-            }
-
             // update
-            existingUser = _repository.Users.Where(u => u.FacebookUserId == user.FacebookUserId).Single();
+            User existingUser = _repository.Users.Where(u => u.FacebookUserId == user.FacebookUserId).Single();
             existingUser.AccessToken = user.AccessToken;
             existingUser.AutoUpdate = user.AutoUpdate;
             existingUser.SteamUserId = user.SteamUserId;
 
             _repository.SubmitChanges();
-
-            if (steamIdChanged && hasAchievements)
-            {
-                // insert the user's updated achievements
-                List<UserAchievement> updatedUserAchievements = new List<UserAchievement>();
-
-                foreach (UserAchievement userAchievement in userAchievements)
-                {
-                    UserAchievement updated =
-                        new UserAchievement
-                            {
-                                AchievementId = userAchievement.AchievementId,
-                                Date = userAchievement.Date,
-                                Id = userAchievement.Id,
-                                Published = userAchievement.Published,
-                                SteamUserId = user.SteamUserId
-                            };
-
-                    updatedUserAchievements.Add(updated);
-                }
-
-                _repository.InsertAllOnSubmit(updatedUserAchievements);
-                _repository.SubmitChanges();
-            }
         }
 
         /// <summary>
@@ -267,9 +224,11 @@ namespace SteamAchievements.Data
                 return;
             }
 
+            long facebookUserId = GetFacebookUserId(steamUserId);
+
             IQueryable<UserAchievement> achievementsToUpdate =
                 from achievement in _repository.UserAchievements
-                where achievement.SteamUserId == steamUserId && achievementIds.Contains(achievement.AchievementId)
+                where achievement.FacebookUserId == facebookUserId && achievementIds.Contains(achievement.AchievementId)
                 select achievement;
 
             foreach (UserAchievement achievement in achievementsToUpdate)
@@ -287,8 +246,10 @@ namespace SteamAchievements.Data
                 throw new ArgumentNullException("steamUserId");
             }
 
+            long facebookUserId = GetFacebookUserId(steamUserId);
+
             return from achievement in _repository.UserAchievements
-                   where achievement.SteamUserId == steamUserId && !achievement.Published
+                   where achievement.FacebookUserId == facebookUserId && !achievement.Published
                    select achievement.Achievement;
         }
 
@@ -317,7 +278,8 @@ namespace SteamAchievements.Data
             }
 
             // get the achievement ids for the games in the given achievements
-            string steamUserId = achievements.First().SteamUserId;
+            long facebookUserId = achievements.First().FacebookUserId;
+            string steamUserId = GetSteamUserId(facebookUserId);
             IEnumerable<Achievement> unassignedAchievements =
                 GetUnassignedAchievements(steamUserId, achievements.Select(achievement => achievement.Achievement));
 
@@ -331,7 +293,7 @@ namespace SteamAchievements.Data
                 from achievement in unassignedAchievements
                 select new UserAchievement
                            {
-                               SteamUserId = steamUserId,
+                               FacebookUserId = facebookUserId,
                                AchievementId = achievement.Id,
                                Date = DateTime.Now //TODO: use achievement date
                            };
@@ -340,6 +302,13 @@ namespace SteamAchievements.Data
             _repository.SubmitChanges();
 
             return newUserAchievements.Count();
+        }
+
+        private string GetSteamUserId(long facebookUserId)
+        {
+            return (from user in _repository.Users
+                    where user.FacebookUserId == facebookUserId
+                    select user.SteamUserId).SingleOrDefault();
         }
 
         /// <summary>
@@ -383,9 +352,11 @@ namespace SteamAchievements.Data
                 return new Achievement[0];
             }
 
+            long facebookUserId = GetFacebookUserId(steamUserId);
+
             // get all assigned achievements
             IEnumerable<Achievement> assignedAchievements = (from a in _repository.UserAchievements
-                                                             where a.SteamUserId == steamUserId
+                                                             where a.FacebookUserId == facebookUserId
                                                              select a.Achievement).ToList();
 
             // return the unassigned achievements. I'm not hitting the database at this point since that could 
@@ -468,6 +439,18 @@ namespace SteamAchievements.Data
             }
 
             _repository.SubmitChanges();
+        }
+
+        private long GetFacebookUserId(string steamUserId)
+        {
+            if (steamUserId == null)
+            {
+                throw new NullReferenceException("steamUserId");
+            }
+
+            return (from user in _repository.Users
+                    where user.SteamUserId == steamUserId
+                    select user.FacebookUserId).SingleOrDefault();
         }
 
         public void Dispose()

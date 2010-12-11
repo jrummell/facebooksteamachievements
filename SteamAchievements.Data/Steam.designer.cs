@@ -332,7 +332,7 @@ namespace SteamAchievements.Data
 		
 		private int _Id;
 		
-		private string _SteamUserId;
+		private long _SteamUserId;
 		
 		private int _AchievementId;
 		
@@ -352,8 +352,8 @@ namespace SteamAchievements.Data
     partial void OnCreated();
     partial void OnIdChanging(int value);
     partial void OnIdChanged();
-    partial void OnSteamUserIdChanging(string value);
-    partial void OnSteamUserIdChanged();
+    partial void OnFacebookUserIdChanging(long value);
+    partial void OnFacebookUserIdChanged();
     partial void OnAchievementIdChanging(int value);
     partial void OnAchievementIdChanged();
     partial void OnDateChanging(System.DateTime value);
@@ -388,9 +388,9 @@ namespace SteamAchievements.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SteamUserId", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SteamUserId", DbType="BigInt NOT NULL")]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-		public string SteamUserId
+		public long FacebookUserId
 		{
 			get
 			{
@@ -404,11 +404,11 @@ namespace SteamAchievements.Data
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnSteamUserIdChanging(value);
+					this.OnFacebookUserIdChanging(value);
 					this.SendPropertyChanging();
 					this._SteamUserId = value;
-					this.SendPropertyChanged("SteamUserId");
-					this.OnSteamUserIdChanged();
+					this.SendPropertyChanged("FacebookUserId");
+					this.OnFacebookUserIdChanged();
 				}
 			}
 		}
@@ -514,7 +514,7 @@ namespace SteamAchievements.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserAchievement", Storage="_User", ThisKey="SteamUserId", OtherKey="SteamUserId", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserAchievement", Storage="_User", ThisKey="FacebookUserId", OtherKey="FacebookUserId", IsForeignKey=true)]
 		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6, EmitDefaultValue=false)]
 		public User User
 		{
