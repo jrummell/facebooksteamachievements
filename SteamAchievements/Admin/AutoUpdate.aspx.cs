@@ -35,6 +35,7 @@ namespace SteamAchievements.Admin
     public partial class AutoUpdate : Page
     {
         private StringBuilder _log = new StringBuilder();
+        private string _fullLogPath;
 
         protected override void OnInit(EventArgs e)
         {
@@ -47,6 +48,8 @@ namespace SteamAchievements.Admin
         {
             try
             {
+                InitLog();
+
                 Log("Auto Update start");
 
                 bool authorized = Request["auth"] == SteamAchievements.Properties.Settings.Default.AutoUpdateAuthKey;
@@ -57,7 +60,11 @@ namespace SteamAchievements.Admin
                 }
                 else
                 {
+                    FlushLog();
+
                     List<Result> results = UpdateAchievements();
+
+                    FlushLog();
 
                     userRepeater.DataSource = results;
                     userRepeater.DataBind();
@@ -82,13 +89,7 @@ namespace SteamAchievements.Admin
                 }
             }
 
-            // save the log
-            string appPath = Server.MapPath(Request.ApplicationPath);
-            string logPath = Path.Combine(appPath, "App_Data\\AutoUpdate");
-            string logFileName = DateTime.UtcNow.Ticks + ".log";
-            string fullPath = Path.Combine(logPath, logFileName);
-
-            File.WriteAllText(fullPath, _log.ToString());
+            FlushLog();
         }
 
         private List<Result> UpdateAchievements()
@@ -100,6 +101,8 @@ namespace SteamAchievements.Admin
                 users = manager.GetAutoUpdateUsers();
             }
 
+            Log("Auto Update user count: " + users.Count());
+
             List<Result> results = new List<Result>();
 
             using (SteamCommunityManager manager = new SteamCommunityManager())
@@ -107,7 +110,7 @@ namespace SteamAchievements.Admin
             {
                 foreach (User user in users)
                 {
-                    Log("User: " + user.SteamUserId + " ( " + user.FacebookUserId + ")");
+                    Log("User: " + user.SteamUserId + " (" + user.FacebookUserId + ")");
 
                     if (String.IsNullOrEmpty(user.AccessToken))
                     {
@@ -194,9 +197,22 @@ namespace SteamAchievements.Admin
             return results;
         }
 
+        private void InitLog()
+        {
+            string logPath = Server.MapPath("~/App_Data/AutoUpdate");
+            string logFileName = DateTime.UtcNow.Ticks + ".log";
+            _fullLogPath = Path.Combine(logPath, logFileName);
+        }
+
         private void Log(string message)
         {
             _log.AppendFormat("{0} {1}{2}", DateTime.UtcNow, message, Environment.NewLine);
+        }
+
+        private void FlushLog()
+        {
+            File.AppendAllText(_fullLogPath, _log.ToString());
+            _log.Clear();
         }
 
         private class Result

@@ -15,7 +15,7 @@
         <div>
             <p>
                 http://steamcommunity.com/id/
-                <asp:TextBox ID="steamIdTextBox" runat="server" />
+                <asp:TextBox ID="steamIdTextBox" runat="server" MaxLength="50" />
                 <asp:RequiredFieldValidator ID="steamIdRequiredValidator" runat="server" Display="Dynamic"
                     ControlToValidate="steamIdTextBox" ErrorMessage="Required" />
                 <steam:HelpLink ID="steamHelpLink" runat="server" HelpAnchor="steam" />
