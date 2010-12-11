@@ -6,7 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <form runat="server">
     <asp:Login ID="login" runat="server" DestinationPageUrl="~/Admin/Default.aspx" DisplayRememberMe="False"
-        OnAuthenticate="login_Authenticate">
+        OnAuthenticate="LoginAuthenticate">
     </asp:Login>
     </form>
 </asp:Content>

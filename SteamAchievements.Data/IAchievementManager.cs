@@ -29,17 +29,16 @@ namespace SteamAchievements.Data
         /// <summary>
         /// Gets the user.
         /// </summary>
-        /// <param name="steamUserId">The facebook user id.</param>
+        /// <param name="facebookUserId">The facebook user id.</param>
         /// <returns></returns>
         User GetUser(long facebookUserId);
 
         /// <summary>
-        /// Gets the achievements.
+        /// Gets the user.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
-        /// <param name="gameId">The game id.</param>
         /// <returns></returns>
-        IEnumerable<Achievement> GetAchievements(string steamUserId, int gameId);
+        User GetUser(string steamUserId);
 
         /// <summary>
         /// Gets the unpublished achievements.

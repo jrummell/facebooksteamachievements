@@ -22,19 +22,19 @@
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web.UI;
 using Facebook;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
-using System.Text;
-using System.IO;
 
 namespace SteamAchievements.Admin
 {
     public partial class AutoUpdate : Page
     {
-        private StringBuilder _log = new StringBuilder();
+        private readonly StringBuilder _log = new StringBuilder();
         private string _fullLogPath;
 
         protected override void OnInit(EventArgs e)
@@ -52,7 +52,7 @@ namespace SteamAchievements.Admin
 
                 Log("Auto Update start");
 
-                bool authorized = Request["auth"] == SteamAchievements.Properties.Settings.Default.AutoUpdateAuthKey;
+                bool authorized = Request["auth"] == Properties.Settings.Default.AutoUpdateAuthKey;
                 if (!authorized)
                 {
                     Log("Invalid auth key");
@@ -105,7 +105,6 @@ namespace SteamAchievements.Admin
 
             List<Result> results = new List<Result>();
 
-            using (SteamCommunityManager manager = new SteamCommunityManager())
             using (IAchievementService service = new AchievementService())
             {
                 foreach (User user in users)
@@ -160,15 +159,15 @@ namespace SteamAchievements.Admin
                         Log(message);
 
                         Result result = new Result
-                                        {
-                                            SteamUserId = user.SteamUserId,
-                                            GameName = achievement.Game.Name,
-                                            Description = achievement.Name
-                                        };
+                                            {
+                                                SteamUserId = user.SteamUserId,
+                                                GameName = achievement.Game.Name,
+                                                Description = achievement.Name
+                                            };
 
                         try
                         {
-                            dynamic response = app.Api(userFeedPath, parameters, HttpMethod.Post);
+                            app.Api(userFeedPath, parameters, HttpMethod.Post);
 
                             publishedAchievements.Add(achievement.Id);
                         }
@@ -178,7 +177,8 @@ namespace SteamAchievements.Admin
                             result.ExceptionMessage += Environment.NewLine + "Exception: " + ex.Message;
                             if (ex.InnerException != null)
                             {
-                                result.ExceptionMessage += Environment.NewLine + ", Inner Exception: " + ex.InnerException.Message;
+                                result.ExceptionMessage += Environment.NewLine + ", Inner Exception: " +
+                                                           ex.InnerException.Message;
                             }
 
                             Log(result.ExceptionMessage);
@@ -215,6 +215,8 @@ namespace SteamAchievements.Admin
             _log.Clear();
         }
 
+        #region Nested type: Result
+
         private class Result
         {
             public string SteamUserId { get; set; }
@@ -222,5 +224,7 @@ namespace SteamAchievements.Admin
             public string Description { get; set; }
             public string ExceptionMessage { get; set; }
         }
+
+        #endregion
     }
 }

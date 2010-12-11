@@ -25,9 +25,9 @@ namespace SteamAchievements.Admin
 {
     public partial class Default : Page
     {
-        protected string AutoUpdateAuthKey
+        protected static string AutoUpdateAuthKey
         {
-            get { return SteamAchievements.Properties.Settings.Default.AutoUpdateAuthKey; }
+            get { return Properties.Settings.Default.AutoUpdateAuthKey; }
         }
     }
 }

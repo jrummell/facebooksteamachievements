@@ -27,7 +27,10 @@ namespace SteamAchievements.Controls
 {
     public partial class Disclaimer : UserControl
     {
-        protected string UserVoiceKey { get { return SteamAchievements.Properties.Settings.Default.UserVoiceKey; } }
+        protected static string UserVoiceKey
+        {
+            get { return Properties.Settings.Default.UserVoiceKey; }
+        }
 
         protected override void OnInit(EventArgs e)
         {

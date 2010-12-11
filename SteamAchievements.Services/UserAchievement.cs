@@ -50,7 +50,7 @@ namespace SteamAchievements.Services
         public Uri ImageUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="Achievement"/> is closed.
+        /// Gets or sets a value indicating whether this <see cref="UserAchievement"/> is closed.
         /// </summary>
         /// <value><c>true</c> if closed; otherwise, <c>false</c>.</value>
         public bool Closed { get; set; }
@@ -66,10 +66,5 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <value>The date the achievement was unlocked.</value>
         public DateTime Date { get; set; }
-
-        /// <summary>
-        /// Gets or sets the facebook user id.
-        /// </summary>
-        public long FacebookUserId { get; set; }
     }
 }

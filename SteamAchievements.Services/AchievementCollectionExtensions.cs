@@ -22,12 +22,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
     public static class AchievementCollectionExtensions
     {
-        public static List<SimpleAchievement> ToSimpleAchievementList(this IEnumerable<Data.Achievement> achievements,
+        public static List<SimpleAchievement> ToSimpleAchievementList(this IEnumerable<Achievement> achievements,
                                                                       IEnumerable<Game> games)
         {
             return (from game in games
@@ -50,7 +51,7 @@ namespace SteamAchievements.Services
                                }).ToList();
         }
 
-        public static IEnumerable<UserAchievement> ToAchievements(this IEnumerable<Data.Achievement> achievements,
+        public static IEnumerable<UserAchievement> ToAchievements(this IEnumerable<Achievement> achievements,
                                                                   IEnumerable<Game> games)
         {
             return from achievement in achievements
@@ -66,15 +67,14 @@ namespace SteamAchievements.Services
                               };
         }
 
-        public static IEnumerable<Data.UserAchievement> ToDataAchievements(
-            this IEnumerable<UserAchievement> achievements)
+        public static IEnumerable<Data.UserAchievement> ToDataAchievements(this IEnumerable<UserAchievement> achievements, long facebookUserId)
         {
             return from achievement in achievements
                    select new Data.UserAchievement
                               {
                                   Date = achievement.Date,
-                                  FacebookUserId = achievement.FacebookUserId,
-                                  Achievement = new Data.Achievement
+                                  FacebookUserId = facebookUserId,
+                                  Achievement = new Achievement
                                                     {
                                                         Name = achievement.Name,
                                                         Description = achievement.Description,

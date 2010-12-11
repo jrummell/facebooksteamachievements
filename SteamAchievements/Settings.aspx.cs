@@ -19,8 +19,8 @@
 
 #endregion
 
-using System.Web.UI;
 using System;
+using System.Web.UI;
 using SteamAchievements.Data;
 
 namespace SteamAchievements
@@ -36,18 +36,20 @@ namespace SteamAchievements
 
         private void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (IsPostBack)
             {
-                steamIdTextBox.Text = Master.SteamUserId;
+                return;
+            }
 
-                using (IAchievementManager manager = new AchievementManager())
+            steamIdTextBox.Text = Master.SteamUserId;
+
+            using (IAchievementManager manager = new AchievementManager())
+            {
+                User user = manager.GetUser(Master.FacebookUserId);
+
+                if (user != null)
                 {
-                    User user = manager.GetUser(Master.FacebookUserId);
-
-                    if (user != null)
-                    {
-                        autoUpdateCheckBox.Checked = user.AutoUpdate;
-                    }
+                    autoUpdateCheckBox.Checked = user.AutoUpdate;
                 }
             }
         }
@@ -61,13 +63,13 @@ namespace SteamAchievements
 
             using (IAchievementManager manager = new AchievementManager())
             {
-                User updatedUser = new User 
-                                    {
-                                        FacebookUserId = Master.FacebookUserId,
-                                        AccessToken = Master.AccessToken,
-                                        AutoUpdate = autoUpdateCheckBox.Checked,
-                                        SteamUserId = steamIdTextBox.Text
-                                    };
+                User updatedUser = new User
+                                       {
+                                           FacebookUserId = Master.FacebookUserId,
+                                           AccessToken = Master.AccessToken,
+                                           AutoUpdate = autoUpdateCheckBox.Checked,
+                                           SteamUserId = steamIdTextBox.Text
+                                       };
 
                 manager.UpdateUser(updatedUser);
             }

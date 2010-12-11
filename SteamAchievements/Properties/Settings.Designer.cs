@@ -34,24 +34,6 @@ namespace SteamAchievements.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("yoururlsuffix")]
-        public string CanvasPageUrlSuffix {
-            get {
-                return ((string)(this["CanvasPageUrlSuffix"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://your.canvas/url")]
-        public global::System.Uri CanvasUrl {
-            get {
-                return ((global::System.Uri)(this["CanvasUrl"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("youruservoicekey")]
         public string UserVoiceKey {
             get {

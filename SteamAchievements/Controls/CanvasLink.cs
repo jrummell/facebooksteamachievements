@@ -32,7 +32,7 @@ namespace SteamAchievements.Controls
     {
         public string CanvasPage
         {
-            get { return (string)ViewState["CanvasPage"] ?? String.Empty; }
+            get { return (string) ViewState["CanvasPage"] ?? String.Empty; }
             set { ViewState["CanvasPage"] = value; }
         }
 
@@ -42,7 +42,7 @@ namespace SteamAchievements.Controls
 
             Target = "_top";
 
-            PreRender += new EventHandler(CanvasLink_PreRender);
+            PreRender += CanvasLink_PreRender;
         }
 
         private void CanvasLink_PreRender(object sender, EventArgs e)

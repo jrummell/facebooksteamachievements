@@ -25,6 +25,5 @@ namespace SteamAchievements.Controls
 {
     public partial class Navigation : UserControl
     {
-        
     }
 }

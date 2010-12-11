@@ -83,14 +83,16 @@ namespace SteamAchievements.Services
                     continue;
                 }
 
-                if (gameAchievements.Any())
+                if (!gameAchievements.Any())
                 {
-                    List<UserAchievement> achievementList = gameAchievements.ToList();
-                    Game game1 = game;
-                    achievementList.ForEach(a => a.Game = game1);
-
-                    achievements.AddRange(achievementList);
+                    continue;
                 }
+
+                List<UserAchievement> achievementList = gameAchievements.ToList();
+                Game game1 = game;
+                achievementList.ForEach(a => a.Game = game1);
+
+                achievements.AddRange(achievementList);
             }
 
             return achievements;
