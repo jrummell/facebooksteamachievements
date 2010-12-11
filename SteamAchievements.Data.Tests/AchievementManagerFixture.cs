@@ -52,8 +52,8 @@ namespace SteamAchievements.Data.Tests
             IQueryable<User> users =
                 (new[]
                      {
-                         new User {FacebookUserId = 1234567890, SteamUserId = "user1"},
-                         new User {FacebookUserId = 1234567891, SteamUserId = "user2"}
+                         new User {FacebookUserId = 1, SteamUserId = "user1"},
+                         new User {FacebookUserId = 2, SteamUserId = "user2"}
                      }).AsQueryable();
 
             IQueryable<UserAchievement> userAchievements =
@@ -64,7 +64,7 @@ namespace SteamAchievements.Data.Tests
                                  Id = 1,
                                  AchievementId = 1,
                                  Date = DateTime.Now,
-                                 SteamUserId = "user1",
+                                 FacebookUserId = 1,
                                  Achievement = achievements.Single(achievement => achievement.Id == 1),
                                  Published = true
                              },
@@ -73,7 +73,7 @@ namespace SteamAchievements.Data.Tests
                                  Id = 2,
                                  AchievementId = 2,
                                  Date = DateTime.Now,
-                                 SteamUserId = "user1",
+                                 FacebookUserId = 1,
                                  Achievement = achievements.Single(achievement => achievement.Id == 2),
                                  Published = true
                              },
@@ -82,7 +82,7 @@ namespace SteamAchievements.Data.Tests
                                  Id = 3,
                                  AchievementId = 3,
                                  Date = DateTime.Now,
-                                 SteamUserId = "user1",
+                                 FacebookUserId = 1,
                                  Achievement = achievements.Single(achievement => achievement.Id == 3),
                                  Published = false
                              }
@@ -134,6 +134,7 @@ namespace SteamAchievements.Data.Tests
         public void AssignAchievements()
         {
             const string steamUserId = "user1";
+            const long facebookUserId = 1;
             IEnumerable<Achievement> achievements = _manager.GetUnassignedAchievements(steamUserId,
                                                                                        _repository.Achievements);
             Assert.That(achievements.Any());
@@ -142,7 +143,7 @@ namespace SteamAchievements.Data.Tests
                 from achievement in achievements
                 select new UserAchievement
                            {
-                               SteamUserId = steamUserId,
+                               FacebookUserId = facebookUserId,
                                Achievement = achievement
                            };
 
@@ -153,7 +154,7 @@ namespace SteamAchievements.Data.Tests
                 int achievementId = achievement.Id;
                 int count =
                     _repository.UserAchievements.Count(
-                        ua => ua.SteamUserId == steamUserId && ua.AchievementId == achievementId);
+                        ua => ua.FacebookUserId == facebookUserId && ua.AchievementId == achievementId);
                 Assert.That(count, Is.EqualTo(1));
             }
         }
@@ -216,14 +217,14 @@ namespace SteamAchievements.Data.Tests
         [Test]
         public void UpdateAchievements()
         {
-            const string steamUserId = "user1";
+            const long facebookUserId = 1;
 
             IEnumerable<UserAchievement> achievements =
                 new[]
                     {
                         new UserAchievement
                             {
-                                SteamUserId = steamUserId,
+                                FacebookUserId = facebookUserId,
                                 Achievement = new Achievement
                                                   {
                                                       Id = 1,
@@ -234,7 +235,7 @@ namespace SteamAchievements.Data.Tests
                             },
                         new UserAchievement
                             {
-                                SteamUserId = steamUserId,
+                                FacebookUserId = facebookUserId,
                                 Achievement = new Achievement
                                                   {
                                                       Id = 2,
@@ -245,7 +246,7 @@ namespace SteamAchievements.Data.Tests
                             },
                         new UserAchievement
                             {
-                                SteamUserId = steamUserId,
+                                FacebookUserId = facebookUserId,
                                 Achievement = new Achievement
                                                   {
                                                       Id = 3,
@@ -256,7 +257,7 @@ namespace SteamAchievements.Data.Tests
                             },
                         new UserAchievement
                             {
-                                SteamUserId = steamUserId,
+                                FacebookUserId = facebookUserId,
                                 Achievement = new Achievement
                                                   {
                                                       Id = 4,
@@ -267,7 +268,7 @@ namespace SteamAchievements.Data.Tests
                             },
                         new UserAchievement
                             {
-                                SteamUserId = steamUserId,
+                                FacebookUserId = facebookUserId,
                                 Achievement = new Achievement
                                                   {
                                                       Id = 5,
@@ -278,7 +279,7 @@ namespace SteamAchievements.Data.Tests
                             },
                         new UserAchievement
                             {
-                                SteamUserId = steamUserId,
+                                FacebookUserId = facebookUserId,
                                 Achievement = new Achievement
                                                   {
                                                       Id = 6,
@@ -289,7 +290,7 @@ namespace SteamAchievements.Data.Tests
                             },
                         new UserAchievement
                             {
-                                SteamUserId = steamUserId,
+                                FacebookUserId = facebookUserId,
                                 Achievement = new Achievement
                                                   {
                                                       Id = 7,
@@ -300,7 +301,7 @@ namespace SteamAchievements.Data.Tests
                             },
                         new UserAchievement
                             {
-                                SteamUserId = steamUserId,
+                                FacebookUserId = facebookUserId,
                                 Achievement = new Achievement
                                                   {
                                                       Id = 8,
@@ -330,7 +331,7 @@ namespace SteamAchievements.Data.Tests
                 // assert that the new achievements were assigned
                 int userAchievementCount =
                     _repository.UserAchievements.Count(
-                        ua => ua.SteamUserId == userAchievement.SteamUserId && ua.AchievementId == achievementId);
+                        ua => ua.FacebookUserId == userAchievement.FacebookUserId && ua.AchievementId == achievementId);
                 Assert.That(userAchievementCount, Is.EqualTo(1));
             }
         }
@@ -345,9 +346,10 @@ namespace SteamAchievements.Data.Tests
 
             IEnumerable<int> achievementIds = from achievement in achievements
                                               select achievement.Id;
+            long facebookUserId = _repository.Users.Where(user => user.SteamUserId == steamUserId).Select(user => user.FacebookUserId).Single();
             IEnumerable<UserAchievement> userAchievements =
                 from achievement in _repository.UserAchievements
-                where achievement.SteamUserId == steamUserId && achievementIds.Contains(achievement.AchievementId)
+                where achievement.FacebookUserId == facebookUserId && achievementIds.Contains(achievement.AchievementId)
                 select achievement;
 
             Assert.That(userAchievements.Any(achievement => !achievement.Published), Is.False);
@@ -357,7 +359,7 @@ namespace SteamAchievements.Data.Tests
         public void UpdateUser()
         {
             const string steamUserId = "userxxx";
-            const int facebookUserId = 1234567890;
+            const int facebookUserId = 1;
 
             int achievmentCount = _manager.GetAchievements("user1", 1).Count();
 
@@ -367,7 +369,7 @@ namespace SteamAchievements.Data.Tests
             Assert.That(_repository.Users.Single(u => u.FacebookUserId == facebookUserId).SteamUserId,
                         Is.EqualTo(steamUserId));
 
-            Assert.That(_repository.UserAchievements.Where(ua => ua.SteamUserId == steamUserId).Count(), Is.EqualTo(achievmentCount));
+            Assert.That(_repository.UserAchievements.Where(ua => ua.FacebookUserId == facebookUserId).Count(), Is.EqualTo(achievmentCount));
         }
     }
 }

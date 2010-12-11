@@ -243,7 +243,7 @@ namespace SteamAchievements.Data
                                  Id = 1,
                                  AchievementId = 1,
                                  Date = DateTime.Now,
-                                 SteamUserId = "user1",
+                                 FacebookUserId = 1,
                                  Achievement = achievements.Single(a => a.Id == 1)
                              },
                          new UserAchievement
@@ -251,7 +251,7 @@ namespace SteamAchievements.Data
                                  Id = 2,
                                  AchievementId = 2,
                                  Date = DateTime.Now,
-                                 SteamUserId = "user1",
+                                 FacebookUserId = 1,
                                  Achievement = achievements.Single(a => a.Id == 2)
                              },
                          new UserAchievement
@@ -259,7 +259,7 @@ namespace SteamAchievements.Data
                                  Id = 3,
                                  AchievementId = 3,
                                  Date = DateTime.Now,
-                                 SteamUserId = "user1",
+                                 FacebookUserId = 1,
                                  Achievement = achievements.Single(a => a.Id == 3)
                              }
                          ,
@@ -268,7 +268,7 @@ namespace SteamAchievements.Data
                                  Id = 4,
                                  AchievementId = 4,
                                  Date = DateTime.Now,
-                                 SteamUserId = "user1",
+                                 FacebookUserId = 1,
                                  Achievement = achievements.Single(a => a.Id == 4)
                              }
                      }).AsQueryable();

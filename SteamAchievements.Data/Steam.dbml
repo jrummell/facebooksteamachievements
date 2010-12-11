@@ -13,12 +13,12 @@
   <Table Name="dbo.steam_UserAchievement" Member="UserAchievements">
     <Type Name="UserAchievement">
       <Column Name="Id" Type="System.Int32" DbType="int not null" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="SteamUserId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FacebookUserId" Storage="_SteamUserId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="AchievementId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Date" Type="System.DateTime" DbType="datetime not null" CanBeNull="false" />
       <Column Name="Published" Type="System.Boolean" DbType="bit not null" CanBeNull="false" />
       <Association Name="Achievement_UserAchievement" Member="Achievement" Storage="_steam_Achievement" ThisKey="AchievementId" OtherKey="Id" Type="Achievement" IsForeignKey="true" />
-      <Association Name="User_UserAchievement" Member="User" ThisKey="SteamUserId" OtherKey="SteamUserId" Type="User" IsForeignKey="true" />
+      <Association Name="User_UserAchievement" Member="User" ThisKey="FacebookUserId" OtherKey="FacebookUserId" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.steam_User" Member="Users">
