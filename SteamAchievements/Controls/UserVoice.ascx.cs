@@ -20,7 +20,6 @@
 #endregion
 
 using System.Web.UI;
-using SteamAchievements.Properties;
 using AppSettings = SteamAchievements.Properties.Settings;
 
 namespace SteamAchievements.Controls
@@ -31,7 +30,7 @@ namespace SteamAchievements.Controls
         /// Gets the user voice key.
         /// </summary>
         /// <value>The user voice key.</value>
-        protected string UserVoiceKey
+        protected static string UserVoiceKey
         {
             get { return AppSettings.Default.UserVoiceKey; }
         }
@@ -40,7 +39,7 @@ namespace SteamAchievements.Controls
         /// Gets the user voice forum.
         /// </summary>
         /// <value>The user voice forum.</value>
-        protected string UserVoiceForum
+        protected static string UserVoiceForum
         {
             get { return AppSettings.Default.UserVoiceForum; }
         }

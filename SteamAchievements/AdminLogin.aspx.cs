@@ -27,7 +27,7 @@ namespace SteamAchievements
 {
     public partial class AdminLogin : Page
     {
-        protected void login_Authenticate(object sender, AuthenticateEventArgs e)
+        protected void LoginAuthenticate(object sender, AuthenticateEventArgs e)
         {
             e.Authenticated = FormsAuthentication.Authenticate(login.UserName, login.Password);
         }

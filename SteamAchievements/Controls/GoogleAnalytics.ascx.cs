@@ -20,7 +20,6 @@
 #endregion
 
 using System.Web.UI;
-using SteamAchievements.Properties;
 using AppSettings = SteamAchievements.Properties.Settings;
 
 namespace SteamAchievements.Controls
@@ -31,7 +30,7 @@ namespace SteamAchievements.Controls
         /// Gets the Google Analytics code.
         /// </summary>
         /// <value>The code.</value>
-        protected string Code
+        protected static string Code
         {
             get { return AppSettings.Default.GoogleAnalyticsCode; }
         }

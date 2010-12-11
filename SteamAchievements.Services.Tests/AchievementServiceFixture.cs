@@ -49,27 +49,27 @@ namespace SteamAchievements.Services.Tests
                 }
             }
 
-            return achievements.ToDataAchievements();
+            return achievements.ToDataAchievements(0);
         }
 
-        private static List<Data.Achievement> GetDataAchievements()
+        private static List<Achievement> GetDataAchievements()
         {
             string text = File.ReadAllText("achievements.csv");
 
-            List<Data.Achievement> achievements = new List<Data.Achievement>();
+            List<Achievement> achievements = new List<Achievement>();
             foreach (string line in text.Split(new[] {Environment.NewLine}, StringSplitOptions.None))
             {
                 // Id	Name	GameId	Description	ImageUrl
                 string[] fields = line.Split('\t');
 
-                Data.Achievement achievement = new Data.Achievement
-                                                   {
-                                                       Id = Convert.ToInt32(fields[0]),
-                                                       Name = fields[1],
-                                                       GameId = Convert.ToInt32(fields[2]),
-                                                       Description = fields[3],
-                                                       ImageUrl = fields[4]
-                                                   };
+                Achievement achievement = new Achievement
+                                              {
+                                                  Id = Convert.ToInt32(fields[0]),
+                                                  Name = fields[1],
+                                                  GameId = Convert.ToInt32(fields[2]),
+                                                  Description = fields[3],
+                                                  ImageUrl = fields[4]
+                                              };
 
                 achievements.Add(achievement);
             }

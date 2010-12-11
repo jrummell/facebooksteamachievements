@@ -30,20 +30,6 @@ namespace SteamAchievements.Services
     public interface IAchievementService : IDisposable
     {
         /// <summary>
-        /// Gets the achievements.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <param name="gameId">The game id.</param>
-        /// <returns>
-        /// All <see cref="Achievement"/>s for the given user and game.
-        /// </returns>
-        [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        [Obsolete("GetNewAchievements()")]
-        List<SimpleAchievement> GetAchievements(string steamUserId, int gameId);
-
-        /// <summary>
         /// Gets the new achievements.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>

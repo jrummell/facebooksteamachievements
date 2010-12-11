@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
@@ -32,6 +31,9 @@ namespace SteamAchievements.Services
         private readonly IAchievementManager _achievementManager;
         private readonly SteamCommunityManager _communityService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AchievementService"/> class.
+        /// </summary>
         public AchievementService()
         {
             _achievementManager = new AchievementManager();
@@ -39,26 +41,6 @@ namespace SteamAchievements.Services
         }
 
         #region IAchievementService Members
-
-        /// <summary>
-        /// Gets the achievements.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <param name="gameId">The game id.</param>
-        /// <returns>
-        /// All <see cref="Achievement"/>s for the given user and game.
-        /// </returns>
-        public List<SimpleAchievement> GetAchievements(string steamUserId, int gameId)
-        {
-            if (steamUserId == null)
-            {
-                throw new ArgumentNullException("steamUserId");
-            }
-
-            IEnumerable<Game> games = _communityService.GetGames(steamUserId).Where(game => game.Id == gameId);
-
-            return _achievementManager.GetAchievements(steamUserId, gameId).ToSimpleAchievementList(games);
-        }
 
         /// <summary>
         /// Gets the games.
@@ -89,11 +71,24 @@ namespace SteamAchievements.Services
 
             IEnumerable<UserAchievement> achievements = _communityService.GetAchievements(steamUserId);
 
-            int updated = _achievementManager.UpdateAchievements(achievements.ToDataAchievements());
+            User user = _achievementManager.GetUser(steamUserId);
+            if (user == null)
+            {
+                throw new ArgumentException("User does not exist.", "steamUserId");
+            }
+
+            int updated = _achievementManager.UpdateAchievements(achievements.ToDataAchievements(user.FacebookUserId));
 
             return updated;
         }
 
+        /// <summary>
+        /// Gets the new achievements.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns>
+        /// The new achievements that haven't been stored yet.
+        /// </returns>
         public List<SimpleAchievement> GetNewAchievements(string steamUserId)
         {
             if (steamUserId == null)
@@ -106,6 +101,14 @@ namespace SteamAchievements.Services
             return _achievementManager.GetUnpublishedAchievements(steamUserId).ToSimpleAchievementList(games);
         }
 
+        /// <summary>
+        /// Updates the Published field for the given achievements for the given user.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="achievementIds">The ids of the achievements to publish.</param>
+        /// <returns>
+        /// true if successful, else false.
+        /// </returns>
         public bool PublishAchievements(string steamUserId, IEnumerable<int> achievementIds)
         {
             if (steamUserId == null)
@@ -123,12 +126,21 @@ namespace SteamAchievements.Services
             return true;
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             GC.SuppressFinalize(this);
             Dispose(true);
         }
 
+        #endregion
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
             lock (this)
@@ -140,7 +152,5 @@ namespace SteamAchievements.Services
                 }
             }
         }
-
-        #endregion
     }
 }

@@ -35,7 +35,7 @@ namespace SteamAchievements.Services
         #region IXmlParser<UserAchievement> Members
 
         /// <summary>
-        /// Returns a collection of <see cref="Achievement"/>s from the given xml and gameId.
+        /// Returns a collection of <see cref="UserAchievement"/>s from the given xml and gameId.
         /// </summary>
         public IEnumerable<UserAchievement> Parse(string xml)
         {
@@ -45,7 +45,7 @@ namespace SteamAchievements.Services
         #endregion
 
         /// <summary>
-        /// Returns a collection of closed <see cref="Achievement"/>s from the given xml.
+        /// Returns a collection of closed <see cref="UserAchievement"/>s from the given xml.
         /// </summary>
         public IEnumerable<UserAchievement> ParseClosed(string xml)
         {
@@ -53,7 +53,7 @@ namespace SteamAchievements.Services
         }
 
         /// <summary>
-        /// Returns a collection of <see cref="Achievement"/>s from the given xml.
+        /// Returns a collection of <see cref="UserAchievement"/>s from the given xml.
         /// </summary>
         /// <param name="xml">The XML.</param>
         /// <param name="closedOnly">If true, get only closed achievements, else get all achievements.</param>
@@ -67,14 +67,19 @@ namespace SteamAchievements.Services
 
             var achievements =
                 from element in document.Descendants("achievement")
+                let iconClosed = element.Element("iconClosed")
+                let description = element.Element("description")
+                let name = element.Element("name")
+                let closed = element.Attribute("closed")
                 let dateElement = element.Element("unlockTimestamp")
+                where iconClosed != null && description != null && name != null && closed != null
                 select new
                            {
-                               closed = element.Attribute("closed").Value == "1",
+                               closed = closed.Value == "1",
                                // name is in all caps - fix it
-                               name = _textInfo.ToTitleCase(element.Element("name").Value.ToLower()),
-                               description = element.Element("description").Value,
-                               image = element.Element("iconClosed").Value,
+                               name = _textInfo.ToTitleCase(name.Value.ToLower()),
+                               description = description.Value,
+                               image = iconClosed.Value,
                                date = dateElement == null ? null : dateElement.Value
                            };
 

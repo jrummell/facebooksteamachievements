@@ -114,7 +114,7 @@ namespace SteamAchievements.Data
                 _userAchievements.Add(userAchievement.Id, userAchievement);
             }
             _userAchievementsToInsertOnSubmit.Clear();
-            
+
             foreach (UserAchievement userAchievement in _userAchievementsToDeleteOnSubmit)
             {
                 _userAchievements.Remove(userAchievement.Id);

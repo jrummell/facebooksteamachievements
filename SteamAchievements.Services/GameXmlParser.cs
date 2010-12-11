@@ -39,15 +39,22 @@ namespace SteamAchievements.Services
 
             var games =
                 from element in document.Descendants("game")
-                where element.Element("statsLink") != null
+                let hoursLast2Weeks = element.Element("hoursLast2Weeks")
+                let storeLink = element.Element("storeLink")
+                let statsLink = element.Element("statsLink")
+                let logo = element.Element("logo")
+                let name = element.Element("name")
+                let appID = element.Element("appID")
+                where
+                    statsLink != null && storeLink != null && logo != null && name != null && appID != null
                 select new
                            {
-                               id = element.Element("appID").Value,
-                               name = element.Element("name").Value,
-                               logo = element.Element("logo").Value,
-                               statsLink = element.Element("statsLink").Value,
-                               storeLink = element.Element("storeLink").Value,
-                               playedRecently = element.Element("hoursLast2Weeks") != null
+                               id = appID.Value,
+                               name = name.Value,
+                               logo = logo.Value,
+                               statsLink = statsLink.Value,
+                               storeLink = storeLink.Value,
+                               playedRecently = hoursLast2Weeks != null
                            };
 
             return from game in games

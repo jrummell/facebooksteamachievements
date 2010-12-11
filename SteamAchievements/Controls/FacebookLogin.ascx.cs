@@ -30,42 +30,41 @@ namespace SteamAchievements.Controls
 {
     public partial class FacebookLogin : UserControl
     {
-        private FacebookApp _facebookApp;
-        private CanvasAuthorizer _authorizer;
+        private readonly CanvasAuthorizer _authorizer;
+        private readonly FacebookApp _facebookApp;
 
         public FacebookLogin()
         {
             _facebookApp = new FacebookApp();
-            _authorizer = new CanvasAuthorizer(_facebookApp);
-            _authorizer.Perms = "publish_stream,offline_access";
+            _authorizer = new CanvasAuthorizer(_facebookApp) {Perms = "publish_stream,offline_access"};
         }
 
         public string AccessToken
         {
-            get { return (string)ViewState["AccessToken"] ?? String.Empty; }
+            get { return (string) ViewState["AccessToken"] ?? String.Empty; }
             private set { ViewState["AccessToken"] = value; }
         }
 
-        protected string FacebookClientId
+        protected static string FacebookClientId
         {
             get { return FacebookSettings.Current.ApiKey; }
         }
 
         public long FacebookUserId
         {
-            get { return (long)(ViewState["FacebookUserId"] ?? 0); }
+            get { return (long) (ViewState["FacebookUserId"] ?? 0); }
             private set { ViewState["FacebookUserId"] = value; }
         }
 
         public bool IsLoggedIn
         {
-            get { return (bool)(ViewState["IsLoggedIn"] ?? false); }
+            get { return (bool) (ViewState["IsLoggedIn"] ?? false); }
             private set { ViewState["IsLoggedIn"] = value; }
         }
 
         public string SteamUserId
         {
-            get { return (string)ViewState["SteamUserId"] ?? String.Empty; }
+            get { return (string) ViewState["SteamUserId"] ?? String.Empty; }
             private set { ViewState["SteamUserId"] = value; }
         }
 

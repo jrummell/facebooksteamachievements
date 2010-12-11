@@ -329,9 +329,10 @@ namespace SteamAchievements.Data.Tests
                 Assert.That(achievementCount, Is.EqualTo(1));
 
                 // assert that the new achievements were assigned
+                UserAchievement achievement1 = userAchievement;
                 int userAchievementCount =
                     _repository.UserAchievements.Count(
-                        ua => ua.FacebookUserId == userAchievement.FacebookUserId && ua.AchievementId == achievementId);
+                        ua => ua.FacebookUserId == achievement1.FacebookUserId && ua.AchievementId == achievementId);
                 Assert.That(userAchievementCount, Is.EqualTo(1));
             }
         }
@@ -340,13 +341,14 @@ namespace SteamAchievements.Data.Tests
         public void UpdatePublished()
         {
             const string steamUserId = "user1";
-            const int gameId = 1;
-            IEnumerable<Achievement> achievements = _manager.GetAchievements(steamUserId, gameId);
+            IEnumerable<Achievement> achievements = _manager.GetUnpublishedAchievements(steamUserId);
             _manager.UpdatePublished(steamUserId, achievements.Select(acheivement => acheivement.Id));
 
             IEnumerable<int> achievementIds = from achievement in achievements
                                               select achievement.Id;
-            long facebookUserId = _repository.Users.Where(user => user.SteamUserId == steamUserId).Select(user => user.FacebookUserId).Single();
+            long facebookUserId =
+                _repository.Users.Where(user => user.SteamUserId == steamUserId).Select(user => user.FacebookUserId).
+                    Single();
             IEnumerable<UserAchievement> userAchievements =
                 from achievement in _repository.UserAchievements
                 where achievement.FacebookUserId == facebookUserId && achievementIds.Contains(achievement.AchievementId)
@@ -361,15 +363,11 @@ namespace SteamAchievements.Data.Tests
             const string steamUserId = "userxxx";
             const int facebookUserId = 1;
 
-            int achievmentCount = _manager.GetAchievements("user1", 1).Count();
-
-            User user = new User { SteamUserId = steamUserId, FacebookUserId = facebookUserId };
+            User user = new User {SteamUserId = steamUserId, FacebookUserId = facebookUserId};
             _manager.UpdateUser(user);
 
             Assert.That(_repository.Users.Single(u => u.FacebookUserId == facebookUserId).SteamUserId,
                         Is.EqualTo(steamUserId));
-
-            Assert.That(_repository.UserAchievements.Where(ua => ua.FacebookUserId == facebookUserId).Count(), Is.EqualTo(achievmentCount));
         }
     }
 }
