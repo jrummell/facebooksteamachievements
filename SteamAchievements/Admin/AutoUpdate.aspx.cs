@@ -45,30 +45,42 @@ namespace SteamAchievements.Admin
 
         private void Page_Load(object sender, EventArgs e)
         {
-            Log("Auto Update start");
-
-            bool authorized = Request["auth"] == SteamAchievements.Properties.Settings.Default.AutoUpdateAuthKey;
-            if (!authorized)
+            try
             {
-                Log("Invalid auth key");
-                unauthorizedDiv.Visible = true;
-            }
-            else
-            {
-                List<Result> results = UpdateAchievements();
+                Log("Auto Update start");
 
-                userRepeater.DataSource = results;
-                userRepeater.DataBind();
-
-                if (results.Count == 0)
+                bool authorized = Request["auth"] == SteamAchievements.Properties.Settings.Default.AutoUpdateAuthKey;
+                if (!authorized)
                 {
-                    Log("No users had new unpublished achievements");
+                    Log("Invalid auth key");
+                    unauthorizedDiv.Visible = true;
+                }
+                else
+                {
+                    List<Result> results = UpdateAchievements();
 
-                    noUpdatesDiv.Visible = true;
+                    userRepeater.DataSource = results;
+                    userRepeater.DataBind();
+
+                    if (results.Count == 0)
+                    {
+                        Log("No users had new unpublished achievements");
+
+                        noUpdatesDiv.Visible = true;
+                    }
+                }
+
+                Log("Done");
+            }
+            catch (Exception ex)
+            {
+                Log("Exception: " + ex.Message);
+
+                if (ex.InnerException != null)
+                {
+                    Log("Inner Exception: " + ex.InnerException.Message);
                 }
             }
-
-            Log("Done");
 
             // save the log
             string appPath = Server.MapPath(Request.ApplicationPath);
