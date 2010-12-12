@@ -97,6 +97,8 @@ namespace SteamAchievements.Admin
                     LogException(ex);
                 }
 
+                Log("Auto Update done");
+
                 FlushLog();
             }
         }
