@@ -25,6 +25,7 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Web.UI;
 using Facebook;
 using SteamAchievements.Data;
@@ -34,8 +35,9 @@ namespace SteamAchievements.Admin
 {
     public partial class AutoUpdate : Page
     {
-        private readonly StringBuilder _log = new StringBuilder();
-        private string _fullLogPath;
+        private static readonly StringBuilder _log = new StringBuilder();
+        private static string _fullLogPath;
+        private readonly object _lock = new object();
 
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event to initialize the page.
@@ -55,57 +57,55 @@ namespace SteamAchievements.Admin
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Page_Load(object sender, EventArgs e)
         {
-            try
+            lock (_lock)
             {
-                InitLog();
-
-                Log("Auto Update start");
-
-                bool authorized = Request["auth"] == Properties.Settings.Default.AutoUpdateAuthKey;
-                if (!authorized)
+                try
                 {
-                    Log("Invalid auth key");
-                    unauthorizedDiv.Visible = true;
-                }
-                else
-                {
-                    FlushLog();
+                    InitLog();
 
-                    List<Result> results = UpdateAchievements();
+                    Log("Auto Update start");
 
-                    FlushLog();
-
-                    userRepeater.DataSource = results;
-                    userRepeater.DataBind();
-
-                    if (results.Count == 0)
+                    bool authorized = Request["auth"] == Properties.Settings.Default.AutoUpdateAuthKey;
+                    if (!authorized)
                     {
-                        Log("No users had new unpublished achievements");
-
-                        noUpdatesDiv.Visible = true;
+                        Log("Invalid auth key");
+                        unauthorizedDiv.Visible = true;
                     }
+                    else
+                    {
+                        FlushLog();
+
+                        List<Result> results = UpdateAchievements();
+
+                        FlushLog();
+
+                        userRepeater.DataSource = results;
+                        userRepeater.DataBind();
+
+                        if (results.Count == 0)
+                        {
+                            Log("No users had new unpublished achievements");
+
+                            noUpdatesDiv.Visible = true;
+                        }
+                    }
+
+                    Log("Done");
                 }
-
-                Log("Done");
-            }
-            catch (Exception ex)
-            {
-                Log("Exception: " + ex.Message);
-
-                if (ex.InnerException != null)
+                catch (Exception ex)
                 {
-                    Log("Inner Exception: " + ex.InnerException.Message);
+                    LogException(ex);
                 }
-            }
 
-            FlushLog();
+                FlushLog();
+            }
         }
 
         /// <summary>
         /// Updates the achievements.
         /// </summary>
         /// <returns></returns>
-        private List<Result> UpdateAchievements()
+        private static List<Result> UpdateAchievements()
         {
             IEnumerable<User> users;
             using (IAchievementManager manager = new AchievementManager())
@@ -188,15 +188,9 @@ namespace SteamAchievements.Admin
                         }
                         catch (FacebookApiException ex)
                         {
-                            // log Facebook errors and continue
-                            result.ExceptionMessage += Environment.NewLine + "Exception: " + ex.Message;
-                            if (ex.InnerException != null)
-                            {
-                                result.ExceptionMessage += Environment.NewLine + ", Inner Exception: " +
-                                                           ex.InnerException.Message;
-                            }
+                            LogException(ex);
 
-                            Log(result.ExceptionMessage);
+                            result.ExceptionMessage = ex.Message;
                         }
 
                         results.Add(result);
@@ -208,7 +202,7 @@ namespace SteamAchievements.Admin
                     Log("User achievements published");
 
                     // flush the log every 10 users - log often to increase chances of catching errors.
-                    if (logCount % 10 == 0)
+                    if (logCount%10 == 0)
                     {
                         FlushLog();
                     }
@@ -223,9 +217,9 @@ namespace SteamAchievements.Admin
         /// <summary>
         /// Inits the log.
         /// </summary>
-        private void InitLog()
+        private static void InitLog()
         {
-            string logPath = Server.MapPath("~/App_Data/AutoUpdate");
+            string logPath = HttpContext.Current.Server.MapPath("~/App_Data/AutoUpdate");
             string logFileName = DateTime.UtcNow.Ticks + ".log";
             _fullLogPath = Path.Combine(logPath, logFileName);
         }
@@ -234,15 +228,29 @@ namespace SteamAchievements.Admin
         /// Logs the specified message.
         /// </summary>
         /// <param name="message">The message.</param>
-        private void Log(string message)
+        private static void Log(string message)
         {
             _log.AppendFormat("{0} {1}{2}", DateTime.UtcNow, message, Environment.NewLine);
         }
 
         /// <summary>
+        /// Logs the exception.
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        private static void LogException(Exception ex)
+        {
+            Log("Exception: " + ex.Message);
+
+            if (ex.InnerException != null)
+            {
+                Log("Inner Exception: " + ex.InnerException.Message);
+            }
+        }
+
+        /// <summary>
         /// Flushes the log.
         /// </summary>
-        private void FlushLog()
+        private static void FlushLog()
         {
             File.AppendAllText(_fullLogPath, _log.ToString());
             _log.Clear();
