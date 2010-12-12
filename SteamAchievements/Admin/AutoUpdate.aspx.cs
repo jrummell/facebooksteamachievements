@@ -115,6 +115,7 @@ namespace SteamAchievements.Admin
             }
 
             Log("Auto Update user count: " + users.Count());
+            FlushLog();
 
             List<Result> results = new List<Result>();
 
@@ -206,13 +207,13 @@ namespace SteamAchievements.Admin
 
                     Log("User achievements published");
 
-                    logCount++;
-
                     // flush the log every 10 users - log often to increase chances of catching errors.
                     if (logCount % 10 == 0)
                     {
                         FlushLog();
                     }
+
+                    logCount++;
                 }
             }
 
