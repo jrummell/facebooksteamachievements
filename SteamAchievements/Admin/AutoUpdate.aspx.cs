@@ -37,6 +37,10 @@ namespace SteamAchievements.Admin
         private readonly StringBuilder _log = new StringBuilder();
         private string _fullLogPath;
 
+        /// <summary>
+        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event to initialize the page.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -44,6 +48,11 @@ namespace SteamAchievements.Admin
             Load += Page_Load;
         }
 
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Page_Load(object sender, EventArgs e)
         {
             try
@@ -92,6 +101,10 @@ namespace SteamAchievements.Admin
             FlushLog();
         }
 
+        /// <summary>
+        /// Updates the achievements.
+        /// </summary>
+        /// <returns></returns>
         private List<Result> UpdateAchievements()
         {
             IEnumerable<User> users;
@@ -105,6 +118,7 @@ namespace SteamAchievements.Admin
 
             List<Result> results = new List<Result>();
 
+            int logCount = 0;
             using (IAchievementService service = new AchievementService())
             {
                 foreach (User user in users)
@@ -191,12 +205,23 @@ namespace SteamAchievements.Admin
                     service.PublishAchievements(user.SteamUserId, publishedAchievements);
 
                     Log("User achievements published");
+
+                    logCount++;
+
+                    // flush the log every 10 users - log often to increase chances of catching errors.
+                    if (logCount % 10 == 0)
+                    {
+                        FlushLog();
+                    }
                 }
             }
 
             return results;
         }
 
+        /// <summary>
+        /// Inits the log.
+        /// </summary>
         private void InitLog()
         {
             string logPath = Server.MapPath("~/App_Data/AutoUpdate");
@@ -204,11 +229,18 @@ namespace SteamAchievements.Admin
             _fullLogPath = Path.Combine(logPath, logFileName);
         }
 
+        /// <summary>
+        /// Logs the specified message.
+        /// </summary>
+        /// <param name="message">The message.</param>
         private void Log(string message)
         {
             _log.AppendFormat("{0} {1}{2}", DateTime.UtcNow, message, Environment.NewLine);
         }
 
+        /// <summary>
+        /// Flushes the log.
+        /// </summary>
         private void FlushLog()
         {
             File.AppendAllText(_fullLogPath, _log.ToString());
