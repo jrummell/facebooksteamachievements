@@ -36,10 +36,11 @@ namespace SteamAchievements.Data
         private readonly List<Achievement> _achievementsToInsertOnSubmit = new List<Achievement>();
         private readonly List<UserAchievement> _userAchievementsToDeleteOnSubmit = new List<UserAchievement>();
         private readonly List<UserAchievement> _userAchievementsToInsertOnSubmit = new List<UserAchievement>();
+        private readonly List<User> _usersToDeleteOnSumbit = new List<User>();
         private readonly List<User> _usersToInsertOnSubmit = new List<User>();
         private Dictionary<int, Achievement> _achievements;
         private Dictionary<int, UserAchievement> _userAchievements;
-        private Dictionary<UserKey, User> _users;
+        private Dictionary<long, User> _users;
 
         public MockSteamRepository()
         {
@@ -75,7 +76,7 @@ namespace SteamAchievements.Data
         public IQueryable<User> Users
         {
             get { return _users.Values.AsQueryable(); }
-            set { _users = value.ToDictionary(x => new UserKey(x), x => x); }
+            set { _users = value.ToDictionary(x => x.FacebookUserId, x => x); }
         }
 
         /// <summary>
@@ -94,6 +95,15 @@ namespace SteamAchievements.Data
         public void DeleteAllOnSubmit(IEnumerable<UserAchievement> achievements)
         {
             _userAchievementsToDeleteOnSubmit.AddRange(achievements);
+        }
+
+        /// <summary>
+        /// Deletes the user on submit.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        public void DeleteOnSubmit(User user)
+        {
+            _usersToDeleteOnSumbit.Add(user);
         }
 
         /// <summary>
@@ -151,9 +161,15 @@ namespace SteamAchievements.Data
             // Users
             foreach (User user in _usersToInsertOnSubmit)
             {
-                _users.Add(new UserKey(user), user);
+                _users.Add(user.FacebookUserId, user);
             }
             _usersToInsertOnSubmit.Clear();
+
+            foreach (User user in _usersToDeleteOnSumbit)
+            {
+                _users.Remove(user.FacebookUserId);
+            }
+            _usersToDeleteOnSumbit.Clear();
         }
 
         /// <summary>
@@ -277,79 +293,5 @@ namespace SteamAchievements.Data
             UserAchievements = userAchievements;
             Users = users;
         }
-
-        #region Nested type: UserKey
-
-        private class UserKey : IEquatable<UserKey>
-        {
-            public UserKey(User user)
-            {
-                if (user == null)
-                {
-                    throw new ArgumentNullException("user");
-                }
-
-                FacebookUserId = user.FacebookUserId;
-                SteamUserId = user.SteamUserId;
-            }
-
-            private long FacebookUserId { get; set; }
-
-            private string SteamUserId { get; set; }
-
-            #region IEquatable<UserKey> Members
-
-            public bool Equals(UserKey other)
-            {
-                if (ReferenceEquals(null, other))
-                {
-                    return false;
-                }
-                if (ReferenceEquals(this, other))
-                {
-                    return true;
-                }
-                return other.FacebookUserId == FacebookUserId && Equals(other.SteamUserId, SteamUserId);
-            }
-
-            #endregion
-
-            public override bool Equals(object obj)
-            {
-                if (ReferenceEquals(null, obj))
-                {
-                    return false;
-                }
-                if (ReferenceEquals(this, obj))
-                {
-                    return true;
-                }
-                if (obj.GetType() != typeof (UserKey))
-                {
-                    return false;
-                }
-                return Equals((UserKey) obj);
-            }
-
-            public override int GetHashCode()
-            {
-                unchecked
-                {
-                    return (int) ((FacebookUserId*397) ^ (SteamUserId != null ? SteamUserId.GetHashCode() : 0));
-                }
-            }
-
-            public static bool operator ==(UserKey left, UserKey right)
-            {
-                return Equals(left, right);
-            }
-
-            public static bool operator !=(UserKey left, UserKey right)
-            {
-                return !Equals(left, right);
-            }
-        }
-
-        #endregion
     }
 }

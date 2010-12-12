@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using SteamAchievements.Data.Properties;
 
@@ -225,6 +226,27 @@ namespace SteamAchievements.Data
         }
 
         /// <summary>
+        /// Deauthorizes the user.
+        /// </summary>
+        /// <param name="facebookUserId">The facebook user id.</param>
+        public void DeauthorizeUser(long facebookUserId)
+        {
+            User user = _repository.Users.Where(u => u.FacebookUserId == facebookUserId).SingleOrDefault();
+            if (user == null)
+            {
+                return;
+            }
+
+            IQueryable<UserAchievement> userAchievements =
+                _repository.UserAchievements.Where(ua => ua.FacebookUserId == facebookUserId);
+            _repository.DeleteAllOnSubmit(userAchievements);
+            _repository.SubmitChanges();
+
+            _repository.DeleteOnSubmit(user);
+            _repository.SubmitChanges();
+        }
+
+        /// <summary>
         /// Updates the published flag of the given achievements.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
@@ -288,9 +310,8 @@ namespace SteamAchievements.Data
 
             // get the achievement ids for the games in the given achievements
             long facebookUserId = achievements.First().FacebookUserId;
-            string steamUserId = GetSteamUserId(facebookUserId);
             IEnumerable<Achievement> unassignedAchievements =
-                GetUnassignedAchievements(steamUserId, achievements.Select(achievement => achievement.Achievement));
+                GetUnassignedAchievements(facebookUserId, achievements.Select(achievement => achievement.Achievement));
 
             if (!unassignedAchievements.Any())
             {
@@ -300,11 +321,25 @@ namespace SteamAchievements.Data
             // create the unassigned achievements and insert them
             IEnumerable<UserAchievement> newUserAchievements =
                 from achievement in unassignedAchievements
+                join userAchievement in achievements on
+                    new
+                        {
+                            Name = achievement.Name.ToUpper(),
+                            achievement.GameId,
+                            achievement.Description
+                        } equals
+                    new
+                        {
+                            Name = userAchievement.Achievement.Name.ToUpper(),
+                            userAchievement.Achievement.GameId,
+                            userAchievement.Achievement.Description
+                        }
                 select new UserAchievement
                            {
                                FacebookUserId = facebookUserId,
                                AchievementId = achievement.Id,
-                               Date = DateTime.Now //TODO: use achievement date
+                               Date = ValidateDate(userAchievement.Date),
+                               Published = false
                            };
 
             _repository.InsertAllOnSubmit(newUserAchievements);
@@ -314,31 +349,31 @@ namespace SteamAchievements.Data
         }
 
         /// <summary>
-        /// Gets the steam user id.
+        /// Validates the date.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="date">The date.</param>
         /// <returns></returns>
-        private string GetSteamUserId(long facebookUserId)
+        public static DateTime ValidateDate(DateTime date)
         {
-            return (from user in _repository.Users
-                    where user.FacebookUserId == facebookUserId
-                    select user.SteamUserId).SingleOrDefault();
+            DateTime minValue = new DateTime(SqlDateTime.MinValue.Value.Ticks);
+            DateTime maxValue = new DateTime(SqlDateTime.MaxValue.Value.Ticks);
+            if (date > minValue && date < maxValue)
+            {
+                return date;
+            }
+
+            return DateTime.Now;
         }
 
         /// <summary>
         /// Gets the unassigned achievement ids.
         /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="facebookUserId">The facebook user id.</param>
         /// <param name="allAchievements">All achievements. These will not necessarily have an Id set.</param>
         /// <returns></returns>
-        public IEnumerable<Achievement> GetUnassignedAchievements(string steamUserId,
+        public IEnumerable<Achievement> GetUnassignedAchievements(long facebookUserId,
                                                                   IEnumerable<Achievement> allAchievements)
         {
-            if (steamUserId == null)
-            {
-                throw new ArgumentNullException("steamUserId");
-            }
-
             if (allAchievements == null)
             {
                 throw new ArgumentNullException("allAchievements");
@@ -365,8 +400,6 @@ namespace SteamAchievements.Data
             {
                 return new Achievement[0];
             }
-
-            long facebookUserId = GetFacebookUserId(steamUserId);
 
             // get all assigned achievements
             IEnumerable<Achievement> assignedAchievements = (from a in _repository.UserAchievements

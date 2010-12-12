@@ -165,6 +165,13 @@
     <Compile Include="Controls\UserVoice.ascx.designer.cs">
       <DependentUpon>UserVoice.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Deauthorize.aspx.cs">
+      <DependentUpon>Deauthorize.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Deauthorize.aspx.designer.cs">
+      <DependentUpon>Deauthorize.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -220,6 +227,7 @@
     <Content Include="Controls\FacebookLogin.ascx" />
     <Content Include="Controls\HelpLink.ascx" />
     <Content Include="Controls\Navigation.ascx" />
+    <Content Include="Deauthorize.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="images\banner-light.png" />
     <Content Include="js\achievements.js" />

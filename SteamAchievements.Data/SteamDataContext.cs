@@ -19,6 +19,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -71,6 +72,15 @@ namespace SteamAchievements.Data
         public void DeleteAllOnSubmit(IEnumerable<UserAchievement> achievements)
         {
             UserAchievements.DeleteAllOnSubmit(achievements);
+        }
+
+        /// <summary>
+        /// Deletes the user on submit.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        public void DeleteOnSubmit(User user)
+        {
+            Users.DeleteOnSubmit(user);
         }
 
         /// <summary>
