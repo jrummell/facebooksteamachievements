@@ -19,7 +19,6 @@
 
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using SteamAchievements.Data;
@@ -28,6 +27,12 @@ namespace SteamAchievements.Services
 {
     public static class AchievementCollectionExtensions
     {
+        /// <summary>
+        /// Converts the <see cref="Achievement"/>s <see cref="SimpleAchievement"/>s.
+        /// </summary>
+        /// <param name="achievements">The achievements.</param>
+        /// <param name="games">The games.</param>
+        /// <returns></returns>
         public static List<SimpleAchievement> ToSimpleAchievementList(this IEnumerable<Achievement> achievements,
                                                                       IEnumerable<Game> games)
         {
@@ -51,23 +56,14 @@ namespace SteamAchievements.Services
                                }).ToList();
         }
 
-        public static IEnumerable<UserAchievement> ToAchievements(this IEnumerable<Achievement> achievements,
-                                                                  IEnumerable<Game> games)
-        {
-            return from achievement in achievements
-                   from game in games
-                   where achievement.GameId == game.Id
-                   select new UserAchievement
-                              {
-                                  Name = achievement.Name,
-                                  Description = achievement.Description,
-                                  ImageUrl = new Uri(achievement.ImageUrl, UriKind.Absolute),
-                                  Closed = true,
-                                  Game = game
-                              };
-        }
-
-        public static IEnumerable<Data.UserAchievement> ToDataAchievements(this IEnumerable<UserAchievement> achievements, long facebookUserId)
+        /// <summary>
+        /// Converts the <see cref="UserAchievement"/>s to <see cref="Data.UserAchievement"/>s.
+        /// </summary>
+        /// <param name="achievements">The achievements.</param>
+        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <returns></returns>
+        public static IEnumerable<Data.UserAchievement> ToDataAchievements(
+            this IEnumerable<UserAchievement> achievements, long facebookUserId)
         {
             return from achievement in achievements
                    select new Data.UserAchievement

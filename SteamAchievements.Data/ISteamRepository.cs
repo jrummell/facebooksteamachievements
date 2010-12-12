@@ -58,6 +58,12 @@ namespace SteamAchievements.Data
         void DeleteAllOnSubmit(IEnumerable<UserAchievement> achievements);
 
         /// <summary>
+        /// Deletes the user on submit.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        void DeleteOnSubmit(User user);
+
+        /// <summary>
         /// Submits the changes.
         /// </summary>
         void SubmitChanges();

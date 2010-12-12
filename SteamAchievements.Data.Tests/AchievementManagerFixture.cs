@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using NUnit.Framework;
 
@@ -112,7 +113,7 @@ namespace SteamAchievements.Data.Tests
         [Test]
         public void AddGameAchievements()
         {
-            int gameId = 99;
+            const int gameId = 99;
             List<Achievement> gameAchievements = new List<Achievement>();
             for (int i = 0; i < 10; i++)
             {
@@ -133,9 +134,8 @@ namespace SteamAchievements.Data.Tests
         [Test]
         public void AssignAchievements()
         {
-            const string steamUserId = "user1";
             const long facebookUserId = 1;
-            IEnumerable<Achievement> achievements = _manager.GetUnassignedAchievements(steamUserId,
+            IEnumerable<Achievement> achievements = _manager.GetUnassignedAchievements(facebookUserId,
                                                                                        _repository.Achievements);
             Assert.That(achievements.Any());
 
@@ -186,7 +186,7 @@ namespace SteamAchievements.Data.Tests
         [Test]
         public void GetUnassignedAchievements()
         {
-            IEnumerable<Achievement> achievements = _manager.GetUnassignedAchievements("user1", _repository.Achievements);
+            IEnumerable<Achievement> achievements = _manager.GetUnassignedAchievements(1, _repository.Achievements);
 
             Assert.That(achievements.Count(), Is.EqualTo(2));
             Assert.That(achievements.Count(a => a.Id == 4), Is.EqualTo(1));
@@ -368,6 +368,15 @@ namespace SteamAchievements.Data.Tests
 
             Assert.That(_repository.Users.Single(u => u.FacebookUserId == facebookUserId).SteamUserId,
                         Is.EqualTo(steamUserId));
+        }
+
+        [Test]
+        public void ValidateDate()
+        {
+            DateTime date = AchievementManager.ValidateDate(DateTime.MinValue);
+
+            long sqlMinTicks = SqlDateTime.MinValue.Value.Ticks;
+            Assert.That(date.Ticks, Is.GreaterThan(sqlMinTicks));
         }
     }
 }

@@ -70,5 +70,11 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="user"></param>
         void UpdateUser(User user);
+
+        /// <summary>
+        /// Deauthorizes the user.
+        /// </summary>
+        /// <param name="facebookUserId">The facebook user id.</param>
+        void DeauthorizeUser(long facebookUserId);
     }
 }
