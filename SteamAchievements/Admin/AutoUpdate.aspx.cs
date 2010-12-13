@@ -233,11 +233,15 @@ namespace SteamAchievements.Admin
         /// <param name="ex">The ex.</param>
         private static void LogException(Exception ex)
         {
-            Log("Exception: " + ex.Message);
+            Log("Exception: " + ex.GetType());
+            Log(ex.Message);
+            Log(ex.StackTrace);
 
             if (ex.InnerException != null)
             {
-                Log("Inner Exception: " + ex.InnerException.Message);
+                Log("Inner Exception: " + ex.InnerException.GetType());
+                Log(ex.InnerException.Message);
+                Log(ex.InnerException.StackTrace);
             }
         }
 
