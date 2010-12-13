@@ -11,17 +11,4 @@
     <div id="unauthorizedDiv" runat="server" class="fberrorbox" visible="false">
         Invalid auth key.
     </div>
-    <div id="noUpdatesDiv" runat="server" class="fbinfobox" visible="false">
-        No updates.
-    </div>
-    <asp:Repeater ID="userRepeater" runat="server">
-        <ItemTemplate>
-            <div>
-                <%# Eval("SteamUserId") %>, Game:
-                <%# Eval("GameName") %>, Achievement:
-                <%# Eval("Description") %>, Exception:
-                <%# Eval("ExceptionMessage")%>
-            </div>
-        </ItemTemplate>
-    </asp:Repeater>
 </asp:Content>

@@ -25,6 +25,7 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using Facebook;
@@ -49,6 +50,7 @@ namespace SteamAchievements.Admin
             base.OnInit(e);
 
             Load += Page_Load;
+            Unload += Page_Unload;
         }
 
         /// <summary>
@@ -65,6 +67,7 @@ namespace SteamAchievements.Admin
                     InitLog();
 
                     Log("Auto Update start");
+                    FlushLog();
 
                     bool authorized = Request["auth"] == Properties.Settings.Default.AutoUpdateAuthKey;
                     if (!authorized)
@@ -74,41 +77,37 @@ namespace SteamAchievements.Admin
                     }
                     else
                     {
-                        FlushLog();
-
-                        List<Result> results = PublishAchievements();
-
-                        FlushLog();
-
-                        userRepeater.DataSource = results;
-                        userRepeater.DataBind();
-
-                        if (results.Count == 0)
-                        {
-                            Log("No users had new unpublished achievements");
-
-                            noUpdatesDiv.Visible = true;
-                        }
+                        ThreadPool.QueueUserWorkItem(PublishAchievements);
                     }
-
-                    Log("Done");
                 }
                 catch (Exception ex)
                 {
                     LogException(ex);
                 }
+                finally
+                {
+                    Log("Auto Update done");
 
-                Log("Auto Update done");
-
-                FlushLog();
+                    FlushLog();
+                }
             }
+        }
+
+        /// <summary>
+        /// Handles the Unload event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private static void Page_Unload(object sender, EventArgs e)
+        {
+            _achievementService.Dispose();
         }
 
         /// <summary>
         /// Publishes the achievements.
         /// </summary>
         /// <returns></returns>
-        private static List<Result> PublishAchievements()
+        private static void PublishAchievements(object state)
         {
             IEnumerable<User> users;
             using (IAchievementManager manager = new AchievementManager())
@@ -120,18 +119,11 @@ namespace SteamAchievements.Admin
             Log("Auto Update user count: " + users.Count());
             FlushLog();
 
-            List<Result> results = new List<Result>();
-
             int logCount = 0;
 
             foreach (User user in users)
             {
-                IEnumerable<Result> userResults = PublishUserAcheivements(user);
-
-                if (userResults.Any())
-                {
-                    results.AddRange(userResults);
-                }
+                PublishUserAcheivements(user);
 
                 // flush the log every 10 users - log often to increase chances of catching errors.
                 if (logCount%10 == 0)
@@ -141,8 +133,6 @@ namespace SteamAchievements.Admin
 
                 logCount++;
             }
-
-            return results;
         }
 
         /// <summary>
@@ -150,10 +140,8 @@ namespace SteamAchievements.Admin
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        private static IEnumerable<Result> PublishUserAcheivements(User user)
+        private static void PublishUserAcheivements(User user)
         {
-            List<Result> results = new List<Result>();
-
             Log("User: " + user.SteamUserId + " (" + user.FacebookUserId + ")");
 
             if (String.IsNullOrEmpty(user.AccessToken))
@@ -161,7 +149,7 @@ namespace SteamAchievements.Admin
                 Log("Empty AccessToken");
 
                 // if there is no access token, the user hasn't given the app offline_access
-                return results;
+                return;
             }
 
             // update the user's achievements
@@ -171,7 +159,7 @@ namespace SteamAchievements.Admin
             {
                 Log("No updated achievements");
 
-                return results;
+                return;
             }
 
             // get the user's unpublished achievements
@@ -181,7 +169,7 @@ namespace SteamAchievements.Admin
             {
                 Log("No unpublished achievements");
 
-                return results;
+                return;
             }
 
             FacebookApp app = new FacebookApp(user.AccessToken);
@@ -203,13 +191,6 @@ namespace SteamAchievements.Admin
 
                 Log(message + ": " + achievement.Name);
 
-                Result result = new Result
-                                    {
-                                        SteamUserId = user.SteamUserId,
-                                        GameName = achievement.Game.Name,
-                                        Description = achievement.Name
-                                    };
-
                 try
                 {
                     app.Api(userFeedPath, parameters, HttpMethod.Post);
@@ -218,13 +199,9 @@ namespace SteamAchievements.Admin
                 }
                 catch (FacebookApiException ex)
                 {
-                    result.ExceptionMessage = ex.Message;
-
                     LogException(ex);
                     FlushLog();
                 }
-
-                results.Add(result);
             }
 
             // update the published flag
@@ -232,7 +209,7 @@ namespace SteamAchievements.Admin
 
             Log("User achievements published");
 
-            return results;
+            return;
         }
 
         /// <summary>
@@ -276,17 +253,5 @@ namespace SteamAchievements.Admin
             File.AppendAllText(_fullLogPath, _log.ToString());
             _log.Clear();
         }
-
-        #region Nested type: Result
-
-        private class Result
-        {
-            public string SteamUserId { get; set; }
-            public string GameName { get; set; }
-            public string Description { get; set; }
-            public string ExceptionMessage { get; set; }
-        }
-
-        #endregion
     }
 }
