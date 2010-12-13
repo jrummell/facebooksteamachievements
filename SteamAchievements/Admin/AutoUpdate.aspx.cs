@@ -28,6 +28,7 @@ using System.Text;
 using System.Threading;
 using System.Web;
 using System.Web.UI;
+using Elmah;
 using Facebook;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
@@ -60,37 +61,23 @@ namespace SteamAchievements.Admin
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Page_Load(object sender, EventArgs e)
         {
-            lock (_lock)
+            InitLog();
+
+            Log("Auto Update start");
+            FlushLog();
+
+            bool authorized = Request["auth"] == Properties.Settings.Default.AutoUpdateAuthKey;
+            if (!authorized)
             {
-                try
-                {
-                    InitLog();
-
-                    Log("Auto Update start");
-                    FlushLog();
-
-                    bool authorized = Request["auth"] == Properties.Settings.Default.AutoUpdateAuthKey;
-                    if (!authorized)
-                    {
-                        Log("Invalid auth key");
-                        unauthorizedDiv.Visible = true;
-                    }
-                    else
-                    {
-                        ThreadPool.QueueUserWorkItem(PublishAchievements);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogException(ex);
-                }
-                finally
-                {
-                    Log("Auto Update done");
-
-                    FlushLog();
-                }
+                Log("Invalid auth key");
+                unauthorizedDiv.Visible = true;
             }
+            else
+            {
+                ThreadPool.QueueUserWorkItem(PublishAchievements);
+            }
+
+            FlushLog();
         }
 
         /// <summary>
@@ -109,29 +96,47 @@ namespace SteamAchievements.Admin
         /// <returns></returns>
         private static void PublishAchievements(object state)
         {
-            IEnumerable<User> users;
-            using (IAchievementManager manager = new AchievementManager())
+            try
             {
-                // get users configured for auto update
-                users = manager.GetAutoUpdateUsers();
-            }
-
-            Log("Auto Update user count: " + users.Count());
-            FlushLog();
-
-            int logCount = 0;
-
-            foreach (User user in users)
-            {
-                PublishUserAcheivements(user);
-
-                // flush the log every 10 users - log often to increase chances of catching errors.
-                if (logCount%10 == 0)
+                lock (_lock)
                 {
-                    FlushLog();
-                }
+                    IEnumerable<User> users;
+                    using (IAchievementManager manager = new AchievementManager())
+                    {
+                        // get users configured for auto update
+                        users = manager.GetAutoUpdateUsers();
+                    }
 
-                logCount++;
+                    Log("Auto Update user count: " + users.Count());
+                    FlushLog();
+
+                    int logCount = 0;
+
+                    foreach (User user in users)
+                    {
+                        PublishUserAcheivements(user);
+
+                        // flush the log every 10 users - log often to increase chances of catching errors.
+                        if (logCount%10 == 0)
+                        {
+                            FlushLog();
+                        }
+
+                        logCount++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
+
+                // since this is executed in a separate thread, Elmah won't log this without some help.
+                ErrorLog.GetDefault(null).Log(new Elmah.Error(ex));
+            }
+            finally
+            {
+                Log("Auto Update done");
+                FlushLog();
             }
         }
 
