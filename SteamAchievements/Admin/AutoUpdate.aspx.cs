@@ -37,7 +37,8 @@ namespace SteamAchievements.Admin
     {
         private static readonly StringBuilder _log = new StringBuilder();
         private static string _fullLogPath;
-        private readonly object _lock = new object();
+        private static readonly IAchievementService _achievementService = new AchievementService();
+        private static readonly object _lock = new object();
 
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event to initialize the page.
@@ -75,7 +76,7 @@ namespace SteamAchievements.Admin
                     {
                         FlushLog();
 
-                        List<Result> results = UpdateAchievements();
+                        List<Result> results = PublishAchievements();
 
                         FlushLog();
 
@@ -104,10 +105,10 @@ namespace SteamAchievements.Admin
         }
 
         /// <summary>
-        /// Updates the achievements.
+        /// Publishes the achievements.
         /// </summary>
         /// <returns></returns>
-        private static List<Result> UpdateAchievements()
+        private static List<Result> PublishAchievements()
         {
             IEnumerable<User> users;
             using (IAchievementManager manager = new AchievementManager())
@@ -122,96 +123,114 @@ namespace SteamAchievements.Admin
             List<Result> results = new List<Result>();
 
             int logCount = 0;
-            using (IAchievementService service = new AchievementService())
+
+            foreach (User user in users)
             {
-                foreach (User user in users)
+                IEnumerable<Result> userResults = PublishUserAcheivements(user);
+
+                if (userResults.Any())
                 {
-                    Log("User: " + user.SteamUserId + " (" + user.FacebookUserId + ")");
-
-                    if (String.IsNullOrEmpty(user.AccessToken))
-                    {
-                        Log("Empty AccessToken");
-
-                        // if there is no access token, the user hasn't given the app offline_access
-                        continue;
-                    }
-
-                    // update the user's achievements
-                    int updated = service.UpdateAchievements(user.SteamUserId);
-
-                    if (updated == 0)
-                    {
-                        Log("No updated achievements");
-
-                        continue;
-                    }
-
-                    // get the user's unpublished achievements
-                    IEnumerable<SimpleAchievement> achievements = service.GetNewAchievements(user.SteamUserId);
-
-                    if (!achievements.Any())
-                    {
-                        Log("No unpublished achievements");
-
-                        continue;
-                    }
-
-                    FacebookApp app = new FacebookApp(user.AccessToken);
-                    string userFeedPath = String.Format("/{0}/feed/", user.FacebookUserId);
-
-                    List<int> publishedAchievements = new List<int>();
-
-                    // post the first 5 new achievements
-                    foreach (SimpleAchievement achievement in achievements.Take(5))
-                    {
-                        string message = String.Format("{0} earned an achievement in {1}",
-                                                       user.SteamUserId, achievement.Game.Name);
-                        dynamic parameters = new ExpandoObject();
-                        parameters.link = achievement.Game.StatsUrl;
-                        parameters.message = message;
-                        parameters.name = achievement.Name;
-                        parameters.description = achievement.Description;
-                        parameters.picture = achievement.ImageUrl;
-
-                        Log(message);
-
-                        Result result = new Result
-                                            {
-                                                SteamUserId = user.SteamUserId,
-                                                GameName = achievement.Game.Name,
-                                                Description = achievement.Name
-                                            };
-
-                        try
-                        {
-                            app.Api(userFeedPath, parameters, HttpMethod.Post);
-
-                            publishedAchievements.Add(achievement.Id);
-                        }
-                        catch (FacebookApiException ex)
-                        {
-                            LogException(ex);
-
-                            result.ExceptionMessage = ex.Message;
-                        }
-
-                        results.Add(result);
-                    }
-
-                    // update the published flag
-                    service.PublishAchievements(user.SteamUserId, publishedAchievements);
-
-                    Log("User achievements published");
-
-                    // flush the log every 10 users - log often to increase chances of catching errors.
-                    if (logCount%10 == 0)
-                    {
-                        FlushLog();
-                    }
-
-                    logCount++;
+                    results.AddRange(userResults);
                 }
+
+                // flush the log every 10 users - log often to increase chances of catching errors.
+                if (logCount%10 == 0)
+                {
+                    FlushLog();
+                }
+
+                logCount++;
             }
+
+            return results;
+        }
+
+        /// <summary>
+        /// Publishes the user's acheivements.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns></returns>
+        private static IEnumerable<Result> PublishUserAcheivements(User user)
+        {
+            List<Result> results = new List<Result>();
+
+            Log("User: " + user.SteamUserId + " (" + user.FacebookUserId + ")");
+
+            if (String.IsNullOrEmpty(user.AccessToken))
+            {
+                Log("Empty AccessToken");
+
+                // if there is no access token, the user hasn't given the app offline_access
+                return results;
+            }
+
+            // update the user's achievements
+            int updated = _achievementService.UpdateAchievements(user.SteamUserId);
+
+            if (updated == 0)
+            {
+                Log("No updated achievements");
+
+                return results;
+            }
+
+            // get the user's unpublished achievements
+            IEnumerable<SimpleAchievement> achievements = _achievementService.GetNewAchievements(user.SteamUserId);
+
+            if (!achievements.Any())
+            {
+                Log("No unpublished achievements");
+
+                return results;
+            }
+
+            FacebookApp app = new FacebookApp(user.AccessToken);
+            string userFeedPath = String.Format("/{0}/feed/", user.FacebookUserId);
+
+            List<int> publishedAchievements = new List<int>();
+
+            // post the first 5 new achievements
+            foreach (SimpleAchievement achievement in achievements.Take(5))
+            {
+                string message = String.Format("{0} earned an achievement in {1}",
+                                               user.SteamUserId, achievement.Game.Name);
+                dynamic parameters = new ExpandoObject();
+                parameters.link = achievement.Game.StatsUrl;
+                parameters.message = message;
+                parameters.name = achievement.Name;
+                parameters.description = achievement.Description;
+                parameters.picture = achievement.ImageUrl;
+
+                Log(message + ": " + achievement.Name);
+
+                Result result = new Result
+                                    {
+                                        SteamUserId = user.SteamUserId,
+                                        GameName = achievement.Game.Name,
+                                        Description = achievement.Name
+                                    };
+
+                try
+                {
+                    app.Api(userFeedPath, parameters, HttpMethod.Post);
+
+                    publishedAchievements.Add(achievement.Id);
+                }
+                catch (FacebookApiException ex)
+                {
+                    result.ExceptionMessage = ex.Message;
+
+                    LogException(ex);
+                    FlushLog();
+                }
+
+                results.Add(result);
+            }
+
+            // update the published flag
+            _achievementService.PublishAchievements(user.SteamUserId, publishedAchievements);
+
+            Log("User achievements published");
 
             return results;
         }
