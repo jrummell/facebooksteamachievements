@@ -40,7 +40,8 @@ namespace SteamAchievements.Admin
         private static readonly StringBuilder _log = new StringBuilder();
         private static string _fullLogPath;
         private static readonly IAchievementService _achievementService = new AchievementService();
-        private static readonly object _lock = new object();
+        private static readonly object _publishLock = new object();
+        private static readonly object _logLock = new object();
 
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event to initialize the page.
@@ -64,7 +65,6 @@ namespace SteamAchievements.Admin
             InitLog();
 
             Log("Auto Update start");
-            FlushLog();
 
             bool authorized = Request["auth"] == Properties.Settings.Default.AutoUpdateAuthKey;
             if (!authorized)
@@ -98,7 +98,7 @@ namespace SteamAchievements.Admin
         {
             try
             {
-                lock (_lock)
+                lock (_publishLock)
                 {
                     IEnumerable<User> users;
                     using (IAchievementManager manager = new AchievementManager())
@@ -255,8 +255,11 @@ namespace SteamAchievements.Admin
         /// </summary>
         private static void FlushLog()
         {
-            File.AppendAllText(_fullLogPath, _log.ToString());
-            _log.Clear();
+            lock (_logLock)
+            {
+                File.AppendAllText(_fullLogPath, _log.ToString());
+                _log.Clear();
+            }
         }
     }
 }
