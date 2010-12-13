@@ -52,7 +52,6 @@ namespace SteamAchievements.Admin
             base.OnInit(e);
 
             Load += Page_Load;
-            Unload += Page_Unload;
         }
 
         /// <summary>
@@ -78,16 +77,6 @@ namespace SteamAchievements.Admin
             }
 
             FlushLog();
-        }
-
-        /// <summary>
-        /// Handles the Unload event of the Page control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private static void Page_Unload(object sender, EventArgs e)
-        {
-            _achievementService.Dispose();
         }
 
         /// <summary>
@@ -137,6 +126,8 @@ namespace SteamAchievements.Admin
             {
                 Log("Auto Update done");
                 FlushLog();
+
+                _achievementService.Dispose();
             }
         }
 
