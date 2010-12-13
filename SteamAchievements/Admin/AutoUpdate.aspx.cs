@@ -28,7 +28,6 @@ using System.Text;
 using System.Threading;
 using System.Web;
 using System.Web.UI;
-using Elmah;
 using Facebook;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
@@ -99,28 +98,32 @@ namespace SteamAchievements.Admin
                     Log("Auto Update user count: " + users.Count());
                     FlushLog();
 
-                    int logCount = 0;
-
+                    int userCount = 0;
                     foreach (User user in users)
                     {
-                        PublishUserAcheivements(user);
+                        try
+                        {
+                            PublishUserAcheivements(user);
+                        }
+                        catch (Exception ex)
+                        {
+                            LogException(ex);
+                            FlushLog();
+                        }
 
                         // flush the log every 10 users - log often to increase chances of catching errors.
-                        if (logCount%10 == 0)
+                        if (userCount%10 == 0)
                         {
                             FlushLog();
                         }
 
-                        logCount++;
+                        userCount++;
                     }
                 }
             }
             catch (Exception ex)
             {
                 LogException(ex);
-
-                // since this is executed in a separate thread, Elmah won't log this without some help.
-                ErrorLog.GetDefault(null).Log(new Elmah.Error(ex));
             }
             finally
             {
