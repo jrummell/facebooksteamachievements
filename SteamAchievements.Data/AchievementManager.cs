@@ -138,6 +138,7 @@ namespace SteamAchievements.Data
 
             return from achievement in _repository.UserAchievements
                    where achievement.FacebookUserId == facebookUserId && !achievement.Published
+                   orderby achievement.Date descending
                    select achievement.Achievement;
         }
 
