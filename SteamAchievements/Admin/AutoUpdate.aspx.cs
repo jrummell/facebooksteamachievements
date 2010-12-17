@@ -88,41 +88,65 @@ namespace SteamAchievements.Admin
             {
                 lock (_publishLock)
                 {
-                    IEnumerable<User> users;
+                    List<User> users;
                     using (IAchievementManager manager = new AchievementManager())
                     {
                         // get users configured for auto update
-                        users = manager.GetAutoUpdateUsers();
+                        users = manager.GetAutoUpdateUsers().ToList();
                     }
 
                     Log("Auto Update user count: " + users.Count());
                     FlushLog();
 
-                    int userCount = 0;
-                    foreach (User user in users)
+                    for (int i = 0; i < users.Count; i++)
                     {
+                        User user = users[i];
+
+                        bool threadAborting = false;
                         try
                         {
-                            PublishUserAcheivements(user);
+                            try
+                            {
+                                try
+                                {
+                                    Log("User " + (i+1) + " of " + users.Count + ": " + user.SteamUserId + " (" + user.FacebookUserId + ")");
+
+                                    PublishUserAcheivements(user);
+                                }
+                                catch (ThreadAbortException ex)
+                                {
+                                    LogException(ex);
+
+                                    // The thread is being aborted
+                                    threadAborting = true;
+
+                                    FlushLog();
+                                }
+                                catch (Exception ex)
+                                {
+                                    LogException(ex);
+                                    FlushLog();
+                                }
+                            }
+                            finally
+                            {
+                                if (threadAborting)
+                                {
+                                    Log("Resetting thread.");
+
+                                    // Cancel the thread abort and continue to the next user.
+                                    // This must be called in a finally wrapped around the ThreadAbortException catch
+                                    // because the runtime will automagically rethrow it after its caught.
+                                    Thread.ResetAbort();
+                                }
+                            }
                         }
-                        catch (ThreadAbortException ex)
+                        catch (ThreadAbortException)
                         {
-                            LogException(ex);
-
-                            Log("Resetting...");
-
-                            Thread.ResetAbort();
-
-                            FlushLog();
+                            // The inner finally block stops the thread from aborting but does not catch the exception.
+                            // Swallow it here and continue to the next user.
+                            Log("Caught and ignored ThreadAbortException");
                         }
-
-                        // flush the log every 10 users - log often to increase chances of catching errors.
-                        if (userCount%10 == 0)
-                        {
-                            FlushLog();
-                        }
-
-                        userCount++;
                     }
                 }
             }
@@ -146,8 +170,6 @@ namespace SteamAchievements.Admin
         /// <returns></returns>
         private static void PublishUserAcheivements(User user)
         {
-            Log("User: " + user.SteamUserId + " (" + user.FacebookUserId + ")");
-
             if (String.IsNullOrEmpty(user.AccessToken))
             {
                 Log("Empty AccessToken");
