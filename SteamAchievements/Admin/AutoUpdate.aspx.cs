@@ -121,6 +121,16 @@ namespace SteamAchievements.Admin
                     }
                 }
             }
+            catch (ThreadAbortException ex)
+            {
+                LogException(ex);
+
+                Log("Resetting...");
+
+                FlushLog();
+
+                Thread.ResetAbort();
+            }
             catch (Exception ex)
             {
                 LogException(ex);
