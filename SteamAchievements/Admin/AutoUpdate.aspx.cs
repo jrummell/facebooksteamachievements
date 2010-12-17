@@ -103,14 +103,7 @@ namespace SteamAchievements.Admin
                     {
                         try
                         {
-                            try
-                            {
-                                PublishUserAcheivements(user);
-                            }
-                            finally
-                            {
-                                Thread.ResetAbort();
-                            }
+                            PublishUserAcheivements(user);
                         }
                         catch (ThreadAbortException ex)
                         {
