@@ -146,6 +146,8 @@ namespace SteamAchievements.Admin
                             // The inner finally block stops the thread from aborting but does not catch the exception.
                             // Swallow it here and continue to the next user.
                             Log("Caught and ignored ThreadAbortException");
+
+                            // Just kidding! The runtime still throws ThreadAbortException ...
                         }
                     }
                 }
