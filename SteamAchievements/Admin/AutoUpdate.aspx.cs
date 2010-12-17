@@ -103,11 +103,21 @@ namespace SteamAchievements.Admin
                     {
                         try
                         {
-                            PublishUserAcheivements(user);
+                            try
+                            {
+                                PublishUserAcheivements(user);
+                            }
+                            finally
+                            {
+                                Thread.ResetAbort();
+                            }
                         }
-                        catch (Exception ex)
+                        catch (ThreadAbortException ex)
                         {
                             LogException(ex);
+
+                            Log("Resetting...");
+
                             FlushLog();
                         }
 
@@ -120,16 +130,6 @@ namespace SteamAchievements.Admin
                         userCount++;
                     }
                 }
-            }
-            catch (ThreadAbortException ex)
-            {
-                LogException(ex);
-
-                Log("Resetting...");
-
-                FlushLog();
-
-                Thread.ResetAbort();
             }
             catch (Exception ex)
             {
