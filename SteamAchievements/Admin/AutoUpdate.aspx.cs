@@ -111,6 +111,8 @@ namespace SteamAchievements.Admin
 
                             Log("Resetting...");
 
+                            Thread.ResetAbort();
+
                             FlushLog();
                         }
 
