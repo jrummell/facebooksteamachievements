@@ -26,7 +26,7 @@ using System.ServiceModel.Web;
 
 namespace SteamAchievements.Services
 {
-    [ServiceContract]
+    [ServiceContract(Namespace = "www.jrummell.com/SteamAchievements")]
     public interface IAchievementService : IDisposable
     {
         /// <summary>

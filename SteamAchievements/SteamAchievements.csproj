@@ -95,12 +95,8 @@
     <Compile Include="AdminLogin.aspx.designer.cs">
       <DependentUpon>AdminLogin.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Admin\AutoUpdate.aspx.cs">
-      <DependentUpon>AutoUpdate.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Admin\AutoUpdate.aspx.designer.cs">
-      <DependentUpon>AutoUpdate.aspx</DependentUpon>
+    <Compile Include="Admin\AutoUpdate.ashx.cs">
+      <DependentUpon>AutoUpdate.ashx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -224,7 +220,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AchievementServiceTest.htm" />
-    <Content Include="Admin\AutoUpdate.aspx" />
     <Content Include="Controls\FacebookLogin.ascx" />
     <Content Include="Controls\HelpLink.ascx" />
     <Content Include="Controls\Navigation.ascx" />
@@ -303,6 +298,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Themes\Default\Site.skin" />
+    <Content Include="Admin\AutoUpdate.ashx" />
     <None Include="p3p.xml" />
     <None Include="policy.htm" />
     <None Include="policy.txt" />
