@@ -42,6 +42,19 @@ namespace SteamAchievements.Services
         List<SimpleAchievement> GetNewAchievements(string steamUserId);
 
         /// <summary>
+        /// Gets the unpublished achievements newer than the given date.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="oldestDate">The oldest date.</param>
+        /// <returns>
+        /// The new achievements that haven't been stored yet.
+        /// </returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        List<SimpleAchievement> GetUnpublishedAchievements(string steamUserId, DateTime oldestDate);
+
+        /// <summary>
         /// Gets the games.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>

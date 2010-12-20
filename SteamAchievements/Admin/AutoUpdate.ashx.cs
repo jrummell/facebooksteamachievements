@@ -38,8 +38,7 @@ namespace SteamAchievements.Admin
                     {
                         Log("Getting auto update users");
 
-                        string[] userNames = GetAutoUpdateUsers().Select(user => user.SteamUserId).ToArray();
-                        string users = String.Join(";", userNames);
+                        string users = GetAutoUpdateUsers();
 
                         Log(users);
 
@@ -75,15 +74,20 @@ namespace SteamAchievements.Admin
             }
         }
 
-        private List<User> GetAutoUpdateUsers()
+        /// <summary>
+        /// Gets the auto update steam user ids.
+        /// </summary>
+        /// <returns></returns>
+        private string GetAutoUpdateUsers()
         {
-            List<User> users;
+            string[] steamUserIds;
             using (IAchievementManager manager = new AchievementManager())
             {
                 // get users configured for auto update
-                users = manager.GetAutoUpdateUsers().ToList();
+                steamUserIds = manager.GetAutoUpdateUsers().Select(user => user.SteamUserId).ToArray();
             }
-            return users;
+
+            return String.Join(";", steamUserIds);
         }
 
         /// <summary>
@@ -125,8 +129,11 @@ namespace SteamAchievements.Admin
                 return;
             }
 
-            // get the user's unpublished achievements
-            IEnumerable<SimpleAchievement> achievements = _achievementService.GetNewAchievements(user.SteamUserId);
+            // get unpublished achievements earned in the last 48 hours to make up for time zone differences 
+            // and the time it takes to run the Auto Update process
+            DateTime oldestDate = DateTime.UtcNow.AddHours(-48);
+            IEnumerable<SimpleAchievement> achievements = 
+                _achievementService.GetUnpublishedAchievements(user.SteamUserId, oldestDate);
 
             if (!achievements.Any())
             {

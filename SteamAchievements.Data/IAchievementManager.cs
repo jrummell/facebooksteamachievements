@@ -47,6 +47,14 @@ namespace SteamAchievements.Data
         IEnumerable<Achievement> GetUnpublishedAchievements(string steamUserId);
 
         /// <summary>
+        /// Gets the unpublished achievements by oldest date.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="oldestDate">The oldest date.</param>
+        /// <returns></returns>
+        IEnumerable<Achievement> GetUnpublishedAchievements(string steamUserId, DateTime oldestDate);
+
+        /// <summary>
         /// Gets the auto update users.
         /// </summary>
         /// <returns></returns>
