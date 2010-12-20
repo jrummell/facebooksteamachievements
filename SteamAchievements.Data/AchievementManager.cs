@@ -119,7 +119,10 @@ namespace SteamAchievements.Data
         /// <returns></returns>
         public IEnumerable<User> GetAutoUpdateUsers()
         {
-            return _repository.Users.Where(user => user.AutoUpdate).ToList();
+            return from user in _repository.Users
+                   where user.AutoUpdate
+                   orderby user.SteamUserId
+                   select user;
         }
 
         /// <summary>
@@ -138,6 +141,30 @@ namespace SteamAchievements.Data
 
             return from achievement in _repository.UserAchievements
                    where achievement.FacebookUserId == facebookUserId && !achievement.Published
+                   orderby achievement.Date descending
+                   select achievement.Achievement;
+        }
+
+        /// <summary>
+        /// Gets the unpublished achievements by date.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="oldestDate">The oldest date.</param>
+        /// <returns></returns>
+        public IEnumerable<Achievement> GetUnpublishedAchievements(string steamUserId, DateTime oldestDate)
+        {
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            oldestDate = ValidateDate(oldestDate);
+
+            long facebookUserId = GetFacebookUserId(steamUserId);
+
+            return from achievement in _repository.UserAchievements
+                   where achievement.FacebookUserId == facebookUserId && !achievement.Published
+                        && achievement.Date > oldestDate
                    orderby achievement.Date descending
                    select achievement.Achievement;
         }

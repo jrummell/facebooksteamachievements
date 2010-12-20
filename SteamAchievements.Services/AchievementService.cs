@@ -102,6 +102,26 @@ namespace SteamAchievements.Services
         }
 
         /// <summary>
+        /// Gets the unpublished achievements newer than the given date.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="oldestDate">The oldest date.</param>
+        /// <returns>
+        /// The new achievements that haven't been stored yet.
+        /// </returns>
+        public List<SimpleAchievement> GetUnpublishedAchievements(string steamUserId, DateTime oldestDate)
+        {
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            IEnumerable<Game> games = _communityService.GetGames(steamUserId);
+
+            return _achievementManager.GetUnpublishedAchievements(steamUserId, oldestDate).ToSimpleAchievementList(games);
+        }
+
+        /// <summary>
         /// Updates the Published field for the given achievements for the given user.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
