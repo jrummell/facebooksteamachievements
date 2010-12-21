@@ -67,8 +67,9 @@ function displayAchievements(achievements)
         }
 
         achievementHtml += "<div class='achievement'><input value='" + achievement.Id + "' type='checkbox' \/>";
-        achievementHtml += "<img src='" + achievement.ImageUrl + "' alt='" + achievement.Description + "' \/>";
-        achievementHtml += "<span class='description'>" + achievement.Description + "<\/span><\/div>\n";
+        achievementHtml += "<img src='" + achievement.ImageUrl + "' alt='" + achievement.Name + "' \/>";
+        achievementHtml += "<div class='name'>" + achievement.Name + "<\/div>\n";
+        achievementHtml += "<div class='description'>" + achievement.Description + "<\/div><\/div>\n";
     });
 
     $("#newAchievements").html(achievementHtml);
