@@ -26,7 +26,7 @@
         <legend>Auto Update</legend>
         <asp:CheckBox ID="autoUpdateCheckBox" runat="server" />
         <label for="autoUpdateCheckBox">
-            Update and publish my achievements automatically (Beta).</label>
+            Update and publish my achievements automatically.</label>
     </fieldset>
     <p>
         <asp:LinkButton ID="saveSettingsButton" runat="server" OnClick="SaveSettingsButtonClick">
