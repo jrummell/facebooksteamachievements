@@ -1,4 +1,8 @@
-﻿body
+﻿/******************
+    Element styles
+******************/
+
+body
 {
     padding: 0px;
     margin: 0px;
@@ -21,67 +25,10 @@ fieldset
     padding: 5px 5px 5px 5px;
 }
 
-.game
-{
-    padding: 5px;
-}
-
-.game img 
-{
-    display: inline-block;
-    width: 184px;
-    height: 69px;
-    margin: 0px;
-    padding: 0px;
-}
-
-#middleAnchor
-{
-    position: absolute;
-    display: block;
-    text-decoration: none;
-    color: #fff;
-}
-
-.clear
-{
-    clear: both;
-}
-
-.message
-{
-}
-
-.message .dismiss
-{
-    font-weight: normal;
-    color: #999;
-}
-
-.error
-{
-    background-color: #ffebe8;
-    color: #333333;
-}
-
-.menu
-{
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-
-.footer
-{
-    color: #999; 
-    margin-top: 1em;
-}
-
-div.form label
-{
-    display: block;
-}
-
-/* http://devtacular.com/articles/bkonrad/how-to-style-an-application-like-facebook/ */
+/****************** 
+    Facebook styles 
+    http://devtacular.com/articles/bkonrad/how-to-style-an-application-like-facebook/ 
+******************/
 
 h1, h2, h3, h4, h5, legend
 {
@@ -125,7 +72,9 @@ h4, h5
 {
     text-decoration: underline;
 }
-/* Facebook Box Styles */
+/****************** 
+    Facebook Box Styles 
+******************/
 .fbgreybox
 {
     background-color: #f7f7f7;
@@ -189,6 +138,10 @@ h4, h5
     cursor: hand;
 }
 
+/****************** 
+    general styles 
+******************/
+
 .button, a.button:link, a.button:visited, a.button:hover, a.button:active
 {
     margin: 5px 2px 5px 2px;
@@ -203,4 +156,117 @@ h4, h5
 .button img
 {
     vertical-align: text-top;
+}
+
+.left
+{
+    float: left;
+}
+
+.right
+{
+    float: right;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.message
+{
+}
+
+.message .dismiss
+{
+    font-weight: normal;
+    color: #999;
+}
+
+.error
+{
+    background-color: #ffebe8;
+    color: #333333;
+}
+
+.menu
+{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.footer
+{
+    color: #999; 
+    margin-top: 1em;
+}
+
+div.form label
+{
+    display: block;
+}
+
+/****************** 
+    default.aspx styles 
+******************/
+.game
+{
+    padding: 5px;
+}
+
+.game img 
+{
+    display: inline-block;
+    width: 184px;
+    height: 69px;
+    margin: 0px;
+    padding: 0px;
+}
+
+/****************** 
+    publish.aspx styles 
+******************/
+.unpublished .achievement
+{
+    height: 70px;
+    padding: 0px;
+    margin: 5px;
+    border: 1px solid #fff;
+}
+.unpublished .selected
+{
+    background-color: #fff9d7;
+    border: 1px solid #e2c822;
+}
+.unpublished .achievement input
+{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.unpublished .achievement img
+{
+    vertical-align: middle;
+    width: 64px;
+    height: 64px;
+}
+.unpublished .achievement .text
+{
+    margin-left: 1em;
+}
+.unpublished .achievement .name
+{
+    font-weight: bold;
+}
+.unpublished .achievement .description
+{
+    
+}
+
+/* publish dialog anchor hack */
+#middleAnchor
+{
+    position: absolute;
+    display: block;
+    text-decoration: none;
+    color: #fff;
 }

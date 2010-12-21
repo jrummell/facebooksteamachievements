@@ -52,27 +52,9 @@ function getNewAchievements()
 var _newAchievements = new Array();
 function displayAchievements(achievements)
 {
-    _newAchievements = new Array();
-    var achievementHtml = "\n";
-    var gameId = new String();
-    $(achievements).each(function (i)
-    {
-        var achievement = achievements[i];
-        _newAchievements.push(achievement);
+    _newAchievements = achievements;
 
-        if (gameId != achievement.Game.Id)
-        {
-            achievementHtml += "<h3>" + achievement.Game.Name + "\</h3>";
-            gameId = achievement.Game.Id;
-        }
-
-        achievementHtml += "<div class='achievement'><input value='" + achievement.Id + "' type='checkbox' \/>";
-        achievementHtml += "<img src='" + achievement.ImageUrl + "' alt='" + achievement.Name + "' \/>";
-        achievementHtml += "<span class='name'>" + achievement.Name + "<\/span><br\/>\n";
-        achievementHtml += "<span class='description'>" + achievement.Description + "<\/span><\/div>\n";
-    });
-
-    $("#newAchievements").html(achievementHtml);
+    $("#achievementTemplate").tmpl(achievements).appendTo("#newAchievements");
 
     // allow user to select only 5 achievements since only 5 images can be displayed at a time
     $("#newAchievements .achievement :checkbox, #newAchievements .achievement img").click(function ()

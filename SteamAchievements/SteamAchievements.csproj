@@ -220,6 +220,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AchievementServiceTest.htm" />
+    <Content Include="AchievementTemplateTest.htm" />
     <Content Include="Controls\FacebookLogin.ascx" />
     <Content Include="Controls\HelpLink.ascx" />
     <Content Include="Controls\Navigation.ascx" />

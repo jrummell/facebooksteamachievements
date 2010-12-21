@@ -3,34 +3,6 @@
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="head">
-    <style type="text/css">
-        #newAchievements .achievement
-        {
-            height: 70px;
-            padding: 0px;
-            margin: 5px;
-            border: 1px solid #fff;
-        }
-        #newAchievements .selected
-        {
-            background-color: #fff9d7;
-            border: 1px solid #e2c822;
-        }
-        #newAchievements .achievement input
-        {
-            margin-top: 25px;
-            margin-bottom: 25px;
-        }
-        #newAchievements .achievement img
-        {
-            vertical-align: middle;
-        }
-        #newAchievements .achievement .description
-        {
-            vertical-align: middle;
-            margin-left: 0.5em;
-        }
-    </style>
 </asp:Content>
 <asp:Content runat="server" ID="Content2" ContentPlaceHolderID="body">
     <h1>
@@ -60,7 +32,26 @@
         <div id="noUnpublishedMessage" class="fbinfobox message" style="display: none;">
             You have no unpublished achievements.</div>
         <img id="newAchievementsLoading" class="loading" src="images/ajax-loader.gif" alt="Getting unpublished achievements..." />
-        <div id="newAchievements">
+        <div id="newAchievements" class="unpublished">
+            <script type="text/javascript">
+                var _currentGameName = "";                
+            </script>
+            <script id="achievementTemplate" type="text/x-jquery-tmpl">
+                {{if Game.Name != _currentGameName }}
+                <h3 class="game">${_currentGameName = Game.Name}</h3>
+                {{/if}}
+                <div class="achievement">
+                    <div class="left">
+                        <input type="checkbox" value="${Id}" />
+                        <img src="${ImageUrl}" alt="${Name}" />
+                    </div>
+                    <div class="text left">
+                        <div class="name">${Name}</div>
+                        <div class="description">${Description}</div>
+                    </div>
+                </div>
+                <br class="clear" />
+            </script>
         </div>
     </fieldset>
     </form>
