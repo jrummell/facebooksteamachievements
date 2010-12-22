@@ -19,6 +19,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -38,11 +39,13 @@ namespace SteamAchievements.Services.Tests
             AchievementXmlParser parser = new AchievementXmlParser();
             IEnumerable<UserAchievement> achievements = parser.ParseClosed(xml);
 
+            DateTime expectedUnlockDate = new DateTime(1970, 1, 1).AddSeconds(1261871228);
+
             Assert.That(achievements.Any());
             Assert.That(achievements.All(a => a.SteamUserId == "nullreference"));
             Assert.That(achievements.Any(a => a.Name == "Fried Piper" && a.Closed));
             Assert.That(!achievements.Any(a => !a.Closed));
-            Assert.That(achievements.Any(a => a.Name == "Midnight Rider" && a.Closed && a.Date.Ticks == 1261871228));
+            Assert.That(achievements.Any(a => a.Name == "Midnight Rider" && a.Closed && a.Date.Ticks == expectedUnlockDate.Ticks));
         }
 
         [Test]

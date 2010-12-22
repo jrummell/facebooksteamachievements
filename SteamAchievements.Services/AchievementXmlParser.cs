@@ -101,8 +101,18 @@ namespace SteamAchievements.Services
                                   Date =
                                       achievement.date == null
                                           ? DateTime.MinValue
-                                          : new DateTime(Convert.ToInt32(achievement.date))
+                                          : GetDate(Convert.ToInt32(achievement.date))
                               };
+        }
+
+        /// <summary>
+        /// Gets a <see cref="DateTime"/> from a unix timestamp.
+        /// </summary>
+        /// <param name="unixTimestamp">The unix timestamp.</param>
+        /// <returns></returns>
+        private static DateTime GetDate(long unixTimestamp)
+        {
+            return new DateTime(1970, 1, 1).AddSeconds(unixTimestamp);
         }
     }
 }
