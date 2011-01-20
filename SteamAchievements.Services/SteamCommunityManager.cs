@@ -105,16 +105,23 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            string gamesUrl = GetGamesUrl(steamUserId);
+            Uri gamesUrl = GetGamesUrl(steamUserId);
 
             string xml = _webClient.DownloadString(gamesUrl);
 
             return _gamesParser.Parse(xml);
         }
 
-        private static string GetGamesUrl(string steamUserId)
+        public static Uri GetStatsUrl(string steamUserId)
         {
-            return String.Format("http://steamcommunity.com/id/{0}/games/?xml=1", steamUserId);
+            string url = "http://steamcommunity.com/id/" + steamUserId;
+            return new Uri(url, UriKind.Absolute);
+        }
+
+        private static Uri GetGamesUrl(string steamUserId)
+        {
+            string url = String.Format("http://steamcommunity.com/id/{0}/games/?xml=1", steamUserId);
+            return new Uri(url, UriKind.Absolute);
         }
     }
 }

@@ -11,12 +11,25 @@ using SteamAchievements.Services;
 
 namespace SteamAchievements.Admin
 {
+    //TODO: move all IAchievementService and IAchievementManager related stuff to another unit test friendly class (maybe Services project?)
     public class AutoUpdate : IHttpHandler
     {
         private static readonly StringBuilder _log = new StringBuilder();
         private static string _fullLogPath;
-        private readonly IAchievementService _achievementService = new AchievementService();
+        private readonly IAchievementService _achievementService;
+        private readonly IAchievementManager _achievementManager;
         private static readonly object _logLock = new object();
+
+        public AutoUpdate()
+            : this(null, null)
+        {
+        }
+
+        public AutoUpdate(IAchievementService achievementService, IAchievementManager achievementManager)
+        {
+            _achievementService = achievementService ?? new AchievementService();
+            _achievementManager = achievementManager ?? new AchievementManager();
+        }
 
         public void ProcessRequest(HttpContext context)
         {
@@ -71,6 +84,7 @@ namespace SteamAchievements.Admin
             {
                 FlushLog();
                 _achievementService.Dispose();
+                _achievementManager.Dispose();
             }
         }
 
@@ -80,12 +94,8 @@ namespace SteamAchievements.Admin
         /// <returns></returns>
         private string GetAutoUpdateUsers()
         {
-            string[] steamUserIds;
-            using (IAchievementManager manager = new AchievementManager())
-            {
-                // get users configured for auto update
-                steamUserIds = manager.GetAutoUpdateUsers().Select(user => user.SteamUserId).ToArray();
-            }
+            // get users configured for auto update
+            string[] steamUserIds = _achievementManager.GetAutoUpdateUsers().Select(user => user.SteamUserId).ToArray();
 
             return String.Join(";", steamUserIds);
         }
@@ -96,12 +106,7 @@ namespace SteamAchievements.Admin
         /// <param name="steamUserId"></param>
         private void PublishUserAchievements(string steamUserId)
         {
-            User user;
-            using (IAchievementManager manager = new AchievementManager())
-            {
-                // get users configured for auto update
-                user = manager.GetUser(steamUserId);
-            }
+            User user = _achievementManager.GetUser(steamUserId);
 
             if (user == null)
             {
@@ -142,36 +147,38 @@ namespace SteamAchievements.Admin
                 return;
             }
 
-            FacebookApp app = new FacebookApp(user.AccessToken);
-            string userFeedPath = String.Format("/{0}/feed/", user.FacebookUserId);
+            // only publish the top 5
+            achievements = achievements.Take(5);
+
+            // since the api only supports one attachment, use the first achievement's image
+            // and build the description from all achievements
+            SimpleAchievement firstAchievement = achievements.First();
+            Uri statsUrl = SteamCommunityManager.GetStatsUrl(user.SteamUserId);
+            string message = String.Format("{0} earned new achievements", user.SteamUserId);
+
+            dynamic parameters = new ExpandoObject();
+            parameters.link = statsUrl.ToString();
+            parameters.message = message;
+            parameters.name = firstAchievement.Name;
+            parameters.picture = firstAchievement.ImageUrl;
+            parameters.description = BuildDescription(achievements);
 
             List<int> publishedAchievements = new List<int>();
-
-            // post the first 5 new achievements
-            foreach (SimpleAchievement achievement in achievements.Take(5))
+            try
             {
-                string message = String.Format("{0} earned an achievement in {1}",
-                                               user.SteamUserId, achievement.Game.Name);
-                dynamic parameters = new ExpandoObject();
-                parameters.link = achievement.Game.StatsUrl;
-                parameters.message = message;
-                parameters.name = achievement.Name;
-                parameters.description = achievement.Description;
-                parameters.picture = achievement.ImageUrl;
+                // publish the post
+                FacebookApp app = new FacebookApp(user.AccessToken);
+                string userFeedPath = String.Format("/{0}/feed/", user.FacebookUserId);
+                app.Api(userFeedPath, parameters, HttpMethod.Post);
 
-                Log(message + ": " + achievement.Name);
+                publishedAchievements.AddRange(achievements.Select(a => a.Id));
+            }
+            catch (FacebookApiException ex)
+            {
+                LogException(ex);
+                FlushLog();
 
-                try
-                {
-                    app.Api(userFeedPath, parameters, HttpMethod.Post);
-
-                    publishedAchievements.Add(achievement.Id);
-                }
-                catch (FacebookApiException ex)
-                {
-                    LogException(ex);
-                    FlushLog();
-                }
+                return;
             }
 
             // update the published flag
@@ -180,6 +187,35 @@ namespace SteamAchievements.Admin
             Log("User achievements published");
 
             return;
+        }
+
+        /// <summary>
+        /// Builds the post description
+        /// </summary>
+        /// <param name="achievements"></param>
+        /// <returns></returns>
+        private static string BuildDescription(IEnumerable<SimpleAchievement> achievements)
+        {
+            StringBuilder message = new StringBuilder();
+
+            int currentGameId = 0;
+            foreach (SimpleAchievement achievement in achievements)
+            {
+                message.Append(" ");
+
+                if (currentGameId != achievement.Game.Id)
+                {
+                    message.Append(achievement.Game.Name).Append(":");
+                    currentGameId = achievement.Game.Id;
+                }
+
+                message.AppendFormat(" {0} ({1}),", achievement.Name, achievement.Description);
+            }
+
+            // remove the last comma
+            message.Remove(message.Length - 1, 1);
+
+            return message.ToString();
         }
 
         /// <summary>
