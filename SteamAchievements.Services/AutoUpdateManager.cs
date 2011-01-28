@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using System.Text;
 using Facebook;
@@ -32,11 +31,15 @@ namespace SteamAchievements.Services
     //TODO: remove dependency on IAchievementManager since it already depends on IAchievementService?
     public class AutoUpdateManager : IDisposable
     {
-        private readonly IAchievementService _achievementService;
         private readonly IAchievementManager _achievementManager;
-        private readonly IFacebookPublisher _publisher;
+        private readonly IAchievementService _achievementService;
         private readonly IAutoUpdateLogger _log;
+        private readonly IFacebookPublisher _publisher;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AutoUpdateManager"/> class.
+        /// </summary>
+        /// <param name="log">The log.</param>
         public AutoUpdateManager(IAutoUpdateLogger log)
             : this(null, null, null, log)
         {
@@ -45,7 +48,12 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Constructor for unit testing.
         /// </summary>
-        public AutoUpdateManager(IAchievementService achievementService, IAchievementManager achievementManager, IFacebookPublisher publisher, IAutoUpdateLogger log)
+        /// <param name="achievementService">The achievement service.</param>
+        /// <param name="achievementManager">The achievement manager.</param>
+        /// <param name="publisher">The publisher.</param>
+        /// <param name="log">The log.</param>
+        public AutoUpdateManager(IAchievementService achievementService, IAchievementManager achievementManager,
+                                 IFacebookPublisher publisher, IAutoUpdateLogger log)
         {
             _achievementService = achievementService ?? new AchievementService();
             _achievementManager = achievementManager ?? new AchievementManager();
@@ -53,10 +61,22 @@ namespace SteamAchievements.Services
             _log = log;
         }
 
+        #region IDisposable Members
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+            Dispose(true);
+        }
+
+        #endregion
+
         /// <summary>
         /// Gets the auto update steam user ids.
         /// </summary>
-        /// <returns></returns>
         public string GetAutoUpdateUsers()
         {
             // get users configured for auto update
@@ -68,7 +88,7 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Publishes the user's achievements.
         /// </summary>
-        /// <param name="steamUserId"></param>
+        /// <param name="steamUserId">The steam user id.</param>
         public void PublishUserAchievements(string steamUserId)
         {
             User user = _achievementManager.GetUser(steamUserId);
@@ -154,7 +174,7 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Builds the post description
         /// </summary>
-        /// <param name="achievements"></param>
+        /// <param name="achievements">The achievements.</param>
         /// <returns></returns>
         private static string BuildDescription(IEnumerable<SimpleAchievement> achievements)
         {
@@ -194,12 +214,6 @@ namespace SteamAchievements.Services
                     _achievementService.Dispose();
                 }
             }
-        }
-
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
-            Dispose(true);
         }
     }
 }
