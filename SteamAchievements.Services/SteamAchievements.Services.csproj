@@ -71,6 +71,9 @@
   <ItemGroup>
     <Compile Include="AutoUpdateLogger.cs" />
     <Compile Include="AutoUpdateManager.cs" />
+    <Compile Include="FacebookPublisher.cs" />
+    <Compile Include="IAutoUpdateLogger.cs" />
+    <Compile Include="IFacebookPublisher.cs" />
     <Compile Include="UserAchievement.cs" />
     <Compile Include="AchievementCollectionExtensions.cs" />
     <Compile Include="AchievementService.cs" />

@@ -41,8 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Elmah, Version=1.1.11517.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Elmah.dll</HintPath>
+      <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
     </Reference>
     <Reference Include="Facebook, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -301,6 +300,7 @@
     <Content Include="App_Themes\Default\Site.skin" />
     <Content Include="Admin\AutoUpdate.ashx" />
     <None Include="p3p.xml" />
+    <Content Include="packages.config" />
     <None Include="policy.htm" />
     <None Include="policy.txt" />
     <None Include="policy.xml" />
