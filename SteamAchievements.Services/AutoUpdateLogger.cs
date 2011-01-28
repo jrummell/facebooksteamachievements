@@ -28,19 +28,25 @@ namespace SteamAchievements.Services
 {
     public class AutoUpdateLogger : IAutoUpdateLogger
     {
+        private static readonly object _logLock = new object();
         private readonly StringBuilder _log = new StringBuilder();
         private readonly string _logFilePath;
         private readonly string _logPath;
-        private static readonly object _logLock = new object();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AutoUpdateLogger"/> class.
+        /// </summary>
+        /// <param name="logPath">The log path.</param>
         public AutoUpdateLogger(string logPath)
         {
             _logPath = logPath;
-            
+
             DateTime now = DateTime.UtcNow;
             string logFileName = String.Format("{0}-{1}-{2}.log", now.Year, now.Month, now.Day);
             _logFilePath = Path.Combine(_logPath, logFileName);
         }
+
+        #region IAutoUpdateLogger Members
 
         /// <summary>
         /// Logs the specified message.
@@ -89,25 +95,30 @@ namespace SteamAchievements.Services
         {
             response.Write(_log.ToString());
         }
-        
+
         /// <summary>
         /// Deletes all log files older than the given date.
         /// </summary>
         /// <param name="date">The oldest date to keep.</param>
         public void Delete(DateTime date)
         {
-            string[] files = Directory.GetFiles(_logPath, "*.log");
-            
-            foreach (string file in files) 
+            lock (_logLock)
             {
-                string fileName = Path.GetFileNameWithoutExtension(file);
-                DateTime fileDate = Convert.ToDateTime(fileName);
-                
-                if (fileDate < date)
+                string[] files = Directory.GetFiles(_logPath, "*.log");
+
+                foreach (string file in files)
                 {
-                    File.Delete(file);
+                    string fileName = Path.GetFileNameWithoutExtension(file);
+                    DateTime fileDate = Convert.ToDateTime(fileName);
+
+                    if (fileDate < date)
+                    {
+                        File.Delete(file);
+                    }
                 }
             }
         }
+
+        #endregion
     }
 }

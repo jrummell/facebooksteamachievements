@@ -40,9 +40,6 @@
     <PublishDatabases>false</PublishDatabases>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Elmah, Version=1.1.11517.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
-    </Reference>
     <Reference Include="Facebook, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\FacebookSDK\Facebook.dll</HintPath>

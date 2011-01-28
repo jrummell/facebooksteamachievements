@@ -31,11 +31,20 @@ namespace SteamAchievements.Services
     /// </summary>
     internal class FacebookPublisher : IFacebookPublisher
     {
+        #region IFacebookPublisher Members
+
+        /// <summary>
+        /// Publishes a post to the user's profile.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="parameters">The post parameters.</param>
         public void Publish(User user, IDictionary<string, object> parameters)
         {
             FacebookApp app = new FacebookApp(user.AccessToken);
             string userFeedPath = String.Format("/{0}/feed/", user.FacebookUserId);
             app.Api(userFeedPath, parameters, HttpMethod.Post);
         }
+
+        #endregion
     }
 }

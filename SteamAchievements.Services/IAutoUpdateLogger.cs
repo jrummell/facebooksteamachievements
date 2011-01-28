@@ -46,9 +46,9 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Writes the log to the response.
         /// </summary>
-        /// <param name="response"></param>
+        /// <param name="response">The response.</param>
         void Write(HttpResponse response);
-        
+
         /// <summary>
         /// Deletes all log files older than the given date.
         /// </summary>

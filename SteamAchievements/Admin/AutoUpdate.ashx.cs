@@ -30,6 +30,8 @@ namespace SteamAchievements.Admin
         private AutoUpdateLogger _log;
         private AutoUpdateManager _manager;
 
+        #region IHttpHandler Members
+
         public void ProcessRequest(HttpContext context)
         {
             try
@@ -69,7 +71,7 @@ namespace SteamAchievements.Admin
                         _log.Flush();
 
                         context.Response.Write(userName + " published.");
-                        
+
                         // delete logs more than two weeks old
                         _log.Delete(DateTime.UtcNow.AddDays(-14).Date);
                     }
@@ -93,10 +95,9 @@ namespace SteamAchievements.Admin
 
         public bool IsReusable
         {
-            get
-            {
-                return false;
-            }
+            get { return false; }
         }
+
+        #endregion
     }
 }
