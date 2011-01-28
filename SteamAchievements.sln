@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-# SharpDevelop 4.0.0.6721
+# SharpDevelop 4.0.0.6963
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamAchievements", "SteamAchievements\SteamAchievements.csproj", "{255FFFAF-4FED-461D-B8B6-496C4B9C77A8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamAchievements.Services", "SteamAchievements.Services\SteamAchievements.Services.csproj", "{097473AA-B8FB-4A5E-889E-00559C65C660}"

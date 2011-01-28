@@ -1,4 +1,25 @@
-﻿using System;
+﻿#region License
+
+// Copyright 2010 John Rummell
+// 
+// This file is part of SteamAchievements.
+// 
+//     SteamAchievements is free software: you can redistribute it and/or modify
+//     it under the terms of the GNU General Public License as published by
+//     the Free Software Foundation, either version 3 of the License, or
+//     (at your option) any later version.
+// 
+//     SteamAchievements is distributed in the hope that it will be useful,
+//     but WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//     GNU General Public License for more details.
+// 
+//     You should have received a copy of the GNU General Public License
+//     along with SteamAchievements.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -8,22 +29,27 @@ using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
-    //TODO: write unit tests, remove dependency on IAchievementManager since it already depends on IAchievementService.
+    //TODO: remove dependency on IAchievementManager since it already depends on IAchievementService?
     public class AutoUpdateManager : IDisposable
     {
         private readonly IAchievementService _achievementService;
         private readonly IAchievementManager _achievementManager;
-        private readonly AutoUpdateLogger _log;
+        private readonly IFacebookPublisher _publisher;
+        private readonly IAutoUpdateLogger _log;
 
-        public AutoUpdateManager(AutoUpdateLogger log)
-            : this(null, null, log)
+        public AutoUpdateManager(IAutoUpdateLogger log)
+            : this(null, null, null, log)
         {
         }
 
-        public AutoUpdateManager(IAchievementService achievementService, IAchievementManager achievementManager, AutoUpdateLogger log)
+        /// <summary>
+        /// Constructor for unit testing.
+        /// </summary>
+        public AutoUpdateManager(IAchievementService achievementService, IAchievementManager achievementManager, IFacebookPublisher publisher, IAutoUpdateLogger log)
         {
             _achievementService = achievementService ?? new AchievementService();
             _achievementManager = achievementManager ?? new AchievementManager();
+            _publisher = publisher ?? new FacebookPublisher();
             _log = log;
         }
 
@@ -73,9 +99,9 @@ namespace SteamAchievements.Services
                 return;
             }
 
-            // get unpublished achievements earned in the last 48 hours to make up for time zone differences 
+            // get unpublished achievements earned in the last 24-48 hours to make up for time zone differences 
             // and the time it takes to run the Auto Update process
-            DateTime oldestDate = DateTime.UtcNow.AddHours(-48);
+            DateTime oldestDate = DateTime.UtcNow.AddHours(-48).Date;
             IEnumerable<SimpleAchievement> achievements =
                 _achievementService.GetUnpublishedAchievements(user.SteamUserId, oldestDate);
 
@@ -95,20 +121,18 @@ namespace SteamAchievements.Services
             Uri statsUrl = SteamCommunityManager.GetStatsUrl(user.SteamUserId);
             string message = String.Format("{0} earned new achievements", user.SteamUserId);
 
-            dynamic parameters = new ExpandoObject();
-            parameters.link = statsUrl.ToString();
-            parameters.message = message;
-            parameters.name = firstAchievement.Name;
-            parameters.picture = firstAchievement.ImageUrl;
-            parameters.description = BuildDescription(achievements);
+            IDictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("link", statsUrl.ToString());
+            parameters.Add("message", message);
+            parameters.Add("name", firstAchievement.Name);
+            parameters.Add("picture", firstAchievement.ImageUrl);
+            parameters.Add("description", BuildDescription(achievements));
 
             List<int> publishedAchievements = new List<int>();
             try
             {
                 // publish the post
-                FacebookApp app = new FacebookApp(user.AccessToken);
-                string userFeedPath = String.Format("/{0}/feed/", user.FacebookUserId);
-                app.Api(userFeedPath, parameters, HttpMethod.Post);
+                _publisher.Publish(user, parameters);
 
                 publishedAchievements.AddRange(achievements.Select(a => a.Id));
             }

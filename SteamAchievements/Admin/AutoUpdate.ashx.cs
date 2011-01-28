@@ -1,4 +1,25 @@
-﻿using System;
+﻿#region License
+
+// Copyright 2010 John Rummell
+// 
+// This file is part of SteamAchievements.
+// 
+//     SteamAchievements is free software: you can redistribute it and/or modify
+//     it under the terms of the GNU General Public License as published by
+//     the Free Software Foundation, either version 3 of the License, or
+//     (at your option) any later version.
+// 
+//     SteamAchievements is distributed in the hope that it will be useful,
+//     but WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//     GNU General Public License for more details.
+// 
+//     You should have received a copy of the GNU General Public License
+//     along with SteamAchievements.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
+
+using System;
 using System.Web;
 using SteamAchievements.Services;
 
@@ -35,7 +56,7 @@ namespace SteamAchievements.Admin
 
                         _log.Log(users);
 
-                        _log.FlushLog();
+                        _log.Flush();
 
                         context.Response.Write(users);
                     }
@@ -45,9 +66,12 @@ namespace SteamAchievements.Admin
 
                         _manager.PublishUserAchievements(userName);
 
-                        _log.FlushLog();
+                        _log.Flush();
 
                         context.Response.Write(userName + " published.");
+                        
+                        // delete logs more than two weeks old
+                        _log.Delete(DateTime.UtcNow.AddDays(-14).Date);
                     }
                     else
                     {
@@ -58,11 +82,11 @@ namespace SteamAchievements.Admin
             catch (Exception ex)
             {
                 _log.Log(ex);
-                _log.WriteLog(context.Response);
+                _log.Write(context.Response);
             }
             finally
             {
-                _log.FlushLog();
+                _log.Flush();
                 _manager.Dispose();
             }
         }
