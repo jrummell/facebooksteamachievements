@@ -7,4 +7,4 @@
 <steam:CanvasLink ID="menuSettingsLink" runat="server" CanvasPage="Settings.aspx"
     Text="Settings" />
 |
-<asp:HyperLink ID="helpLink" runat="server" Target="_blank" />
+<asp:HyperLink ID="helpLink" runat="server" Target="_blank" Text="Help" />
