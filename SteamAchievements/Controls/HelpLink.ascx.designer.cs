@@ -19,7 +19,7 @@ namespace SteamAchievements.Controls {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SteamAchievements.Controls.CanvasLink helpLink;
+        protected global::System.Web.UI.WebControls.HyperLink helpLink;
         
         /// <summary>
         /// helpImage control.
