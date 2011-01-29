@@ -17,5 +17,8 @@
     <Setting Name="AutoUpdateAuthKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">yourautoupdateauthkey</Value>
     </Setting>
+    <Setting Name="WikiHelpUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://example.com/help</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

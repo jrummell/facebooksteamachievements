@@ -22,7 +22,7 @@
         <steam:CanvasLink ID="steamIdErrorSettingsLink" runat="server" CanvasPage="Settings.aspx"
             Text="settings" />
         page.
-        <steam:HelpLink ID="steamIdErrorHelpLink" runat="server" HelpAnchor="steam" />
+        <steam:HelpLink ID="steamIdErrorHelpLink" runat="server" HelpAnchor="Configure_your_Steam_Community_Profile" />
     </div>
     <h1 id="steamUserIdHeading">
     </h1>
@@ -37,7 +37,7 @@
             <p>
                 Your games. This list includes all Steam games that you own (including some free
                 Source Mods) that support achievements.
-                <steam:HelpLink ID="gamesHelpLink" runat="server" HelpAnchor="games" />
+                <steam:HelpLink ID="gamesHelpLink" runat="server" HelpAnchor="Supported_Games" />
             </p>
             <img id="loadingGames" class="loading" src="images/ajax-loader.gif" alt="Loading..." />
         </div>
