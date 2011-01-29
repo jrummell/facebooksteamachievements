@@ -14,12 +14,12 @@
         <steam:CanvasLink ID="steamIdErrorSettingsLink" runat="server" CanvasPage="Settings.aspx"
             Text="settings" />
         page.
-        <steam:HelpLink ID="steamIdErrorHelpLink" runat="server" HelpAnchor="steam" />
+        <steam:HelpLink ID="steamIdErrorHelpLink" runat="server" HelpAnchor="Configure_your_Steam_Community_Profile" />
     </div>
     <div id="achievementsUpdateFailure" class="fberrorbox message" style="display: none;">
         Your achievements could not be updated. Please verify that your Custom Url is correct
         and that your Steam Community Profile is public.
-        <steam:HelpLink ID="updateFailedHelpLink" runat="server" HelpAnchor="steam" />
+        <steam:HelpLink ID="updateFailedHelpLink" runat="server" HelpAnchor="Configure_your_Steam_Community_Profile" />
     </div>
     <fieldset>
         <legend>Unpublished Achievements</legend>

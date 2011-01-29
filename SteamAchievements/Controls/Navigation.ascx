@@ -6,5 +6,5 @@
 |
 <steam:CanvasLink ID="menuSettingsLink" runat="server" CanvasPage="Settings.aspx"
     Text="Settings" />
-|
-<steam:CanvasLink ID="menuHelpLink" runat="server" CanvasPage="Help.aspx" Text="Help" />
+| <a href="<%= SteamAchievements.Properties.Settings.WikiHelpUrl %>" target="_blank">
+    Help</a>

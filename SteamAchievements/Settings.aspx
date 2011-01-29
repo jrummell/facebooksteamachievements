@@ -18,7 +18,7 @@
                 <asp:TextBox ID="steamIdTextBox" runat="server" MaxLength="50" />
                 <asp:RequiredFieldValidator ID="steamIdRequiredValidator" runat="server" Display="Dynamic"
                     ControlToValidate="steamIdTextBox" ErrorMessage="Required" />
-                <steam:HelpLink ID="steamHelpLink" runat="server" HelpAnchor="steam" />
+                <steam:HelpLink ID="steamHelpLink" runat="server" HelpAnchor="Configure_your_Steam_Community_Profile" />
             </p>
         </div>
     </fieldset>

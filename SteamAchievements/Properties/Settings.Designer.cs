@@ -67,5 +67,14 @@ namespace SteamAchievements.Properties {
                 return ((string)(this["AutoUpdateAuthKey"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://example.com/help")]
+        public string WikiHelpUrl {
+            get {
+                return ((string)(this["WikiHelpUrl"]));
+            }
+        }
     }
 }
