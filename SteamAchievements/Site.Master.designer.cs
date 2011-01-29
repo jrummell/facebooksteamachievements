@@ -22,13 +22,13 @@ namespace SteamAchievements {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
         
         /// <summary>
-        /// adMarkup control.
+        /// topAdMarkup control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder adMarkup;
+        protected global::System.Web.UI.WebControls.PlaceHolder topAdMarkup;
         
         /// <summary>
         /// login control.
@@ -74,6 +74,15 @@ namespace SteamAchievements {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::SteamAchievements.Controls.Disclaimer disclaimer;
+        
+        /// <summary>
+        /// bottomAdMarkup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder bottomAdMarkup;
         
         /// <summary>
         /// tracker control.

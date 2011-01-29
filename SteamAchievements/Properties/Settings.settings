@@ -2,7 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SteamAchievements.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="AdMarkup" Type="System.String" Scope="Application">
+    <Setting Name="TopAdMarkup" Type="System.String" Scope="Application">
       <Value Profile="(Default)">&lt;p&gt;your ad code here&lt;/p&gt;</Value>
     </Setting>
     <Setting Name="UserVoiceKey" Type="System.String" Scope="Application">
@@ -19,6 +19,9 @@
     </Setting>
     <Setting Name="WikiHelpUrl" Type="System.String" Scope="Application">
       <Value Profile="(Default)">http://example.com/help</Value>
+    </Setting>
+    <Setting Name="BottomAdMarkup" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">&lt;p&gt;you ad code here&lt;/p&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

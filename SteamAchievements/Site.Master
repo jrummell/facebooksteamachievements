@@ -11,7 +11,7 @@
 </head>
 <body>
     <div style="margin-bottom: 1em">
-        <asp:PlaceHolder ID="adMarkup" runat="server" />
+        <asp:PlaceHolder ID="topAdMarkup" runat="server" />
     </div>
     <div class="fbbody">
         <script type="text/javascript" src='<%=ResolveUrl("~/js/json2.js")%>'></script>
@@ -33,6 +33,9 @@
             <steam:Disclaimer ID="disclaimer" runat="server" />
             <script type="text/javascript" src="http://www.ohloh.net/p/483250/widgets/project_thin_badge.js"></script>
         </div>
+    </div>
+    <div style="margin-top: 1em">
+        <asp:PlaceHolder ID="bottomAdMarkup" runat="server" />
     </div>
     <steam:GoogleAnalytics ID="tracker" runat="server" />
     <steam:UserVoice ID="userVoice" runat="server" />

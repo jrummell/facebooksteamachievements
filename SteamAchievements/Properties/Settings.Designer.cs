@@ -26,9 +26,9 @@ namespace SteamAchievements.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<p>your ad code here</p>")]
-        public string AdMarkup {
+        public string TopAdMarkup {
             get {
-                return ((string)(this["AdMarkup"]));
+                return ((string)(this["TopAdMarkup"]));
             }
         }
         
@@ -74,6 +74,15 @@ namespace SteamAchievements.Properties {
         public string WikiHelpUrl {
             get {
                 return ((string)(this["WikiHelpUrl"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<p>you ad code here</p>")]
+        public string BottomAdMarkup {
+            get {
+                return ((string)(this["BottomAdMarkup"]));
             }
         }
     }
