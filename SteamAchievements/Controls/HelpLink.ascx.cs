@@ -34,10 +34,8 @@ namespace SteamAchievements.Controls
 
         protected override void OnPreRender(EventArgs e)
         {
-            helpLink.CanvasPage = String.Format("{0}#{1}",
+            helpLink.NavigateUrl = String.Format("{0}#{1}",
                 Properties.Settings.Default.WikiHelpUrl, HelpAnchor);
-
-            helpLink.Target = "_blank";
 
             base.OnPreRender(e);
         }
