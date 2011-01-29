@@ -23,7 +23,6 @@ using System;
 using System.Web.UI;
 using AppSettings = SteamAchievements.Properties.Settings;
 
-
 namespace SteamAchievements
 {
     public partial class Site : MasterPage
@@ -57,7 +56,8 @@ namespace SteamAchievements
 
         private void Page_Load(object sender, EventArgs args)
         {
-            adMarkup.Controls.Add(new LiteralControl(AppSettings.Default.AdMarkup));
+            topAdMarkup.Controls.Add(new LiteralControl(AppSettings.Default.TopAdMarkup));
+            bottomAdMarkup.Controls.Add(new LiteralControl(AppSettings.Default.BottomAdMarkup));
         }
     }
 }
