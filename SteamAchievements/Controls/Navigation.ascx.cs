@@ -25,5 +25,11 @@ namespace SteamAchievements.Controls
 {
     public partial class Navigation : UserControl
     {
+        protected override void OnInit(System.EventArgs e)
+        {
+            base.OnInit(e);
+
+            helpLink.NavigateUrl = Properties.Settings.Default.WikiHelpUrl;
+        }
     }
 }
