@@ -24,7 +24,7 @@
     <fieldset>
         <legend>Unpublished Achievements</legend>
         <p>
-            You can publish up to five achievements at a time.</p>
+            Click an achievement icon to select it. You can publish up to five at a time.</p>
         <p>
             <a id="publishSelectedButton" class="button" href="#" style="display: none;">Publish
                 Selected</a> (If you don't see the publish dialog after clicking, scroll down.)
