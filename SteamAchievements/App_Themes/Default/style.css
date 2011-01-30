@@ -228,7 +228,7 @@ div.form label
 ******************/
 .unpublished .achievement
 {
-    height: 70px;
+    height: 74px;
     padding: 0px;
     margin: 5px;
     border: 1px solid #fff;
@@ -248,10 +248,11 @@ div.form label
     vertical-align: middle;
     width: 64px;
     height: 64px;
+    margin: 5px;
 }
 .unpublished .achievement .text
 {
-    margin-left: 1em;
+    margin: 5px;
 }
 .unpublished .achievement .name
 {
