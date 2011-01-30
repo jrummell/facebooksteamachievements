@@ -52,6 +52,9 @@ function getNewAchievements()
 var _newAchievements = new Array();
 function displayAchievements(achievements)
 {
+	// remove any currently displayed achievements
+	$("#newAchievements").empty();
+	
     _newAchievements = achievements;
 
     // pair the achievements so that the templates plugin can display them in a 2 column table
