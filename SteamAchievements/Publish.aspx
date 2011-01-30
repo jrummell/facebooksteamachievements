@@ -27,32 +27,46 @@
             You can publish up to five achievements at a time.</p>
         <p>
             <a id="publishSelectedButton" class="button" href="#" style="display: none;">Publish
-                Selected</a>
+                Selected</a> (If you don't see the publish dialog after clicking, scroll down.)
         </p>
         <div id="noUnpublishedMessage" class="fbinfobox message" style="display: none;">
             You have no unpublished achievements.</div>
         <img id="newAchievementsLoading" class="loading" src="images/ajax-loader.gif" alt="Getting unpublished achievements..." />
-        <div id="newAchievements" class="unpublished">
-            <script type="text/javascript">
-                var _currentGameName = "";                
-            </script>
-            <script id="achievementTemplate" type="text/x-jquery-tmpl">
-                {{if Game.Name != _currentGameName }}
-                <h3 class="game">${_currentGameName = Game.Name}</h3>
-                {{/if}}
-                <div class="achievement">
-                    <div class="left">
-                        <input type="checkbox" value="${Id}" />
-                        <img src="${ImageUrl}" alt="${Name}" />
-                    </div>
-                    <div class="text left">
-                        <div class="name">${Name}</div>
-                        <div class="description">${Description}</div>
-                    </div>
-                </div>
-                <br class="clear" />
-            </script>
-        </div>
+        <table>
+            <tbody id="newAchievements" class="unpublished">
+                <script type="text/javascript">
+                    var _currentGameName = "";                
+                </script>
+                <script id="achievementTemplate" type="text/x-jquery-tmpl">
+                    <tr>
+                        <td>
+                            <div class="achievement">
+                                <input type="checkbox" value="${achievement1.Id}" style="display:none" />
+                                <img class="left" src="${achievement1.ImageUrl}" alt="${achievement1.Name}" />
+                                <div class="text">
+                                    <h3>${achievement1.Game.Name}</h3>
+                                    <div class="name">${achievement1.Name}</div>
+                                    <div class="description">${achievement1.Description}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            {{if achievement2 != null}}
+                            <div class="achievement">
+                                <input type="checkbox" value="${achievement2.Id}" style="display:none" />
+                                <img class="left" src="${achievement2.ImageUrl}" alt="${achievement2.Name}" />
+                                <div class="text">
+                                    <h3>${achievement2.Game.Name}</h3>
+                                    <div class="name">${achievement2.Name}</div>
+                                    <div class="description">${achievement2.Description}</div>
+                                </div>
+                            </div>
+                            {{/if}}
+                        </td>
+                    </tr>
+                </script>
+            </tbody>
+        </table>
     </fieldset>
     </form>
     <div id="log">
