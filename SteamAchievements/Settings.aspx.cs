@@ -79,6 +79,7 @@ namespace SteamAchievements
             catch (DuplicateSteamUserException)
             {
                 duplicateErrorScript.Visible = true;
+                saveSuccessScript.Visible = false;
                 return;
             }
 
