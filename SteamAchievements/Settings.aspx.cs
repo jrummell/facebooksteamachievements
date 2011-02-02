@@ -61,17 +61,25 @@ namespace SteamAchievements
                 return;
             }
 
-            using (IAchievementManager manager = new AchievementManager())
-            {
-                User updatedUser = new User
-                                       {
-                                           FacebookUserId = Master.FacebookUserId,
-                                           AccessToken = Master.AccessToken,
-                                           AutoUpdate = autoUpdateCheckBox.Checked,
-                                           SteamUserId = steamIdTextBox.Text
-                                       };
+            User updatedUser = new User
+                                {
+                                    FacebookUserId = Master.FacebookUserId,
+                                    AccessToken = Master.AccessToken,
+                                    AutoUpdate = autoUpdateCheckBox.Checked,
+                                    SteamUserId = steamIdTextBox.Text
+                                };
 
-                manager.UpdateUser(updatedUser);
+            try
+            {
+                using (IAchievementManager manager = new AchievementManager())
+                {
+                    manager.UpdateUser(updatedUser);
+                }
+            }
+            catch (DuplicateSteamUserException)
+            {
+                duplicateErrorScript.Visible = true;
+                return;
             }
 
             saveSuccessScript.Visible = true;

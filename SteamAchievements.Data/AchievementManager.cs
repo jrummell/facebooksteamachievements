@@ -226,6 +226,21 @@ namespace SteamAchievements.Data
             }
 
             bool exists = _repository.Users.Where(u => u.FacebookUserId == user.FacebookUserId).Any();
+            bool duplicate;
+            if (exists)
+            {
+                duplicate =
+                    _repository.Users.Where(u => u.SteamUserId == user.SteamUserId && u.FacebookUserId != user.FacebookUserId).Any();
+            }
+            else
+            {
+                duplicate = _repository.Users.Where(u => u.SteamUserId == user.SteamUserId).Any();
+            }
+
+            if (duplicate)
+            {
+                throw new DuplicateSteamUserException();
+            }
 
             if (!exists)
             {
