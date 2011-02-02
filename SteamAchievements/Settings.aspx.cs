@@ -84,6 +84,7 @@ namespace SteamAchievements
             }
 
             saveSuccessScript.Visible = true;
+            duplicateErrorScript.Visible = false;
         }
     }
 }
