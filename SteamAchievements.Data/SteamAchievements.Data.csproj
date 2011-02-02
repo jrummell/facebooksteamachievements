@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AchievementManager.cs" />
+    <Compile Include="DuplicateSteamUserException.cs" />
     <Compile Include="IAchievementManager.cs" />
     <Compile Include="ISteamRepository.cs" />
     <Compile Include="MockSteamRepository.cs" />

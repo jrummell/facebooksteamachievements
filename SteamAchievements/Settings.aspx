@@ -28,6 +28,8 @@
         <label for="autoUpdateCheckBox">
             Update and publish my achievements automatically.</label>
     </fieldset>
+    <div id="duplicateError" class="fberrorbox message" style="display: none;">
+        This Steam Community URL is already in use.</div>
     <p>
         <asp:LinkButton ID="saveSettingsButton" runat="server" OnClick="SaveSettingsButtonClick">
             <asp:Image ID="steamUserIdHelpImage" runat="server" ImageUrl="~/images/disk.png"
@@ -56,6 +58,14 @@
             $(document).ready(function ()
             {
                 $achievements.showMessage("#saveSuccess");
+            });
+        </script>
+    </asp:PlaceHolder>
+    <asp:PlaceHolder ID="duplicateErrorScript" runat="server" Visible="false">
+        <script type="text/javascript">
+            $(document).ready(function ()
+            {
+                $achievements.showMessage("#duplicateError");
             });
         </script>
     </asp:PlaceHolder>
