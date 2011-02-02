@@ -340,6 +340,8 @@ namespace SteamAchievements.Data
 		
 		private bool _Published;
 		
+		private bool _Hidden;
+		
 		private EntityRef<Achievement> _steam_Achievement;
 		
 		private EntityRef<User> _User;
@@ -360,6 +362,8 @@ namespace SteamAchievements.Data
     partial void OnDateChanged();
     partial void OnPublishedChanging(bool value);
     partial void OnPublishedChanged();
+    partial void OnHiddenChanging(bool value);
+    partial void OnHiddenChanged();
     #endregion
 		
 		public UserAchievement()
@@ -480,6 +484,27 @@ namespace SteamAchievements.Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Hidden", DbType="bit not null")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		public bool Hidden
+		{
+			get
+			{
+				return this._Hidden;
+			}
+			set
+			{
+				if ((this._Hidden != value))
+				{
+					this.OnHiddenChanging(value);
+					this.SendPropertyChanging();
+					this._Hidden = value;
+					this.SendPropertyChanged("Hidden");
+					this.OnHiddenChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Achievement_UserAchievement", Storage="_steam_Achievement", ThisKey="AchievementId", OtherKey="Id", IsForeignKey=true)]
 		public Achievement Achievement
 		{
@@ -515,7 +540,7 @@ namespace SteamAchievements.Data
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserAchievement", Storage="_User", ThisKey="FacebookUserId", OtherKey="FacebookUserId", IsForeignKey=true)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7, EmitDefaultValue=false)]
 		public User User
 		{
 			get

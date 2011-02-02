@@ -129,7 +129,6 @@ namespace SteamAchievements.Data
         /// Gets the unpublished achievements.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
-        /// <returns></returns>
         public IEnumerable<Achievement> GetUnpublishedAchievements(string steamUserId)
         {
             if (steamUserId == null)
@@ -321,6 +320,38 @@ namespace SteamAchievements.Data
             foreach (UserAchievement achievement in achievementsToUpdate)
             {
                 achievement.Published = true;
+            }
+
+            _repository.SubmitChanges();
+        }
+
+        public void UpdateHidden(string steamUserId, IEnumerable<int> achievementIds)
+        {
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            if (achievementIds == null)
+            {
+                throw new ArgumentNullException("achievementIds");
+            }
+
+            if (!achievementIds.Any())
+            {
+                return;
+            }
+
+            long facebookUserId = GetFacebookUserId(steamUserId);
+
+            IQueryable<UserAchievement> achievementsToUpdate =
+                from achievement in _repository.UserAchievements
+                where achievement.FacebookUserId == facebookUserId && achievementIds.Contains(achievement.AchievementId)
+                select achievement;
+
+            foreach (UserAchievement achievement in achievementsToUpdate)
+            {
+                achievement.Hidden = true;
             }
 
             _repository.SubmitChanges();

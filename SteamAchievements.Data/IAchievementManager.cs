@@ -74,6 +74,13 @@ namespace SteamAchievements.Data
         void UpdatePublished(string steamUserId, IEnumerable<int> achievementIds);
 
         /// <summary>
+        /// Updates the hidden flag on the given achievements.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="achievementIds">The achievement ids.</param>
+        void UpdateHidden(string steamUserId, IEnumerable<int> achievementIds);
+
+        /// <summary>
         /// Updates the user.
         /// </summary>
         /// <param name="user"></param>

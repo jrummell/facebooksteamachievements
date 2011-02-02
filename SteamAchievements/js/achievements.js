@@ -35,7 +35,7 @@ var $achievements =
     {
         var ondone = function (updateCount)
         {
-            $achievements.callAjax("GetNewAchievements", { steamUserId: $achievements.steamUserId }, callback, errorCallback);
+            $achievements.callAjax("GetUnpublishedAchievements", { steamUserId: $achievements.steamUserId }, callback, errorCallback);
         };
 
         var parameters = { "steamUserId": this.steamUserId };

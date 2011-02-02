@@ -17,6 +17,7 @@
       <Column Name="AchievementId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Date" Type="System.DateTime" DbType="datetime not null" CanBeNull="false" />
       <Column Name="Published" Type="System.Boolean" DbType="bit not null" CanBeNull="false" />
+      <Column Name="Hidden" Type="System.Boolean" DbType="bit not null" CanBeNull="false" />
       <Association Name="Achievement_UserAchievement" Member="Achievement" Storage="_steam_Achievement" ThisKey="AchievementId" OtherKey="Id" Type="Achievement" IsForeignKey="true" />
       <Association Name="User_UserAchievement" Member="User" ThisKey="FacebookUserId" OtherKey="FacebookUserId" Type="User" IsForeignKey="true" />
     </Type>
