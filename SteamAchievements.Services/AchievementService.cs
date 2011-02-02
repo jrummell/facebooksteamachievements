@@ -83,31 +83,12 @@ namespace SteamAchievements.Services
         }
 
         /// <summary>
-        /// Gets the new achievements.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <returns>
-        /// The new achievements that haven't been stored yet.
-        /// </returns>
-        public List<SimpleAchievement> GetNewAchievements(string steamUserId)
-        {
-            if (steamUserId == null)
-            {
-                throw new ArgumentNullException("steamUserId");
-            }
-
-            IEnumerable<Game> games = _communityService.GetGames(steamUserId);
-
-            return _achievementManager.GetUnpublishedAchievements(steamUserId).ToSimpleAchievementList(games);
-        }
-
-        /// <summary>
         /// Gets the unpublished achievements newer than the given date.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="oldestDate">The oldest date.</param>
         /// <returns>
-        /// The new achievements that haven't been stored yet.
+        /// The achievements that haven't been published yet.
         /// </returns>
         public List<SimpleAchievement> GetUnpublishedAchievements(string steamUserId, DateTime oldestDate)
         {
@@ -142,6 +123,18 @@ namespace SteamAchievements.Services
             }
 
             _achievementManager.UpdatePublished(steamUserId, achievementIds);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Hides the given user's achievements.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="achievementIds">The ids of the achievements to hide.</param>
+        public bool HideAchievements(string steamUserId, IEnumerable<int> achievementIds)
+        {
+            _achievementManager.UpdateHidden(steamUserId, achievementIds);
 
             return true;
         }

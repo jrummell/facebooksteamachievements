@@ -30,24 +30,12 @@ namespace SteamAchievements.Services
     public interface IAchievementService : IDisposable
     {
         /// <summary>
-        /// Gets the new achievements.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <returns>
-        /// The new achievements that haven't been stored yet.
-        /// </returns>
-        [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        List<SimpleAchievement> GetNewAchievements(string steamUserId);
-
-        /// <summary>
         /// Gets the unpublished achievements newer than the given date.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="oldestDate">The oldest date.</param>
         /// <returns>
-        /// The new achievements that haven't been stored yet.
+        /// The achievements that haven't been published yet.
         /// </returns>
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
@@ -77,7 +65,7 @@ namespace SteamAchievements.Services
         int UpdateAchievements(string steamUserId);
 
         /// <summary>
-        /// Updates the Published field for the given achievements for the given user.
+        /// Publishes the given user's achievements.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="achievementIds">The ids of the achievements to publish.</param>
@@ -87,5 +75,16 @@ namespace SteamAchievements.Services
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         bool PublishAchievements(string steamUserId, IEnumerable<int> achievementIds);
+
+        /// <summary>
+        /// Hides the given user's achievements
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="achievementIds">The ids of the achievements to hide.</param>
+        /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
+        [OperationContract]
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        bool HideAchievements(string steamUserId, IEnumerable<int> achievementIds);
     }
 }

@@ -358,6 +358,26 @@ namespace SteamAchievements.Data.Tests
         }
 
         [Test]
+        public void UpdateHidden()
+        {
+            const string steamUserId = "user1";
+            IEnumerable<Achievement> achievements = _manager.GetUnpublishedAchievements(steamUserId);
+            _manager.UpdateHidden(steamUserId, achievements.Select(acheivement => acheivement.Id));
+
+            IEnumerable<int> achievementIds = from achievement in achievements
+                                              select achievement.Id;
+            long facebookUserId =
+                _repository.Users.Where(user => user.SteamUserId == steamUserId).Select(user => user.FacebookUserId).
+                    Single();
+            IEnumerable<UserAchievement> userAchievements =
+                from achievement in _repository.UserAchievements
+                where achievement.FacebookUserId == facebookUserId && achievementIds.Contains(achievement.AchievementId)
+                select achievement;
+
+            Assert.That(userAchievements.Any(achievement => !achievement.Hidden), Is.False);
+        }
+
+        [Test]
         public void UpdateUser()
         {
             const string steamUserId = "userxxx";
