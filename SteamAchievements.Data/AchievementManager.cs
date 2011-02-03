@@ -229,7 +229,8 @@ namespace SteamAchievements.Data
             if (exists)
             {
                 duplicate =
-                    _repository.Users.Where(u => u.SteamUserId == user.SteamUserId && u.FacebookUserId != user.FacebookUserId).Any();
+                    _repository.Users.Where(
+                        u => u.SteamUserId == user.SteamUserId && u.FacebookUserId != user.FacebookUserId).Any();
             }
             else
             {
@@ -325,6 +326,11 @@ namespace SteamAchievements.Data
             _repository.SubmitChanges();
         }
 
+        /// <summary>
+        /// Updates the hidden flag on the given achievements.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="achievementIds">The achievement ids.</param>
         public void UpdateHidden(string steamUserId, IEnumerable<int> achievementIds)
         {
             if (steamUserId == null)
