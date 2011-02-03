@@ -90,7 +90,7 @@ namespace SteamAchievements.Services
         /// <returns>
         /// The achievements that haven't been published yet.
         /// </returns>
-        public List<SimpleAchievement> GetUnpublishedAchievements(string steamUserId, DateTime oldestDate)
+        public List<SimpleAchievement> GetUnpublishedAchievements(string steamUserId, DateTime? oldestDate)
         {
             if (steamUserId == null)
             {
@@ -99,7 +99,17 @@ namespace SteamAchievements.Services
 
             IEnumerable<Game> games = _communityService.GetGames(steamUserId);
 
-            return _achievementManager.GetUnpublishedAchievements(steamUserId, oldestDate).ToSimpleAchievementList(games);
+            IEnumerable<Achievement> achievements;
+            if (oldestDate == null)
+            {
+                achievements = _achievementManager.GetUnpublishedAchievements(steamUserId);
+            }
+            else
+            {
+                achievements = _achievementManager.GetUnpublishedAchievements(steamUserId, oldestDate.Value);
+            }
+
+            return achievements.ToSimpleAchievementList(games);
         }
 
         /// <summary>

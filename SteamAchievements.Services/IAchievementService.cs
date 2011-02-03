@@ -40,7 +40,7 @@ namespace SteamAchievements.Services
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        List<SimpleAchievement> GetUnpublishedAchievements(string steamUserId, DateTime oldestDate);
+        List<SimpleAchievement> GetUnpublishedAchievements(string steamUserId, DateTime? oldestDate);
 
         /// <summary>
         /// Gets the games.

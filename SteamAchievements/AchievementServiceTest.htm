@@ -12,11 +12,12 @@
     <div id="gamesDiv">
     </div>
     <script type="text/javascript">
-        $(document).ready(function ()
-        {
+        $(document).ready(function () {
             $achievements.init("nullreference", "#log", true);
 
             getGames();
+
+            $achievements.callAjax("GetUnpublishedAchievements", { steamUserId: $achievements.steamUserId }, function (achievements) { $achievements.log(achievements); });
         });
 
         function getGames()
