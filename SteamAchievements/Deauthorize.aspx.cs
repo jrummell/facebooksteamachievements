@@ -21,7 +21,7 @@
 
 using System;
 using System.Web.UI;
-using SteamAchievements.Data;
+using SteamAchievements.Services;
 
 namespace SteamAchievements
 {
@@ -36,7 +36,7 @@ namespace SteamAchievements
 
         private void Page_Load(object sender, EventArgs e)
         {
-            using (IAchievementManager manager = new AchievementManager())
+            using (IUserService manager = new UserService())
             {
                 manager.DeauthorizeUser(Master.FacebookUserId);
             }

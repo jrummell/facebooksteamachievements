@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using NUnit.Mocks;
-using SteamAchievements.Data;
 
 namespace SteamAchievements.Services.Tests
 {
@@ -36,16 +35,16 @@ namespace SteamAchievements.Services.Tests
         public void SetUp()
         {
             _achievementServiceMock = new DynamicMock(typeof (IAchievementService));
-            _achievementManagerMock = new DynamicMock(typeof (IAchievementManager));
+            _userServiceMock = new DynamicMock(typeof (IUserService));
             _loggerMock = new DynamicMock(typeof (IAutoUpdateLogger));
             _publisherMock = new DynamicMock(typeof (IFacebookPublisher));
 
             IAchievementService achievementService = (IAchievementService) _achievementServiceMock.MockInstance;
-            IAchievementManager achievementManager = (IAchievementManager) _achievementManagerMock.MockInstance;
+            IUserService userService = (IUserService) _userServiceMock.MockInstance;
             IAutoUpdateLogger logger = (IAutoUpdateLogger) _loggerMock.MockInstance;
             IFacebookPublisher publisher = (IFacebookPublisher) _publisherMock.MockInstance;
 
-            _manager = new AutoUpdateManager(achievementService, achievementManager, publisher, logger);
+            _manager = new AutoUpdateManager(achievementService, userService, publisher, logger);
         }
 
         #endregion
@@ -53,28 +52,28 @@ namespace SteamAchievements.Services.Tests
         private AutoUpdateManager _manager;
         private DynamicMock _achievementServiceMock;
         private DynamicMock _loggerMock;
-        private DynamicMock _achievementManagerMock;
+        private DynamicMock _userServiceMock;
         private DynamicMock _publisherMock;
 
         [Test]
         public void GetAutoUpdateUsers()
         {
-            User[] users = new[] {new User {SteamUserId = "user1"}, new User {SteamUserId = "user2"}};
-            _achievementManagerMock.ExpectAndReturn("GetAutoUpdateUsers", users);
+            string[] users = new[] {"user1", "user2"};
+            _userServiceMock.ExpectAndReturn("GetAutoUpdateUsers", users);
 
             string userIds = _manager.GetAutoUpdateUsers();
 
             Assert.That(userIds, Is.Not.Null.Or.Empty);
             Assert.That(userIds, Is.EquivalentTo("user1;user2"));
 
-            _achievementManagerMock.Verify();
+            _userServiceMock.Verify();
         }
 
         [Test]
         public void PublishUserAchievements()
         {
             User user = new User {SteamUserId = "user1", FacebookUserId = 1, AccessToken = "token", AutoUpdate = true};
-            _achievementManagerMock.ExpectAndReturn("GetUser", user, "user1");
+            _userServiceMock.ExpectAndReturn("GetUser", user, "user1");
             _achievementServiceMock.ExpectAndReturn("UpdateAchievements", 1, "user1");
             _achievementServiceMock.ExpectAndReturn("GetUnpublishedAchievements",
                                                     new List<SimpleAchievement>
@@ -104,7 +103,7 @@ namespace SteamAchievements.Services.Tests
 
             _achievementServiceMock.Verify();
             _publisherMock.Verify();
-            _achievementManagerMock.Verify();
+            _userServiceMock.Verify();
         }
     }
 }

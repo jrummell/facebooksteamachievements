@@ -24,17 +24,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Facebook;
-using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
-    //TODO: remove dependency on IAchievementManager since it already depends on IAchievementService?
     public class AutoUpdateManager : IDisposable
     {
-        private readonly IAchievementManager _achievementManager;
         private readonly IAchievementService _achievementService;
         private readonly IAutoUpdateLogger _log;
         private readonly IFacebookPublisher _publisher;
+        private readonly IUserService _userService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoUpdateManager"/> class.
@@ -49,14 +47,14 @@ namespace SteamAchievements.Services
         /// Constructor for unit testing.
         /// </summary>
         /// <param name="achievementService">The achievement service.</param>
-        /// <param name="achievementManager">The achievement manager.</param>
+        /// <param name="userService">The user service.</param>
         /// <param name="publisher">The publisher.</param>
         /// <param name="log">The log.</param>
-        public AutoUpdateManager(IAchievementService achievementService, IAchievementManager achievementManager,
+        public AutoUpdateManager(IAchievementService achievementService, IUserService userService,
                                  IFacebookPublisher publisher, IAutoUpdateLogger log)
         {
             _achievementService = achievementService ?? new AchievementService();
-            _achievementManager = achievementManager ?? new AchievementManager();
+            _userService = userService ?? new UserService();
             _publisher = publisher ?? new FacebookPublisher();
             _log = log;
         }
@@ -80,7 +78,7 @@ namespace SteamAchievements.Services
         public string GetAutoUpdateUsers()
         {
             // get users configured for auto update
-            string[] steamUserIds = _achievementManager.GetAutoUpdateUsers().Select(user => user.SteamUserId).ToArray();
+            IEnumerable<string> steamUserIds = _userService.GetAutoUpdateUsers();
 
             return String.Join(";", steamUserIds);
         }
@@ -91,7 +89,7 @@ namespace SteamAchievements.Services
         /// <param name="steamUserId">The steam user id.</param>
         public void PublishUserAchievements(string steamUserId)
         {
-            User user = _achievementManager.GetUser(steamUserId);
+            User user = _userService.GetUser(steamUserId);
 
             if (user == null)
             {
@@ -210,7 +208,7 @@ namespace SteamAchievements.Services
             {
                 if (disposing)
                 {
-                    _achievementManager.Dispose();
+                    _userService.Dispose();
                     _achievementService.Dispose();
                 }
             }

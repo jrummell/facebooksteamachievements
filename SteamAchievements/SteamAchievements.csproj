@@ -231,10 +231,6 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SteamAchievements.Data\SteamAchievements.Data.csproj">
-      <Project>{D654EA50-07D2-42FF-B420-17373D0B4C74}</Project>
-      <Name>SteamAchievements.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SteamAchievements.Services\SteamAchievements.Services.csproj">
       <Project>{097473AA-B8FB-4A5E-889E-00559C65C660}</Project>
       <Name>SteamAchievements.Services</Name>
