@@ -21,7 +21,7 @@
 
 using System;
 using System.Web.UI;
-using SteamAchievements.Data;
+using SteamAchievements.Services;
 
 namespace SteamAchievements
 {
@@ -43,9 +43,9 @@ namespace SteamAchievements
 
             steamIdTextBox.Text = Master.SteamUserId;
 
-            using (IAchievementManager manager = new AchievementManager())
+            using (IUserService service = new UserService())
             {
-                User user = manager.GetUser(Master.FacebookUserId);
+                User user = service.GetUser(Master.FacebookUserId);
 
                 if (user != null)
                 {
@@ -61,19 +61,21 @@ namespace SteamAchievements
                 return;
             }
 
-            User updatedUser = new User
-                                {
-                                    FacebookUserId = Master.FacebookUserId,
-                                    AccessToken = Master.AccessToken,
-                                    AutoUpdate = autoUpdateCheckBox.Checked,
-                                    SteamUserId = steamIdTextBox.Text
-                                };
+            User user = new User
+                            {
+                                FacebookUserId = Master.FacebookUserId,
+                                AccessToken = Master.AccessToken,
+                                AutoUpdate = autoUpdateCheckBox.Checked,
+                                SteamUserId = steamIdTextBox.Text
+                            };
 
+            bool newUser;
             try
             {
-                using (IAchievementManager manager = new AchievementManager())
+                using (IUserService service = new UserService())
                 {
-                    manager.UpdateUser(updatedUser);
+                    newUser = service.GetUser(user.FacebookUserId) == null;
+                    service.UpdateUser(user);
                 }
             }
             catch (DuplicateSteamUserException)
@@ -81,6 +83,14 @@ namespace SteamAchievements
                 duplicateErrorScript.Visible = true;
                 saveSuccessScript.Visible = false;
                 return;
+            }
+
+            if (newUser)
+            {
+                using (IAchievementService service = new AchievementService())
+                {
+                    service.UpdateNewUserAchievements(user);
+                }
             }
 
             saveSuccessScript.Visible = true;

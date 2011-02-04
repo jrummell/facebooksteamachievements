@@ -224,22 +224,12 @@ namespace SteamAchievements.Data
                 throw new ArgumentException("user.FacebookUserId cannot be 0", "user");
             }
 
-            bool exists = _repository.Users.Where(u => u.FacebookUserId == user.FacebookUserId).Any();
-            bool duplicate;
-            if (exists)
-            {
-                duplicate =
-                    _repository.Users.Where(
-                        u => u.SteamUserId == user.SteamUserId && u.FacebookUserId != user.FacebookUserId).Any();
-            }
-            else
-            {
-                duplicate = _repository.Users.Where(u => u.SteamUserId == user.SteamUserId).Any();
-            }
+            bool exists = Exists(user.FacebookUserId);
+            bool duplicate = IsDuplicate(user.SteamUserId, user.FacebookUserId, exists);
 
             if (duplicate)
             {
-                throw new DuplicateSteamUserException();
+                throw new InvalidOperationException("steamUserId already exists");
             }
 
             if (!exists)
@@ -287,6 +277,21 @@ namespace SteamAchievements.Data
 
             _repository.DeleteOnSubmit(user);
             _repository.SubmitChanges();
+        }
+
+        /// <summary>
+        /// Determines whether the specified user is a duplicate.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified user is a duplicate; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsDuplicate(string steamUserId, long facebookUserId)
+        {
+            bool exists = Exists(facebookUserId);
+
+            return IsDuplicate(steamUserId, facebookUserId, exists);
         }
 
         /// <summary>
@@ -363,6 +368,9 @@ namespace SteamAchievements.Data
             _repository.SubmitChanges();
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             GC.SuppressFinalize(this);
@@ -370,6 +378,42 @@ namespace SteamAchievements.Data
         }
 
         #endregion
+
+        /// <summary>
+        /// Existses the specified facebook user id.
+        /// </summary>
+        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <returns></returns>
+        private bool Exists(long facebookUserId)
+        {
+            return _repository.Users.Where(u => u.FacebookUserId == facebookUserId).Any();
+        }
+
+        /// <summary>
+        /// Determines whether the specified steam user id is duplicate.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="exists">if set to <c>true</c> [exists].</param>
+        /// <returns>
+        ///   <c>true</c> if the specified steam user id is duplicate; otherwise, <c>false</c>.
+        /// </returns>
+        private bool IsDuplicate(string steamUserId, long facebookUserId, bool exists)
+        {
+            bool duplicate;
+            if (exists)
+            {
+                duplicate =
+                    _repository.Users.Where(
+                        u => u.SteamUserId == steamUserId && u.FacebookUserId != facebookUserId).Any();
+            }
+            else
+            {
+                duplicate = _repository.Users.Where(u => u.SteamUserId == steamUserId).Any();
+            }
+
+            return duplicate;
+        }
 
         /// <summary>
         /// Assigns the new achievements.

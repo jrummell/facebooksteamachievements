@@ -1,5 +1,4 @@
-﻿using System;
-#region License
+﻿#region License
 
 // Copyright 2010 John Rummell
 // 
@@ -20,7 +19,9 @@
 
 #endregion
 
-namespace SteamAchievements.Data
+using System;
+
+namespace SteamAchievements.Services
 {
     public class DuplicateSteamUserException : Exception
     {

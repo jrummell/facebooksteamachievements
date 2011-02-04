@@ -52,7 +52,7 @@ namespace SteamAchievements.Services.Tests
             return achievements.ToDataAchievements(0);
         }
 
-        private static List<Achievement> GetDataAchievements()
+        private static IEnumerable<Achievement> GetDataAchievements()
         {
             string text = File.ReadAllText("achievements.csv");
 
@@ -76,12 +76,12 @@ namespace SteamAchievements.Services.Tests
             return achievements;
         }
 
-        private void UpdateAchievements(string steamUserId)
+        private static void UpdateAchievements(string steamUserId)
         {
             MockSteamRepository repository = new MockSteamRepository();
             repository.Achievements = GetDataAchievements().AsQueryable();
             repository.Users =
-                new List<User> {new User {FacebookUserId = 0, SteamUserId = steamUserId}}.AsQueryable();
+                new List<Data.User> {new Data.User {FacebookUserId = 0, SteamUserId = steamUserId}}.AsQueryable();
             repository.UserAchievements = new List<Data.UserAchievement>().AsQueryable();
 
             AchievementManager manager = new AchievementManager(repository);
@@ -91,7 +91,7 @@ namespace SteamAchievements.Services.Tests
             manager.UpdateAchievements(achievements);
         }
 
-        private void SerializeAchievements(string steamUserId)
+        private static void SerializeAchievements(string steamUserId)
         {
             SteamCommunityManager manager = new SteamCommunityManager();
             List<UserAchievement> achievements = manager.GetAchievements(steamUserId).ToList();

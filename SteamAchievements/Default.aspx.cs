@@ -21,7 +21,7 @@
 
 using System;
 using System.Web.UI;
-using SteamAchievements.Data;
+using SteamAchievements.Services;
 
 namespace SteamAchievements
 {
@@ -42,7 +42,7 @@ namespace SteamAchievements
             {
                 if (Master.IsLoggedIn)
                 {
-                    using (IAchievementManager manager = new AchievementManager())
+                    using (IUserService manager = new UserService())
                     {
                         User user = manager.GetUser(Master.FacebookUserId);
                         user.AccessToken = Master.AccessToken;
