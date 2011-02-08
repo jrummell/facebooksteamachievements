@@ -78,6 +78,7 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="SteamDataContext.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Steam.dbml">
