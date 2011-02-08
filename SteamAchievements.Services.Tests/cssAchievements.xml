@@ -1,0 +1,1152 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playerstats>
+  <privacyState>public</privacyState>
+  <visibilityState>3</visibilityState>
+  <game>
+    <gameFriendlyName><![CDATA[CS:S]]></gameFriendlyName>
+    <gameName><![CDATA[Counter-Strike: Source]]></gameName>
+    <gameLink><![CDATA[http://store.steampowered.com/app/240]]></gameLink>
+    <gameIcon><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/9052fa60c496a1c03383b27687ec50f4bf0f0e10.jpg]]></gameIcon>
+    <gameLogo><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/ee97d0dbf3e5d5d59e69dc20b98ed9dc8cad5283.jpg]]></gameLogo>
+    <gameLogoSmall><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/ee97d0dbf3e5d5d59e69dc20b98ed9dc8cad5283_thumb.jpg]]></gameLogoSmall>
+  </game>
+  <player>
+    <steamID64>76561197960875581</steamID64>
+    <customURL><![CDATA[nullreference]]></customURL>
+  </player>
+  <stats>
+    <hoursPlayed>0s</hoursPlayed>
+    <summary>
+      <rounds>380</rounds>
+      <wins>154</wins>
+      <winpct>40.5263157895</winpct>
+      <shots>5257</shots>
+      <shotshit>1319</shotshit>
+      <shotpct>25.0903557162</shotpct>
+      <stars>15</stars>
+      <kills>309</kills>
+      <deaths>339</deaths>
+      <kdratio>0.911504424779</kdratio>
+      <timeplayed>14192</timeplayed>
+      <timeplayedfmt>3h 56m 32s</timeplayedfmt>
+    </summary>
+    <lastmatch>
+      <t_wins>0</t_wins>
+      <ct_wins>1</ct_wins>
+      <wins>0</wins>
+      <favwpnid>17</favwpnid>
+      <shots>2</shots>
+      <hits>1</hits>
+      <wkills>1</wkills>
+      <ksratio>0.5</ksratio>
+      <acc>50</acc>
+      <kills>1</kills>
+      <deaths>1</deaths>
+      <kdratio>1</kdratio>
+      <stars>0</stars>
+      <max_players>27</max_players>
+      <dmg>108</dmg>
+      <money>0</money>
+      <costkill>0</costkill>
+      <dominations>0</dominations>
+      <revenges>0</revenges>
+      <favwpn>mp5navy</favwpn>
+    </lastmatch>
+    <lifetime>
+      <dmg>43070</dmg>
+      <bombsplanted>0</bombsplanted>
+      <bombsdefused>0</bombsdefused>
+      <hostagesrescued>0</hostagesrescued>
+      <pistolrounds>13</pistolrounds>
+      <dominations>5</dominations>
+      <dominationoverkills>0</dominationoverkills>
+      <revenges>3</revenges>
+      <headshots>124</headshots>
+      <zsniperkills>35</zsniperkills>
+      <blindkills>0</blindkills>
+      <enemywpnkills>89</enemywpnkills>
+      <knifekills>0</knifekills>
+      <money>1024950</money>
+      <decals>22</decals>
+      <nvgdmg>0</nvgdmg>
+      <winbroken>0</winbroken>
+      <wpndonated>0</wpndonated>
+    </lifetime>
+    <weapons>
+      <deagle_shots>24</deagle_shots>
+      <deagle_hits>14</deagle_hits>
+      <deagle_acc>58.3333333333</deagle_acc>
+      <deagle_kills>6</deagle_kills>
+      <deagle_ksratio>0.25</deagle_ksratio>
+      <usp_shots>46</usp_shots>
+      <usp_hits>20</usp_hits>
+      <usp_acc>43.4782608696</usp_acc>
+      <usp_kills>3</usp_kills>
+      <usp_ksratio>0.0652173913043</usp_ksratio>
+      <glock_shots>66</glock_shots>
+      <glock_hits>21</glock_hits>
+      <glock_acc>31.8181818182</glock_acc>
+      <glock_kills>0</glock_kills>
+      <glock_ksratio>0</glock_ksratio>
+      <p228_shots>27</p228_shots>
+      <p228_hits>13</p228_hits>
+      <p228_acc>48.1481481481</p228_acc>
+      <p228_kills>3</p228_kills>
+      <p228_ksratio>0.111111111111</p228_ksratio>
+      <elite_shots>94</elite_shots>
+      <elite_hits>28</elite_hits>
+      <elite_acc>29.7872340426</elite_acc>
+      <elite_kills>6</elite_kills>
+      <elite_ksratio>0.063829787234</elite_ksratio>
+      <fiveseven_shots>52</fiveseven_shots>
+      <fiveseven_hits>22</fiveseven_hits>
+      <fiveseven_acc>42.3076923077</fiveseven_acc>
+      <fiveseven_kills>6</fiveseven_kills>
+      <fiveseven_ksratio>0.115384615385</fiveseven_ksratio>
+      <awp_shots>73</awp_shots>
+      <awp_hits>30</awp_hits>
+      <awp_acc>41.095890411</awp_acc>
+      <awp_kills>27</awp_kills>
+      <awp_ksratio>0.369863013699</awp_ksratio>
+      <ak47_shots>339</ak47_shots>
+      <ak47_hits>81</ak47_hits>
+      <ak47_acc>23.8938053097</ak47_acc>
+      <ak47_kills>24</ak47_kills>
+      <ak47_ksratio>0.070796460177</ak47_ksratio>
+      <m4a1_shots>587</m4a1_shots>
+      <m4a1_hits>144</m4a1_hits>
+      <m4a1_acc>24.531516184</m4a1_acc>
+      <m4a1_kills>29</m4a1_kills>
+      <m4a1_ksratio>0.0494037478705</m4a1_ksratio>
+      <aug_shots>295</aug_shots>
+      <aug_hits>98</aug_hits>
+      <aug_acc>33.2203389831</aug_acc>
+      <aug_kills>22</aug_kills>
+      <aug_ksratio>0.0745762711864</aug_ksratio>
+      <sg552_shots>365</sg552_shots>
+      <sg552_hits>91</sg552_hits>
+      <sg552_acc>24.9315068493</sg552_acc>
+      <sg552_kills>24</sg552_kills>
+      <sg552_ksratio>0.0657534246575</sg552_ksratio>
+      <sg550_shots>0</sg550_shots>
+      <sg550_hits>0</sg550_hits>
+      <sg550_acc>0</sg550_acc>
+      <sg550_kills>0</sg550_kills>
+      <sg550_ksratio>0</sg550_ksratio>
+      <galil_shots>179</galil_shots>
+      <galil_hits>53</galil_hits>
+      <galil_acc>29.6089385475</galil_acc>
+      <galil_kills>16</galil_kills>
+      <galil_ksratio>0.0893854748603</galil_ksratio>
+      <famas_shots>206</famas_shots>
+      <famas_hits>44</famas_hits>
+      <famas_acc>21.359223301</famas_acc>
+      <famas_kills>13</famas_kills>
+      <famas_ksratio>0.0631067961165</famas_ksratio>
+      <scout_shots>79</scout_shots>
+      <scout_hits>40</scout_hits>
+      <scout_acc>50.6329113924</scout_acc>
+      <scout_kills>19</scout_kills>
+      <scout_ksratio>0.240506329114</scout_ksratio>
+      <g3sg1_shots>167</g3sg1_shots>
+      <g3sg1_hits>35</g3sg1_hits>
+      <g3sg1_acc>20.9580838323</g3sg1_acc>
+      <g3sg1_kills>21</g3sg1_kills>
+      <g3sg1_ksratio>0.125748502994</g3sg1_ksratio>
+      <p90_shots>164</p90_shots>
+      <p90_hits>41</p90_hits>
+      <p90_acc>25</p90_acc>
+      <p90_kills>13</p90_kills>
+      <p90_ksratio>0.0792682926829</p90_ksratio>
+      <mp5navy_shots>440</mp5navy_shots>
+      <mp5navy_hits>99</mp5navy_hits>
+      <mp5navy_acc>22.5</mp5navy_acc>
+      <mp5navy_kills>11</mp5navy_kills>
+      <mp5navy_ksratio>0.025</mp5navy_ksratio>
+      <tmp_shots>100</tmp_shots>
+      <tmp_hits>29</tmp_hits>
+      <tmp_acc>29</tmp_acc>
+      <tmp_kills>5</tmp_kills>
+      <tmp_ksratio>0.05</tmp_ksratio>
+      <mac10_shots>169</mac10_shots>
+      <mac10_hits>35</mac10_hits>
+      <mac10_acc>20.7100591716</mac10_acc>
+      <mac10_kills>10</mac10_kills>
+      <mac10_ksratio>0.0591715976331</mac10_ksratio>
+      <ump45_shots>170</ump45_shots>
+      <ump45_hits>66</ump45_hits>
+      <ump45_acc>38.8235294118</ump45_acc>
+      <ump45_kills>11</ump45_kills>
+      <ump45_ksratio>0.0647058823529</ump45_ksratio>
+      <m3_shots>360</m3_shots>
+      <m3_hits>73</m3_hits>
+      <m3_acc>20.2777777778</m3_acc>
+      <m3_kills>7</m3_kills>
+      <m3_ksratio>0.0194444444444</m3_ksratio>
+      <xm1014_shots>174</xm1014_shots>
+      <xm1014_hits>64</xm1014_hits>
+      <xm1014_acc>36.7816091954</xm1014_acc>
+      <xm1014_kills>5</xm1014_kills>
+      <xm1014_ksratio>0.0287356321839</xm1014_ksratio>
+      <m249_shots>1062</m249_shots>
+      <m249_hits>176</m249_hits>
+      <m249_acc>16.5725047081</m249_acc>
+      <m249_kills>26</m249_kills>
+      <m249_ksratio>0.0244821092279</m249_ksratio>
+      <favorite>m4a1</favorite>
+      <maxshots>1062</maxshots>
+      <knife_kills>1</knife_kills>
+      <grenade_kills>1</grenade_kills>
+    </weapons>
+    <maps>
+      <cs_assault_rounds>0</cs_assault_rounds>
+      <cs_assault_wins>0</cs_assault_wins>
+      <cs_assault_winpct>0</cs_assault_winpct>
+      <cs_compound_rounds>0</cs_compound_rounds>
+      <cs_compound_wins>0</cs_compound_wins>
+      <cs_compound_winpct>0</cs_compound_winpct>
+      <cs_havana_rounds>0</cs_havana_rounds>
+      <cs_havana_wins>0</cs_havana_wins>
+      <cs_havana_winpct>0</cs_havana_winpct>
+      <cs_italy_rounds>14</cs_italy_rounds>
+      <cs_italy_wins>3</cs_italy_wins>
+      <cs_italy_winpct>21.4285714286</cs_italy_winpct>
+      <cs_militia_rounds>0</cs_militia_rounds>
+      <cs_militia_wins>0</cs_militia_wins>
+      <cs_militia_winpct>0</cs_militia_winpct>
+      <cs_office_rounds>0</cs_office_rounds>
+      <cs_office_wins>0</cs_office_wins>
+      <cs_office_winpct>0</cs_office_winpct>
+      <de_aztec_rounds>0</de_aztec_rounds>
+      <de_aztec_wins>0</de_aztec_wins>
+      <de_aztec_winpct>0</de_aztec_winpct>
+      <de_cbble_rounds>0</de_cbble_rounds>
+      <de_cbble_wins>0</de_cbble_wins>
+      <de_cbble_winpct>0</de_cbble_winpct>
+      <de_chateau_rounds>0</de_chateau_rounds>
+      <de_chateau_wins>0</de_chateau_wins>
+      <de_chateau_winpct>0</de_chateau_winpct>
+      <de_dust_rounds>0</de_dust_rounds>
+      <de_dust_wins>0</de_dust_wins>
+      <de_dust_winpct>0</de_dust_winpct>
+      <de_dust2_rounds>25</de_dust2_rounds>
+      <de_dust2_wins>6</de_dust2_wins>
+      <de_dust2_winpct>24</de_dust2_winpct>
+      <de_inferno_rounds>0</de_inferno_rounds>
+      <de_inferno_wins>0</de_inferno_wins>
+      <de_inferno_winpct>0</de_inferno_winpct>
+      <de_nuke_rounds>0</de_nuke_rounds>
+      <de_nuke_wins>0</de_nuke_wins>
+      <de_nuke_winpct>0</de_nuke_winpct>
+      <de_piranesi_rounds>0</de_piranesi_rounds>
+      <de_piranesi_wins>0</de_piranesi_wins>
+      <de_piranesi_winpct>0</de_piranesi_winpct>
+      <de_port_rounds>0</de_port_rounds>
+      <de_port_wins>0</de_port_wins>
+      <de_port_winpct>0</de_port_winpct>
+      <de_prodigy_rounds>0</de_prodigy_rounds>
+      <de_prodigy_wins>0</de_prodigy_wins>
+      <de_prodigy_winpct>0</de_prodigy_winpct>
+      <de_tides_rounds>0</de_tides_rounds>
+      <de_tides_wins>0</de_tides_wins>
+      <de_tides_winpct>0</de_tides_winpct>
+      <de_train_rounds>0</de_train_rounds>
+      <de_train_wins>0</de_train_wins>
+      <de_train_winpct>0</de_train_winpct>
+      <favorite>de_dust2</favorite>
+      <maxroundsplayed>25</maxroundsplayed>
+    </maps>
+  </stats>
+  <achievements>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/7bbd09bac4ebe17b84e8fb0eb5d9e3351fcb4bc0.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/bf782686b655c49914c975e08c5f10fa887ae3df.jpg]]></iconOpen>
+      <name><![CDATA[Body Bagger]]></name>
+      <description><![CDATA[Kill 25 enemies]]></description>
+      <unlockTimestamp>1277654892</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/08890ac29bfbfefcc43a3188a8127d141d1d5153.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d4587d03bc84d83088f5eb2887b2967d7d7096f8.jpg]]></iconOpen>
+      <name><![CDATA[Newb World Order]]></name>
+      <description><![CDATA[Win 10 rounds]]></description>
+      <unlockTimestamp>1283391909</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/a646cdeba4eb3590fb1b16241949daec306df333.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/07f8e3174f03886807f91f97621ccceb1aa89d60.jpg]]></iconOpen>
+      <name><![CDATA[Points in Your Favor]]></name>
+      <description><![CDATA[Inflict 2,500 total points of damage to enemy players]]></description>
+      <unlockTimestamp>1277654536</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/0335247125175126a8ad5cb89a55f79e81773e41.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/ee9381e30ad090c431ca343f2b996c376393a8dc.jpg]]></iconOpen>
+      <name><![CDATA[Ballistic]]></name>
+      <description><![CDATA[Kill 5 enemy players within 15 seconds]]></description>
+      <unlockTimestamp>1292906172</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/b9f034fe25d79fbfe755363a6d06455c587a37f9.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/7ab8bcc1f9c24a430821b93c22d15ef900132315.jpg]]></iconOpen>
+      <name><![CDATA[Ammo Conservation]]></name>
+      <description><![CDATA[Kill two enemy players with a single bullet]]></description>
+      <unlockTimestamp>1294890367</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/a73d6bdd5cccfaf9a14ca4951d896eae6fa061ff.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d008372fe508e7c02a39665825195082f48c33b0.jpg]]></iconOpen>
+      <name><![CDATA[War Bonds]]></name>
+      <description><![CDATA[Earn $125,000 total cash]]></description>
+      <unlockTimestamp>1277612613</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/45d3bab688dae22c45c4e8f723be789ab9ac9f13.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/caa5c72e9677fd51a4115e2f342917e82ffd0db2.jpg]]></iconOpen>
+      <name><![CDATA[Variety Hour]]></name>
+      <description><![CDATA[Get kills with 5 different guns in a round]]></description>
+      <unlockTimestamp>1292906172</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/e2b66dd3525b05d41952b798cb49f2d3c7d890c9.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/e0b3e0cc52998b520ea19efe60e19414668f032a.jpg]]></iconOpen>
+      <name><![CDATA[Primer]]></name>
+      <description><![CDATA[Do at least 95% damage to an enemy who is then killed by a another player]]></description>
+      <unlockTimestamp>1294790575</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/539173c8900678ffdf0a58046f74715afa172771.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/0cf8d8c7b38b2b98efd094c83752dca3fbdf9a35.jpg]]></iconOpen>
+      <name><![CDATA[Finishing Schooled]]></name>
+      <description><![CDATA[Kill an enemy player who has been reduced to less than 5% health by other players]]></description>
+      <unlockTimestamp>1277612142</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/4de15811ad0ae97501b0e6e210d2debf3a5151d0.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/fe5786bbedf3f02ead3600b838f8727c4d22617e.jpg]]></iconOpen>
+      <name><![CDATA[Shot With Their Pants Down]]></name>
+      <description><![CDATA[Kill an enemy player while they are reloading]]></description>
+      <unlockTimestamp>1287269548</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/df1f8451b8a7bf7522c044df2baa77ce72d4f3d0.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/63c073aa15025c3bacc70cc39426e2bcae2ddc02.jpg]]></iconOpen>
+      <name><![CDATA[Safety First]]></name>
+      <description><![CDATA[Survive a shot to the head because you had the good sense to wear a helmet]]></description>
+      <unlockTimestamp>1294791823</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/f148bcf3a60845f4dcc43cf076727fa9e1f7a824.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/82ab24f79f92f8fda43ccd46229bc62f4160217d.jpg]]></iconOpen>
+      <name><![CDATA[Hip Shot]]></name>
+      <description><![CDATA[Kill an enemy with an un-zoomed sniper rifle]]></description>
+      <unlockTimestamp>1283391997</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/37b5159e9721c3b0934292bf879e6088438e1e09.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/108b4a67427a034dba48d06edc8c65050f3a4e51.jpg]]></iconOpen>
+      <name><![CDATA[Eye to Eye]]></name>
+      <description><![CDATA[Kill a zoomed-in enemy sniper with a sniper rifle of your own]]></description>
+      <unlockTimestamp>1277654497</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/24190f805c63645bbb5d821a46b41b8a6fd68991.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/80719abe703511e31168714dd81e5b2b3e915df2.jpg]]></iconOpen>
+      <name><![CDATA[Dead Man Stalking]]></name>
+      <description><![CDATA[Kill an enemy while at 1 health]]></description>
+      <unlockTimestamp>1283392279</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/813933a17dbc8b103170a0c3d05b9440557302a0.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/c7565725d1fd08b256e2eaf0df4e74b85159c675.jpg]]></iconOpen>
+      <name><![CDATA[Blitzkrieg]]></name>
+      <description><![CDATA[Win a round in less than 30 seconds (against at least 5 enemy players)]]></description>
+      <unlockTimestamp>1283392323</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d0327c158beff0515a08b91879093540dafec54d.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/632320abeddf72b39265cd40e8260ae6760226f0.jpg]]></iconOpen>
+      <name><![CDATA[Piece Initiative]]></name>
+      <description><![CDATA[Win 5 Pistol Rounds]]></description>
+      <unlockTimestamp>1292905673</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/496164516a675df5cd6e74a5b960118344748a18.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/acd2ca2586e177de05e7cef420a11fc7b2cee179.jpg]]></iconOpen>
+      <name><![CDATA[Akimbo King]]></name>
+      <description><![CDATA[Use Dual Elites to kill an enemy player that also has Dual Elites equipped]]></description>
+      <unlockTimestamp>1294790735</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/5ef95972df256a08fd0627928f08fc89152c2e22.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/3482350926a2342794b4559f5572df8012249c20.jpg]]></iconOpen>
+      <name><![CDATA[Bunny Hunt]]></name>
+      <description><![CDATA[Kill an airborne enemy]]></description>
+      <unlockTimestamp>1287272349</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/012e70c5765ea2d3fce32a98f559805d63e3f58a.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/f5b6399ae407827b28200158a8d54db27d86306b.jpg]]></iconOpen>
+      <name><![CDATA[Repeat Offender]]></name>
+      <description><![CDATA[Dominate an enemy player]]></description>
+      <unlockTimestamp>1293215662</unlockTimestamp>
+    </achievement>
+    <achievement closed="1">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/99be21adcaf1215a0823ba647fb5f4de95d4b16f.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/22819a1826fb437cdaa1ee905a04075fd3b3c1cd.jpg]]></iconOpen>
+      <name><![CDATA[Insurgent]]></name>
+      <description><![CDATA[Kill an enemy player that is dominating you]]></description>
+      <unlockTimestamp>1277611830</unlockTimestamp>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/4711014791e4ae29408e8bc2fcae1ab61ca7c189.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/94f7819e75fcf01107e65531a54b1820c8613191.jpg]]></iconOpen>
+      <name><![CDATA[Someone Set Up Us The Bomb]]></name>
+      <description><![CDATA[Win a round by planting a bomb]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/5f689c20656716f2a8bf67bd26f3f7846786bca5.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/bae62d2ff31fc415e5973a50ec836afec949d6a7.jpg]]></iconOpen>
+      <name><![CDATA[Boomala Boomala]]></name>
+      <description><![CDATA[Plant 100 bombs]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/6eda73149b29c897330a15e502eaee4ac8242c02.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d8a4931cbd688b9c44167b59536f5a21cedd312b.jpg]]></iconOpen>
+      <name><![CDATA[The Hurt Blocker]]></name>
+      <description><![CDATA[Defuse 100 bombs]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/058b56fcc898b9bf893a6237ad233f677f8d48dd.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/9405532bf85010d8fdd61877ae915d103a2f30f3.jpg]]></iconOpen>
+      <name><![CDATA[Corpseman]]></name>
+      <description><![CDATA[Kill 500 enemies]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/908a8d1cdb376c401653e843fef8b4fe85156212.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/0be60ac95bc82f5637390c12e69942403bbd7d92.jpg]]></iconOpen>
+      <name><![CDATA[God of War]]></name>
+      <description><![CDATA[Kill 10,000 enemies]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/110782d2a043351f48c2e2bffac52db775ec573d.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/7625385f689887107e215ca0cabe661eb379dc71.jpg]]></iconOpen>
+      <name><![CDATA[Second to None]]></name>
+      <description><![CDATA[Successfully defuse a bomb with less than one second remaining]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/892d00fc07c5dfa2f243d77722c6b9a176ac56c6.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/c0ff0663501b4ea206b88a8086f7650450f1e26f.jpg]]></iconOpen>
+      <name><![CDATA[Combat Ready]]></name>
+      <description><![CDATA[Defuse a bomb with a kit when it would have failed without one]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/10a0839b2f9bd60d8bb3a85b5a194573018fe24b.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/b568fd0fcaed2aab563ce466d3051ded78990ca9.jpg]]></iconOpen>
+      <name><![CDATA[Counter-Counter-Terrorist]]></name>
+      <description><![CDATA[Kill a CT while he is defusing the bomb]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d156614d7d84bfdde80bdfb67b1f46cc9fb7d23e.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/dbfc1db1f61b7d805e6e731e5e63bbe40179c964.jpg]]></iconOpen>
+      <name><![CDATA[Rite of First Defusal]]></name>
+      <description><![CDATA[Win a round by defusing a bomb]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/3a9f3060c6f0c5f49e3841f3661cde48c078f36e.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/57446aaae6407272d76215b18be286b451ea5440.jpg]]></iconOpen>
+      <name><![CDATA[Short Fuse]]></name>
+      <description><![CDATA[Plant a bomb within 25 seconds]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/c5e9b4ae4f52c542045c20cdfc8b7f05cef78bce.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/5da3a6d369793d0fcbe6b44726d87f699a01a4cc.jpg]]></iconOpen>
+      <name><![CDATA[Pro-moted]]></name>
+      <description><![CDATA[Win 200 rounds]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/cfa8f71312275fe26db7158ababbdd8b83fa6979.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/9348d2d72e9f5bb28d3a1247c067ffef6bf48c4d.jpg]]></iconOpen>
+      <name><![CDATA[Leet-er of Men]]></name>
+      <description><![CDATA[Win 5000 rounds]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/6b517619bbaaa916dc5be3350cd6be26fdbf335b.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/3ee6b682ca7895d6947a93b360bb61c24b58702e.jpg]]></iconOpen>
+      <name><![CDATA[You've Made Your Points]]></name>
+      <description><![CDATA[Inflict 50,000 total points of damage to enemy players]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/2930b087cb3a622a09e299772f7d2e9fc4ea3082.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/20e03308ca9383c05a0dc0f79916ff383d2f3200.jpg]]></iconOpen>
+      <name><![CDATA[A Million Points of Blight]]></name>
+      <description><![CDATA[Inflict 1,000,000 total points of damage to enemy players]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/958796f76ce6c0781687144d2b8a7c9ed3a029fe.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/2afdd075f0324732a3b2f49aec8c086ea95928fb.jpg]]></iconOpen>
+      <name><![CDATA[Lost and F0wnd]]></name>
+      <description><![CDATA[KIll an enemy player with a gun they dropped that round]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/b9729279ef483bfbad3fd9666236fec68ab9380f.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/7037232d0ead0cae2c41181f95e2d16d93d72b54.jpg]]></iconOpen>
+      <name><![CDATA[Cowboy Diplomacy]]></name>
+      <description><![CDATA[Rescue 100 hostages]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/83628680b7c21781689bc01e36312528b9bcc61a.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/ab9431e63e4d5295c8c6169baa9c95e5bf965c48.jpg]]></iconOpen>
+      <name><![CDATA[SAR Czar]]></name>
+      <description><![CDATA[Rescue 500 hostages]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/cd6c8567cbe7f143f0f2f9d5b76aa9839140e49c.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/48cb324c5eace57bf56e1b87d199b4911a3f29a3.jpg]]></iconOpen>
+      <name><![CDATA[Good Shepherd]]></name>
+      <description><![CDATA[Rescue all hostages in a single round]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/1f85755ee5cb772162042c75d9dc2a9e661ca519.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/600ab7c5d2fe282581660f4d5e359a2e1b88e621.jpg]]></iconOpen>
+      <name><![CDATA[Freed With Speed]]></name>
+      <description><![CDATA[Rescue all hostages within 90 seconds]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/fc5d299ac57b075c651983b1492534064d305305.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/e01e6af5decf611f86cbece4191213c1fda93b5f.jpg]]></iconOpen>
+      <name><![CDATA[Spoils of War]]></name>
+      <description><![CDATA[Earn $2,500,000 total cash]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/eb5746d81a7b33e30d4e8888c858ec6da31fbe63.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/38064df95182fb0c744d8f15be4d17723b2b524c.jpg]]></iconOpen>
+      <name><![CDATA[Blood Money]]></name>
+      <description><![CDATA[Earn $50,000,000 total cash]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/e4b044ea898e17a52db0cdd4ecf2f67139104a21.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/862a26cbd251d3ade38c04a2a746f07af49d1c83.jpg]]></iconOpen>
+      <name><![CDATA[Premature Burial]]></name>
+      <description><![CDATA[Kill an enemy with a grenade after you've died]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d599997f174b8185e3f7f4e6642ab364cd8224eb.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/246aec5cf665ee534fadc59e1d2dbb3b73d194fb.jpg]]></iconOpen>
+      <name><![CDATA[Night Hawk .50c Expert]]></name>
+      <description><![CDATA[Kill 200 enemy players with the Night Hawk .50c]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/130698886f13c85777a0267b07e7e74ef3c23518.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/05d10dfe4f7d32f850cec1edc21a44a06c662615.jpg]]></iconOpen>
+      <name><![CDATA[KM Tactical .45 Expert]]></name>
+      <description><![CDATA[Kill 200 enemy players with the KM Tactical .45]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/358cb5a24e8ecd721e34d828a0bf38a37e50498a.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/26aef00127561e289b7fc9a3b9230b13540dbfa9.jpg]]></iconOpen>
+      <name><![CDATA[9x19 Sidearm Expert]]></name>
+      <description><![CDATA[Kill 200 enemy players with the 9x19 Sidearm]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/7414a87ca8d5113fcaff9de60140c1d3ae7240a9.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/cc83a8f9818bee4cc16b20445afe45a7b8951291.jpg]]></iconOpen>
+      <name><![CDATA[228 Compact Expert]]></name>
+      <description><![CDATA[Kill 200 enemy players with the 228 Compact]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/3bbbe364a200794c0c40f0dea4c76e536dcc0e10.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/820764553c24688868f89ac1462d369ef8ba8889.jpg]]></iconOpen>
+      <name><![CDATA[.40 Dual Elites Expert]]></name>
+      <description><![CDATA[Kill 100 enemy players with the .40 Dual Elites]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/062f3ad079e7df53b2a8d49aa2d7983cea985e95.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/8a410121e7ee5b18dd8f7ef3a04fc21a8a8e5024.jpg]]></iconOpen>
+      <name><![CDATA[ES Five-Seven Expert]]></name>
+      <description><![CDATA[Kill 100 enemy players with the ES Five-Seven]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/4cb4663fd6df1a3b7ccb5a987f1660b28b5071f6.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/93f05d9e2892fd1111234e1c3712d00a91f461c9.jpg]]></iconOpen>
+      <name><![CDATA[Pistol Master]]></name>
+      <description><![CDATA[Unlock all 6 Pistol kill achievements]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/baaec1b4ba2a388c29eb10f932f0a029ccf41473.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/df428641a3ec6ed90ef71f6430b77380ef853fab.jpg]]></iconOpen>
+      <name><![CDATA[Magnum Sniper Rifle Expert]]></name>
+      <description><![CDATA[Kill 1,000 enemy players with the Magnum Sniper Rifle]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/b0945b589b715e043dd791df7280b872e39f69ea.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/2d49b161558e207d676cf26724fbcc5e5a0defee.jpg]]></iconOpen>
+      <name><![CDATA[CV-47 Expert]]></name>
+      <description><![CDATA[Kill 1,000 enemy players with the CV-47]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/5f57d1613e7cf965c3e8a88af4880c7202ede46c.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/13967b1b1df30c265a193e26826047a858f6b65f.jpg]]></iconOpen>
+      <name><![CDATA[Maverick M4A1 Carbine Expert]]></name>
+      <description><![CDATA[Kill 1,000 enemy players with the Maverick M4A1 Carbine]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/5059d63a0669ce9825ecaea63015bac8d2627f50.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/1c5e93dc407d858348d980c16b26370423ff72e8.jpg]]></iconOpen>
+      <name><![CDATA[Bullpup Expert]]></name>
+      <description><![CDATA[Kill 500 enemy players with the Bullpup]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/ea6b7ff2887dbea64ba06f55777d0bc8b5ba84bf.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/584d8ed62def39fadf58cd2a5a8713801352fc4b.jpg]]></iconOpen>
+      <name><![CDATA[Krieg 552 Expert]]></name>
+      <description><![CDATA[Kill 500 enemy players with the Krieg 552]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/2180aa5121e2066b86b8e0a002640a83d38d3dd1.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/c3807a7a9aa5c8a0b5167e9a1af2065359a76ef6.jpg]]></iconOpen>
+      <name><![CDATA[Krieg 550 Commando Expert]]></name>
+      <description><![CDATA[Kill 500 enemy players with the Krieg 550 Commando]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/95437097875b1388f9158e7ebe47b2eb1ab86f99.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/0f67d0f9514b7ed579cb83d83eba8b65202ff49c.jpg]]></iconOpen>
+      <name><![CDATA[IDF Defender Expert]]></name>
+      <description><![CDATA[Kill 500 enemy players with the IDF Defender]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/559690251fa20a45469917edbd6eaadad3402175.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/625c6c26c33cd7be528785b96820e2133c098306.jpg]]></iconOpen>
+      <name><![CDATA[Clarion 5.56 Expert]]></name>
+      <description><![CDATA[Kill 500 enemy players with the Clarion 5.56]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/c7d5f568f036be6832028e3d679650743ea4cceb.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d8ec3830d8eba4cd0a260a49ff07ade7c3875429.jpg]]></iconOpen>
+      <name><![CDATA[Schmidt Scout Expert]]></name>
+      <description><![CDATA[Kill 1,000 enemy players with the Schmidt Scout]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/9ce3c3d509c891689bae0212bf26096afe1818c3.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/97231f3456e67e4b8e913eae70ad39ad99bfdf6b.jpg]]></iconOpen>
+      <name><![CDATA[D3/AU-1 Expert]]></name>
+      <description><![CDATA[Kill 500 enemy players with the D3/AU-1]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/75603c6cfe455453b335f7ef33327a18584fda87.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/a11c64561ce145561f8dc14a80fad31f2d25ed24.jpg]]></iconOpen>
+      <name><![CDATA[Rifle Master]]></name>
+      <description><![CDATA[Unlock all 10 rifle kill achievements]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/c28b855319e0313ed5d72e3814be3877fe6d8701.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/dd02ec8e5b90acd1d5094a67bf5860df3390d5c1.jpg]]></iconOpen>
+      <name><![CDATA[ES C90 Expert]]></name>
+      <description><![CDATA[Kill 1,000 enemy players with the ES C90]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/670f7c75793615eaffc2bfbd804aea338a0c0c58.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/f094b78d66d0c1f0e2ad3aa61e489f1cc9984b64.jpg]]></iconOpen>
+      <name><![CDATA[KM Sub-Machine Gun Expert]]></name>
+      <description><![CDATA[Kill 1,000 enemy players with the KM Sub-Machine Gun]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/62475b771c19ab516ad096755317aef44230035e.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d5970614302f30f5a20bef5b27dfef14bfbb0a61.jpg]]></iconOpen>
+      <name><![CDATA[Schmidt Machine Pistol Expert]]></name>
+      <description><![CDATA[Kill 500 enemy players with the Schmidt Machine Pistol]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/2d6b9c05b9cbfe6c5c778e6a862f2ff320b8a467.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/ce0d80806fddfb1607f1592523dcfe2651cc821c.jpg]]></iconOpen>
+      <name><![CDATA[Ingram Mac-10 Expert]]></name>
+      <description><![CDATA[Kill 500 enemy players with the Ingram Mac-10]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/5126af466fd7cd2a5b52864fa061ea8cb371b693.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/c29b99f0ef8aea4bd1d32fad1327f8751b8dc2c2.jpg]]></iconOpen>
+      <name><![CDATA[KM UMP45 Expert]]></name>
+      <description><![CDATA[Kill 1,000 enemy players with the KM UMP45]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d607975ef3bf7c92ff5df3be378ddfdbc6a297e8.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/ba6d8e4db2ef4e8c22fee388dcbc11e2a1722e78.jpg]]></iconOpen>
+      <name><![CDATA[Sub-Machine Gun Master]]></name>
+      <description><![CDATA[Unlock all 5 sub-machine gun kill achievements]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/8e0b707a47986499cb2b9ed8b969f530eda8f789.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/02c3a3b6fcc77a28064aa362d0a53bac50802cc3.jpg]]></iconOpen>
+      <name><![CDATA[Leone 12 Gauge Super Expert]]></name>
+      <description><![CDATA[Kill 200 enemy players with the Leone 12 Gauge Super]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/cb59a2b025fe1588963a94be93c0cb3716ea04dd.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/f7cee0ffd12e382104a7316b4af670e926ab9e87.jpg]]></iconOpen>
+      <name><![CDATA[Leone YG1265 Auto Shotgun Expert]]></name>
+      <description><![CDATA[Kill 200 enemy players with the Leone YG1265 Auto Shotgun]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/c6ee36ad70b44df073edb262b58d2b53f023d362.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/91eac45cf9abd44b5ad3a126e15a1cc9a273401c.jpg]]></iconOpen>
+      <name><![CDATA[Shotgun Master]]></name>
+      <description><![CDATA[Unlock both shotgun kill achievements]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/39ae2bf957bbb26394f2b8054eb3bb9f525afaca.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/ed7e7609eed89a5820b362ae8c2f02af0d121f13.jpg]]></iconOpen>
+      <name><![CDATA[HE Grenade Expert]]></name>
+      <description><![CDATA[Kill 500 enemy players with the HE grenade]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/5e40c25485619a489e20f3134780658365c1f0b8.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/74abd08d8f84234fd65d9538c4606ecbe9ee10e1.jpg]]></iconOpen>
+      <name><![CDATA[Knife Expert]]></name>
+      <description><![CDATA[Kill 100 enemy players with the knife]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d699ac67ad64a2aa06faf46e3c26f55406c31992.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/12c44fe21bff737633ad03393a581ef2839e2793.jpg]]></iconOpen>
+      <name><![CDATA[M249 Expert]]></name>
+      <description><![CDATA[Kill 500 enemy players with the M249]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/c88426aed4ffc3a2bda95ad5c5943648717a71f1.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/5bc16320b03ee5202cac2f8a0b84a24e0d65d88e.jpg]]></iconOpen>
+      <name><![CDATA[Master At Arms]]></name>
+      <description><![CDATA[Unlock every weapon kill achievement]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/9aa4672fd410cdb9482042025949e853bad970b2.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/9f556bbab6502d32e800ab543863981d70a02675.jpg]]></iconOpen>
+      <name><![CDATA[The Cleaner]]></name>
+      <description><![CDATA[Kill the entire enemy team (with at least 5 players) in a single round]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/51bfb690e29188f49aeb4072f34a9094b2db2214.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/861579599e1403caa3961c6ed411530c3d9068d7.jpg]]></iconOpen>
+      <name><![CDATA[Dead Shepherd]]></name>
+      <description><![CDATA[Kill an enemy player who is leading the hostages without injuring any hostages]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/c01f85fc8120729d365c788d65328ae1566f39cf.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/5f6ceb19f91d0d393af0d227cf1f123240724f33.jpg]]></iconOpen>
+      <name><![CDATA[War of Attrition]]></name>
+      <description><![CDATA[Be the last player alive in a round (with at least 5 players on your team)]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/6ba07e0329d501cfce59049c9fd93722dc7868d5.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/34f4668be5097032a17a74031f73293346927e75.jpg]]></iconOpen>
+      <name><![CDATA[Magic Bullet]]></name>
+      <description><![CDATA[Kill an enemy with the last bullet in your magazine (excluding sniper rifles)]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/62ed103e86b3fb24779693d8ed48d2a777559d66.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/f21b12e05650e6fea75f21e0656a8cfce4103b4a.jpg]]></iconOpen>
+      <name><![CDATA[Kill One, Get One Spree]]></name>
+      <description><![CDATA[Kill an enemy player who is on a killing spree]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/e6a9c693f47f2f0333da279d6b180d57cfd1c2fe.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/5126f587ffa5f8c264dec78e528d3fd2d1d577cb.jpg]]></iconOpen>
+      <name><![CDATA[A World of Pane]]></name>
+      <description><![CDATA[Shoot out 14 windows in a single round on cs_office]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/3ef408527a82676ab7a1cb61d8d6555a822b7eb6.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/57e1923b1e191448b130a74ea340daa286dd89ff.jpg]]></iconOpen>
+      <name><![CDATA[Battle Sight Zero]]></name>
+      <description><![CDATA[Kill 250 enemy players with headshots]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/ef8338a54a56db7b6d3be6b1dd973197f1707cdc.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/9b69dc5e5fe04065bfd7ab07e28c445a7179deeb.jpg]]></iconOpen>
+      <name><![CDATA[Blind Ambition]]></name>
+      <description><![CDATA[Kill a total of 25 enemy players blinded by flashbangs]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/8c2838cc63458e2d8d7927813184f64d9061c809.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/49cb07ed836eed71c23dac29181d869a201937c8.jpg]]></iconOpen>
+      <name><![CDATA[Blind Fury]]></name>
+      <description><![CDATA[Kill an enemy player while you are blinded from a flashbang]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/9cc500765c2545f27705dc7547e6daf2a4b28218.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/51ae619386c1fd0ddc4b69ee06c5053e8573517b.jpg]]></iconOpen>
+      <name><![CDATA[Friendly Firearms]]></name>
+      <description><![CDATA[Kill 100 enemy players with enemy weapons]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/b8a68c6dd61a9068fa9b1160b5676c926bd63d57.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/004f238ef0a5da50ea4a5af246c41f3068415ad7.jpg]]></iconOpen>
+      <name><![CDATA[Expert Marksman]]></name>
+      <description><![CDATA[Get a kill with every weapon]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/2294b872f224385a449abaab2d43bc4c04178ac0.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/cb6c4e663908c63b0f2acd134ab8e2751f300833.jpg]]></iconOpen>
+      <name><![CDATA[Shrapnelproof]]></name>
+      <description><![CDATA[Take 80 points of damage from enemy grenades and still survive the round]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/0a98a35608855a7a3ef7bb87fbe83d351c3f7319.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/859fa9b3d74b110a7b0e3e3bc307fcec41204f37.jpg]]></iconOpen>
+      <name><![CDATA[Make the Cut]]></name>
+      <description><![CDATA[Win a knife fight]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/9ff5f14a76456fb827785e5ac37997fb6dc11b14.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/62ad26989b8e97fc598d32b402236b802e41783d.jpg]]></iconOpen>
+      <name><![CDATA[The Bleeding Edge]]></name>
+      <description><![CDATA[Win 100 knife fights]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/ed308d86e18431a3bc586205c1721e8baabe1600.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/c23d6723fef89248636d0a130ffa2455197b3332.jpg]]></iconOpen>
+      <name><![CDATA[Defuse This!]]></name>
+      <description><![CDATA[Kill the defuser with an HE grenade]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/e721cddc55903779f2d609c1ee6bf3f380df1b67.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/f99aa8a03c4d7db8fd672e2a5a0999bcfc66191a.jpg]]></iconOpen>
+      <name><![CDATA[Sknifed]]></name>
+      <description><![CDATA[Kill a zoomed-in enemy sniper with a knife]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/6029cdd0f943ade69f68181e6c9ddcbbe468aef8.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/50910661ff66d81e93e99faab3849dd9429ff61c.jpg]]></iconOpen>
+      <name><![CDATA[Snipe Hunter]]></name>
+      <description><![CDATA[Kill 100 zoomed-in enemy snipers]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/6115986d15eedbb343047693b2026cfdd35fe774.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/4c5d08cc6beec4fb12247a98666b86507ca668c0.jpg]]></iconOpen>
+      <name><![CDATA[Three the Hard Way]]></name>
+      <description><![CDATA[Kill 3 enemy players with a single HE grenade]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/b76e0bcfd7f17f803d6d9d00d690a0400af705f4.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/171265031b4f77885934c82d9b5a2482635f6228.jpg]]></iconOpen>
+      <name><![CDATA[Street Fighter]]></name>
+      <description><![CDATA[Kill an enemy player with a knife during the pistol round]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/569903b97da046a9e39f3aa6cab2f0ab3a791208.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/5ceca7f87e027fe37c0b22d70f7e3ad828f57f6e.jpg]]></iconOpen>
+      <name><![CDATA[Give Piece a Chance]]></name>
+      <description><![CDATA[Win 25 Pistol Rounds]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/e4e75041504be04ee50b793e3ddb965e2b50ea16.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/8d07c9de193787c74e136c3d4f22cd84715b5744.jpg]]></iconOpen>
+      <name><![CDATA[Piece Treaty]]></name>
+      <description><![CDATA[Win 250 Pistol Rounds]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/2ab8a4c58effdc47b6859139108428c2cec7776c.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/84e1115a7b13b8e9da1cc3fc9120219c2287458b.jpg]]></iconOpen>
+      <name><![CDATA[Clusterstruck]]></name>
+      <description><![CDATA[Kill 5 players in a C4 blast]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/0cf3535ea0fb1eb2301bbc1ea556735fc7427168.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/edcf3f017ee4fe0cdb8f45a4d09ef63d18d624f3.jpg]]></iconOpen>
+      <name><![CDATA[Wild Gooseman Chase]]></name>
+      <description><![CDATA[As the last living terrorist, distract a defuser long enough for the bomb to explode]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/6cf434bbd0898441178457c02a3e103c402e6251.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/e89f47ff11d27028151713816b564213858c692f.jpg]]></iconOpen>
+      <name><![CDATA[Blast Will and Testament]]></name>
+      <description><![CDATA[Win a round by picking up the bomb from a fallen comrade and successfully planting it]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/555cd9fc445ff777c6fc49c3550650efccbfb2cf.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/7d920b6786f682fcb1d91f9c75ebec4c2089c518.jpg]]></iconOpen>
+      <name><![CDATA[Target-Hardened]]></name>
+      <description><![CDATA[Survive damage from 5 different players within a round]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d0fccbc1cc2876855540328e7294586266636ce6.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/756159a664238b13d2a8b7d26a3f10fec14e75c1.jpg]]></iconOpen>
+      <name><![CDATA[Mercy Rule]]></name>
+      <description><![CDATA[Kill the entire opposing team without any members of your team dying]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/012b420dc3df74fe5612e911585ed36f6e09cc59.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/25b09fc5020ed0e1219a9894045a68dde52623d6.jpg]]></iconOpen>
+      <name><![CDATA[Clean Sweep]]></name>
+      <description><![CDATA[Kill the entire opposing team without any members of your team taking any damage]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d474faa598724ad9820bb4c2aeb6dc6bea9cecd5.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/db7bbdc8adaf545fe8904555cb623be4ad2e0858.jpg]]></iconOpen>
+      <name><![CDATA[Mad Props]]></name>
+      <description><![CDATA[Break 15 props in a single round]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/1de18090c15dfed29448cfcd9a5b26809edeed80.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/c1d25e912cfe9fba9b5554be71c2cf2ca837bb44.jpg]]></iconOpen>
+      <name><![CDATA[The Art of War]]></name>
+      <description><![CDATA[Spray 100 decals]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/020ddd446b95872a95c895b267cf11a77991030b.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/915e6dd8d0a607d4c8b77cbc95bdc82a12af2d93.jpg]]></iconOpen>
+      <name><![CDATA[Dead of Night]]></name>
+      <description><![CDATA[Do 5,000 damage with nightvision active]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/6875185372aa29caadef5b25d0455df883da9b93.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/95f599d0fb67cc5d775a5d7f10cab700ad450ae9.jpg]]></iconOpen>
+      <name><![CDATA[The Unstoppable Force]]></name>
+      <description><![CDATA[Kill 10 enemy players in a single round]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d4318c37cbbafe9b66d76d2caa6527aa653aba29.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/8e99fe1b10e9dcb00cd4f2a5dd849a74da592c78.jpg]]></iconOpen>
+      <name><![CDATA[The Immovable Object]]></name>
+      <description><![CDATA[Kill an enemy player who has just killed 10 of your teammates in a single round]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/24b273ead1fc4bd4b26e9bbeebc9b97c43ae569d.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d459feb76fd95f666738a5b333dfae7d645cfebd.jpg]]></iconOpen>
+      <name><![CDATA[Head Shred Redemption]]></name>
+      <description><![CDATA[Kill 5 enemy players with headshots in a single round]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/530e1c44b7c1b2d8c9ab7d49f3595e36e5a90303.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d82f8dbd3e4eeb6e4d0fba359349e7493ab872c2.jpg]]></iconOpen>
+      <name><![CDATA[Assault Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the CS_Assault map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/44699261fce17aaf69db20557629e417439aa902.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/77fd39cb007e0a18c756c0e49a800ce9f9271bc7.jpg]]></iconOpen>
+      <name><![CDATA[Compound Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the CS_Compound map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/9ca4e0bc7c700a9cc12fe2529b085923e9acbce2.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/f8cb78cbf0cece659552ed56687c9cbbab83a197.jpg]]></iconOpen>
+      <name><![CDATA[Havana Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the CS_Havana map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/286875088867edfbfa72b5280248b5d561057ab0.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/8d64249713d2f704aca75b0bad7b01c2d90f7d35.jpg]]></iconOpen>
+      <name><![CDATA[Italy Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the CS_Italy map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/e1f96fb777a1ca845e124a533dcad6bc4f650868.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/293d32b26b33e3bd3eb1bfe9e48e70129f702806.jpg]]></iconOpen>
+      <name><![CDATA[Militia Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the CS_Militia map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/36ad4e09cd89895567feaa369fc6bbd9bbcadf89.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/1a0d104f2601dfa3e8c0a55292bf886f1b5ac54f.jpg]]></iconOpen>
+      <name><![CDATA[Office Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the CS_Office map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/31e1a68b8fdb7ffab0ca0c499863b4b16118ad23.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/3b2757996f82301adadc6240c55a8a8f294e844f.jpg]]></iconOpen>
+      <name><![CDATA[Aztec Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the DE_Aztec map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/a14115f06eb65f7d622b09b974f59aeaa26c442a.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/db634d87e842f86fa2d934c8482384b6d7a63311.jpg]]></iconOpen>
+      <name><![CDATA[Cobblestone Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the DE_Cbble map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/87ca7d0e41c1ada0c30c9fdee9cbd5c19bd13d0e.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/171bb36d4b240bd2862ca80c94d0ad5b6fda2fa3.jpg]]></iconOpen>
+      <name><![CDATA[Chateau Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the DE_Chateau map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d8aeb5571151a3c0b4a66bd091bc39957666eedb.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/ebcf3ad9153b6dc47ace5c10de102af49bc65f4c.jpg]]></iconOpen>
+      <name><![CDATA[Dust Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the DE_Dust map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/75ee0f2b514081ba9f38c3e0cf4f02794b78ca70.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/439b9244d58963deeb53a9f5e6aae43aa19f2802.jpg]]></iconOpen>
+      <name><![CDATA[Dust2 Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the DE_Dust2 map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/8cd4ee2228548722db7013931dc191ac30bb3c4d.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/8ffa513a6294c4681a234d1fa7d60e1f561bea6d.jpg]]></iconOpen>
+      <name><![CDATA[Inferno Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the DE_Inferno map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/650cb1f7f8fb14cbf2dab9b79d8521314086b5bd.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/c4ac507be4437083065fe6d11e9ff2dedace3e49.jpg]]></iconOpen>
+      <name><![CDATA[Nuke Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the DE_Nuke map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/bc56ee83cb4dbb03784017cee7b19c6fc2d37a23.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/1ac249410b8a8f2e15ffda0316d421d1359369c1.jpg]]></iconOpen>
+      <name><![CDATA[Piranesi Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the DE_Piranesi map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/9af72780d889df0836717a7d67b5dca5e29881aa.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/b23d5799481debfe02df80a1acd19729c493745e.jpg]]></iconOpen>
+      <name><![CDATA[Port Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the DE_Port map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/7d35455b2b31e4d9416269a73217dfb5f1cb4242.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/f537c8650f65607dc217cdb93ebfd449a7b04ff3.jpg]]></iconOpen>
+      <name><![CDATA[Prodigy Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the DE_Prodigy map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/99386feb215e4d334eb77de0f7e2757997134f4e.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/a59d60daed47fef8d699fc917ae941a746fcd8e0.jpg]]></iconOpen>
+      <name><![CDATA[Tides Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the DE_Tides map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/7f87fa1a2db26b2e7d3495147d671610c832c9e5.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/e662a64de44543b4cea87cf501680a6dd74e0e22.jpg]]></iconOpen>
+      <name><![CDATA[Train Map Veteran]]></name>
+      <description><![CDATA[Win 100 rounds on the DE_Train map]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/c3f931fafe076c8ccc2a038b2a83b09b68c77f72.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/679131f27945028a5b9484a54b98cc2e7d7118e8.jpg]]></iconOpen>
+      <name><![CDATA[Death From Above]]></name>
+      <description><![CDATA[Kill an enemy player while you are airborne]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/2265e65c4fdd7de892a1eae38323e2770101956b.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/767b3d214f1021c4763304ce551703c0a61d35b2.jpg]]></iconOpen>
+      <name><![CDATA[Aerial Necrobatics]]></name>
+      <description><![CDATA[Kill an airborne enemy while you are also airborne]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/25e66c00fa29ca84a542176a5347fc78b38ad287.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/a2da13fe1a603d9b7acdc3948ed1f0fb877d1cb0.jpg]]></iconOpen>
+      <name><![CDATA[Black Bag Operation]]></name>
+      <description><![CDATA[Win a round while making no footstep noise and killing at least one enemy]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/77b5d9f4fa1758022de4a66c745339d5498d814f.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/3569536e9a90f0bbbd21fc9f524f6334409558a3.jpg]]></iconOpen>
+      <name><![CDATA[Cold War]]></name>
+      <description><![CDATA[Win a round without your team killing any enemy players]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/427427e5d35f8834f082632b748086c4f4283912.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d3e3990185cb961bff1687616590448167c51812.jpg]]></iconOpen>
+      <name><![CDATA[Killanthropist]]></name>
+      <description><![CDATA[Donate 100 weapons to your teammates]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/242bc3339d9adc98f3b1d70f22160c61ed3c5546.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/da2e0158cd2e7be6034fbdcff61dfd1e5dc2d41c.jpg]]></iconOpen>
+      <name><![CDATA[The Frugal Beret]]></name>
+      <description><![CDATA[Win 10 rounds without dying and not spending any cash]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/ae36a93477e626e74d8d08f356b7ad5b3b20a2a1.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/122894bbc9c9f02c6ca8c45a456d92c6331e2665.jpg]]></iconOpen>
+      <name><![CDATA[Defusus Interruptus]]></name>
+      <description><![CDATA[Stop defusing to kill a terrorist and then successfully finish defusing the bomb]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/2a37ebf08dac31510ea73fafa5622a449330f1ca.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/92c2ee419e7930f7af629e63fe38918d6932d9c3.jpg]]></iconOpen>
+      <name><![CDATA[Participation Award]]></name>
+      <description><![CDATA[Kill an enemy player within 3 seconds of them recovering a dropped bomb]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/3931746cd739b6b21b3ec30cd278bddf82adc9e0.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/af86968cb4dd0119df7ef8f2c70078c8354f8e40.jpg]]></iconOpen>
+      <name><![CDATA[Decimator]]></name>
+      <description><![CDATA[Dominate a total of 10 enemy players]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/586947c911d7139729a1687544563111f98621df.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/050149f18fd9aea6ec8063eb580bfa833c242bb0.jpg]]></iconOpen>
+      <name><![CDATA[Overkill]]></name>
+      <description><![CDATA[Kill an opponent you are already dominating]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/9cd2f5544fb0233db51c28d8be693e1ee7c8b40c.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/c6425346ca0b8629a2a429c26120a91c3a445193.jpg]]></iconOpen>
+      <name><![CDATA[Command and Control]]></name>
+      <description><![CDATA[Get a total of 100 kills on enemy players you are dominating]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/0ff527791add48f34c4f15366344febfddc89034.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/78a30c19ff00c821b353b931b111948c3d3bf3a9.jpg]]></iconOpen>
+      <name><![CDATA[Can't Keep a Good Man Down]]></name>
+      <description><![CDATA[Kill a total of 20 enemy players that are dominating you]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/6147d635271ddcf8596563e2e3af54fe4c18005d.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/62bd809dcad309dfe19a01738c32a79eff4a6803.jpg]]></iconOpen>
+      <name><![CDATA[Dressed to Kill]]></name>
+      <description><![CDATA[Start a round with all players on your team wearing the same uniform (at least 5 players)]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/0d4c6d404e62ffb239b51689d3a5ef7c388bc84c.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/d4ac8af26ecd25d33e2ce303650753c71828bd1f.jpg]]></iconOpen>
+      <name><![CDATA[Hat Trick]]></name>
+      <description><![CDATA[Dominate three enemy players simultaneously]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/1e284d86932bd8a911ca55f8c8998104e42c4c89.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/4930cb8ca65be6d5d090e78769f926615a38109d.jpg]]></iconOpen>
+      <name><![CDATA[Ten Angry Men]]></name>
+      <description><![CDATA[Get 10 kills on enemy players you are already dominating during a single match]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/e05f6f7d85d91f44dc0415b93bd039f0ccaabe67.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/2fdbc478820c09be0953d35e3500ebec0f5aaf92.jpg]]></iconOpen>
+      <name><![CDATA[Excessive Brutality]]></name>
+      <description><![CDATA[Kill an enemy player 4 additional times while you are dominating them]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/60674d2cb2d4d3a548dadf243192403af40f7615.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/04e22e8251eeb8d54fed5768d2f435f0843dc68a.jpg]]></iconOpen>
+      <name><![CDATA[Spray and Pray]]></name>
+      <description><![CDATA[Kill two enemy players while you are blinded from a flashbang]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/c8938e9b9f235dc3592338616ac8d0e9187ab888.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/04a630a64e7e7c5235f0aa61eed775af334b5da2.jpg]]></iconOpen>
+      <name><![CDATA[Friendly Attire]]></name>
+      <description><![CDATA[Start a round on the same team as 4 of your friends, with all of you wearing the same outfit]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/75317e308e6ba1504cfb4801a0f1def30c6a4622.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/eff064ada9716f88c8d24a5bac179119e99dde8f.jpg]]></iconOpen>
+      <name><![CDATA[The Road to Hell]]></name>
+      <description><![CDATA[Blind an enemy player who then kills a teammate]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/ca7d2c7a2925990a83388d9689c9c066a5e083af.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/da401c1b1b4186dfd8f506d1ea7715d52d1aa3a4.jpg]]></iconOpen>
+      <name><![CDATA[Avenging Angel]]></name>
+      <description><![CDATA[Kill an enemy player in the same round as they kill a player on your friends list]]></description>
+    </achievement>
+    <achievement closed="0">
+      <iconClosed><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/0554987641f214e4c60ab80ed51d092403e1b81d.jpg]]></iconClosed>
+      <iconOpen><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/85dce6fe1760934cf7a46fd09131362eadeea48b.jpg]]></iconOpen>
+      <name><![CDATA[Clan Warfare]]></name>
+      <description><![CDATA[Win a match of at least 10 players where the entirety of each team is composed of a single clan]]></description>
+    </achievement>
+  </achievements>
+</playerstats>

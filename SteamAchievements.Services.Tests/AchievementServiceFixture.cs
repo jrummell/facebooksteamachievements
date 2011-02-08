@@ -26,6 +26,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml;
 using NUnit.Framework;
+using NUnit.Mocks;
 using SteamAchievements.Data;
 
 namespace SteamAchievements.Services.Tests
@@ -33,6 +34,11 @@ namespace SteamAchievements.Services.Tests
     [TestFixture]
     public class AchievementServiceFixture
     {
+        /// <summary>
+        /// Gets the community achievements.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns></returns>
         private static IEnumerable<Data.UserAchievement> GetCommunityAchievements(string steamUserId)
         {
             List<UserAchievement> achievements;
@@ -52,6 +58,10 @@ namespace SteamAchievements.Services.Tests
             return achievements.ToDataAchievements(0);
         }
 
+        /// <summary>
+        /// Gets the data achievements.
+        /// </summary>
+        /// <returns></returns>
         private static IEnumerable<Achievement> GetDataAchievements()
         {
             string text = File.ReadAllText("achievements.csv");
@@ -76,6 +86,10 @@ namespace SteamAchievements.Services.Tests
             return achievements;
         }
 
+        /// <summary>
+        /// Updates the achievements.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
         private static void UpdateAchievements(string steamUserId)
         {
             MockSteamRepository repository = new MockSteamRepository();
@@ -91,6 +105,10 @@ namespace SteamAchievements.Services.Tests
             manager.UpdateAchievements(achievements);
         }
 
+        /// <summary>
+        /// Serializes the achievements.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
         private static void SerializeAchievements(string steamUserId)
         {
             SteamCommunityManager manager = new SteamCommunityManager();
@@ -137,6 +155,62 @@ namespace SteamAchievements.Services.Tests
         public void SerializeAchievementsForIssue51()
         {
             SerializeAchievements("richardmstallman");
+        }
+
+        [Test]
+        public void UpdateNewUserAchievements()
+        {
+            DynamicMock achievementManagerMock = new DynamicMock(typeof (IAchievementManager));
+            DynamicMock communityManagerMock = new DynamicMock(typeof (ISteamCommunityManager));
+            IAchievementService service =
+                new AchievementService((IAchievementManager) achievementManagerMock.MockInstance,
+                                       (ISteamCommunityManager) communityManagerMock.MockInstance);
+
+            // expect
+            User user = new User {FacebookUserId = 1234, SteamUserId = "user1"};
+            Data.User dataUser = new Data.User {FacebookUserId = 1234, SteamUserId = "user1"};
+            achievementManagerMock.ExpectAndReturn("GetUser", dataUser, user.FacebookUserId);
+
+            AchievementXmlParser achievementXmlParser = new AchievementXmlParser();
+            List<UserAchievement> userAchievements =
+                achievementXmlParser.ParseClosed(File.ReadAllText("cssAchievements.xml")).ToList();
+            userAchievements.ForEach(
+                userAchievement =>
+                userAchievement.Game =
+                new Game
+                    {
+                        Id = 240,
+                        ImageUrl =
+                            new Uri(
+                            "http://media.steampowered.com/steamcommunity/public/images/apps/10/af890f848dd606ac2fd4415de3c3f5e7a66fcb9f.jpg"),
+                        Name = "Counter-Strike: Source",
+                        PlayedRecently = true,
+                        StatsUrl =
+                            new Uri(String.Format("http://steamcommunity.com/id/{0}/games/?xml=1", user.SteamUserId)),
+                        StoreUrl = new Uri("http://store.steampowered.com/app/10")
+                    });
+
+            communityManagerMock.ExpectAndReturn("GetAchievements", userAchievements, user.SteamUserId);
+
+            achievementManagerMock.ExpectAndReturn("GetUser", dataUser, user.SteamUserId);
+            achievementManagerMock.ExpectAndReturn("UpdateAchievements", 5,
+                                                   userAchievements.ToDataAchievements(user.FacebookUserId));
+
+            IEnumerable<Game> games = new GameXmlParser().Parse(File.ReadAllText("games.xml"));
+            communityManagerMock.ExpectAndReturn("GetGames", games, user.SteamUserId);
+
+            Achievement[] dataAchievements = new[] {new Achievement {Description = "x", GameId = 1, Id = 1,}};
+            achievementManagerMock.ExpectAndReturn("GetUnpublishedAchievements", dataAchievements, user.SteamUserId,
+                                                   DateTime.UtcNow.Date.AddDays(-2));
+            achievementManagerMock.Expect("UpdateHidden", user.SteamUserId,
+                                          dataAchievements.ToSimpleAchievementList(games).Select(a => a.Id));
+
+            // execute
+            service.UpdateNewUserAchievements(user);
+
+            // verify
+            achievementManagerMock.Verify();
+            communityManagerMock.Verify();
         }
     }
 }

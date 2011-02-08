@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 
 // Copyright 2010 John Rummell
 // 
@@ -19,39 +19,25 @@
 
 #endregion
 
+using System;
+using System.Collections.Generic;
+
 namespace SteamAchievements.Services
 {
-    //TODO: do we need Services.Game and Services.SimpleGame??
-    public class SimpleGame
+    public interface ISteamCommunityManager : IDisposable
     {
         /// <summary>
-        /// Gets or sets the id.
+        /// Gets the closed achievements from http://steamcommunity.com/id/[customurl]/statsfeed/[game]/?xml=1.
         /// </summary>
-        /// <value>The id.</value>
-        public int Id { get; set; }
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns></returns>
+        IEnumerable<UserAchievement> GetAchievements(string steamUserId);
 
         /// <summary>
-        /// Gets or sets the name.
+        /// Gets the games from http://steamcommunity.com/id/[customurl]/games/?xml=1.
         /// </summary>
-        /// <value>The name.</value>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the image URL.
-        /// </summary>
-        /// <value>The image URL.</value>
-        public string ImageUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the stats URL.
-        /// </summary>
-        /// <value>The stats URL.</value>
-        public string StatsUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the store URL.
-        /// </summary>
-        /// <value>The store URL.</value>
-        public string StoreUrl { get; set; }
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns></returns>
+        IEnumerable<Game> GetGames(string steamUserId);
     }
 }

@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Achievement.cs" />
     <Compile Include="AchievementManager.cs" />
     <Compile Include="IAchievementManager.cs" />
     <Compile Include="ISteamRepository.cs" />
@@ -79,6 +80,7 @@
     </Compile>
     <Compile Include="SteamDataContext.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="UserAchievement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Steam.dbml">

@@ -113,9 +113,22 @@ namespace SteamAchievements.Services.Tests
                                          FacebookUserId = 1234,
                                          SteamUserId = "user1"
                                      };
+            _managerMock.ExpectAndReturn("IsDuplicate", false, user.SteamUserId, user.FacebookUserId);
             _managerMock.Expect("UpdateUser", dataUser);
 
             _service.UpdateUser(user);
+
+            _managerMock.Verify();
+        }
+
+        [Test]
+        public void UpdateUser_Duplicate()
+        {
+            User user = new User {AccessToken = "x", AutoUpdate = true, FacebookUserId = 1234, SteamUserId = "user1"};
+            _managerMock.ExpectAndReturn("IsDuplicate", true, user.SteamUserId, user.FacebookUserId);
+            _managerMock.ExpectNoCall("UpdateUser");
+
+            Assert.That(() => _service.UpdateUser(user), Throws.TypeOf(typeof (DuplicateSteamUserException)));
 
             _managerMock.Verify();
         }

@@ -54,6 +54,7 @@
 			<logo><![CDATA[http://media.steampowered.com/steamcommunity/public/images/apps/240/2829d85b338a3bc2d10e2f39c9339d785ad8fcd2.jpg]]></logo>
 			<storeLink><![CDATA[http://store.steampowered.com/app/240]]></storeLink>
 			<hoursOnRecord>48.5</hoursOnRecord>
+      <hoursLast2Weeks>12.0</hoursLast2Weeks>
 		</game>
 		<game>
 			<appID>1280</appID>

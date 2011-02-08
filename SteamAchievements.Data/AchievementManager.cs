@@ -225,13 +225,6 @@ namespace SteamAchievements.Data
             }
 
             bool exists = Exists(user.FacebookUserId);
-            bool duplicate = IsDuplicate(user.SteamUserId, user.FacebookUserId, exists);
-
-            if (duplicate)
-            {
-                throw new InvalidOperationException("steamUserId already exists");
-            }
-
             if (!exists)
             {
                 // the user does not exist, create a new one.
