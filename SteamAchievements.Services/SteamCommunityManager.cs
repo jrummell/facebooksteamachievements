@@ -28,20 +28,21 @@ using Elmah;
 
 namespace SteamAchievements.Services
 {
-    public class SteamCommunityManager : IDisposable
+    public class SteamCommunityManager : ISteamCommunityManager
     {
         private readonly AchievementXmlParser _achievementParser = new AchievementXmlParser();
         private readonly GameXmlParser _gamesParser = new GameXmlParser();
         private readonly WebClient _webClient = new WebClient();
 
-        #region IDisposable Members
+        #region ISteamCommunityManager Members
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             _webClient.Dispose();
         }
-
-        #endregion
 
         /// <summary>
         /// Gets the closed achievements from http://steamcommunity.com/id/[customurl]/statsfeed/[game]/?xml=1.
@@ -98,6 +99,11 @@ namespace SteamAchievements.Services
             return achievements;
         }
 
+        /// <summary>
+        /// Gets the games from http://steamcommunity.com/id/[customurl]/games/?xml=1.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns></returns>
         public IEnumerable<Game> GetGames(string steamUserId)
         {
             if (steamUserId == null)
@@ -112,12 +118,24 @@ namespace SteamAchievements.Services
             return _gamesParser.Parse(xml);
         }
 
+        #endregion
+
+        /// <summary>
+        /// Gets the stats URL.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns></returns>
         public static Uri GetStatsUrl(string steamUserId)
         {
             string url = "http://steamcommunity.com/id/" + steamUserId;
             return new Uri(url, UriKind.Absolute);
         }
 
+        /// <summary>
+        /// Gets the games URL.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns></returns>
         private static Uri GetGamesUrl(string steamUserId)
         {
             string url = String.Format("http://steamcommunity.com/id/{0}/games/?xml=1", steamUserId);

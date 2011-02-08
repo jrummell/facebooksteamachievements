@@ -30,15 +30,25 @@ namespace SteamAchievements.Services
     public class AchievementService : IAchievementService
     {
         private readonly IAchievementManager _achievementManager;
-        private readonly SteamCommunityManager _communityService;
+        private readonly ISteamCommunityManager _communityService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AchievementService"/> class.
         /// </summary>
         public AchievementService()
+            : this(null, null)
         {
-            _achievementManager = new AchievementManager();
-            _communityService = new SteamCommunityManager();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AchievementService"/> class.
+        /// </summary>
+        /// <param name="achievementManager">The achievement manager.</param>
+        /// <param name="communityManager">The community manager.</param>
+        public AchievementService(IAchievementManager achievementManager, ISteamCommunityManager communityManager)
+        {
+            _achievementManager = achievementManager ?? new AchievementManager();
+            _communityService = communityManager ?? new SteamCommunityManager();
         }
 
         #region IAchievementService Members
@@ -167,24 +177,19 @@ namespace SteamAchievements.Services
         {
             bool exists = _achievementManager.GetUser(user.FacebookUserId) != null;
 
-            bool duplicate = _achievementManager.IsDuplicate(user.SteamUserId, user.FacebookUserId);
-
-            if (duplicate)
-            {
-                throw new DuplicateSteamUserException();
-            }
-
             if (!exists)
             {
-                int updatedCount = UpdateAchievements(user.SteamUserId);
-                if (updatedCount > 0)
-                {
-                    // hide achievements more than two days old
-                    List<SimpleAchievement> achievements =
-                        GetUnpublishedAchievements(user.SteamUserId, DateTime.Now.AddDays(-2));
-                    IEnumerable<int> achievementIds = achievements.Select(achievement => achievement.Id);
-                    HideAchievements(user.SteamUserId, achievementIds);
-                }
+                throw new ArgumentException("The given user does not exist", "user");
+            }
+
+            int updatedCount = UpdateAchievements(user.SteamUserId);
+            if (updatedCount > 0)
+            {
+                // hide achievements more than two days old
+                List<SimpleAchievement> achievements =
+                    GetUnpublishedAchievements(user.SteamUserId, DateTime.UtcNow.Date.AddDays(-2));
+                IEnumerable<int> achievementIds = achievements.Select(achievement => achievement.Id);
+                HideAchievements(user.SteamUserId, achievementIds);
             }
         }
 

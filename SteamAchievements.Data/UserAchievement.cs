@@ -21,46 +21,11 @@
 
 using System;
 
-namespace SteamAchievements.Services
+namespace SteamAchievements.Data
 {
-    public class Game : IEquatable<Game>
+    public partial class UserAchievement : IEquatable<UserAchievement>
     {
-        /// <summary>
-        /// Gets or sets the id.
-        /// </summary>
-        /// <value>The id.</value>
-        public int Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name.
-        /// </summary>
-        /// <value>The name.</value>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the image URL.
-        /// </summary>
-        /// <value>The image URL.</value>
-        public Uri ImageUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the stats URL.
-        /// </summary>
-        /// <value>The stats URL.</value>
-        public Uri StatsUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the store URL.
-        /// </summary>
-        /// <value>The store URL.</value>
-        public Uri StoreUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether the game was played recently.
-        /// </summary>
-        public bool PlayedRecently { get; set; }
-
-        #region IEquatable<Game> Members
+        #region IEquatable<UserAchievement> Members
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
@@ -69,7 +34,7 @@ namespace SteamAchievements.Services
         /// <returns>
         /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
         /// </returns>
-        public bool Equals(Game other)
+        public bool Equals(UserAchievement other)
         {
             if (ReferenceEquals(null, other))
             {
@@ -79,9 +44,8 @@ namespace SteamAchievements.Services
             {
                 return true;
             }
-            return other.Id == Id && Equals(other.Name, Name) && Equals(other.ImageUrl, ImageUrl) &&
-                   Equals(other.StatsUrl, StatsUrl) && Equals(other.StoreUrl, StoreUrl) &&
-                   other.PlayedRecently.Equals(PlayedRecently);
+            return other._Id == _Id && other._SteamUserId == _SteamUserId && other._AchievementId == _AchievementId &&
+                   other._Date.Equals(_Date) && other._Published.Equals(_Published) && other._Hidden.Equals(_Hidden);
         }
 
         #endregion
@@ -103,11 +67,11 @@ namespace SteamAchievements.Services
             {
                 return true;
             }
-            if (obj.GetType() != typeof (Game))
+            if (obj.GetType() != typeof (UserAchievement))
             {
                 return false;
             }
-            return Equals((Game) obj);
+            return Equals((UserAchievement) obj);
         }
 
         /// <summary>
@@ -120,12 +84,12 @@ namespace SteamAchievements.Services
         {
             unchecked
             {
-                int result = Id;
-                result = (result*397) ^ (Name != null ? Name.GetHashCode() : 0);
-                result = (result*397) ^ (ImageUrl != null ? ImageUrl.GetHashCode() : 0);
-                result = (result*397) ^ (StatsUrl != null ? StatsUrl.GetHashCode() : 0);
-                result = (result*397) ^ (StoreUrl != null ? StoreUrl.GetHashCode() : 0);
-                result = (result*397) ^ PlayedRecently.GetHashCode();
+                int result = _Id;
+                result = (result*397) ^ _SteamUserId.GetHashCode();
+                result = (result*397) ^ _AchievementId;
+                result = (result*397) ^ _Date.GetHashCode();
+                result = (result*397) ^ _Published.GetHashCode();
+                result = (result*397) ^ _Hidden.GetHashCode();
                 return result;
             }
         }
