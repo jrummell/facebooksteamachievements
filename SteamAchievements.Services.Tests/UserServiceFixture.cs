@@ -19,7 +19,8 @@
 
 #endregion
 
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using NUnit.Mocks;
 using SteamAchievements.Data;
@@ -53,7 +54,10 @@ namespace SteamAchievements.Services.Tests
         [Test]
         public void DeauthorizeUser()
         {
-            throw new NotImplementedException();
+            const int facebookUserId = 1234;
+            _managerMock.Expect("DeauthorizeUser", facebookUserId);
+
+            _service.DeauthorizeUser(facebookUserId);
 
             _managerMock.Verify();
         }
@@ -61,31 +65,57 @@ namespace SteamAchievements.Services.Tests
         [Test]
         public void GetAutoUpdateUsers()
         {
-            throw new NotImplementedException();
+            const string steamUserId = "user1";
+            _managerMock.ExpectAndReturn("GetAutoUpdateUsers",
+                                         new List<Data.User> {new Data.User {SteamUserId = steamUserId}});
 
+            IEnumerable<string> users = _service.GetAutoUpdateUsers();
+
+            Assert.That(users.Count(), Is.EqualTo(1));
+            Assert.That(users.First(), Is.EqualTo(steamUserId));
             _managerMock.Verify();
         }
 
         [Test]
         public void GetUserByFacebookId()
         {
-            throw new NotImplementedException();
+            const int facebookUserId = 1234;
+            _managerMock.ExpectAndReturn("GetUser", new Data.User {FacebookUserId = facebookUserId}, facebookUserId);
 
+            User user = _service.GetUser(facebookUserId);
+
+            Assert.That(user, Is.Not.Null);
+            Assert.That(user.FacebookUserId, Is.EqualTo(facebookUserId));
             _managerMock.Verify();
         }
 
         [Test]
         public void GetUserBySteamId()
         {
-            throw new NotImplementedException();
+            const string steamUserId = "user1";
+            _managerMock.ExpectAndReturn("GetUser", new Data.User {SteamUserId = steamUserId}, steamUserId);
 
+            User user = _service.GetUser(steamUserId);
+
+            Assert.That(user, Is.Not.Null);
+            Assert.That(user.SteamUserId, Is.EqualTo(steamUserId));
             _managerMock.Verify();
         }
 
         [Test]
         public void UpdateUser()
         {
-            throw new NotImplementedException();
+            User user = new User {AccessToken = "x", AutoUpdate = true, FacebookUserId = 1234, SteamUserId = "user1"};
+            Data.User dataUser = new Data.User
+                                     {
+                                         AccessToken = "x",
+                                         AutoUpdate = true,
+                                         FacebookUserId = 1234,
+                                         SteamUserId = "user1"
+                                     };
+            _managerMock.Expect("UpdateUser", dataUser);
+
+            _service.UpdateUser(user);
 
             _managerMock.Verify();
         }
