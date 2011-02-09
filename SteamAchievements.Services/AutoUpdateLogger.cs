@@ -109,7 +109,9 @@ namespace SteamAchievements.Services
                 foreach (string file in files)
                 {
                     string fileName = Path.GetFileNameWithoutExtension(file);
-                    DateTime fileDate = Convert.ToDateTime(fileName);
+                    string[] dateParts = fileName.Split('-');
+                    DateTime fileDate = new DateTime(Convert.ToInt32(dateParts[0]), Convert.ToInt32(dateParts[1]),
+                                                     Convert.ToInt32(dateParts[2]));
 
                     if (fileDate < date)
                     {
