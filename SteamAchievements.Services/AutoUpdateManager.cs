@@ -21,14 +21,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Facebook;
+using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
     public class AutoUpdateManager : IDisposable
     {
+        private readonly StringBuilder _achievementManagerLog = new StringBuilder();
         private readonly IAchievementService _achievementService;
         private readonly IAutoUpdateLogger _log;
         private readonly IFacebookPublisher _publisher;
@@ -53,7 +56,9 @@ namespace SteamAchievements.Services
         public AutoUpdateManager(IAchievementService achievementService, IUserService userService,
                                  IFacebookPublisher publisher, IAutoUpdateLogger log)
         {
-            _achievementService = achievementService ?? new AchievementService();
+            AchievementManager achievementManager =
+                new AchievementManager {Log = new StringWriter(_achievementManagerLog)};
+            _achievementService = achievementService ?? new AchievementService(achievementManager, null);
             _userService = userService ?? new UserService();
             _publisher = publisher ?? new FacebookPublisher();
             _log = log;
@@ -208,6 +213,9 @@ namespace SteamAchievements.Services
             {
                 if (disposing)
                 {
+                    _log.Log("SQL:");
+                    _log.Log(_achievementManagerLog.ToString());
+
                     _userService.Dispose();
                     _achievementService.Dispose();
                 }

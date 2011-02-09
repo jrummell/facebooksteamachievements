@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
+using System.IO;
 using System.Linq;
 using SteamAchievements.Data.Properties;
 
@@ -76,6 +77,18 @@ namespace SteamAchievements.Data
             }
 
             _repository = repository;
+        }
+
+        /// <summary>
+        /// Gets or sets the log.
+        /// </summary>
+        /// <value>
+        /// The log.
+        /// </value>
+        public TextWriter Log
+        {
+            get { return _repository.Log; }
+            set { _repository.Log = value; }
         }
 
         #region IAchievementManager Members

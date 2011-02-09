@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace SteamAchievements.Data
@@ -78,6 +79,14 @@ namespace SteamAchievements.Data
             get { return _users.Values.AsQueryable(); }
             set { _users = value.ToDictionary(x => x.FacebookUserId, x => x); }
         }
+
+        /// <summary>
+        /// Gets or sets the log.
+        /// </summary>
+        /// <value>
+        /// The log.
+        /// </value>
+        public TextWriter Log { get; set; }
 
         /// <summary>
         /// Inserts the user on submit.

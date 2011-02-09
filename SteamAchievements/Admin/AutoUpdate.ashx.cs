@@ -88,8 +88,8 @@ namespace SteamAchievements.Admin
             }
             finally
             {
-                _log.Flush();
                 _manager.Dispose();
+                _log.Flush();
             }
         }
 
