@@ -44,8 +44,7 @@ namespace SteamAchievements.Data
             {
                 return true;
             }
-            return other._Id == _Id && other._SteamUserId == _SteamUserId && other._AchievementId == _AchievementId &&
-                   other._Date.Equals(_Date) && other._Published.Equals(_Published) && other._Hidden.Equals(_Hidden);
+            return other._Id == _Id;
         }
 
         #endregion
@@ -84,12 +83,7 @@ namespace SteamAchievements.Data
         {
             unchecked
             {
-                int result = _Id;
-                result = (result*397) ^ _SteamUserId.GetHashCode();
-                result = (result*397) ^ _AchievementId;
-                result = (result*397) ^ _Date.GetHashCode();
-                result = (result*397) ^ _Published.GetHashCode();
-                result = (result*397) ^ _Hidden.GetHashCode();
+                int result = _Id.GetHashCode();
                 return result;
             }
         }
