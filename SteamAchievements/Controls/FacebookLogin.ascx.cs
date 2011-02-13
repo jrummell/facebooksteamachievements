@@ -20,9 +20,8 @@
 #endregion
 
 using System;
-using System.Web;
+using System.Collections.Generic;
 using System.Web.UI;
-using Facebook;
 using Facebook.Web;
 using SteamAchievements.Services;
 
@@ -31,12 +30,10 @@ namespace SteamAchievements.Controls
     public partial class FacebookLogin : UserControl
     {
         private readonly CanvasAuthorizer _authorizer;
-        private readonly FacebookApp _facebookApp;
 
         public FacebookLogin()
         {
-            _facebookApp = new FacebookApp();
-            _authorizer = new CanvasAuthorizer(_facebookApp) {Perms = "publish_stream,offline_access"};
+            _authorizer = new CanvasAuthorizer {Perms = "publish_stream,offline_access"};
         }
 
         public string AccessToken
@@ -45,9 +42,9 @@ namespace SteamAchievements.Controls
             private set { ViewState["AccessToken"] = value; }
         }
 
-        protected static string FacebookClientId
+        protected string FacebookClientId
         {
-            get { return FacebookSettings.Current.ApiKey; }
+            get { return _authorizer.AppId; }
         }
 
         public long FacebookUserId
@@ -76,13 +73,21 @@ namespace SteamAchievements.Controls
 
             if (!IsLoggedIn)
             {
-                Uri authurl = _authorizer.GetLoginUrl(new HttpRequestWrapper(Request));
-                CanvasRedirect(authurl.ToString());
+                Dictionary<string, object> parameters =
+                    new Dictionary<string, object>
+                        {
+                            {"scope", _authorizer.Perms},
+                            {"client_id", _authorizer.AppId},
+                            {"redirect_uri", _authorizer.ReturnUrlPath},
+                            {"response_type", "token"}
+                        };
+                Uri authurl = _authorizer.GetLoginUrl(parameters);
+                CanvasRedirect(authurl);
             }
             else
             {
-                FacebookUserId = _facebookApp.UserId;
-                AccessToken = _facebookApp.Session.AccessToken;
+                FacebookUserId = Convert.ToInt64(_authorizer.Session.UserId);
+                AccessToken = _authorizer.Session.AccessToken;
 
                 using (IUserService manager = new UserService())
                 {
@@ -95,7 +100,7 @@ namespace SteamAchievements.Controls
             }
         }
 
-        private void CanvasRedirect(string url)
+        private void CanvasRedirect(Uri url)
         {
             string content = CanvasUrlBuilder.GetCanvasRedirectHtml(url);
 
