@@ -23,8 +23,7 @@ namespace SteamAchievements.Data
             {
                 return true;
             }
-            return other._FacebookUserId == _FacebookUserId && Equals(other._SteamUserId, _SteamUserId) &&
-                   Equals(other._AccessToken, _AccessToken) && other._AutoUpdate.Equals(_AutoUpdate);
+            return other._FacebookUserId == _FacebookUserId;
         }
 
         #endregion
@@ -64,9 +63,6 @@ namespace SteamAchievements.Data
             unchecked
             {
                 int result = _FacebookUserId.GetHashCode();
-                result = (result*397) ^ (_SteamUserId != null ? _SteamUserId.GetHashCode() : 0);
-                result = (result*397) ^ (_AccessToken != null ? _AccessToken.GetHashCode() : 0);
-                result = (result*397) ^ _AutoUpdate.GetHashCode();
                 return result;
             }
         }
