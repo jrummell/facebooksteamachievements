@@ -21,7 +21,7 @@
 
 using System;
 using System.Web.UI.WebControls;
-using Facebook.Web;
+using Facebook;
 
 namespace SteamAchievements.Controls
 {
@@ -47,7 +47,7 @@ namespace SteamAchievements.Controls
 
         private void CanvasLink_PreRender(object sender, EventArgs e)
         {
-            NavigateUrl = CanvasSettings.Current.CanvasPageUrl + CanvasPage;
+            NavigateUrl = FacebookContext.Current.CanvasPage + CanvasPage;
         }
     }
 }

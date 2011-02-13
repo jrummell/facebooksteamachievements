@@ -6,6 +6,6 @@
         appId: "<%= FacebookClientId %>",
         cookie: true,
         status: true,
-        xfbml: true
+        xfbml: false
     });
 </script>

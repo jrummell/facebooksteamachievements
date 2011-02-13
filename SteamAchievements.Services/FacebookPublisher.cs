@@ -22,7 +22,6 @@
 using System;
 using System.Collections.Generic;
 using Facebook;
-using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
@@ -40,7 +39,7 @@ namespace SteamAchievements.Services
         /// <param name="parameters">The post parameters.</param>
         public void Publish(User user, IDictionary<string, object> parameters)
         {
-            FacebookApp app = new FacebookApp(user.AccessToken);
+            FacebookClient app = new FacebookClient(user.AccessToken);
             string userFeedPath = String.Format("/{0}/feed/", user.FacebookUserId);
             app.Api(userFeedPath, parameters, HttpMethod.Post);
         }
