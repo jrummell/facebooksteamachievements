@@ -20,7 +20,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Web.UI;
 using Facebook.Web;
 using SteamAchievements.Services;
@@ -73,16 +72,7 @@ namespace SteamAchievements.Controls
 
             if (!IsLoggedIn)
             {
-                Dictionary<string, object> parameters =
-                    new Dictionary<string, object>
-                        {
-                            {"scope", _authorizer.Perms},
-                            {"client_id", _authorizer.AppId},
-                            {"redirect_uri", _authorizer.ReturnUrlPath},
-                            {"response_type", "token"}
-                        };
-                Uri authurl = _authorizer.GetLoginUrl(parameters);
-                CanvasRedirect(authurl);
+                _authorizer.HandleUnauthorizedRequest();
             }
             else
             {
@@ -98,14 +88,6 @@ namespace SteamAchievements.Controls
                     }
                 }
             }
-        }
-
-        private void CanvasRedirect(Uri url)
-        {
-            string content = CanvasUrlBuilder.GetCanvasRedirectHtml(url);
-
-            Response.ContentType = "text/html";
-            Response.Write(content);
         }
     }
 }
