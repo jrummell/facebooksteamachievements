@@ -56,8 +56,13 @@ namespace SteamAchievements.Services
         public AutoUpdateManager(IAchievementService achievementService, IUserService userService,
                                  IFacebookPublisher publisher, IAutoUpdateLogger log)
         {
-            AchievementManager achievementManager =
-                new AchievementManager {Log = new StringWriter(_achievementManagerLog)};
+            AchievementManager achievementManager = new AchievementManager();
+
+#if DEBUG
+            // add repository log if we are in the debug configuration.
+            achievementManager.Log = new StringWriter(_achievementManagerLog);
+#endif
+
             _achievementService = achievementService ?? new AchievementService(achievementManager, null);
             _userService = userService ?? new UserService();
             _publisher = publisher ?? new FacebookPublisher();
