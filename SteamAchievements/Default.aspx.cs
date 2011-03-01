@@ -35,24 +35,22 @@ namespace SteamAchievements
 
         private void Page_Load(object sender, EventArgs e)
         {
+            if (FacebookSettings == null)
+            {
+                return;
+            }
+
             steamUserIdHidden.Value = FacebookSettings.SteamUserId;
 
-            try
+            using (IUserService manager = new UserService())
             {
-                if (FacebookSettings != null)
-                {
-                    using (IUserService manager = new UserService())
-                    {
-                        User user = manager.GetUser(FacebookSettings.FacebookUserId);
-                        user.AccessToken = FacebookSettings.AccessToken;
+                User user = manager.GetUser(FacebookSettings.FacebookUserId);
 
-                        manager.UpdateUser(user);
-                    }
+                if (user != null)
+                {
+                    user.AccessToken = FacebookSettings.AccessToken;
+                    manager.UpdateUser(user);
                 }
-            }
-            catch (Exception ex)
-            {
-                errorLiteral.Text = ex.Message;
             }
         }
     }
