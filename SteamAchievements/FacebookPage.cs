@@ -19,22 +19,25 @@
 
 #endregion
 
-using System;
+using System.Web.UI;
+using SteamAchievements.Controls;
+using SteamAchievements.Services;
 
 namespace SteamAchievements
 {
-    public partial class Publish : FacebookPage
+    public class FacebookPage : Page
     {
-        protected override void OnInit(EventArgs e)
-        {
-            base.OnInit(e);
+        internal const string FacebookSettingsCacheKey = "FacebookSettings";
 
-            Load += Page_Load;
-        }
-
-        private void Page_Load(object sender, EventArgs e)
+        /// <summary>
+        /// Gets the facebook settings.
+        /// </summary>
+        /// <remarks>
+        /// This is set by <see cref="FacebookLogin"/>.
+        /// </remarks>
+        protected FacebookSettings FacebookSettings
         {
-            steamUserIdHidden.Value = FacebookSettings.SteamUserId;
+            get { return Session[FacebookSettingsCacheKey] as FacebookSettings; }
         }
     }
 }

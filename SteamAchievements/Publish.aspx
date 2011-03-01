@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="Publish" Language="C#" AutoEventWireup="false" MasterPageFile="~/Site.Master"
     CodeBehind="Publish.aspx.cs" Inherits="SteamAchievements.Publish" %>
 
-<%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="head">
 </asp:Content>
 <asp:Content runat="server" ID="Content2" ContentPlaceHolderID="body">

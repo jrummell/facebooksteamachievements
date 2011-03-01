@@ -30,15 +30,9 @@ namespace SteamAchievements.Controls
     {
         private readonly CanvasAuthorizer _authorizer;
 
-        public FacebookLogin()
+        protected FacebookLogin()
         {
             _authorizer = new CanvasAuthorizer {Perms = "publish_stream,offline_access"};
-        }
-
-        public string AccessToken
-        {
-            get { return (string) ViewState["AccessToken"] ?? String.Empty; }
-            private set { ViewState["AccessToken"] = value; }
         }
 
         protected string FacebookClientId
@@ -46,48 +40,37 @@ namespace SteamAchievements.Controls
             get { return _authorizer.AppId; }
         }
 
-        public long FacebookUserId
-        {
-            get { return (long) (ViewState["FacebookUserId"] ?? 0); }
-            private set { ViewState["FacebookUserId"] = value; }
-        }
-
-        public bool IsLoggedIn
-        {
-            get { return (bool) (ViewState["IsLoggedIn"] ?? false); }
-            private set { ViewState["IsLoggedIn"] = value; }
-        }
-
-        public string SteamUserId
-        {
-            get { return (string) ViewState["SteamUserId"] ?? String.Empty; }
-            private set { ViewState["SteamUserId"] = value; }
-        }
-
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
 
-            IsLoggedIn = _authorizer.IsAuthorized();
+            bool loggedIn = _authorizer.IsAuthorized();
 
-            if (!IsLoggedIn)
+            if (!loggedIn)
             {
                 _authorizer.HandleUnauthorizedRequest();
+                return;
             }
-            else
-            {
-                FacebookUserId = Convert.ToInt64(_authorizer.Session.UserId);
-                AccessToken = _authorizer.Session.AccessToken;
 
-                using (IUserService manager = new UserService())
+            long facebookUserId = Convert.ToInt64(_authorizer.Session.UserId);
+
+            string steamUserId = null;
+            using (IUserService manager = new UserService())
+            {
+                User user = manager.GetUser(facebookUserId);
+                if (user != null)
                 {
-                    User user = manager.GetUser(FacebookUserId);
-                    if (user != null)
-                    {
-                        SteamUserId = user.SteamUserId;
-                    }
+                    steamUserId = user.SteamUserId;
                 }
             }
+
+            Session[FacebookPage.FacebookSettingsCacheKey] =
+                new FacebookSettings
+                    {
+                        FacebookUserId = facebookUserId,
+                        SteamUserId = steamUserId,
+                        AccessToken = _authorizer.Session.AccessToken
+                    };
         }
     }
 }

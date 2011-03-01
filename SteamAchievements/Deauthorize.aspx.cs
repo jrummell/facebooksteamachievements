@@ -20,12 +20,11 @@
 #endregion
 
 using System;
-using System.Web.UI;
 using SteamAchievements.Services;
 
 namespace SteamAchievements
 {
-    public partial class Deauthorize : Page
+    public partial class Deauthorize : FacebookPage
     {
         protected override void OnInit(EventArgs e)
         {
@@ -38,7 +37,7 @@ namespace SteamAchievements
         {
             using (IUserService manager = new UserService())
             {
-                manager.DeauthorizeUser(Master.FacebookUserId);
+                manager.DeauthorizeUser(FacebookSettings.FacebookUserId);
             }
         }
     }

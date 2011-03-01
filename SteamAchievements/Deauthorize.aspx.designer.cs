@@ -11,17 +11,5 @@ namespace SteamAchievements {
     
     
     public partial class Deauthorize {
-        
-        /// <summary>
-        /// Master property.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated property.
-        /// </remarks>
-        public new SteamAchievements.Site Master {
-            get {
-                return ((SteamAchievements.Site)(base.Master));
-            }
-        }
     }
 }

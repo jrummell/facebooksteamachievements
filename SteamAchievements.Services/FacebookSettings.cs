@@ -21,20 +21,33 @@
 
 using System;
 
-namespace SteamAchievements
+namespace SteamAchievements.Services
 {
-    public partial class Publish : FacebookPage
+    [Serializable]
+    public class FacebookSettings
     {
-        protected override void OnInit(EventArgs e)
-        {
-            base.OnInit(e);
+        /// <summary>
+        /// Gets or sets the facebook user id.
+        /// </summary>
+        /// <value>
+        /// The facebook user id.
+        /// </value>
+        public long FacebookUserId { get; set; }
 
-            Load += Page_Load;
-        }
+        /// <summary>
+        /// Gets or sets the steam user id.
+        /// </summary>
+        /// <value>
+        /// The steam user id.
+        /// </value>
+        public string SteamUserId { get; set; }
 
-        private void Page_Load(object sender, EventArgs e)
-        {
-            steamUserIdHidden.Value = FacebookSettings.SteamUserId;
-        }
+        /// <summary>
+        /// Gets or sets the access token.
+        /// </summary>
+        /// <value>
+        /// The access token.
+        /// </value>
+        public string AccessToken { get; set; }
     }
 }
