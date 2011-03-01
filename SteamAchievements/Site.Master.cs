@@ -27,26 +27,6 @@ namespace SteamAchievements
 {
     public partial class Site : MasterPage
     {
-        public long FacebookUserId
-        {
-            get { return login.FacebookUserId; }
-        }
-
-        public string SteamUserId
-        {
-            get { return login.SteamUserId; }
-        }
-
-        public bool IsLoggedIn
-        {
-            get { return login.IsLoggedIn; }
-        }
-
-        public string AccessToken
-        {
-            get { return login.AccessToken; }
-        }
-
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);

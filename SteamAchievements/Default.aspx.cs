@@ -20,12 +20,11 @@
 #endregion
 
 using System;
-using System.Web.UI;
 using SteamAchievements.Services;
 
 namespace SteamAchievements
 {
-    public partial class Default : Page
+    public partial class Default : FacebookPage
     {
         protected override void OnInit(EventArgs e)
         {
@@ -36,16 +35,16 @@ namespace SteamAchievements
 
         private void Page_Load(object sender, EventArgs e)
         {
-            steamUserIdHidden.Value = Master.SteamUserId;
+            steamUserIdHidden.Value = FacebookSettings.SteamUserId;
 
             try
             {
-                if (Master.IsLoggedIn)
+                if (FacebookSettings != null)
                 {
                     using (IUserService manager = new UserService())
                     {
-                        User user = manager.GetUser(Master.FacebookUserId);
-                        user.AccessToken = Master.AccessToken;
+                        User user = manager.GetUser(FacebookSettings.FacebookUserId);
+                        user.AccessToken = FacebookSettings.AccessToken;
 
                         manager.UpdateUser(user);
                     }

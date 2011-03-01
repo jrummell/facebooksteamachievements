@@ -1,7 +1,6 @@
 <%@ Page Title="Home" Language="C#" AutoEventWireup="false" MasterPageFile="~/Site.Master"
     CodeBehind="Default.aspx.cs" Inherits="SteamAchievements.Default" %>
 
-<%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="head">
     <style type="text/css">
         #steamUserIdHeading

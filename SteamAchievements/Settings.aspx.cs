@@ -20,12 +20,11 @@
 #endregion
 
 using System;
-using System.Web.UI;
 using SteamAchievements.Services;
 
 namespace SteamAchievements
 {
-    public partial class Settings : Page
+    public partial class Settings : FacebookPage
     {
         protected override void OnInit(EventArgs e)
         {
@@ -41,11 +40,11 @@ namespace SteamAchievements
                 return;
             }
 
-            steamIdTextBox.Text = Master.SteamUserId;
+            steamIdTextBox.Text = FacebookSettings.SteamUserId;
 
             using (IUserService service = new UserService())
             {
-                User user = service.GetUser(Master.FacebookUserId);
+                User user = service.GetUser(FacebookSettings.FacebookUserId);
 
                 if (user != null)
                 {
@@ -63,8 +62,8 @@ namespace SteamAchievements
 
             User user = new User
                             {
-                                FacebookUserId = Master.FacebookUserId,
-                                AccessToken = Master.AccessToken,
+                                FacebookUserId = FacebookSettings.FacebookUserId,
+                                AccessToken = FacebookSettings.AccessToken,
                                 AutoUpdate = autoUpdateCheckBox.Checked,
                                 SteamUserId = steamIdTextBox.Text
                             };
