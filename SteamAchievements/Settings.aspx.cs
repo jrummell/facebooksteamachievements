@@ -40,6 +40,11 @@ namespace SteamAchievements
                 return;
             }
 
+            if (FacebookSettings == null)
+            {
+                return;
+            }
+
             steamIdTextBox.Text = FacebookSettings.SteamUserId;
 
             using (IUserService service = new UserService())
@@ -56,6 +61,11 @@ namespace SteamAchievements
         protected void SaveSettingsButtonClick(object sender, EventArgs e)
         {
             if (!IsValid)
+            {
+                return;
+            }
+
+            if (FacebookSettings == null)
             {
                 return;
             }

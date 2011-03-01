@@ -35,6 +35,11 @@ namespace SteamAchievements
 
         private void Page_Load(object sender, EventArgs e)
         {
+            if (FacebookSettings == null)
+            {
+                return;
+            }
+
             using (IUserService manager = new UserService())
             {
                 manager.DeauthorizeUser(FacebookSettings.FacebookUserId);

@@ -34,7 +34,10 @@ namespace SteamAchievements
 
         private void Page_Load(object sender, EventArgs e)
         {
-            steamUserIdHidden.Value = FacebookSettings.SteamUserId;
+            if (FacebookSettings != null)
+            {
+                steamUserIdHidden.Value = FacebookSettings.SteamUserId;
+            }
         }
     }
 }
