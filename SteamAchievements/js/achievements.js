@@ -1,5 +1,6 @@
 ﻿/// <reference path="js/jquery-vsdoc.js" />
 /// <reference path="js/json2.js" />
+/// <reference path="js/columnizer.js" />
 
 var $achievements =
 {
@@ -40,6 +41,12 @@ var $achievements =
 
         var parameters = { "steamUserId": this.steamUserId };
         this.callAjax("UpdateAchievements", parameters, ondone, errorCallback);
+    },
+
+    hideAchievements: function (achievementIds, callback, errorCallback)
+    {
+        var parameters = { steamUserId: this.steamUserId, achievementIds: achievementIds };
+        this.callAjax("HideAchievements", parameters, callback, errorCallback);
     },
 
     publishAchievements: function (achievements, callback, errorCallback)
@@ -212,8 +219,11 @@ var $achievements =
 
     updateSize: function ()
     {
-        // update the size of the iframe to match the content
-        FB.Canvas.setSize();
+        if (FB)
+        {
+            // update the size of the iframe to match the content
+            FB.Canvas.setSize();
+        }
     },
 
     log: function (message)
