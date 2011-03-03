@@ -1,5 +1,6 @@
 ﻿/// <reference path="jquery-vsdoc.js" />
 /// <reference path="achievements.js" />
+/// <reference path="columnizer.js" />
 
 $(document).ready(function ()
 {
@@ -57,15 +58,8 @@ function displayAchievements(achievements)
 {
     _newAchievements = achievements;
 
-    // pair the achievements so that the templates plugin can display them in a 2 column table
-    var pairedAchievements = new Array();
-    for (var i = 0; i < achievements.length; i=i+2)
-    {
-        var pair = { achievement1: achievements[i], achievement2: achievements[i+1] };
-        pairedAchievements.push(pair);
-    }
-
-    $("#achievementTemplate").tmpl(pairedAchievements).appendTo("#newAchievements");
+    $("#newAchievements").empty().append("<ul></ul>");
+    $("#achievementTemplate").tmpl(achievements).appendTo("#newAchievements ul");
 
     // allow user to select only 5 achievements since only 5 images can be displayed at a time
     $("#newAchievements .achievement :checkbox, #newAchievements .achievement img").click(function ()
@@ -91,6 +85,8 @@ function displayAchievements(achievements)
             return !this.checked;
         }).attr("disabled", disableUnchecked);
     });
+
+    $("#newAchievements ul").makeacolumnlists({ cols: 2, equalHeight: "ul" });
 
     if (achievements.length == 0)
     {
