@@ -152,7 +152,9 @@ namespace SteamAchievements.Data
             long facebookUserId = GetFacebookUserId(steamUserId);
 
             return from achievement in _repository.UserAchievements
-                   where achievement.FacebookUserId == facebookUserId && !achievement.Published
+                   where achievement.FacebookUserId == facebookUserId
+                         && !achievement.Published
+                         && !achievement.Hidden
                    orderby achievement.Date descending
                    select achievement.Achievement;
         }
@@ -175,7 +177,9 @@ namespace SteamAchievements.Data
             long facebookUserId = GetFacebookUserId(steamUserId);
 
             return from achievement in _repository.UserAchievements
-                   where achievement.FacebookUserId == facebookUserId && !achievement.Published
+                   where achievement.FacebookUserId == facebookUserId
+                         && !achievement.Published
+                         && !achievement.Hidden
                          && achievement.Date > oldestDate
                    orderby achievement.Date descending
                    select achievement.Achievement;

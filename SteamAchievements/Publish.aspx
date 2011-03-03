@@ -23,19 +23,18 @@
     <fieldset>
         <legend>Unpublished Achievements</legend>
         <p>
-            Click an achievement icon to select it. You can publish up to five at a time.</p>
-        <p>
-            <a id="publishSelectedButton" class="button" href="#" style="display: none;">Publish
-                Selected</a> (If you don't see the publish dialog after clicking, scroll down.)
+            Click an achievement icon to select it. You can select up to five at a time. If
+            you don't see the publish dialog after clicking Publish, scroll down. If you hide
+            an achievement, you will no longer see it on this page and it can not be published.</p>
+        <p id="buttons" class="hidden">
+            <a id="publishSelectedButton" class="button" href="#">Publish</a> <a id="hideSelectedButton"
+                class="button" href="#">Hide</a>
         </p>
         <div id="noUnpublishedMessage" class="fbinfobox message" style="display: none;">
             You have no unpublished achievements.</div>
         <img id="newAchievementsLoading" class="loading" src="images/ajax-loader.gif" alt="Getting unpublished achievements..." />
         <div id="newAchievements" class="unpublished">
         </div>
-        <script type="text/javascript">
-            var _currentGameName = "";                
-        </script>
         <script id="achievementTemplate" type="text/x-jquery-tmpl">
             <li class="achievement">
                 <input type="checkbox" value="${Id}" class="hidden" />

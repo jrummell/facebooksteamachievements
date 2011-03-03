@@ -35,10 +35,21 @@ $(document).ready(function ()
 
         if (achievementsToPublish.length > 0)
         {
-            $achievements.publishAchievements(achievementsToPublish, function ()
-            {
-                getNewAchievements();
-            });
+            $achievements.publishAchievements(achievementsToPublish, getNewAchievements);
+        }
+    });
+
+    $("#hideSelectedButton").click(function ()
+    {
+        var achievementsToHide = new Array();
+        $("#newAchievements input:checked").each(function ()
+        {
+            achievementsToHide.push(this.value);
+        });
+
+        if (achievementsToHide.length > 0)
+        {
+            $achievements.hideAchievements(achievementsToHide, getNewAchievements);
         }
     });
 });
@@ -94,7 +105,7 @@ function displayAchievements(achievements)
     }
     else
     {
-        $("#publishSelectedButton").show();
+        $("#buttons").show();
     }
 
     $achievements.hideLoading("#newAchievementsLoading");
