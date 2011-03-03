@@ -213,9 +213,14 @@ div.form label
 /****************** 
     default.aspx styles 
 ******************/
+#gamesDiv ul
+{
+    padding-left: 1em;
+}
 .game
 {
     padding: 5px;
+    margin: 0px;
     list-style-type: none;
 }
 
@@ -231,6 +236,10 @@ div.form label
 /****************** 
     publish.aspx styles 
 ******************/
+#newAchievements ul
+{
+    padding-left: 1em;
+}
 li.achievement
 {
     list-style-type: none;
