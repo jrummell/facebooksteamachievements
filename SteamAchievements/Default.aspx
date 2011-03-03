@@ -42,6 +42,12 @@
         </div>
         <div id="gamesDiv" class="games">
         </div>
+        <script id="gamesTemplate" type="text/x-jquery-tmpl">
+            <li class="game">
+                <a target="_blank" href="${StoreUrl}"><img src="${ImageUrl}" alt="${Name}" title="${Name}" /></a><br />
+                <a target="_blank" href="${StatsUrl}?tab=achievements">View Achievements</a>
+            </li>
+        </script>
     </fieldset>
     <div id="log" class="fberrorbox" style="display: none;">
         <asp:Literal ID="errorLiteral" runat="server" />

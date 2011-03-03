@@ -31,40 +31,21 @@
         <div id="noUnpublishedMessage" class="fbinfobox message" style="display: none;">
             You have no unpublished achievements.</div>
         <img id="newAchievementsLoading" class="loading" src="images/ajax-loader.gif" alt="Getting unpublished achievements..." />
-        <table>
-            <tbody id="newAchievements" class="unpublished">
-            </tbody>
-        </table>
+        <ul id="newAchievements" class="unpublished">
+        </ul>
         <script type="text/javascript">
             var _currentGameName = "";                
         </script>
         <script id="achievementTemplate" type="text/x-jquery-tmpl">
-            <tr>
-                <td>
-                    <div class="achievement">
-                        <input type="checkbox" value="${achievement1.Id}" style="display:none" />
-                        <img class="left" src="${achievement1.ImageUrl}" alt="${achievement1.Name}" />
-                        <div class="text">
-                            <h3>${achievement1.Game.Name}</h3>
-                            <div class="name">${achievement1.Name}</div>
-                            <div class="description">${achievement1.Description}</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    {{if achievement2 != null}}
-                    <div class="achievement">
-                        <input type="checkbox" value="${achievement2.Id}" style="display:none" />
-                        <img class="left" src="${achievement2.ImageUrl}" alt="${achievement2.Name}" />
-                        <div class="text">
-                            <h3>${achievement2.Game.Name}</h3>
-                            <div class="name">${achievement2.Name}</div>
-                            <div class="description">${achievement2.Description}</div>
-                        </div>
-                    </div>
-                    {{/if}}
-                </td>
-            </tr>
+            <li class="achievement">
+                <input type="checkbox" value="${Id}" class="hidden" />
+                <img class="left" src="${ImageUrl}" alt="${Name}" />
+                <div class="text">
+                    <h3>${Game.Name}</h3>
+                    <div class="name">${Name}</div>
+                    <div class="description">${Description}</div>
+                </div>
+            </li>
         </script>
     </fieldset>
     </form>

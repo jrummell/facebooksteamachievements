@@ -224,6 +224,7 @@
     <Content Include="Error.aspx" />
     <Content Include="images\banner-light.png" />
     <Content Include="js\achievements.js" />
+    <Content Include="js\columnizer.js" />
     <Content Include="js\default.js" />
     <Content Include="js\publish.js" />
     <Content Include="Publish.aspx" />
