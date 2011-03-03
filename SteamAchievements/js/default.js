@@ -27,11 +27,10 @@ function getGames()
     var ondone = function (games)
     {
         $("#gamesDiv").empty().append("<ul></ul>");
-        $("#gamesTemplate").tmpl(achievements).appendTo("#gamesDiv ul");
+        $("#gamesTemplate").tmpl(games).appendTo("#gamesDiv ul");
 
-        $("#gamesDiv ul").makeacolumnlists({ cols: 2, equalHeight: "ul" });
+        $("#gamesDiv ul").makeacolumnlists({ cols: 3, equalHeight: "ul" });
 
-        $achievements.log(gamesHtml);
         $achievements.hideLoading(updatingSelector);
 
         $achievements.updateSize();

@@ -31,8 +31,8 @@
         <div id="noUnpublishedMessage" class="fbinfobox message" style="display: none;">
             You have no unpublished achievements.</div>
         <img id="newAchievementsLoading" class="loading" src="images/ajax-loader.gif" alt="Getting unpublished achievements..." />
-        <ul id="newAchievements" class="unpublished">
-        </ul>
+        <div id="newAchievements" class="unpublished">
+        </div>
         <script type="text/javascript">
             var _currentGameName = "";                
         </script>
