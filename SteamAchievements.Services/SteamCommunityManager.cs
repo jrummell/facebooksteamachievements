@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Xml;
 using Elmah;
 
@@ -73,12 +74,17 @@ namespace SteamAchievements.Services
                 }
                 catch (XmlException ex)
                 {
-                    ErrorSignal signal = ErrorSignal.FromCurrentContext();
-                    if (signal != null)
+                    // log and ignore invalid achievement xml
+                    HttpContext context = HttpContext.Current;
+                    if (context != null)
                     {
-                        string message = "Invalid xml for " + game.Name + " stats: " + statsUrl;
-                        Exception exception = new InvalidOperationException(message, ex);
-                        signal.Raise(exception);
+                        ErrorSignal signal = ErrorSignal.FromContext(context);
+                        if (signal != null)
+                        {
+                            string message = "Invalid xml for " + game.Name + " stats: " + statsUrl;
+                            Exception exception = new InvalidOperationException(message, ex);
+                            signal.Raise(exception);
+                        }
                     }
 
                     continue;
