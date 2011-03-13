@@ -131,7 +131,7 @@ namespace SteamAchievements.Services
         /// <returns>
         /// true if successful, else false.
         /// </returns>
-        public bool PublishAchievements(string steamUserId, ICollection<int> achievementIds)
+        public bool PublishAchievements(string steamUserId, IEnumerable<int> achievementIds)
         {
             if (steamUserId == null)
             {
@@ -153,7 +153,7 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="achievementIds">The ids of the achievements to hide.</param>
-        public bool HideAchievements(string steamUserId, ICollection<int> achievementIds)
+        public bool HideAchievements(string steamUserId, IEnumerable<int> achievementIds)
         {
             _achievementManager.UpdateHidden(steamUserId, achievementIds);
 
@@ -188,7 +188,7 @@ namespace SteamAchievements.Services
                 // hide achievements more than two days old
                 List<SimpleAchievement> achievements =
                     GetUnpublishedAchievements(user.SteamUserId, DateTime.UtcNow.Date.AddDays(-2));
-                ICollection<int> achievementIds = achievements.Select(achievement => achievement.Id).ToList();
+                IEnumerable<int> achievementIds = achievements.Select(achievement => achievement.Id);
                 HideAchievements(user.SteamUserId, achievementIds);
             }
         }

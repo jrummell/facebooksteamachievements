@@ -64,21 +64,21 @@ namespace SteamAchievements.Data
         /// Updates the achievements.
         /// </summary>
         /// <param name="achievements">The achievements.</param>
-        int UpdateAchievements(ICollection<UserAchievement> achievements);
+        int UpdateAchievements(IEnumerable<UserAchievement> achievements);
 
         /// <summary>
         /// Updates the published flag on the given achievements.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="achievementIds">The achievement ids.</param>
-        void UpdatePublished(string steamUserId, ICollection<int> achievementIds);
+        void UpdatePublished(string steamUserId, IEnumerable<int> achievementIds);
 
         /// <summary>
         /// Updates the hidden flag on the given achievements.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="achievementIds">The achievement ids.</param>
-        void UpdateHidden(string steamUserId, ICollection<int> achievementIds);
+        void UpdateHidden(string steamUserId, IEnumerable<int> achievementIds);
 
         /// <summary>
         /// Updates the user.

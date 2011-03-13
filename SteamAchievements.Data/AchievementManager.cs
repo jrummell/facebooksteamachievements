@@ -169,7 +169,7 @@ namespace SteamAchievements.Data
         /// <remarks>
         /// Calls <see cref="InsertMissingAchievements"/> and <see cref="AssignAchievements"/>.
         /// </remarks>
-        public int UpdateAchievements(ICollection<UserAchievement> achievements)
+        public int UpdateAchievements(IEnumerable<UserAchievement> achievements)
         {
             if (achievements == null)
             {
@@ -286,7 +286,7 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="achievementIds">The achievement ids.</param>
-        public void UpdatePublished(string steamUserId, ICollection<int> achievementIds)
+        public void UpdatePublished(string steamUserId, IEnumerable<int> achievementIds)
         {
             if (steamUserId == null)
             {
@@ -323,7 +323,7 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="achievementIds">The achievement ids.</param>
-        public void UpdateHidden(string steamUserId, ICollection<int> achievementIds)
+        public void UpdateHidden(string steamUserId, IEnumerable<int> achievementIds)
         {
             if (steamUserId == null)
             {
@@ -342,6 +342,7 @@ namespace SteamAchievements.Data
 
             long facebookUserId = GetFacebookUserId(steamUserId);
 
+            //Note: achievementIds.Contains() will only translate to SQL if achievementIds is IEnumerable<int> (not ICollection<int>).
             IQueryable<UserAchievement> achievementsToUpdate =
                 from achievement in _repository.UserAchievements
                 where achievement.FacebookUserId == facebookUserId && achievementIds.Contains(achievement.AchievementId)

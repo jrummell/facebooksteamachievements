@@ -74,7 +74,7 @@ namespace SteamAchievements.Services
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool PublishAchievements(string steamUserId, ICollection<int> achievementIds);
+        bool PublishAchievements(string steamUserId, IEnumerable<int> achievementIds);
 
         /// <summary>
         /// Hides the given user's achievements
@@ -85,7 +85,7 @@ namespace SteamAchievements.Services
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool HideAchievements(string steamUserId, ICollection<int> achievementIds);
+        bool HideAchievements(string steamUserId, IEnumerable<int> achievementIds);
 
         /// <summary>
         /// Updates the new user's achievements and hides any that are more than 2 days old.
