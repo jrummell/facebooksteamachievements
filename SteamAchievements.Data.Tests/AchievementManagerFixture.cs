@@ -389,7 +389,7 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.SetupProperty(rep => rep.UserAchievements, new UserAchievement[0].AsQueryable());
             _repositoryMock.SetupProperty(rep => rep.Users, _users);
 
-            _manager.UpdateAchievements(achievements.ToList());
+            _manager.UpdateAchievements(achievements);
 
             foreach (UserAchievement userAchievement in achievements)
             {
@@ -423,7 +423,7 @@ namespace SteamAchievements.Data.Tests
 
             const string steamUserId = "user1";
             ICollection<Achievement> achievements = _manager.GetUnpublishedAchievements(steamUserId);
-            _manager.UpdateHidden(steamUserId, achievements.Select(acheivement => acheivement.Id).ToList());
+            _manager.UpdateHidden(steamUserId, achievements.Select(acheivement => acheivement.Id));
 
             IEnumerable<int> achievementIds = from achievement in achievements
                                               select achievement.Id;
@@ -448,7 +448,7 @@ namespace SteamAchievements.Data.Tests
 
             const string steamUserId = "user1";
             ICollection<Achievement> achievements = _manager.GetUnpublishedAchievements(steamUserId);
-            _manager.UpdatePublished(steamUserId, achievements.Select(acheivement => acheivement.Id).ToList());
+            _manager.UpdatePublished(steamUserId, achievements.Select(acheivement => acheivement.Id));
 
             IEnumerable<int> achievementIds = from achievement in achievements
                                               select achievement.Id;
