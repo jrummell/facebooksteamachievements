@@ -44,7 +44,7 @@ namespace SteamAchievements.Data
         /// Gets the unpublished achievements.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
-        IEnumerable<Achievement> GetUnpublishedAchievements(string steamUserId);
+        ICollection<Achievement> GetUnpublishedAchievements(string steamUserId);
 
         /// <summary>
         /// Gets the unpublished achievements by oldest date.
@@ -52,33 +52,33 @@ namespace SteamAchievements.Data
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="oldestDate">The oldest date.</param>
         /// <returns></returns>
-        IEnumerable<Achievement> GetUnpublishedAchievements(string steamUserId, DateTime oldestDate);
+        ICollection<Achievement> GetUnpublishedAchievements(string steamUserId, DateTime oldestDate);
 
         /// <summary>
         /// Gets the auto update users.
         /// </summary>
         /// <returns></returns>
-        IEnumerable<User> GetAutoUpdateUsers();
+        ICollection<User> GetAutoUpdateUsers();
 
         /// <summary>
         /// Updates the achievements.
         /// </summary>
         /// <param name="achievements">The achievements.</param>
-        int UpdateAchievements(IEnumerable<UserAchievement> achievements);
+        int UpdateAchievements(ICollection<UserAchievement> achievements);
 
         /// <summary>
         /// Updates the published flag on the given achievements.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="achievementIds">The achievement ids.</param>
-        void UpdatePublished(string steamUserId, IEnumerable<int> achievementIds);
+        void UpdatePublished(string steamUserId, ICollection<int> achievementIds);
 
         /// <summary>
         /// Updates the hidden flag on the given achievements.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="achievementIds">The achievement ids.</param>
-        void UpdateHidden(string steamUserId, IEnumerable<int> achievementIds);
+        void UpdateHidden(string steamUserId, ICollection<int> achievementIds);
 
         /// <summary>
         /// Updates the user.

@@ -39,7 +39,7 @@ namespace SteamAchievements.Services.Tests
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <returns></returns>
-        private static IEnumerable<Data.UserAchievement> GetCommunityAchievements(string steamUserId)
+        private static ICollection<Data.UserAchievement> GetCommunityAchievements(string steamUserId)
         {
             List<UserAchievement> achievements;
             using (FileStream fs = new FileStream("Serialized" + steamUserId + "Achievements.xml", FileMode.Open))
@@ -92,14 +92,17 @@ namespace SteamAchievements.Services.Tests
         /// <param name="steamUserId">The steam user id.</param>
         private static void UpdateAchievements(string steamUserId)
         {
-            MockSteamRepository repository = new MockSteamRepository();
-            repository.Achievements = GetDataAchievements().AsQueryable();
-            repository.Users =
-                new List<Data.User> {new Data.User {FacebookUserId = 0, SteamUserId = steamUserId}}.AsQueryable();
-            repository.UserAchievements = new List<Data.UserAchievement>().AsQueryable();
+            DynamicMock repositoryMock = new DynamicMock(typeof (ISteamRepository));
+            ISteamRepository repository = (ISteamRepository) repositoryMock.MockInstance;
+            repositoryMock.ExpectAndReturn("get_Achivements", GetDataAchievements().AsQueryable());
+            repositoryMock.ExpectAndReturn("get_Users",
+                                           new List<Data.User>
+                                               {new Data.User {FacebookUserId = 0, SteamUserId = steamUserId}}.
+                                               AsQueryable());
+            repositoryMock.ExpectAndReturn("get_UserAchievements", new List<Data.UserAchievement>().AsQueryable());
 
             AchievementManager manager = new AchievementManager(repository);
-            IEnumerable<Data.UserAchievement> achievements = GetCommunityAchievements(steamUserId);
+            ICollection<Data.UserAchievement> achievements = GetCommunityAchievements(steamUserId);
 
             // should not throw InvalidOperationException
             manager.UpdateAchievements(achievements);

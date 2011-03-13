@@ -31,13 +31,13 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <returns></returns>
-        IEnumerable<UserAchievement> GetAchievements(string steamUserId);
+        ICollection<UserAchievement> GetAchievements(string steamUserId);
 
         /// <summary>
         /// Gets the games from http://steamcommunity.com/id/[customurl]/games/?xml=1.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <returns></returns>
-        IEnumerable<Game> GetGames(string steamUserId);
+        ICollection<Game> GetGames(string steamUserId);
     }
 }

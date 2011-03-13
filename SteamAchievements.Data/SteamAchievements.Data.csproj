@@ -59,11 +59,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Achievement.cs" />
     <Compile Include="AchievementManager.cs" />
     <Compile Include="IAchievementManager.cs" />
     <Compile Include="ISteamRepository.cs" />
-    <Compile Include="MockSteamRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -79,8 +77,6 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="SteamDataContext.cs" />
-    <Compile Include="User.cs" />
-    <Compile Include="UserAchievement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Steam.dbml">

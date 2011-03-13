@@ -1,1 +1,0 @@
-﻿Create the Steam database with the Steam.sql script in the SteamAchievements.Data project.
