@@ -62,22 +62,22 @@ namespace SteamAchievements.Services
         /// <param name="achievements">The achievements.</param>
         /// <param name="facebookUserId">The facebook user id.</param>
         /// <returns></returns>
-        public static IEnumerable<Data.UserAchievement> ToDataAchievements(
-            this IEnumerable<UserAchievement> achievements, long facebookUserId)
+        public static ICollection<Data.UserAchievement> ToDataAchievements(
+            this ICollection<UserAchievement> achievements, long facebookUserId)
         {
-            return from achievement in achievements
-                   select new Data.UserAchievement
-                              {
-                                  Date = achievement.Date,
-                                  FacebookUserId = facebookUserId,
-                                  Achievement = new Achievement
-                                                    {
-                                                        Name = achievement.Name,
-                                                        Description = achievement.Description,
-                                                        ImageUrl = achievement.ImageUrl.ToString(),
-                                                        GameId = achievement.Game.Id
-                                                    }
-                              };
+            return (from achievement in achievements
+                    select new Data.UserAchievement
+                               {
+                                   Date = achievement.Date,
+                                   FacebookUserId = facebookUserId,
+                                   Achievement = new Achievement
+                                                     {
+                                                         Name = achievement.Name,
+                                                         Description = achievement.Description,
+                                                         ImageUrl = achievement.ImageUrl.ToString(),
+                                                         GameId = achievement.Game.Id
+                                                     }
+                               }).ToList();
         }
     }
 }

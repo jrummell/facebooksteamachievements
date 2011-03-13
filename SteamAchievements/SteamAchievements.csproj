@@ -251,7 +251,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\ReadMe.txt" />
     <Content Include="App_Themes\Default\ajax-loader.gif" />
     <Content Include="images\achievements.png" />
     <Content Include="images\profilecustomurl.png" />

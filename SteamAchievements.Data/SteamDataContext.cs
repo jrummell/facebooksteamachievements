@@ -26,6 +26,13 @@ namespace SteamAchievements.Data
 {
     internal partial class SteamDataContext : ISteamRepository
     {
+        partial void OnCreated()
+        {
+#if DEBUG
+            Log = System.Console.Out;
+#endif
+        }
+
         #region ISteamRepository Members
 
         /// <summary>

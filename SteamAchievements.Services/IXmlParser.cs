@@ -32,6 +32,6 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Returns a collection of <typeparamref name="T"/>s from the given xml.
         /// </summary>
-        IEnumerable<T> Parse(string xml);
+        ICollection<T> Parse(string xml);
     }
 }

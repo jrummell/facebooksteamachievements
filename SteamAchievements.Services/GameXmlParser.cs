@@ -33,7 +33,7 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Returns a collection of <see cref="Game"/>s from the given xml.
         /// </summary>
-        public IEnumerable<Game> Parse(string xml)
+        public ICollection<Game> Parse(string xml)
         {
             XDocument document = XDocument.Parse(xml);
 
@@ -57,16 +57,16 @@ namespace SteamAchievements.Services
                                playedRecently = hoursLast2Weeks != null
                            };
 
-            return from game in games
-                   select new Game
-                              {
-                                  Id = Convert.ToInt32(game.id),
-                                  Name = game.name,
-                                  ImageUrl = new Uri(game.logo, UriKind.Absolute),
-                                  StatsUrl = new Uri(game.statsLink, UriKind.Absolute),
-                                  StoreUrl = new Uri(game.storeLink, UriKind.Absolute),
-                                  PlayedRecently = game.playedRecently
-                              };
+            return (from game in games
+                    select new Game
+                               {
+                                   Id = Convert.ToInt32(game.id),
+                                   Name = game.name,
+                                   ImageUrl = new Uri(game.logo, UriKind.Absolute),
+                                   StatsUrl = new Uri(game.statsLink, UriKind.Absolute),
+                                   StoreUrl = new Uri(game.storeLink, UriKind.Absolute),
+                                   PlayedRecently = game.playedRecently
+                               }).ToList();
         }
 
         #endregion

@@ -37,7 +37,7 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Returns a collection of <see cref="UserAchievement"/>s from the given xml and gameId.
         /// </summary>
-        public IEnumerable<UserAchievement> Parse(string xml)
+        public ICollection<UserAchievement> Parse(string xml)
         {
             return Parse(xml, false);
         }
@@ -47,7 +47,7 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Returns a collection of closed <see cref="UserAchievement"/>s from the given xml.
         /// </summary>
-        public IEnumerable<UserAchievement> ParseClosed(string xml)
+        public ICollection<UserAchievement> ParseClosed(string xml)
         {
             return Parse(xml, true);
         }
@@ -58,7 +58,7 @@ namespace SteamAchievements.Services
         /// <param name="xml">The XML.</param>
         /// <param name="closedOnly">If true, get only closed achievements, else get all achievements.</param>
         /// <returns></returns>
-        private IEnumerable<UserAchievement> Parse(string xml, bool closedOnly)
+        private ICollection<UserAchievement> Parse(string xml, bool closedOnly)
         {
             XDocument document = XDocument.Parse(xml);
 
@@ -90,19 +90,19 @@ namespace SteamAchievements.Services
                                select achievement;
             }
 
-            return from achievement in achievements
-                   select new UserAchievement
-                              {
-                                  SteamUserId = customUrlElement.Value,
-                                  Name = achievement.name,
-                                  Description = achievement.description,
-                                  ImageUrl = new Uri(achievement.image, UriKind.Absolute),
-                                  Closed = achievement.closed,
-                                  Date =
-                                      achievement.date == null
-                                          ? DateTime.MinValue
-                                          : GetDate(Convert.ToInt32(achievement.date))
-                              };
+            return (from achievement in achievements
+                    select new UserAchievement
+                               {
+                                   SteamUserId = customUrlElement.Value,
+                                   Name = achievement.name,
+                                   Description = achievement.description,
+                                   ImageUrl = new Uri(achievement.image, UriKind.Absolute),
+                                   Closed = achievement.closed,
+                                   Date =
+                                       achievement.date == null
+                                           ? DateTime.MinValue
+                                           : GetDate(Convert.ToInt32(achievement.date))
+                               }).ToList();
         }
 
         /// <summary>

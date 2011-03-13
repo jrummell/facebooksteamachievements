@@ -50,7 +50,7 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <returns></returns>
-        public IEnumerable<UserAchievement> GetAchievements(string steamUserId)
+        public ICollection<UserAchievement> GetAchievements(string steamUserId)
         {
             if (steamUserId == null)
             {
@@ -110,7 +110,7 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <returns></returns>
-        public IEnumerable<Game> GetGames(string steamUserId)
+        public ICollection<Game> GetGames(string steamUserId)
         {
             if (steamUserId == null)
             {
