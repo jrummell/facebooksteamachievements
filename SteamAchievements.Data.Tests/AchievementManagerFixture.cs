@@ -28,15 +28,6 @@ using NUnit.Framework;
 
 namespace SteamAchievements.Data.Tests
 {
-    public interface IMockSteamRepository : ISteamRepository
-    {
-        new IQueryable<Achievement> Achievements { get; set; }
-
-        new IQueryable<UserAchievement> UserAchievements { get; set; }
-
-        new IQueryable<User> Users { get; set; }
-    }
-
     [TestFixture]
     public class AchievementManagerFixture
     {
@@ -74,7 +65,8 @@ namespace SteamAchievements.Data.Tests
                                                  Date = DateTime.Now,
                                                  FacebookUserId = 1,
                                                  Achievement = _achievements.Single(achievement => achievement.Id == 1),
-                                                 Published = true
+                                                 Published = true,
+                                                 Hidden = false
                                              },
                                          new UserAchievement
                                              {
@@ -83,7 +75,8 @@ namespace SteamAchievements.Data.Tests
                                                  Date = DateTime.Now,
                                                  FacebookUserId = 1,
                                                  Achievement = _achievements.Single(achievement => achievement.Id == 2),
-                                                 Published = true
+                                                 Published = true,
+                                                 Hidden = false
                                              },
                                          new UserAchievement
                                              {
@@ -92,11 +85,12 @@ namespace SteamAchievements.Data.Tests
                                                  Date = DateTime.Now,
                                                  FacebookUserId = 1,
                                                  Achievement = _achievements.Single(achievement => achievement.Id == 3),
-                                                 Published = false
+                                                 Published = false,
+                                                 Hidden = false
                                              }
                                      }).AsQueryable();
 
-            _repositoryMock = new Mock<IMockSteamRepository>();
+            _repositoryMock = new Mock<ISteamRepository>();
             _manager = new AchievementManager(_repositoryMock.Object);
         }
 
@@ -112,7 +106,7 @@ namespace SteamAchievements.Data.Tests
         private IQueryable<Achievement> _achievements;
         private IQueryable<User> _users;
         private IQueryable<UserAchievement> _userAchievements;
-        private Mock<IMockSteamRepository> _repositoryMock;
+        private Mock<ISteamRepository> _repositoryMock;
 
         [Test]
         public void AddGameAchievements()
@@ -130,25 +124,19 @@ namespace SteamAchievements.Data.Tests
                 gameAchievements.Add(achievement);
             }
 
-            foreach (Achievement achievement in gameAchievements)
-            {
-                _repositoryMock.SetupProperty(rep => rep.Achievements, _achievements);
-                _repositoryMock.Setup(rep => rep.InsertOnSubmit(achievement));
-            }
-
-            _repositoryMock.Setup(rep => rep.SubmitChanges());
+            _repositoryMock.SetupProperty(rep => rep.Achievements, _achievements);
 
             _manager.AddAchievements(99, gameAchievements);
 
-            _repositoryMock.Verify();
+            _repositoryMock.VerifyGet(rep => rep.Achievements);
+            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<Achievement>()), Times.Exactly(gameAchievements.Count));
+            _repositoryMock.Verify(rep => rep.SubmitChanges());
 
             List<Achievement> expectedAchievements = new List<Achievement>(_achievements);
             expectedAchievements.AddRange(gameAchievements);
             _repositoryMock.SetupProperty(rep => rep.Achievements, expectedAchievements.AsQueryable());
 
             Assert.That(_repositoryMock.Object.Achievements.Count(a => a.GameId == gameId), Is.EqualTo(10));
-
-            _repositoryMock.Verify();
         }
 
         [Test]
@@ -162,7 +150,8 @@ namespace SteamAchievements.Data.Tests
                 _manager.GetUnassignedAchievements(facebookUserId, _achievements);
             Assert.That(achievements.Any());
 
-            _repositoryMock.Verify();
+            _repositoryMock.VerifyGet(rep => rep.Achievements);
+            _repositoryMock.VerifyGet(rep => rep.UserAchievements);
 
             IEnumerable<UserAchievement> userAchievements =
                 from achievement in achievements
@@ -172,25 +161,10 @@ namespace SteamAchievements.Data.Tests
                                Achievement = achievement
                            };
 
-            _repositoryMock.Setup(rep => rep.InsertAllOnSubmit(userAchievements));
-            _repositoryMock.Setup(rep => rep.SubmitChanges());
-
             _manager.AssignAchievements(userAchievements);
 
-            _repositoryMock.Verify();
-
-            foreach (Achievement achievement in achievements)
-            {
-                _repositoryMock.SetupProperty(rep => rep.UserAchievements, _userAchievements);
-
-                int achievementId = achievement.Id;
-                int count =
-                    _repositoryMock.Object.UserAchievements.Count(
-                        ua => ua.FacebookUserId == facebookUserId && ua.AchievementId == achievementId);
-                Assert.That(count, Is.EqualTo(1));
-            }
-
-            _repositoryMock.Verify();
+            _repositoryMock.Verify(rep => rep.InsertAllOnSubmit(It.IsAny<IEnumerable<UserAchievement>>()));
+            _repositoryMock.Verify(rep => rep.SubmitChanges());
         }
 
         [Test]
@@ -212,7 +186,7 @@ namespace SteamAchievements.Data.Tests
             ICollection<Achievement> missingAchievements =
                 _manager.GetMissingAchievements(communityAchievements.ToList());
 
-            _repositoryMock.Verify();
+            _repositoryMock.VerifyGet(rep => rep.Achievements);
 
             Assert.That(missingAchievements.Count(), Is.EqualTo(2));
 
@@ -226,11 +200,12 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.SetupProperty(rep => rep.Achievements, _achievements);
             _repositoryMock.SetupProperty(rep => rep.UserAchievements, _userAchievements);
 
-            IEnumerable<Achievement> achievements = _manager.GetUnassignedAchievements(1, _achievements);
+            ICollection<Achievement> achievements = _manager.GetUnassignedAchievements(1, _achievements);
 
-            _repositoryMock.Verify();
+            _repositoryMock.VerifyGet(rep => rep.UserAchievements);
+            _repositoryMock.VerifyGet(rep => rep.Achievements);
 
-            Assert.That(achievements.Count(), Is.EqualTo(2));
+            Assert.That(achievements.Count, Is.EqualTo(2));
             Assert.That(achievements.Count(a => a.Id == 4), Is.EqualTo(1));
             Assert.That(achievements.Count(a => a.Id == 5), Is.EqualTo(1));
         }
@@ -243,9 +218,10 @@ namespace SteamAchievements.Data.Tests
 
             ICollection<Achievement> achievements = _manager.GetUnpublishedAchievements("user1");
 
-            _repositoryMock.Verify();
+            _repositoryMock.VerifyGet(rep => rep.UserAchievements);
+            _repositoryMock.VerifyGet(rep => rep.Users);
 
-            Assert.That(achievements.Count(), Is.EqualTo(1));
+            Assert.That(achievements.Count, Is.EqualTo(1));
             Assert.That(achievements.Count(a => a.Id == 3), Is.EqualTo(1));
         }
 
@@ -276,15 +252,10 @@ namespace SteamAchievements.Data.Tests
 
             Achievement[] missingAchievements = new[] {achievement1Game5, achievement2Game5};
 
-            foreach (Achievement achievement in missingAchievements)
-            {
-                _repositoryMock.Setup(rep => rep.InsertOnSubmit(achievement));
-            }
-            _repositoryMock.Setup(rep => rep.SubmitChanges());
-
             _manager.InsertMissingAchievements(missingAchievements);
 
-            _repositoryMock.Verify();
+            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<Achievement>()), Times.Exactly(missingAchievements.Length));
+            _repositoryMock.Verify(rep => rep.SubmitChanges());
         }
 
         [Test]
@@ -298,6 +269,7 @@ namespace SteamAchievements.Data.Tests
                         new UserAchievement
                             {
                                 FacebookUserId = facebookUserId,
+                                AchievementId = 1,
                                 Achievement = new Achievement
                                                   {
                                                       Id = 1,
@@ -309,6 +281,7 @@ namespace SteamAchievements.Data.Tests
                         new UserAchievement
                             {
                                 FacebookUserId = facebookUserId,
+                                AchievementId = 2,
                                 Achievement = new Achievement
                                                   {
                                                       Id = 2,
@@ -320,6 +293,7 @@ namespace SteamAchievements.Data.Tests
                         new UserAchievement
                             {
                                 FacebookUserId = facebookUserId,
+                                AchievementId = 3,
                                 Achievement = new Achievement
                                                   {
                                                       Id = 3,
@@ -331,6 +305,7 @@ namespace SteamAchievements.Data.Tests
                         new UserAchievement
                             {
                                 FacebookUserId = facebookUserId,
+                                AchievementId = 4,
                                 Achievement = new Achievement
                                                   {
                                                       Id = 4,
@@ -342,6 +317,7 @@ namespace SteamAchievements.Data.Tests
                         new UserAchievement
                             {
                                 FacebookUserId = facebookUserId,
+                                AchievementId = 5,
                                 Achievement = new Achievement
                                                   {
                                                       Id = 5,
@@ -353,6 +329,7 @@ namespace SteamAchievements.Data.Tests
                         new UserAchievement
                             {
                                 FacebookUserId = facebookUserId,
+                                AchievementId = 6,
                                 Achievement = new Achievement
                                                   {
                                                       Id = 6,
@@ -364,6 +341,7 @@ namespace SteamAchievements.Data.Tests
                         new UserAchievement
                             {
                                 FacebookUserId = facebookUserId,
+                                AchievementId = 7,
                                 Achievement = new Achievement
                                                   {
                                                       Id = 7,
@@ -375,6 +353,7 @@ namespace SteamAchievements.Data.Tests
                         new UserAchievement
                             {
                                 FacebookUserId = facebookUserId,
+                                AchievementId = 8,
                                 Achievement = new Achievement
                                                   {
                                                       Id = 8,
@@ -391,27 +370,12 @@ namespace SteamAchievements.Data.Tests
 
             _manager.UpdateAchievements(achievements);
 
-            foreach (UserAchievement userAchievement in achievements)
-            {
-                // assert that the new achievements were added
-                Achievement achievement = userAchievement.Achievement;
-                int achievementId = achievement.Id;
-                int gameId = achievement.GameId;
-                string name = achievement.Name;
-                string description = achievement.Description;
-                int achievementCount =
-                    _repositoryMock.Object.Achievements.Count(
-                        a =>
-                        a.Id == achievementId && a.GameId == gameId && a.Name == name && a.Description == description);
-                Assert.That(achievementCount, Is.EqualTo(1));
-
-                // assert that the new achievements were assigned
-                UserAchievement achievement1 = userAchievement;
-                int userAchievementCount =
-                    _repositoryMock.Object.UserAchievements.Count(
-                        ua => ua.FacebookUserId == achievement1.FacebookUserId && ua.AchievementId == achievementId);
-                Assert.That(userAchievementCount, Is.EqualTo(1));
-            }
+            _repositoryMock.VerifyGet(rep => rep.Achievements);
+            _repositoryMock.VerifyGet(rep => rep.UserAchievements);
+            _repositoryMock.VerifyGet(rep => rep.Users);
+            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<Achievement>()), Times.Exactly(achievements.Count));
+            _repositoryMock.Verify(rep => rep.InsertAllOnSubmit(achievements));
+            _repositoryMock.Verify(rep => rep.SubmitChanges(), Times.Exactly(2));
         }
 
         [Test]
@@ -468,16 +432,17 @@ namespace SteamAchievements.Data.Tests
         public void UpdateUser()
         {
             _repositoryMock.SetupProperty(rep => rep.Users, _users);
+            _repositoryMock.Setup(rep => rep.SubmitChanges());
 
             const string steamUserId = "userxxx";
             const int facebookUserId = 1;
 
-            User user = new User {SteamUserId = steamUserId, FacebookUserId = facebookUserId};
+            User user = new User { SteamUserId = steamUserId, FacebookUserId = facebookUserId };
             _manager.UpdateUser(user);
 
-            _repositoryMock.Setup(rep => rep.SubmitChanges());
-
-            _repositoryMock.Verify();
+            _repositoryMock.VerifyGet(rep => rep.Users, Times.Exactly(2));
+            _repositoryMock.Verify(rep => rep.SubmitChanges());
+            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<User>()), Times.Never());
         }
 
         [Test]

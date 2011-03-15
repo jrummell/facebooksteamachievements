@@ -19,6 +19,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,13 +27,6 @@ namespace SteamAchievements.Data
 {
     internal partial class SteamDataContext : ISteamRepository
     {
-        partial void OnCreated()
-        {
-#if DEBUG
-            Log = System.Console.Out;
-#endif
-        }
-
         #region ISteamRepository Members
 
         /// <summary>
@@ -42,6 +36,7 @@ namespace SteamAchievements.Data
         IQueryable<Achievement> ISteamRepository.Achievements
         {
             get { return Achievements; }
+            set { throw new InvalidOperationException(); }
         }
 
         /// <summary>
@@ -51,6 +46,7 @@ namespace SteamAchievements.Data
         IQueryable<UserAchievement> ISteamRepository.UserAchievements
         {
             get { return UserAchievements; }
+            set { throw new InvalidOperationException(); }
         }
 
         /// <summary>
@@ -60,6 +56,7 @@ namespace SteamAchievements.Data
         IQueryable<User> ISteamRepository.Users
         {
             get { return Users; }
+            set { throw new InvalidOperationException(); }
         }
 
         /// <summary>
@@ -108,5 +105,12 @@ namespace SteamAchievements.Data
         }
 
         #endregion
+
+        partial void OnCreated()
+        {
+#if DEBUG
+            Log = Console.Out;
+#endif
+        }
     }
 }
