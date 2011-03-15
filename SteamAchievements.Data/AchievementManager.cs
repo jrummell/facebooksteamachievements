@@ -483,7 +483,7 @@ namespace SteamAchievements.Data
         /// <param name="facebookUserId">The facebook user id.</param>
         /// <param name="allAchievements">All achievements. These will not necessarily have an Id set.</param>
         /// <returns></returns>
-        public IEnumerable<Achievement> GetUnassignedAchievements(long facebookUserId,
+        public ICollection<Achievement> GetUnassignedAchievements(long facebookUserId,
                                                                   IEnumerable<Achievement> allAchievements)
         {
             if (allAchievements == null)
@@ -520,23 +520,23 @@ namespace SteamAchievements.Data
 
             // return the unassigned achievements. I'm not hitting the database at this point since that could 
             // add a great deal of complexity to the following query.
-            return from achievement in allAchievements
-                   join possibleAchievement in possibleAchievements
-                       on new {achievement.GameId, achievement.Name, achievement.Description}
-                       equals
-                       new {possibleAchievement.GameId, possibleAchievement.Name, possibleAchievement.Description}
-                   join assignedAchievement in assignedAchievements
-                       on possibleAchievement.Id equals assignedAchievement.Id into joinedAssignedAchievements
-                   from joinedAssignedAchievement in joinedAssignedAchievements.DefaultIfEmpty()
-                   where joinedAssignedAchievement == null
-                   select possibleAchievement;
+            return (from achievement in allAchievements
+                    join possibleAchievement in possibleAchievements
+                        on new {achievement.GameId, achievement.Name, achievement.Description}
+                        equals
+                        new {possibleAchievement.GameId, possibleAchievement.Name, possibleAchievement.Description}
+                    join assignedAchievement in assignedAchievements
+                        on possibleAchievement.Id equals assignedAchievement.Id into joinedAssignedAchievements
+                    from joinedAssignedAchievement in joinedAssignedAchievements.DefaultIfEmpty()
+                    where joinedAssignedAchievement == null
+                    select possibleAchievement).ToList();
         }
 
         /// <summary>
         /// Inserts the missing achievements.
         /// </summary>
         /// <param name="missingAchievements">The missing achievements.</param>
-        public void InsertMissingAchievements(ICollection<Achievement> missingAchievements)
+        public void InsertMissingAchievements(IEnumerable<Achievement> missingAchievements)
         {
             if (!missingAchievements.Any())
             {
@@ -563,7 +563,7 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="communityAchievements">The community achievements.</param>
         /// <returns></returns>
-        public ICollection<Achievement> GetMissingAchievements(ICollection<Achievement> communityAchievements)
+        public ICollection<Achievement> GetMissingAchievements(IEnumerable<Achievement> communityAchievements)
         {
             if (communityAchievements == null)
             {
@@ -586,7 +586,7 @@ namespace SteamAchievements.Data
                  select achievement).ToList();
 
             List<Achievement> missingAchievements = new List<Achievement>();
-            if (communityAchievements.Count != dbAchievements.Count)
+            if (communityAchievements.Count() != dbAchievements.Count)
             {
                 foreach (Achievement achievement in communityAchievements)
                 {
@@ -612,7 +612,7 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="gameId">The game id.</param>
         /// <param name="achievements">The game achievements.</param>
-        public void AddAchievements(int gameId, ICollection<Achievement> achievements)
+        public void AddAchievements(int gameId, IEnumerable<Achievement> achievements)
         {
             if (achievements == null)
             {

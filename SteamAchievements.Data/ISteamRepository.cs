@@ -32,19 +32,19 @@ namespace SteamAchievements.Data
         /// Gets the achievements.
         /// </summary>
         /// <value>The achievements.</value>
-        IQueryable<Achievement> Achievements { get; }
+        IQueryable<Achievement> Achievements { get; set; }
 
         /// <summary>
         /// Gets the user achievements.
         /// </summary>
         /// <value>The user achievements.</value>
-        IQueryable<UserAchievement> UserAchievements { get; }
+        IQueryable<UserAchievement> UserAchievements { get; set; }
 
         /// <summary>
         /// Gets the users.
         /// </summary>
         /// <value>The users.</value>
-        IQueryable<User> Users { get; }
+        IQueryable<User> Users { get; set; }
 
         /// <summary>
         /// Gets or sets the log.
