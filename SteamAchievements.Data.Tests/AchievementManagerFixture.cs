@@ -261,7 +261,7 @@ namespace SteamAchievements.Data.Tests
         [Test]
         public void UpdateAchievements()
         {
-            const long facebookUserId = 1;
+            long facebookUserId = _users.First().FacebookUserId;
 
             ICollection<UserAchievement> achievements =
                 new[]
@@ -364,17 +364,17 @@ namespace SteamAchievements.Data.Tests
                             }
                     };
 
-            _repositoryMock.SetupProperty(rep => rep.Achievements, new Achievement[0].AsQueryable());
+            _repositoryMock.SetupSequence(rep => rep.Achievements)
+                .Returns(new Achievement[0].AsQueryable())
+                .Returns(achievements.Select(a => a.Achievement).AsQueryable());
             _repositoryMock.SetupProperty(rep => rep.UserAchievements, new UserAchievement[0].AsQueryable());
-            _repositoryMock.SetupProperty(rep => rep.Users, _users);
 
             _manager.UpdateAchievements(achievements);
 
             _repositoryMock.VerifyGet(rep => rep.Achievements);
             _repositoryMock.VerifyGet(rep => rep.UserAchievements);
-            _repositoryMock.VerifyGet(rep => rep.Users);
             _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<Achievement>()), Times.Exactly(achievements.Count));
-            _repositoryMock.Verify(rep => rep.InsertAllOnSubmit(achievements));
+            _repositoryMock.Verify(rep => rep.InsertAllOnSubmit(It.IsAny<IEnumerable<UserAchievement>>()));
             _repositoryMock.Verify(rep => rep.SubmitChanges(), Times.Exactly(2));
         }
 
