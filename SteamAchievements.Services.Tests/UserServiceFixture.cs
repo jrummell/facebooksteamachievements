@@ -21,6 +21,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Moq;
 using NUnit.Framework;
 using NUnit.Mocks;
 using SteamAchievements.Data;
@@ -106,19 +107,20 @@ namespace SteamAchievements.Services.Tests
         public void UpdateUser()
         {
             User user = new User {AccessToken = "x", AutoUpdate = true, FacebookUserId = 1234, SteamUserId = "user1"};
-            Data.User dataUser = new Data.User
-                                     {
-                                         AccessToken = "x",
-                                         AutoUpdate = true,
-                                         FacebookUserId = 1234,
-                                         SteamUserId = "user1"
-                                     };
-            _managerMock.ExpectAndReturn("IsDuplicate", false, user.SteamUserId, user.FacebookUserId);
-            _managerMock.Expect("UpdateUser", dataUser);
 
-            _service.UpdateUser(user);
+            Mock<IAchievementManager> managerMock = new Mock<IAchievementManager>();
+            managerMock.Setup(rep => rep.IsDuplicate(user.SteamUserId, user.FacebookUserId))
+                .Returns(false).Verifiable();
+            managerMock.Setup(
+                rep =>
+                rep.UpdateUser(
+                    It.Is<Data.User>(u => u.SteamUserId == user.SteamUserId && u.FacebookUserId == user.FacebookUserId)))
+                .Verifiable();
 
-            _managerMock.Verify();
+            UserService service = new UserService(managerMock.Object);
+            service.UpdateUser(user);
+
+            managerMock.Verify();
         }
 
         [Test]

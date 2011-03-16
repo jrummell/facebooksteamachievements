@@ -25,6 +25,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml;
+using Moq;
 using NUnit.Framework;
 using NUnit.Mocks;
 using SteamAchievements.Data;
@@ -163,16 +164,14 @@ namespace SteamAchievements.Services.Tests
         [Test]
         public void UpdateNewUserAchievements()
         {
-            DynamicMock achievementManagerMock = new DynamicMock(typeof (IAchievementManager));
-            DynamicMock communityManagerMock = new DynamicMock(typeof (ISteamCommunityManager));
-            IAchievementService service =
-                new AchievementService((IAchievementManager) achievementManagerMock.MockInstance,
-                                       (ISteamCommunityManager) communityManagerMock.MockInstance);
+            Mock<IAchievementManager> achievementManagerMock = new Mock<IAchievementManager>();
+            Mock<ISteamCommunityManager> communityManagerMock = new Mock<ISteamCommunityManager>();
 
             // expect
             User user = new User {FacebookUserId = 1234, SteamUserId = "user1"};
             Data.User dataUser = new Data.User {FacebookUserId = 1234, SteamUserId = "user1"};
-            achievementManagerMock.ExpectAndReturn("GetUser", dataUser, user.FacebookUserId);
+            achievementManagerMock.Setup(rep => rep.GetUser(user.FacebookUserId))
+                .Returns(dataUser).Verifiable();
 
             AchievementXmlParser achievementXmlParser = new AchievementXmlParser();
             List<UserAchievement> userAchievements =
@@ -193,22 +192,30 @@ namespace SteamAchievements.Services.Tests
                         StoreUrl = new Uri("http://store.steampowered.com/app/10")
                     });
 
-            communityManagerMock.ExpectAndReturn("GetAchievements", userAchievements, user.SteamUserId);
+            communityManagerMock.Setup(rep => rep.GetAchievements(user.SteamUserId))
+                .Returns(new List<UserAchievement>()).Verifiable();
 
-            achievementManagerMock.ExpectAndReturn("GetUser", dataUser, user.SteamUserId);
-            achievementManagerMock.ExpectAndReturn("UpdateAchievements", 5,
-                                                   userAchievements.ToDataAchievements(user.FacebookUserId));
+            achievementManagerMock.Setup(rep => rep.GetUser(user.SteamUserId))
+                .Returns(dataUser).Verifiable();
+            achievementManagerMock.Setup(rep => rep.UpdateAchievements(It.IsAny<IEnumerable<Data.UserAchievement>>()))
+                .Returns(5).Verifiable();
 
-            IEnumerable<Game> games = new GameXmlParser().Parse(File.ReadAllText("games.xml"));
-            communityManagerMock.ExpectAndReturn("GetGames", games, user.SteamUserId);
+            ICollection<Game> games = new GameXmlParser().Parse(File.ReadAllText("games.xml"));
+            communityManagerMock.Setup(rep => rep.GetGames(user.SteamUserId))
+                .Returns(games).Verifiable();
 
             Achievement[] dataAchievements = new[] {new Achievement {Description = "x", GameId = 1, Id = 1,}};
-            achievementManagerMock.ExpectAndReturn("GetUnpublishedAchievements", dataAchievements, user.SteamUserId,
-                                                   DateTime.UtcNow.Date.AddDays(-2));
-            achievementManagerMock.Expect("UpdateHidden", user.SteamUserId,
-                                          dataAchievements.ToSimpleAchievementList(games).Select(a => a.Id));
+            achievementManagerMock.Setup(
+                rep => rep.GetUnpublishedAchievements(user.SteamUserId, DateTime.UtcNow.Date.AddDays(-2)))
+                .Returns(dataAchievements).Verifiable();
+            achievementManagerMock.Setup(
+                rep =>
+                rep.UpdateHidden(user.SteamUserId, It.IsAny<IEnumerable<int>>()))
+                .Verifiable();
 
             // execute
+            IAchievementService service =
+                new AchievementService(achievementManagerMock.Object, communityManagerMock.Object);
             service.UpdateNewUserAchievements(user);
 
             // verify
