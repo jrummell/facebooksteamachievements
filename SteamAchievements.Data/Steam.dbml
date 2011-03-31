@@ -28,6 +28,7 @@
       <Column Name="SteamUserId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="AccessToken" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="AutoUpdate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PublishDescription" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

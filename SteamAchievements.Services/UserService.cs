@@ -34,18 +34,15 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
-        public UserService()
-            : this(null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UserService"/> class.
-        /// </summary>
         /// <param name="manager">The manager.</param>
         public UserService(IAchievementManager manager)
         {
-            _manager = manager ?? new AchievementManager();
+            if (manager == null)
+            {
+                throw new ArgumentNullException("manager");
+            }
+
+            _manager = manager;
         }
 
         #region IUserService Members

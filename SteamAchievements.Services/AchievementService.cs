@@ -35,20 +35,22 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="AchievementService"/> class.
         /// </summary>
-        public AchievementService()
-            : this(null, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AchievementService"/> class.
-        /// </summary>
         /// <param name="achievementManager">The achievement manager.</param>
         /// <param name="communityManager">The community manager.</param>
         public AchievementService(IAchievementManager achievementManager, ISteamCommunityManager communityManager)
         {
-            _achievementManager = achievementManager ?? new AchievementManager();
-            _communityService = communityManager ?? new SteamCommunityManager();
+            if (achievementManager == null)
+            {
+                throw new ArgumentNullException("achievementManager");
+            }
+
+            if (communityManager == null)
+            {
+                throw new ArgumentNullException("achievementManager");
+            }
+
+            _achievementManager = achievementManager;
+            _communityService = communityManager;
         }
 
         #region IAchievementService Members
