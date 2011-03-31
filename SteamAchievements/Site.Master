@@ -33,15 +33,6 @@
         <div class="footer">
             <steam:Disclaimer ID="disclaimer" runat="server" />
             <script type="text/javascript" src="http://www.ohloh.net/p/483250/widgets/project_thin_badge.js"></script>
-            <!-- PayPal Donate Button -->
-            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-            <input type="hidden" name="cmd" value="_s-xclick" />
-            <input type="hidden" name="hosted_button_id" value="NN7EJHT97E3KW" />
-            <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_SM.gif" style="border-style: none;"
-                name="submit" alt="PayPal - The safer, easier way to pay online!" />
-            <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1"
-                height="1" />
-            </form>
         </div>
     </div>
     <div style="margin-top: 1em">
