@@ -20,20 +20,34 @@
 #endregion
 
 using System;
+using Bootstrap;
+using Microsoft.Practices.Unity;
 using SteamAchievements.Services;
 
 namespace SteamAchievements
 {
     public partial class Settings : FacebookPage
     {
+        private IUnityContainer _container;
+        private IUserService _userService;
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
 
-            Load += Page_Load;
+            Load += PageLoad;
+            Unload += PageUnload;
+
+            _container = (IUnityContainer) Bootstrapper.GetContainer();
+            _userService = _container.Resolve<IUserService>();
         }
 
-        private void Page_Load(object sender, EventArgs e)
+        private void PageUnload(object sender, EventArgs e)
+        {
+            _userService.Dispose();
+        }
+
+        private void PageLoad(object sender, EventArgs e)
         {
             if (IsPostBack)
             {
@@ -47,14 +61,12 @@ namespace SteamAchievements
 
             steamIdTextBox.Text = FacebookSettings.SteamUserId;
 
-            using (IUserService service = new UserService())
-            {
-                User user = service.GetUser(FacebookSettings.FacebookUserId);
+            User user = _userService.GetUser(FacebookSettings.FacebookUserId);
 
-                if (user != null)
-                {
-                    autoUpdateCheckBox.Checked = user.AutoUpdate;
-                }
+            if (user != null)
+            {
+                autoUpdateCheckBox.Checked = user.AutoUpdate;
+                publishDescriptionCheckBox.Checked = user.PublishDescription;
             }
         }
 
@@ -75,17 +87,15 @@ namespace SteamAchievements
                                 FacebookUserId = FacebookSettings.FacebookUserId,
                                 AccessToken = FacebookSettings.AccessToken,
                                 AutoUpdate = autoUpdateCheckBox.Checked,
+                                PublishDescription = publishDescriptionCheckBox.Checked,
                                 SteamUserId = steamIdTextBox.Text
                             };
 
             bool newUser;
             try
             {
-                using (IUserService service = new UserService())
-                {
-                    newUser = service.GetUser(user.FacebookUserId) == null;
-                    service.UpdateUser(user);
-                }
+                newUser = _userService.GetUser(user.FacebookUserId) == null;
+                _userService.UpdateUser(user);
             }
             catch (DuplicateSteamUserException)
             {
@@ -96,7 +106,7 @@ namespace SteamAchievements
 
             if (newUser)
             {
-                using (IAchievementService service = new AchievementService())
+                using (IAchievementService service = _container.Resolve<IAchievementService>())
                 {
                     service.UpdateNewUserAchievements(user);
                 }

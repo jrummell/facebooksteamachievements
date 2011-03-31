@@ -21,7 +21,9 @@
 
 using System;
 using System.Web.UI;
+using Bootstrap;
 using Facebook.Web;
+using Microsoft.Practices.Unity;
 using SteamAchievements.Services;
 
 namespace SteamAchievements.Controls
@@ -55,7 +57,8 @@ namespace SteamAchievements.Controls
             long facebookUserId = Convert.ToInt64(_authorizer.Session.UserId);
 
             string steamUserId = null;
-            using (IUserService manager = new UserService())
+            IUnityContainer container = (IUnityContainer) Bootstrapper.GetContainer();
+            using (IUserService manager = container.Resolve<IUserService>())
             {
                 User user = manager.GetUser(facebookUserId);
                 if (user != null)

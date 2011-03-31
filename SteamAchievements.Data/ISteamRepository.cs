@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace SteamAchievements.Data
@@ -45,14 +44,6 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <value>The users.</value>
         IQueryable<User> Users { get; set; }
-
-        /// <summary>
-        /// Gets or sets the log.
-        /// </summary>
-        /// <value>
-        /// The log.
-        /// </value>
-        TextWriter Log { get; set; }
 
         /// <summary>
         /// Inserts the user on submit.

@@ -40,6 +40,14 @@ namespace SteamAchievements.Services
         public bool AutoUpdate { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether [publish description].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [publish description]; otherwise, <c>false</c>.
+        /// </value>
+        public bool PublishDescription { get; set; }
+
+        /// <summary>
         /// Gets or sets the facebook user id.
         /// </summary>
         /// <value>

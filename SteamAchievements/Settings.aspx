@@ -24,10 +24,17 @@
         </div>
     </fieldset>
     <fieldset>
-        <legend>Auto Update</legend>
-        <asp:CheckBox ID="autoUpdateCheckBox" runat="server" />
-        <label for="autoUpdateCheckBox">
-            Update and publish my achievements automatically.</label>
+        <legend>Publish Options</legend>
+        <div>
+            <asp:CheckBox ID="autoUpdateCheckBox" runat="server" />
+            <label for="autoUpdateCheckBox">
+                Update and publish my achievements automatically.</label>
+        </div>
+        <div>
+            <asp:CheckBox ID="publishDescriptionCheckBox" runat="server" />
+            <label for="publishDescriptionCheckBox">
+                Include achievement descriptions when publishing.</label>
+        </div>
     </fieldset>
     <p>
         <asp:LinkButton ID="saveSettingsButton" runat="server" OnClick="SaveSettingsButtonClick">

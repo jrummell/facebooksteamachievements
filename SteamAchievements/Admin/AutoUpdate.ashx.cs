@@ -21,6 +21,8 @@
 
 using System;
 using System.Web;
+using Bootstrap;
+using Microsoft.Practices.Unity;
 using SteamAchievements.Services;
 
 namespace SteamAchievements.Admin
@@ -38,7 +40,11 @@ namespace SteamAchievements.Admin
             {
                 string logPath = context.Server.MapPath("~/App_Data/AutoUpdate");
                 _log = new AutoUpdateLogger(logPath);
-                _manager = new AutoUpdateManager(_log);
+                IUnityContainer container = (IUnityContainer) Bootstrapper.GetContainer();
+                IAchievementService achievementService = container.Resolve<IAchievementService>();
+                _manager = new AutoUpdateManager(achievementService,
+                                                 container.Resolve<IUserService>(),
+                                                 container.Resolve<IFacebookPublisher>(), _log);
 
                 bool authorized = context.Request["auth"] == Properties.Settings.Default.AutoUpdateAuthKey;
                 if (!authorized)

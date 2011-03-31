@@ -21,11 +21,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using Facebook;
-using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
@@ -38,15 +36,6 @@ namespace SteamAchievements.Services
         private readonly IUserService _userService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AutoUpdateManager"/> class.
-        /// </summary>
-        /// <param name="log">The log.</param>
-        public AutoUpdateManager(IAutoUpdateLogger log)
-            : this(null, null, null, log)
-        {
-        }
-
-        /// <summary>
         /// Constructor for unit testing.
         /// </summary>
         /// <param name="achievementService">The achievement service.</param>
@@ -56,16 +45,29 @@ namespace SteamAchievements.Services
         public AutoUpdateManager(IAchievementService achievementService, IUserService userService,
                                  IFacebookPublisher publisher, IAutoUpdateLogger log)
         {
-            AchievementManager achievementManager = new AchievementManager();
+            if (achievementService == null)
+            {
+                throw new ArgumentNullException("achievementService");
+            }
 
-#if DEBUG
-            // add repository log if we are in the debug configuration.
-            achievementManager.Log = new StringWriter(_achievementManagerLog);
-#endif
+            if (userService == null)
+            {
+                throw new ArgumentNullException("userService");
+            }
 
-            _achievementService = achievementService ?? new AchievementService(achievementManager, null);
-            _userService = userService ?? new UserService();
-            _publisher = publisher ?? new FacebookPublisher();
+            if (publisher == null)
+            {
+                throw new ArgumentNullException("publisher");
+            }
+
+            if (log == null)
+            {
+                throw new ArgumentNullException("log");
+            }
+
+            _achievementService = achievementService;
+            _userService = userService;
+            _publisher = publisher;
             _log = log;
         }
 

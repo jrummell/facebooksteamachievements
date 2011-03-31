@@ -19,34 +19,27 @@
 
 #endregion
 
-using System;
-using Bootstrap;
+using Bootstrap.UnityExtension;
 using Microsoft.Practices.Unity;
-using SteamAchievements.Services;
+using SteamAchievements.Data;
 
-namespace SteamAchievements
+namespace SteamAchievements.Services
 {
-    public partial class Deauthorize : FacebookPage
+    public class UnityRegistration : IUnityRegistration
     {
-        protected override void OnInit(EventArgs e)
-        {
-            base.OnInit(e);
+        #region IUnityRegistration Members
 
-            Load += PageLoad;
+        public void Register(IUnityContainer container)
+        {
+            container.RegisterType<ISteamRepository, SteamDataContext>();
+            container.RegisterType<IAchievementManager, AchievementManager>();
+            container.RegisterType<IFacebookPublisher, FacebookPublisher>();
+            container.RegisterType<IAchievementService, AchievementService>();
+            container.RegisterType<IAutoUpdateLogger, AutoUpdateLogger>();
+            container.RegisterType<ISteamCommunityManager, SteamCommunityManager>();
+            container.RegisterType<IUserService, UserService>();
         }
 
-        private void PageLoad(object sender, EventArgs e)
-        {
-            if (FacebookSettings == null)
-            {
-                return;
-            }
-
-            IUnityContainer container = (IUnityContainer) Bootstrapper.GetContainer();
-            using (IUserService manager = container.Resolve<IUserService>())
-            {
-                manager.DeauthorizeUser(FacebookSettings.FacebookUserId);
-            }
-        }
+        #endregion
     }
 }

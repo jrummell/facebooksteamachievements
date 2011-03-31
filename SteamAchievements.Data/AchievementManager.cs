@@ -22,7 +22,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
-using System.IO;
 using System.Linq;
 
 namespace SteamAchievements.Data
@@ -30,14 +29,6 @@ namespace SteamAchievements.Data
     public class AchievementManager : IAchievementManager
     {
         private readonly ISteamRepository _repository;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AchievementManager"/> class.
-        /// </summary>
-        public AchievementManager()
-        {
-            _repository = new SteamDataContext();
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AchievementManager"/> class.
@@ -54,18 +45,6 @@ namespace SteamAchievements.Data
             }
 
             _repository = repository;
-        }
-
-        /// <summary>
-        /// Gets or sets the log.
-        /// </summary>
-        /// <value>
-        /// The log.
-        /// </value>
-        public TextWriter Log
-        {
-            get { return _repository.Log; }
-            set { _repository.Log = value; }
         }
 
         #region IAchievementManager Members

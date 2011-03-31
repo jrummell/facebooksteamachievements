@@ -25,7 +25,7 @@ using System.Linq;
 
 namespace SteamAchievements.Data
 {
-    internal partial class SteamDataContext : ISteamRepository
+    public partial class SteamDataContext : ISteamRepository
     {
         #region ISteamRepository Members
 
