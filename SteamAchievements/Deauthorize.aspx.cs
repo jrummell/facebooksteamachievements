@@ -20,7 +20,6 @@
 #endregion
 
 using System;
-using Bootstrap;
 using Microsoft.Practices.Unity;
 using SteamAchievements.Services;
 
@@ -42,8 +41,7 @@ namespace SteamAchievements
                 return;
             }
 
-            IUnityContainer container = (IUnityContainer) Bootstrapper.GetContainer();
-            using (IUserService manager = container.Resolve<IUserService>())
+            using (IUserService manager = Container.Resolve<IUserService>())
             {
                 manager.DeauthorizeUser(FacebookSettings.FacebookUserId);
             }

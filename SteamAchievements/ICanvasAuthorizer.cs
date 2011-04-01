@@ -19,34 +19,44 @@
 
 #endregion
 
-using System.Web.UI;
-using Microsoft.Practices.Unity;
-using SteamAchievements.Controls;
-using SteamAchievements.Services;
-
 namespace SteamAchievements
 {
-    public class FacebookPage : Page
+    public interface ICanvasAuthorizer
     {
-        internal const string FacebookSettingsCacheKey = "FacebookSettings";
+        /// <summary>
+        /// Gets the app id.
+        /// </summary>
+        string AppId { get; }
 
         /// <summary>
-        /// Gets the container.
+        /// Gets or sets the perms.
         /// </summary>
-        protected IUnityContainer Container
-        {
-            get { return ContainerManager.Container; }
-        }
+        /// <value>
+        /// The perms.
+        /// </value>
+        string Perms { get; set; }
 
         /// <summary>
-        /// Gets the facebook settings.
+        /// Gets the user id.
         /// </summary>
-        /// <remarks>
-        /// This is set by <see cref="FacebookLogin"/>.
-        /// </remarks>
-        protected FacebookSettings FacebookSettings
-        {
-            get { return Session[FacebookSettingsCacheKey] as FacebookSettings; }
-        }
+        string UserId { get; }
+
+        /// <summary>
+        /// Gets the access token.
+        /// </summary>
+        string AccessToken { get; }
+
+        /// <summary>
+        /// Determines whether this instance is authorized.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is authorized; otherwise, <c>false</c>.
+        /// </returns>
+        bool IsAuthorized();
+
+        /// <summary>
+        /// Handles the unauthorized request.
+        /// </summary>
+        void HandleUnauthorizedRequest();
     }
 }

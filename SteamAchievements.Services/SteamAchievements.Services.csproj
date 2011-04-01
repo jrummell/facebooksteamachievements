@@ -36,6 +36,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Staging\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.1.1.0.118\lib\AutoMapper.dll</HintPath>
@@ -99,6 +109,7 @@
   <ItemGroup>
     <Compile Include="AutoUpdateLogger.cs" />
     <Compile Include="AutoUpdateManager.cs" />
+    <Compile Include="ContainerManager.cs" />
     <Compile Include="DuplicateSteamUserException.cs" />
     <Compile Include="FacebookPublisher.cs" />
     <Compile Include="FacebookSettings.cs" />
@@ -106,6 +117,7 @@
     <Compile Include="IFacebookPublisher.cs" />
     <Compile Include="ISteamCommunityManager.cs" />
     <Compile Include="IUserService.cs" />
+    <Compile Include="MockSteamRepository.cs" />
     <Compile Include="UnityRegistration.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserAchievement.cs" />

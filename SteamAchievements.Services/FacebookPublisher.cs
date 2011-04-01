@@ -28,7 +28,7 @@ namespace SteamAchievements.Services
     /// <summary>
     /// Description of FacebookPublisher.
     /// </summary>
-    internal class FacebookPublisher : IFacebookPublisher
+    public class FacebookPublisher : IFacebookPublisher
     {
         #region IFacebookPublisher Members
 

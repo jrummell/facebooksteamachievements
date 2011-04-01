@@ -20,7 +20,6 @@
 #endregion
 
 using System;
-using Bootstrap;
 using Microsoft.Practices.Unity;
 using SteamAchievements.Services;
 
@@ -28,7 +27,6 @@ namespace SteamAchievements
 {
     public partial class Settings : FacebookPage
     {
-        private IUnityContainer _container;
         private IUserService _userService;
 
         protected override void OnInit(EventArgs e)
@@ -38,8 +36,7 @@ namespace SteamAchievements
             Load += PageLoad;
             Unload += PageUnload;
 
-            _container = (IUnityContainer) Bootstrapper.GetContainer();
-            _userService = _container.Resolve<IUserService>();
+            _userService = Container.Resolve<IUserService>();
         }
 
         private void PageUnload(object sender, EventArgs e)
@@ -106,7 +103,7 @@ namespace SteamAchievements
 
             if (newUser)
             {
-                using (IAchievementService service = _container.Resolve<IAchievementService>())
+                using (IAchievementService service = Container.Resolve<IAchievementService>())
                 {
                     service.UpdateNewUserAchievements(user);
                 }

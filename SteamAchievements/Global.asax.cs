@@ -23,7 +23,6 @@ using System;
 using System.Web;
 using Bootstrap;
 using Bootstrap.UnityExtension;
-using SteamAchievements.Services;
 
 namespace SteamAchievements
 {
@@ -32,7 +31,6 @@ namespace SteamAchievements
         protected void Application_Start(object sender, EventArgs e)
         {
             UnityContainerExtension containerExtension = new UnityContainerExtension();
-            containerExtension.LookForRegistrations.InAssembly(typeof(IAchievementService).Assembly);
             Bootstrapper.With.Container(containerExtension).Start();
         }
     }
