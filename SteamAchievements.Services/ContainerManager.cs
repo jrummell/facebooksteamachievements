@@ -19,40 +19,19 @@
 
 #endregion
 
-using System;
+using Bootstrap;
 using Microsoft.Practices.Unity;
-using SteamAchievements.Services;
 
-namespace SteamAchievements
+namespace SteamAchievements.Services
 {
-    public partial class Default : FacebookPage
+    public static class ContainerManager
     {
-        protected override void OnInit(EventArgs e)
+        /// <summary>
+        /// Gets the container.
+        /// </summary>
+        public static IUnityContainer Container
         {
-            base.OnInit(e);
-
-            Load += PageLoad;
-        }
-
-        private void PageLoad(object sender, EventArgs e)
-        {
-            if (FacebookSettings == null)
-            {
-                return;
-            }
-
-            steamUserIdHidden.Value = FacebookSettings.SteamUserId;
-
-            using (IUserService manager = Container.Resolve<IUserService>())
-            {
-                User user = manager.GetUser(FacebookSettings.FacebookUserId);
-
-                if (user != null)
-                {
-                    user.AccessToken = FacebookSettings.AccessToken;
-                    manager.UpdateUser(user);
-                }
-            }
+            get { return (IUnityContainer) Bootstrapper.GetContainer(); }
         }
     }
 }

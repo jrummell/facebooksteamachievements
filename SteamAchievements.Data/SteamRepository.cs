@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 
 // Copyright 2010 John Rummell
 // 
@@ -25,59 +25,113 @@ using System.Linq;
 
 namespace SteamAchievements.Data
 {
-    public interface ISteamRepository : IDisposable
+    public class SteamRepository : ISteamRepository
     {
+        private readonly SteamDataContext _context = new SteamDataContext();
+
+        #region ISteamRepository Members
+
         /// <summary>
         /// Gets the achievements.
         /// </summary>
         /// <value>The achievements.</value>
-        IQueryable<Achievement> Achievements { get; }
+        public IQueryable<Achievement> Achievements
+        {
+            get { return _context.Achievements; }
+        }
 
         /// <summary>
         /// Gets the user achievements.
         /// </summary>
         /// <value>The user achievements.</value>
-        IQueryable<UserAchievement> UserAchievements { get; }
+        public IQueryable<UserAchievement> UserAchievements
+        {
+            get { return _context.UserAchievements; }
+        }
 
         /// <summary>
         /// Gets the users.
         /// </summary>
         /// <value>The users.</value>
-        IQueryable<User> Users { get; }
+        public IQueryable<User> Users
+        {
+            get { return _context.Users; }
+        }
 
         /// <summary>
         /// Inserts the user on submit.
         /// </summary>
         /// <param name="user">The user.</param>
-        void InsertOnSubmit(User user);
+        public void InsertOnSubmit(User user)
+        {
+            _context.Users.InsertOnSubmit(user);
+        }
 
         /// <summary>
         /// Deletes all given achievements on submit.
         /// </summary>
         /// <param name="achievements">The achievements.</param>
-        void DeleteAllOnSubmit(IEnumerable<UserAchievement> achievements);
+        public void DeleteAllOnSubmit(IEnumerable<UserAchievement> achievements)
+        {
+            _context.UserAchievements.DeleteAllOnSubmit(achievements);
+        }
 
         /// <summary>
         /// Deletes the user on submit.
         /// </summary>
         /// <param name="user">The user.</param>
-        void DeleteOnSubmit(User user);
+        public void DeleteOnSubmit(User user)
+        {
+            _context.Users.DeleteOnSubmit(user);
+        }
 
         /// <summary>
         /// Submits the changes.
         /// </summary>
-        void SubmitChanges();
+        public void SubmitChanges()
+        {
+            _context.SubmitChanges();
+        }
 
         /// <summary>
         /// Inserts the achievement on submit.
         /// </summary>
         /// <param name="achievement">The achievement.</param>
-        void InsertOnSubmit(Achievement achievement);
+        public void InsertOnSubmit(Achievement achievement)
+        {
+            _context.Achievements.InsertOnSubmit(achievement);
+        }
 
         /// <summary>
         /// Inserts all given achievements on submit.
         /// </summary>
         /// <param name="achievements">The achievements.</param>
-        void InsertAllOnSubmit(IEnumerable<UserAchievement> achievements);
+        public void InsertAllOnSubmit(IEnumerable<UserAchievement> achievements)
+        {
+            _context.UserAchievements.InsertAllOnSubmit(achievements);
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+        }
     }
 }

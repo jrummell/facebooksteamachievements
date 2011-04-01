@@ -20,39 +20,38 @@
 #endregion
 
 using System;
-using Microsoft.Practices.Unity;
-using SteamAchievements.Services;
 
 namespace SteamAchievements
 {
-    public partial class Default : FacebookPage
+    public class MockCanvasAuthorizer : ICanvasAuthorizer
     {
-        protected override void OnInit(EventArgs e)
+        public MockCanvasAuthorizer()
         {
-            base.OnInit(e);
-
-            Load += PageLoad;
+            AppId = "ApplicationId";
+            Perms = String.Empty;
+            UserId = "1234567890";
+            AccessToken = "AccessToken";
         }
 
-        private void PageLoad(object sender, EventArgs e)
+        #region ICanvasAuthorizer Members
+
+        public string AppId { get; private set; }
+
+        public string Perms { get; set; }
+
+        public string UserId { get; private set; }
+
+        public string AccessToken { get; private set; }
+
+        public bool IsAuthorized()
         {
-            if (FacebookSettings == null)
-            {
-                return;
-            }
-
-            steamUserIdHidden.Value = FacebookSettings.SteamUserId;
-
-            using (IUserService manager = Container.Resolve<IUserService>())
-            {
-                User user = manager.GetUser(FacebookSettings.FacebookUserId);
-
-                if (user != null)
-                {
-                    user.AccessToken = FacebookSettings.AccessToken;
-                    manager.UpdateUser(user);
-                }
-            }
+            return true;
         }
+
+        public void HandleUnauthorizedRequest()
+        {
+        }
+
+        #endregion
     }
 }

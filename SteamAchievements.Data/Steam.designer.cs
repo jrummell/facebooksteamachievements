@@ -24,7 +24,7 @@ namespace SteamAchievements.Data
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="steam")]
-	public partial class SteamDataContext : System.Data.Linq.DataContext
+	internal partial class SteamDataContext : System.Data.Linq.DataContext
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();

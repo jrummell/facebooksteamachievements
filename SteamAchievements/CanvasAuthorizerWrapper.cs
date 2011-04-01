@@ -19,40 +19,47 @@
 
 #endregion
 
-using System;
-using Microsoft.Practices.Unity;
-using SteamAchievements.Services;
+using Facebook.Web;
 
 namespace SteamAchievements
 {
-    public partial class Default : FacebookPage
+    public class CanvasAuthorizerWrapper : ICanvasAuthorizer
     {
-        protected override void OnInit(EventArgs e)
-        {
-            base.OnInit(e);
+        private readonly CanvasAuthorizer _authorizer = new CanvasAuthorizer {Perms = "publish_stream,offline_access"};
 
-            Load += PageLoad;
+        #region ICanvasAuthorizer Members
+
+        public string AppId
+        {
+            get { return _authorizer.AppId; }
         }
 
-        private void PageLoad(object sender, EventArgs e)
+        public string Perms
         {
-            if (FacebookSettings == null)
-            {
-                return;
-            }
-
-            steamUserIdHidden.Value = FacebookSettings.SteamUserId;
-
-            using (IUserService manager = Container.Resolve<IUserService>())
-            {
-                User user = manager.GetUser(FacebookSettings.FacebookUserId);
-
-                if (user != null)
-                {
-                    user.AccessToken = FacebookSettings.AccessToken;
-                    manager.UpdateUser(user);
-                }
-            }
+            get { return _authorizer.Perms; }
+            set { _authorizer.Perms = value; }
         }
+
+        public string UserId
+        {
+            get { return _authorizer.Session.UserId; }
+        }
+
+        public string AccessToken
+        {
+            get { return _authorizer.Session.AccessToken; }
+        }
+
+        public bool IsAuthorized()
+        {
+            return _authorizer.IsAuthorized();
+        }
+
+        public void HandleUnauthorizedRequest()
+        {
+            _authorizer.HandleUnauthorizedRequest();
+        }
+
+        #endregion
     }
 }

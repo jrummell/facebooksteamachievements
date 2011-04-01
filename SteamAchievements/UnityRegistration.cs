@@ -22,8 +22,9 @@
 using Bootstrap.UnityExtension;
 using Microsoft.Practices.Unity;
 using SteamAchievements.Data;
+using SteamAchievements.Services;
 
-namespace SteamAchievements.Services
+namespace SteamAchievements
 {
     public class UnityRegistration : IUnityRegistration
     {
@@ -32,9 +33,11 @@ namespace SteamAchievements.Services
         public void Register(IUnityContainer container)
         {
 #if DEBUG
-            ContainerManager.Container.RegisterType<ISteamRepository, MockSteamRepository>();
+            container.RegisterType<ISteamRepository, MockSteamRepository>();
+            container.RegisterType<ICanvasAuthorizer, MockCanvasAuthorizer>();
 #else
-            ContainerManager.Container.RegisterType<ISteamRepository, SteamRepository>();
+            container.RegisterType<ISteamRepository, SteamRepository>();
+            container.RegisterType<ICanvasAuthorizer, CanvasAuthorizer>();
 #endif
 
             container.RegisterType<IAchievementManager, AchievementManager>();

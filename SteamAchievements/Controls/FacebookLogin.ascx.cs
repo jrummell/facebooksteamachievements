@@ -21,8 +21,6 @@
 
 using System;
 using System.Web.UI;
-using Bootstrap;
-using Facebook.Web;
 using Microsoft.Practices.Unity;
 using SteamAchievements.Services;
 
@@ -30,11 +28,18 @@ namespace SteamAchievements.Controls
 {
     public partial class FacebookLogin : UserControl
     {
-        private readonly CanvasAuthorizer _authorizer;
+        private readonly ICanvasAuthorizer _authorizer;
+        private readonly IUnityContainer _container;
 
         protected FacebookLogin()
+            : this(null)
         {
-            _authorizer = new CanvasAuthorizer {Perms = "publish_stream,offline_access"};
+        }
+
+        protected FacebookLogin(ICanvasAuthorizer authorizer)
+        {
+            _container = ContainerManager.Container;
+            _authorizer = authorizer ?? _container.Resolve<ICanvasAuthorizer>();
         }
 
         protected string FacebookClientId
@@ -54,11 +59,10 @@ namespace SteamAchievements.Controls
                 return;
             }
 
-            long facebookUserId = Convert.ToInt64(_authorizer.Session.UserId);
+            long facebookUserId = Convert.ToInt64(_authorizer.UserId);
 
             string steamUserId = null;
-            IUnityContainer container = (IUnityContainer) Bootstrapper.GetContainer();
-            using (IUserService manager = container.Resolve<IUserService>())
+            using (IUserService manager = _container.Resolve<IUserService>())
             {
                 User user = manager.GetUser(facebookUserId);
                 if (user != null)
@@ -72,7 +76,7 @@ namespace SteamAchievements.Controls
                     {
                         FacebookUserId = facebookUserId,
                         SteamUserId = steamUserId,
-                        AccessToken = _authorizer.Session.AccessToken
+                        AccessToken = _authorizer.AccessToken
                     };
         }
     }
