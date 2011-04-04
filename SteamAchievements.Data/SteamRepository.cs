@@ -1,4 +1,4 @@
-﻿#region License
+ #region License
 
 // Copyright 2010 John Rummell
 // 
@@ -38,6 +38,7 @@ namespace SteamAchievements.Data
         public IQueryable<Achievement> Achievements
         {
             get { return _context.Achievements; }
+            set { throw new NotSupportedException(); }
         }
 
         /// <summary>
@@ -47,6 +48,7 @@ namespace SteamAchievements.Data
         public IQueryable<UserAchievement> UserAchievements
         {
             get { return _context.UserAchievements; }
+            set { throw new NotSupportedException(); }
         }
 
         /// <summary>
@@ -56,6 +58,7 @@ namespace SteamAchievements.Data
         public IQueryable<User> Users
         {
             get { return _context.Users; }
+            set { throw new NotSupportedException(); }
         }
 
         /// <summary>
