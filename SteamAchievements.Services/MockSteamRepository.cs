@@ -1,4 +1,4 @@
-﻿#region License
+ #region License
 
 // Copyright 2010 John Rummell
 // 
@@ -87,16 +87,19 @@ namespace SteamAchievements.Services
         public IQueryable<Achievement> Achievements
         {
             get { return _achievements.Values.AsQueryable(); }
+            set { throw new NotSupportedException(); }
         }
 
         public IQueryable<Data.UserAchievement> UserAchievements
         {
             get { return _userAchievements.Values.AsQueryable(); }
+            set { throw new NotSupportedException(); }
         }
 
         public IQueryable<Data.User> Users
         {
             get { return _users.Values.AsQueryable(); }
+            set { throw new NotSupportedException(); }
         }
 
         public void InsertOnSubmit(Data.User user)
