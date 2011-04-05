@@ -37,7 +37,7 @@ namespace SteamAchievements
             container.RegisterType<ICanvasAuthorizer, MockCanvasAuthorizer>();
 #else
             container.RegisterType<ISteamRepository, SteamRepository>();
-            container.RegisterType<ICanvasAuthorizer, CanvasAuthorizer>();
+            container.RegisterType<ICanvasAuthorizer, CanvasAuthorizerWrapper>();
 #endif
 
             container.RegisterType<IAchievementManager, AchievementManager>();
