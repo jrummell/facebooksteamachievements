@@ -22,6 +22,24 @@ namespace SteamAchievements {
         protected global::System.Web.UI.WebControls.HiddenField steamUserIdHidden;
         
         /// <summary>
+        /// publishDescriptionHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField publishDescriptionHidden;
+        
+        /// <summary>
+        /// enableLogHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField enableLogHidden;
+        
+        /// <summary>
         /// steamIdErrorSettingsLink control.
         /// </summary>
         /// <remarks>

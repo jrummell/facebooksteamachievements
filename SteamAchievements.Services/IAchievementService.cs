@@ -30,6 +30,16 @@ namespace SteamAchievements.Services
     public interface IAchievementService : IDisposable
     {
         /// <summary>
+        /// Gets the profile.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns></returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        SteamProfile GetProfile(string steamUserId);
+
+        /// <summary>
         /// Gets the unpublished achievements newer than the given date.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
@@ -52,7 +62,7 @@ namespace SteamAchievements.Services
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        List<SimpleGame> GetGames(string steamUserId);
+        List<Game> GetGames(string steamUserId);
 
         /// <summary>
         /// Updates the achievements.

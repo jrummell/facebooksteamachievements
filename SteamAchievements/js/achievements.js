@@ -12,11 +12,14 @@ var $achievements =
 
     logSelector: null,
 
-    init: function (userId, logSelector, enableLog)
+    publishDescription: true,
+
+    init: function (userId, logSelector, enableLog, publishDescription)
     {
         this.steamUserId = userId;
         this.logSelector = logSelector;
         this.enableLog = enableLog;
+        this.publishDescription = publishDescription;
 
         $("img.loading").hide();
 
@@ -25,6 +28,11 @@ var $achievements =
         {
             $(this).hide('normal', $achievements.updateSize);
         });
+    },
+
+    getProfile: function(callback, errorCallback)
+    {
+        this.callAjax("GetProfile", { steamUserId: this.steamUserId }, callback, errorCallback);
     },
 
     getGames: function (callback, errorCallback)
@@ -80,7 +88,12 @@ var $achievements =
                 description += achievement.Game.Name + ": ";
             }
 
-            description += achievement.Name + " (" + achievement.Description + ")";
+            description += achievement.Name;
+
+            if ($achievements.publishDescription)
+            {
+                description += " (" + achievement.Description + ")";
+            }
 
             if (i < achievements.length - 1)
             {
@@ -90,6 +103,8 @@ var $achievements =
             {
                 description += ".";
             }
+
+            $achievements.log(description);
         });
 
         var publishParams = {

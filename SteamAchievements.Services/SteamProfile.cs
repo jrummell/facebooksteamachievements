@@ -19,24 +19,14 @@
 
 #endregion
 
-using System.Collections.Generic;
-using System.Linq;
-
 namespace SteamAchievements.Services
 {
-    internal static class GameCollectionExtensions
+    public class SteamProfile
     {
-        public static List<SimpleGame> ToSimpleGameList(this IEnumerable<Game> games)
-        {
-            return (from game in games
-                    select new SimpleGame
-                               {
-                                   Id = game.Id,
-                                   Name = game.Name,
-                                   ImageUrl = game.ImageUrl.ToString(),
-                                   StatsUrl = game.StatsUrl.ToString(),
-                                   StoreUrl = game.StoreUrl.ToString()
-                               }).ToList();
-        }
+        public string SteamUserId { get; set; }
+
+        public string AvatarUrl { get; set; }
+
+        public string Headline { get; set; }
     }
 }

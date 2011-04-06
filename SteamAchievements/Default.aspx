@@ -5,8 +5,13 @@
     <style type="text/css">
         #steamUserIdHeading
         {
-            text-align: center;
             font-size: 200%;
+        }
+        #profileImage
+        {
+            width: 69px;
+            height: 69px;
+            padding: 0 5px 5px 0;
         }
     </style>
 </asp:Content>
@@ -14,8 +19,6 @@
     <form runat="server">
     <asp:HiddenField ID="steamUserIdHidden" runat="server" />
     </form>
-    <h1>
-        Home</h1>
     <div id="steamIdError" class="fberrorbox message" style="display: none;">
         You haven't set your Steam Community Profile URL. Please set it on the
         <steam:CanvasLink ID="steamIdErrorSettingsLink" runat="server" CanvasPage="Settings.aspx"
@@ -23,8 +26,13 @@
         page.
         <steam:HelpLink ID="steamIdErrorHelpLink" runat="server" HelpAnchor="Configure_your_Steam_Community_Profile" />
     </div>
-    <h1 id="steamUserIdHeading">
-    </h1>
+    <div id="heading" class="hidden">
+        <asp:Image ID="profileImage" runat="server" ImageAlign="Left" />
+        <h1>
+            <asp:Label ID="steamUserIdHeading" runat="server" /></h1>
+        <asp:Label ID="headlineLabel" runat="server" />
+        <br class="clear" />
+    </div>
     <div id="publishPageMessage" class="fbinfobox message">
         Use the
         <steam:CanvasLink ID="publishPageMessageLink" runat="server" Text="publish" CanvasPage="Publish.aspx" />

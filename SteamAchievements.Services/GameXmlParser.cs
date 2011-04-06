@@ -62,9 +62,9 @@ namespace SteamAchievements.Services
                                {
                                    Id = Convert.ToInt32(game.id),
                                    Name = game.name,
-                                   ImageUrl = new Uri(game.logo, UriKind.Absolute),
-                                   StatsUrl = new Uri(game.statsLink, UriKind.Absolute),
-                                   StoreUrl = new Uri(game.storeLink, UriKind.Absolute),
+                                   ImageUrl = game.logo,
+                                   StatsUrl = game.statsLink,
+                                   StoreUrl = game.storeLink,
                                    PlayedRecently = game.playedRecently
                                }).ToList();
         }

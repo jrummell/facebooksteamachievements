@@ -59,14 +59,14 @@ namespace SteamAchievements.Services
         /// Gets the games.
         /// </summary>
         /// <returns>All <see cref="Game"/>s.</returns>
-        public List<SimpleGame> GetGames(string steamUserId)
+        public List<Game> GetGames(string steamUserId)
         {
             if (steamUserId == null)
             {
                 throw new ArgumentNullException("steamUserId");
             }
 
-            return _communityService.GetGames(steamUserId).ToSimpleGameList();
+            return _communityService.GetGames(steamUserId).ToList();
         }
 
         /// <summary>
@@ -93,6 +93,16 @@ namespace SteamAchievements.Services
             int updated = _achievementManager.UpdateAchievements(achievements.ToDataAchievements(user.FacebookUserId));
 
             return updated;
+        }
+
+        /// <summary>
+        /// Gets the profile.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns></returns>
+        public SteamProfile GetProfile(string steamUserId)
+        {
+            return _communityService.GetProfile(steamUserId);
         }
 
         /// <summary>

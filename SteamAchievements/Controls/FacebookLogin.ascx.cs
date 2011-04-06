@@ -62,12 +62,14 @@ namespace SteamAchievements.Controls
             long facebookUserId = Convert.ToInt64(_authorizer.UserId);
 
             string steamUserId = null;
+            bool publishDescription = false;
             using (IUserService manager = _container.Resolve<IUserService>())
             {
                 User user = manager.GetUser(facebookUserId);
                 if (user != null)
                 {
                     steamUserId = user.SteamUserId;
+                    publishDescription = user.PublishDescription;
                 }
             }
 
@@ -76,7 +78,8 @@ namespace SteamAchievements.Controls
                     {
                         FacebookUserId = facebookUserId,
                         SteamUserId = steamUserId,
-                        AccessToken = _authorizer.AccessToken
+                        AccessToken = _authorizer.AccessToken,
+                        PublishDescription = publishDescription
                     };
         }
     }

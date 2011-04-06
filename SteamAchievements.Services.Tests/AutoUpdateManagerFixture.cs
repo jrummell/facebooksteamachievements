@@ -85,7 +85,7 @@ namespace SteamAchievements.Services.Tests
                                                                     Description = "x",
                                                                     ImageUrl = "http://example.com/a.jpg",
                                                                     Game =
-                                                                        new SimpleGame
+                                                                        new Game
                                                                             {
                                                                                 Id = 1,
                                                                                 Name = "game 1",

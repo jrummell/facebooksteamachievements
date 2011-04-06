@@ -14,10 +14,30 @@ $(document).ready(function ()
         return;
     }
 
-    $("#steamUserIdHeading").text(steamUserId);
+    getProfile();
 
     getGames();
 });
+
+function getProfile()
+{
+    var ondone = function (profile)
+    {
+        if (profile == null)
+        {
+            return;
+        }
+        $("#profileImage").attr("src", profile.AvatarUrl);
+        $("#headlineLabel").text(profile.Headline);
+        $("#steamUserIdHeading").text(profile.SteamUserId);
+
+        $("#heading").show();
+
+        $achievements.updateSize();
+    };
+
+    $achievements.getProfile(ondone);
+}
 
 function getGames()
 {

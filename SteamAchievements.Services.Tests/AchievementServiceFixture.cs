@@ -183,13 +183,12 @@ namespace SteamAchievements.Services.Tests
                     {
                         Id = 240,
                         ImageUrl =
-                            new Uri(
-                            "http://media.steampowered.com/steamcommunity/public/images/apps/10/af890f848dd606ac2fd4415de3c3f5e7a66fcb9f.jpg"),
+                            "http://media.steampowered.com/steamcommunity/public/images/apps/10/af890f848dd606ac2fd4415de3c3f5e7a66fcb9f.jpg",
                         Name = "Counter-Strike: Source",
                         PlayedRecently = true,
                         StatsUrl =
-                            new Uri(String.Format("http://steamcommunity.com/id/{0}/games/?xml=1", user.SteamUserId)),
-                        StoreUrl = new Uri("http://store.steampowered.com/app/10")
+                            String.Format("http://steamcommunity.com/id/{0}/games/?xml=1", user.SteamUserId),
+                        StoreUrl = "http://store.steampowered.com/app/10"
                     });
 
             communityManagerMock.Setup(rep => rep.GetAchievements(user.SteamUserId))
