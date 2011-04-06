@@ -32,6 +32,7 @@ namespace SteamAchievements.Services
     public class SteamCommunityManager : ISteamCommunityManager
     {
         private readonly AchievementXmlParser _achievementParser = new AchievementXmlParser();
+        private readonly SteamProfileXmlParser _profileParser = new SteamProfileXmlParser();
         private readonly GameXmlParser _gamesParser = new GameXmlParser();
         private readonly WebClient _webClient = new WebClient();
 
@@ -46,7 +47,24 @@ namespace SteamAchievements.Services
         }
 
         /// <summary>
-        /// Gets the closed achievements from http://steamcommunity.com/id/[customurl]/statsfeed/[game]/?xml=1.
+        /// Gets the profile from http://steamcommunity.com/id/[customurl]/?xml=1.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns></returns>
+        public SteamProfile GetProfile(string steamUserId)
+        {
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            string xml = _webClient.DownloadString(GetProfileUrl(steamUserId, true));
+
+            return _profileParser.Parse(xml).SingleOrDefault();
+        }
+
+        /// <summary>
+        /// Gets the closed achievements from http://steamcommunity.com/id/[customurl]/[game]/?xml=1.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <returns></returns>
@@ -62,8 +80,7 @@ namespace SteamAchievements.Services
             IEnumerable<Game> games = GetGames(steamUserId);
             foreach (Game game in games.Where(g => g.PlayedRecently))
             {
-                string statsUrl = game.StatsUrl.ToString();
-                string xmlStatsUrl = statsUrl + "/?xml=1";
+                string xmlStatsUrl = game.StatsUrl + "/?xml=1";
 
                 string xml = _webClient.DownloadString(xmlStatsUrl);
 
@@ -81,7 +98,7 @@ namespace SteamAchievements.Services
                         ErrorSignal signal = ErrorSignal.FromContext(context);
                         if (signal != null)
                         {
-                            string message = "Invalid xml for " + game.Name + " stats: " + statsUrl;
+                            string message = "Invalid xml for " + game.Name + " stats: " + game.StatsUrl;
                             Exception exception = new InvalidOperationException(message, ex);
                             signal.Raise(exception);
                         }
@@ -117,7 +134,7 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            Uri gamesUrl = GetGamesUrl(steamUserId);
+            Uri gamesUrl = GetGamesUrl(steamUserId, true);
 
             string xml = _webClient.DownloadString(gamesUrl);
 
@@ -127,13 +144,15 @@ namespace SteamAchievements.Services
         #endregion
 
         /// <summary>
-        /// Gets the stats URL.
+        /// Gets the profile URL.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="xml">if set to <c>true</c> gets the xml url.</param>
         /// <returns></returns>
-        public static Uri GetStatsUrl(string steamUserId)
+        public static Uri GetProfileUrl(string steamUserId, bool xml)
         {
-            string url = "http://steamcommunity.com/id/" + steamUserId;
+            string url = string.Format("http://steamcommunity.com/id/{0}{1}",
+                                       steamUserId, GetXmlParameter(xml));
             return new Uri(url, UriKind.Absolute);
         }
 
@@ -141,11 +160,18 @@ namespace SteamAchievements.Services
         /// Gets the games URL.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="xml">if set to <c>true</c> gets the xml url.</param>
         /// <returns></returns>
-        private static Uri GetGamesUrl(string steamUserId)
+        private static Uri GetGamesUrl(string steamUserId, bool xml)
         {
-            string url = String.Format("http://steamcommunity.com/id/{0}/games/?xml=1", steamUserId);
+            string url = String.Format("http://steamcommunity.com/id/{0}/games/{1}",
+                                       steamUserId, GetXmlParameter(xml));
             return new Uri(url, UriKind.Absolute);
+        }
+
+        private static string GetXmlParameter(bool xml)
+        {
+            return xml ? "?xml=1" : String.Empty;
         }
     }
 }

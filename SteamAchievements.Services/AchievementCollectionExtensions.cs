@@ -33,8 +33,8 @@ namespace SteamAchievements.Services
         /// <param name="achievements">The achievements.</param>
         /// <param name="games">The games.</param>
         /// <returns></returns>
-        public static List<SimpleAchievement> ToSimpleAchievementList(this IEnumerable<Achievement> achievements,
-                                                                      IEnumerable<Game> games)
+        public static List<SimpleAchievement> ToSimpleAchievementList(
+            this IEnumerable<Achievement> achievements, IEnumerable<Game> games)
         {
             return (from game in games
                     from achievement in achievements
@@ -45,14 +45,7 @@ namespace SteamAchievements.Services
                                    ImageUrl = achievement.ImageUrl,
                                    Name = achievement.Name,
                                    Description = achievement.Description,
-                                   Game = new SimpleGame
-                                              {
-                                                  Id = game.Id,
-                                                  Name = game.Name,
-                                                  ImageUrl = game.ImageUrl.ToString(),
-                                                  StatsUrl = game.StatsUrl.ToString(),
-                                                  StoreUrl = game.StoreUrl.ToString()
-                                              }
+                                   Game = game
                                }).ToList();
         }
 

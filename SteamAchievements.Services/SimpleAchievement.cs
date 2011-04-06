@@ -52,7 +52,7 @@ namespace SteamAchievements.Services
         /// Gets or sets the game.
         /// </summary>
         /// <value>The game.</value>
-        public SimpleGame Game { get; set; }
+        public Game Game { get; set; }
 
         #region IEquatable<SimpleAchievement> Members
 

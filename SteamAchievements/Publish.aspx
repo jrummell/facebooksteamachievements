@@ -8,6 +8,8 @@
         Publish</h1>
     <form runat="server">
     <asp:HiddenField ID="steamUserIdHidden" runat="server" />
+    <asp:HiddenField ID="publishDescriptionHidden" runat="server" />
+    <asp:HiddenField ID="enableLogHidden" runat="server" />
     <div id="steamIdError" class="fberrorbox message" style="display: none;">
         You haven't set your Steam Community Profile URL. Please set it on the
         <steam:CanvasLink ID="steamIdErrorSettingsLink" runat="server" CanvasPage="Settings.aspx"

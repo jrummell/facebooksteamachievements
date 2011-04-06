@@ -41,23 +41,24 @@ namespace SteamAchievements.Services
                                         new Achievement
                                             {
                                                 Id = 1,
-                                                Description = "Achievement 1",
-                                                GameId = 1,
-                                                Name = "Achievement 1",
-                                                ImageUrl = "example.com/image.jpg"
+                                                Description = "Achievement 1 Description",
+                                                GameId = 220,
+                                                Name = "Achievement 1 Name",
+                                                ImageUrl = "http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_escape_apartmentraid.jpg"
                                             }
                                         }
                                 };
             _users = new Dictionary<long, Data.User>
                          {
                              {
-                                 1,
+                                 1234567890,
                                  new Data.User
                                      {
                                          AccessToken = "",
                                          AutoUpdate = true,
                                          FacebookUserId = 1234567890,
-                                         SteamUserId = "NullReference"
+                                         SteamUserId = "NullReference",
+                                         PublishDescription = true
                                      }
                                  }
                          };
@@ -68,11 +69,13 @@ namespace SteamAchievements.Services
                                             new Data.UserAchievement
                                                 {
                                                     Achievement = _achievements.Values.First(),
-                                                    AchievementId = 1,
-                                                    FacebookUserId = 1,
-                                                    Date = DateTime.Now,
+                                                    AchievementId = _achievements.Keys.First(),
+                                                    FacebookUserId = _users.Keys.First(),
+                                                    Date = DateTime.Now.AddDays(-1),
                                                     Id = 1,
-                                                    User = _users.Values.First()
+                                                    User = _users.Values.First(),
+                                                    Hidden = false,
+                                                    Published = false
                                                 }
                                             }
                                     };

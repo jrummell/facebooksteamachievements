@@ -39,5 +39,12 @@ namespace SteamAchievements.Services
         /// <param name="steamUserId">The steam user id.</param>
         /// <returns></returns>
         ICollection<Game> GetGames(string steamUserId);
+
+        /// <summary>
+        /// Gets the profile.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns></returns>
+        SteamProfile GetProfile(string steamUserId);
     }
 }

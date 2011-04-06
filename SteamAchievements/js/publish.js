@@ -6,7 +6,9 @@ $(document).ready(function ()
 {
     var steamUserId = $("#steamUserIdHidden").val();
     var logSelector = "#log";
-    $achievements.init(steamUserId, logSelector, false);
+    var enableLog = $("#enableLogHidden").val() == "True";
+    var publishDescription = $("#publishDescriptionHidden").val() == "True";
+    $achievements.init(steamUserId, logSelector, enableLog, publishDescription);
 
     var valid = $achievements.validateSteamUserId("#steamIdError");
     if (!valid)

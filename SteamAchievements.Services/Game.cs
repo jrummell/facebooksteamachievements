@@ -41,19 +41,19 @@ namespace SteamAchievements.Services
         /// Gets or sets the image URL.
         /// </summary>
         /// <value>The image URL.</value>
-        public Uri ImageUrl { get; set; }
+        public string ImageUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the stats URL.
         /// </summary>
         /// <value>The stats URL.</value>
-        public Uri StatsUrl { get; set; }
+        public string StatsUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the store URL.
         /// </summary>
         /// <value>The store URL.</value>
-        public Uri StoreUrl { get; set; }
+        public string StoreUrl { get; set; }
 
         /// <summary>
         /// Gets or sets whether the game was played recently.

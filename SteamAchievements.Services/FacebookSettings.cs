@@ -49,5 +49,13 @@ namespace SteamAchievements.Services
         /// The access token.
         /// </value>
         public string AccessToken { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to publish the description.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if publish the description; otherwise, <c>false</c>.
+        /// </value>
+        public bool PublishDescription { get; set; }
     }
 }

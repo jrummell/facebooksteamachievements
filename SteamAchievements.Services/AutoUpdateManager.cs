@@ -148,15 +148,18 @@ namespace SteamAchievements.Services
             // since the api only supports one attachment, use the first achievement's image
             // and build the description from all achievements
             SimpleAchievement firstAchievement = achievements.First();
-            Uri statsUrl = SteamCommunityManager.GetStatsUrl(user.SteamUserId);
+            Uri statsUrl = SteamCommunityManager.GetProfileUrl(user.SteamUserId, false);
             string message = String.Format("{0} earned new achievements", user.SteamUserId);
 
-            IDictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("link", statsUrl.ToString());
-            parameters.Add("message", message);
-            parameters.Add("name", firstAchievement.Name);
-            parameters.Add("picture", firstAchievement.ImageUrl);
-            parameters.Add("description", BuildDescription(achievements));
+            IDictionary<string, object> parameters = 
+                new Dictionary<string, object>
+                    {
+                        {"link", statsUrl.ToString()},
+                        {"message", message},
+                        {"name", firstAchievement.Name},
+                        {"picture", firstAchievement.ImageUrl},
+                        {"description", BuildDescription(achievements, user.PublishDescription)}
+                    };
 
             List<int> publishedAchievements = new List<int>();
             try
@@ -185,8 +188,9 @@ namespace SteamAchievements.Services
         /// Builds the post description
         /// </summary>
         /// <param name="achievements">The achievements.</param>
+        /// <param name="publishDescription">if set to <c>true</c> [publish description].</param>
         /// <returns></returns>
-        private static string BuildDescription(IEnumerable<SimpleAchievement> achievements)
+        private static string BuildDescription(IEnumerable<SimpleAchievement> achievements, bool publishDescription)
         {
             StringBuilder message = new StringBuilder();
 
@@ -201,7 +205,14 @@ namespace SteamAchievements.Services
                     currentGameId = achievement.Game.Id;
                 }
 
-                message.AppendFormat(" {0} ({1}),", achievement.Name, achievement.Description);
+                message.AppendFormat(" {0}", achievement.Name);
+                
+                if (publishDescription)
+                {
+                    message.AppendFormat(" ({0})", achievement.Description);
+                }
+
+                message.Append(",");
             }
 
             // remove the last comma

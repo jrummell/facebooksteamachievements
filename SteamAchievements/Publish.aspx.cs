@@ -29,14 +29,19 @@ namespace SteamAchievements
         {
             base.OnInit(e);
 
-            Load += Page_Load;
+            Load += PageLoad;
+
+#if DEBUG
+            enableLogHidden.Value = true.ToString();
+#endif
         }
 
-        private void Page_Load(object sender, EventArgs e)
+        private void PageLoad(object sender, EventArgs e)
         {
             if (FacebookSettings != null)
             {
                 steamUserIdHidden.Value = FacebookSettings.SteamUserId;
+                publishDescriptionHidden.Value = FacebookSettings.PublishDescription.ToString();
             }
         }
     }
