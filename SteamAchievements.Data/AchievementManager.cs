@@ -206,7 +206,8 @@ namespace SteamAchievements.Data
                                        FacebookUserId = user.FacebookUserId,
                                        SteamUserId = user.SteamUserId,
                                        AccessToken = user.AccessToken,
-                                       AutoUpdate = user.AutoUpdate
+                                       AutoUpdate = user.AutoUpdate,
+                                       PublishDescription = user.PublishDescription
                                    };
 
                 _repository.InsertOnSubmit(newUser);
@@ -220,6 +221,7 @@ namespace SteamAchievements.Data
             existingUser.AccessToken = user.AccessToken;
             existingUser.AutoUpdate = user.AutoUpdate;
             existingUser.SteamUserId = user.SteamUserId;
+            existingUser.PublishDescription = user.PublishDescription;
 
             _repository.SubmitChanges();
         }
