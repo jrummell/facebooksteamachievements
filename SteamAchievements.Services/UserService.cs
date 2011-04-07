@@ -137,7 +137,8 @@ namespace SteamAchievements.Services
                            AccessToken = user.AccessToken,
                            AutoUpdate = user.AutoUpdate,
                            FacebookUserId = user.FacebookUserId,
-                           SteamUserId = user.SteamUserId
+                           SteamUserId = user.SteamUserId,
+                           PublishDescription = user.PublishDescription
                        };
         }
 
@@ -158,7 +159,8 @@ namespace SteamAchievements.Services
                            AccessToken = user.AccessToken,
                            AutoUpdate = user.AutoUpdate,
                            FacebookUserId = user.FacebookUserId,
-                           SteamUserId = user.SteamUserId
+                           SteamUserId = user.SteamUserId,
+                           PublishDescription = user.PublishDescription
                        };
         }
 
