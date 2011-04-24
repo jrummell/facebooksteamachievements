@@ -1,4 +1,4 @@
- #region License
+#region License
 
 // Copyright 2010 John Rummell
 // 
@@ -44,7 +44,8 @@ namespace SteamAchievements.Services
                                                 Description = "Achievement 1 Description",
                                                 GameId = 220,
                                                 Name = "Achievement 1 Name",
-                                                ImageUrl = "http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_escape_apartmentraid.jpg"
+                                                ImageUrl =
+                                                    "http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_escape_apartmentraid.jpg"
                                             }
                                         }
                                 };
@@ -112,7 +113,7 @@ namespace SteamAchievements.Services
 
         public void DeleteAllOnSubmit(IEnumerable<Data.UserAchievement> achievements)
         {
-            foreach (Data.UserAchievement userAchievement in achievements)
+            foreach (Data.UserAchievement userAchievement in achievements.ToArray())
             {
                 _userAchievements.Remove(userAchievement.Id);
             }

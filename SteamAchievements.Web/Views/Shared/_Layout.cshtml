@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/favicon.ico")" rel="icon" type="image/x-icon" />
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/redmond/jquery-ui.css"
+        rel="Stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/style.css")" rel="stylesheet" type="text/css" />
+    @RenderSection("head", false)
+</head>
+<body>
+    <div id="topAdWrapper">
+        @Html.Ad(AdLocation.Top)
+    </div>
+    <div class="fbbody">
+        <script type="text/javascript" src='@Url.Content("~/Scripts/json2.js")'></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery.Validate/1.8/jQuery.Validate.min.js"></script>
+        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.min.js"></script>
+        <script type="text/javascript" src='@Url.Content("~/Scripts/jquery.message.js")'></script>
+        <script type="text/javascript" src='@Url.Content("~/Scripts/columnizer.js")'></script>
+        <script type="text/javascript" src='@Url.Content("~/Scripts/achievements.js")'></script>
+        <div id="fb-root">
+        </div>
+        @Html.Partial("_FacebookInitPartial")
+        <div>
+            <a href="@Url.Action("")">
+                <img src="@Url.Content("~/Content/images/banner-light.png")" alt="Steam Achievements" />
+            </a>
+        </div>
+        <div class="menu">
+            @Html.Partial("_MenuPartial")
+        </div>
+        <div id="body">
+            @RenderBody()
+        </div>
+        <div class="footer">
+            @Html.Disclaimer()
+            <p>
+                Version @Html.Version().</p>
+        </div>
+    </div>
+    <div id="bottomAdWrapper">
+        @Html.Ad(AdLocation.Bottom)
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            $("a.help, button.help, input.help").button({ icons: { primary: "ui-icon-help"} });
+            $("a.button").button();
+        });
+    </script>
+    @Html.UserVoice()
+</body>
+</html>

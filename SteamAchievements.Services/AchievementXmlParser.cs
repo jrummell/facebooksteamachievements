@@ -28,7 +28,7 @@ using System.Xml.Linq;
 
 namespace SteamAchievements.Services
 {
-    public class AchievementXmlParser : IXmlParser<UserAchievement>
+    public class AchievementXmlParser : IAchievementXmlParser
     {
         private readonly TextInfo _textInfo = Thread.CurrentThread.CurrentCulture.TextInfo;
 

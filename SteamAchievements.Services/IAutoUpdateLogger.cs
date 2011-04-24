@@ -20,7 +20,6 @@
 #endregion
 
 using System;
-using System.Web;
 
 namespace SteamAchievements.Services
 {
@@ -42,12 +41,6 @@ namespace SteamAchievements.Services
         /// Flushes the log.
         /// </summary>
         void Flush();
-
-        /// <summary>
-        /// Writes the log to the response.
-        /// </summary>
-        /// <param name="response">The response.</param>
-        void Write(HttpResponse response);
 
         /// <summary>
         /// Deletes all log files older than the given date.

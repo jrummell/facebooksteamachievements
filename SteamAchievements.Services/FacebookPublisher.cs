@@ -41,7 +41,7 @@ namespace SteamAchievements.Services
         {
             FacebookClient app = new FacebookClient(user.AccessToken);
             string userFeedPath = String.Format("/{0}/feed/", user.FacebookUserId);
-            app.Api(userFeedPath, parameters, HttpMethod.Post);
+            app.Post(userFeedPath, parameters);
         }
 
         #endregion

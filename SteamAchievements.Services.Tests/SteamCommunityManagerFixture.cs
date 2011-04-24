@@ -28,12 +28,24 @@ namespace SteamAchievements.Services.Tests
     [TestFixture, Explicit("Requires internet connection")]
     public class SteamCommunityManagerFixture
     {
+        private SteamCommunityManager _manager;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _manager = new SteamCommunityManager(new WebClientWrapper(), new SteamProfileXmlParser(), new GameXmlParser(), new AchievementXmlParser());
+        }
+        
+        [TearDown]
+        public void TearDown()
+        {
+            _manager.Dispose();
+        }
+
         [Test]
         public void GetAchievements()
         {
-            SteamCommunityManager manager = new SteamCommunityManager();
-
-            IEnumerable<UserAchievement> achievements = manager.GetAchievements("nullreference");
+            IEnumerable<UserAchievement> achievements = _manager.GetAchievements("nullreference");
 
             Assert.That(achievements.Any());
             Assert.That(achievements.Any(a => a.Name == "Acid Reflex"));
@@ -42,13 +54,20 @@ namespace SteamAchievements.Services.Tests
         [Test]
         public void GetGames()
         {
-            SteamCommunityManager manager = new SteamCommunityManager();
-
-            IEnumerable<Game> games = manager.GetGames("nullreference");
+            IEnumerable<Game> games = _manager.GetGames("nullreference");
 
             Assert.That(games.Any());
             Assert.That(games.Any(game => game.Name == "Left 4 Dead"));
             Assert.That(games.Any(game => game.Name == "Left 4 Dead 2"));
+        }
+
+        [Test]
+        public void GetProfile()
+        {
+            SteamProfile profile = _manager.GetProfile("nullreference");
+
+            Assert.That(profile, Is.Not.Null);
+            Assert.That(profile.SteamUserId, Is.EqualTo("Null Reference"));
         }
     }
 }

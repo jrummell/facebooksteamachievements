@@ -61,9 +61,12 @@
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
     </Reference>
-    <Reference Include="Facebook, Version=5.0.3.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+    <Reference Include="Facebook, Version=5.0.9.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Facebook.5.0.3\lib\Net40\Facebook.dll</HintPath>
+      <HintPath>..\packages\Facebook.5.0.9.0\lib\net40-client\Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook.Web">
+      <HintPath>..\packages\FacebookWeb.5.0.9.0\lib\net40\Facebook.Web.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation">
@@ -114,11 +117,15 @@
     <Compile Include="ContainerManager.cs" />
     <Compile Include="DuplicateSteamUserException.cs" />
     <Compile Include="FacebookPublisher.cs" />
-    <Compile Include="FacebookSettings.cs" />
+    <Compile Include="IAchievementXmlParser.cs" />
     <Compile Include="IAutoUpdateLogger.cs" />
+    <Compile Include="IAutoUpdateManager.cs" />
     <Compile Include="IFacebookPublisher.cs" />
+    <Compile Include="IGameXmlParser.cs" />
     <Compile Include="ISteamCommunityManager.cs" />
+    <Compile Include="ISteamProfileXmlParser.cs" />
     <Compile Include="IUserService.cs" />
+    <Compile Include="IWebClientWrapper.cs" />
     <Compile Include="MockSteamRepository.cs" />
     <Compile Include="SteamProfile.cs" />
     <Compile Include="SteamProfileXmlParser.cs" />
@@ -138,6 +145,7 @@
     <Compile Include="SimpleAchievement.cs" />
     <Compile Include="SteamCommunityManager.cs" />
     <Compile Include="UserService.cs" />
+    <Compile Include="WebClientWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

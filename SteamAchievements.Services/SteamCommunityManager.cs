@@ -22,7 +22,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Xml;
 using Elmah;
@@ -31,10 +30,19 @@ namespace SteamAchievements.Services
 {
     public class SteamCommunityManager : ISteamCommunityManager
     {
-        private readonly AchievementXmlParser _achievementParser = new AchievementXmlParser();
-        private readonly SteamProfileXmlParser _profileParser = new SteamProfileXmlParser();
-        private readonly GameXmlParser _gamesParser = new GameXmlParser();
-        private readonly WebClient _webClient = new WebClient();
+        private readonly IAchievementXmlParser _achievementParser;
+        private readonly IGameXmlParser _gamesParser;
+        private readonly ISteamProfileXmlParser _profileParser;
+        private readonly IWebClientWrapper _webClient;
+
+        public SteamCommunityManager(IWebClientWrapper webClient, ISteamProfileXmlParser profileParser,
+                                     IGameXmlParser gamesParser, IAchievementXmlParser achievementParser)
+        {
+            _webClient = webClient;
+            _achievementParser = achievementParser;
+            _gamesParser = gamesParser;
+            _profileParser = profileParser;
+        }
 
         #region ISteamCommunityManager Members
 
@@ -60,6 +68,11 @@ namespace SteamAchievements.Services
 
             string xml = _webClient.DownloadString(GetProfileUrl(steamUserId, true));
 
+            if (xml == null)
+            {
+                return null;
+            }
+
             return _profileParser.Parse(xml).SingleOrDefault();
         }
 
@@ -80,9 +93,14 @@ namespace SteamAchievements.Services
             IEnumerable<Game> games = GetGames(steamUserId);
             foreach (Game game in games.Where(g => g.PlayedRecently))
             {
-                string xmlStatsUrl = game.StatsUrl + "/?xml=1";
+                Uri xmlStatsUrl = new Uri(game.StatsUrl + "/?xml=1", UriKind.Absolute);
 
                 string xml = _webClient.DownloadString(xmlStatsUrl);
+
+                if (xml == null)
+                {
+                    continue;
+                }
 
                 IEnumerable<UserAchievement> gameAchievements;
                 try
@@ -137,6 +155,11 @@ namespace SteamAchievements.Services
             Uri gamesUrl = GetGamesUrl(steamUserId, true);
 
             string xml = _webClient.DownloadString(gamesUrl);
+
+            if (xml == null)
+            {
+                return new Game[0];
+            }
 
             return _gamesParser.Parse(xml);
         }
