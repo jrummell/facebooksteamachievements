@@ -115,7 +115,7 @@ namespace SteamAchievements.Services.Tests
         /// <param name="steamUserId">The steam user id.</param>
         private static void SerializeAchievements(string steamUserId)
         {
-            SteamCommunityManager manager = new SteamCommunityManager();
+            SteamCommunityManager manager = new SteamCommunityManager(new WebClientWrapper(), new SteamProfileXmlParser(), new GameXmlParser(), new AchievementXmlParser());
             List<UserAchievement> achievements = manager.GetAchievements(steamUserId).ToList();
 
             FileInfo dll = new FileInfo("SteamAchievements.Services.Tests");

@@ -1,0 +1,50 @@
+﻿@model SteamAchievements.Web.Models.SettingsViewModel
+@{
+    ViewBag.Title = "Publish";
+}
+<h1>
+    Publish</h1>
+@Html.Hidden("steamUserIdHidden", Model.SteamUserId)
+@Html.Hidden("publishDescriptionHidden", Model.PublishDescription)
+@Html.Hidden("enableLogHidden", (bool)ViewBag.EnableLog)
+<div id="steamIdError" style="display: none;">
+    You haven't set your Steam Community Profile URL. Please set it on the
+    @Html.ActionLink("settings", "Settings")
+    page.
+    @Html.HelpLink("Help", "Configure_your_Steam_Community_Profile")
+</div>
+<div id="achievementsUpdateFailure" style="display: none;">
+    Your achievements could not be updated. Please verify that your Custom Url is correct
+    and that your Steam Community Profile is public.
+    @Html.HelpLink("Help", "Configure_your_Steam_Community_Profile")
+</div>
+<fieldset>
+    <legend>Unpublished Achievements</legend>
+    <p>
+        Click an achievement icon to select it. You can select up to five at a time. If
+        you don't see the publish dialog after clicking Publish, scroll down. If you hide
+        an achievement, you will no longer see it on this page and it can not be published.</p>
+    <p id="buttons" class="hidden">
+        <a id="publishSelectedButton" class="button" href="#">Publish</a> <a id="hideSelectedButton"
+            class="button" href="#">Hide</a>
+    </p>
+    <div id="noUnpublishedMessage" style="display: none;">
+        You have no unpublished achievements.</div>
+    <img id="newAchievementsLoading" class="loading" src="@Url.Content("~/Content/images/ajax-loader.gif")" alt="Getting unpublished achievements..." />
+    <div id="newAchievements" class="unpublished">
+    </div>
+    <script id="achievementTemplate" type="text/x-jquery-tmpl">
+        <li class="achievement">
+            <input type="checkbox" value="${Id}" class="hidden" />
+            <img class="left" src="${ImageUrl}" alt="${Name}" />
+            <div class="text">
+                <h3>${Game.Name}</h3>
+                <div class="name">${Name}</div>
+                <div class="description">${Description}</div>
+            </div>
+        </li>
+    </script>
+</fieldset>
+<div id="log">
+</div>
+<script type="text/javascript" src="@Url.Content("~/Scripts/publish.js")"></script>

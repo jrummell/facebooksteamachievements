@@ -129,7 +129,8 @@ namespace SteamAchievements.Data.Tests
             _manager.AddAchievements(99, gameAchievements);
 
             _repositoryMock.VerifyGet(rep => rep.Achievements);
-            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<Achievement>()), Times.Exactly(gameAchievements.Count));
+            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<Achievement>()),
+                                   Times.Exactly(gameAchievements.Count));
             _repositoryMock.Verify(rep => rep.SubmitChanges());
 
             List<Achievement> expectedAchievements = new List<Achievement>(_achievements);
@@ -254,7 +255,8 @@ namespace SteamAchievements.Data.Tests
 
             _manager.InsertMissingAchievements(missingAchievements);
 
-            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<Achievement>()), Times.Exactly(missingAchievements.Length));
+            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<Achievement>()),
+                                   Times.Exactly(missingAchievements.Length));
             _repositoryMock.Verify(rep => rep.SubmitChanges());
         }
 
@@ -437,7 +439,7 @@ namespace SteamAchievements.Data.Tests
             const string steamUserId = "userxxx";
             const int facebookUserId = 1;
 
-            User user = new User { SteamUserId = steamUserId, FacebookUserId = facebookUserId };
+            User user = new User {SteamUserId = steamUserId, FacebookUserId = facebookUserId};
             _manager.UpdateUser(user);
 
             _repositoryMock.VerifyGet(rep => rep.Users, Times.Exactly(2));

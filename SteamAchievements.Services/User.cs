@@ -19,9 +19,11 @@
 
 #endregion
 
+using System;
+
 namespace SteamAchievements.Services
 {
-    public class User
+    public class User : IEquatable<User>
     {
         /// <summary>
         /// Gets or sets the access token.
@@ -62,5 +64,47 @@ namespace SteamAchievements.Services
         /// The steam user id.
         /// </value>
         public string SteamUserId { get; set; }
+
+        #region IEquatable<User> Members
+
+        public bool Equals(User other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+            return other.FacebookUserId == FacebookUserId && Equals(other.SteamUserId, SteamUserId);
+        }
+
+        #endregion
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            if (obj.GetType() != typeof (User))
+            {
+                return false;
+            }
+            return Equals((User) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (FacebookUserId.GetHashCode()*397) ^ (SteamUserId != null ? SteamUserId.GetHashCode() : 0);
+            }
+        }
     }
 }

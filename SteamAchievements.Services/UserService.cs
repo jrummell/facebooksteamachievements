@@ -156,7 +156,7 @@ namespace SteamAchievements.Services
 
             return new Data.User
                        {
-                           AccessToken = user.AccessToken,
+                           AccessToken = user.AccessToken ?? String.Empty,
                            AutoUpdate = user.AutoUpdate,
                            FacebookUserId = user.FacebookUserId,
                            SteamUserId = user.SteamUserId,

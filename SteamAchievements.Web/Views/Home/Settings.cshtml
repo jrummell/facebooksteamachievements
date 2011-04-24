@@ -1,0 +1,72 @@
+﻿@model SteamAchievements.Web.Models.SettingsViewModel
+@{
+    ViewBag.Title = "Settings";
+}
+<h1>
+    Settings</h1>
+<div id="saveSuccess" style="display: none;">
+    Your settings have been saved successfully.</div>
+<div id="duplicateError" style="display: none;">
+    This Steam Community URL is already in use.</div>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary()
+    <fieldset>
+        <legend>Steam Community Custom URL</legend>
+        <div>
+            <p>
+                http://steamcommunity.com/id/
+                @Html.TextBoxFor(model => model.SteamUserId, new { maxlength = 50 })
+                @Html.HelpLink("Help", "Configure_your_Steam_Community_Profile")
+                @Html.ValidationMessageFor(model => model.SteamUserId)
+            </p>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Publish Options</legend>
+        <div>
+            @Html.CheckBoxFor(model => model.AutoUpdate)
+            @Html.LabelFor(model => model.AutoUpdate, "Update and publish my achievements automatically.")
+        </div>
+        <div>
+            @Html.CheckBoxFor(model => model.PublishDescription)
+            @Html.LabelFor(model => model.PublishDescription, "Include achievement descriptions when publishing.")
+        </div>
+    </fieldset>
+    <p>
+        <button type="submit" class="save">Save</button>
+        <img id="saveImage" class="loading" src="@Url.Content("~/Content/images/ajax-loader.gif")" alt="Saving..."
+            style="display: none" />
+    </p>
+}
+<script type="text/javascript">
+    $(document).ready(function ()
+    {
+        var steamUserId = $("#SteamUserId").val();
+        $achievements.init(steamUserId);
+
+        $("button.save").button({ icons: { primary: "ui-icon-disk"} })
+                       .click(function ()
+                       {
+                           $("#saveImage").show();
+                       });
+    });
+</script>
+@if (ViewBag.SaveSuccess)
+{
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            $("#saveSuccess").message({ type: "info" });
+        });
+    </script>
+}
+@if (ViewBag.DuplicateError)
+{
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            $("#duplicateError").message({ type: "info" });
+        });
+    </script>
+}

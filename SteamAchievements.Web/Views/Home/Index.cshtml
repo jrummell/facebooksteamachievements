@@ -1,0 +1,62 @@
+﻿@model SteamAchievements.Web.Models.SettingsViewModel
+@{
+    ViewBag.Title = "Home";
+}
+@section head
+{
+    <style type="text/css">
+        #steamUserIdHeading
+        {
+            font-size: 200%;
+        }
+        #profileImage
+        {
+            width: 69px;
+            height: 69px;
+            padding: 0 5px 5px 0;
+        }
+    </style>
+}
+@Html.Hidden("steamUserIdHidden", Model.SteamUserId)
+<div id="steamIdError" style="display: none;">
+    You haven't set your Steam Community Profile URL. Please set it on the
+    @Html.ActionLink("settings", "Settings")
+    page.
+    @Html.HelpLink("Help", "Configure_your_Steam_Community_Profile")
+</div>
+<div id="heading" class="hidden">
+    <img id="profileImage" src="" align="left" />
+    <h1>
+        <span id="steamUserIdHeading"></span>
+    </h1>
+    <span id="headlineLabel"></span>
+    <br class="clear" />
+</div>
+<div id="publishPageMessage">
+    Use the
+    @Html.ActionLink("publish", "Publish")
+    page to update and publish new achievements to your profile.
+</div>
+<fieldset>
+    <legend>Games</legend>
+    <div>
+        <p>
+            Your games. This list includes all Steam games that you own (including some free
+            Source Mods) that support achievements.
+            @Html.HelpLink("Help", "Supported_Games")
+        </p>
+        <img id="loadingGames" class="loading" src="@Url.Content("~/Content/images/ajax-loader.gif")" alt="Loading..." />
+    </div>
+    <div id="gamesDiv" class="games">
+    </div>
+    <script id="gamesTemplate" type="text/x-jquery-tmpl">
+        <li class="game">
+            <a target="_blank" href="${StoreUrl}"><img src="${ImageUrl}" alt="${Name}" title="${Name}" /></a><br />
+            <a target="_blank" href="${StatsUrl}?tab=achievements">View Achievements</a>
+        </li>
+    </script>
+</fieldset>
+<div id="log" style="display: none;">
+    <span id="errorLiteral"></span>
+</div>
+<script type="text/javascript" src="@Url.Content("~/Scripts/default.js")"></script>

@@ -26,7 +26,7 @@ using System.Xml.Linq;
 
 namespace SteamAchievements.Services
 {
-    public class GameXmlParser : IXmlParser<Game>
+    public class GameXmlParser : IGameXmlParser
     {
         #region IXmlParser<Game> Members
 

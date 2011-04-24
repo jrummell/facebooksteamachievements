@@ -25,7 +25,7 @@ using System.Xml.Linq;
 
 namespace SteamAchievements.Services
 {
-    public class SteamProfileXmlParser : IXmlParser<SteamProfile>
+    public class SteamProfileXmlParser : ISteamProfileXmlParser
     {
         #region IXmlParser<SteamProfile> Members
 

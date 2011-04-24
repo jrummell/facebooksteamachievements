@@ -1,0 +1,273 @@
+﻿/******************
+    Element styles
+******************/
+
+body
+{
+    padding: 0px;
+    margin: 0px;
+}
+
+img
+{
+    border-style: none;
+}
+
+p
+{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+fieldset
+{
+    margin: 5px 1px 5px 0px;
+    padding: 5px 5px 5px 5px;
+}
+
+/****************** 
+    Facebook styles 
+    http://devtacular.com/articles/bkonrad/how-to-style-an-application-like-facebook/ 
+******************/
+
+h1, h2, h3, h4, h5, legend
+{
+    font-size: 13px;
+    color: #333;
+    margin: 0px;
+    padding: 0px;
+}
+h1
+{
+    font-size: 14px;
+}
+h4, h5
+{
+    font-size: 11px;
+}
+
+.fbbody
+{
+    width: 710px;
+    padding-left: 28px;
+}
+
+/* Default Facebook CSS */
+.fbbody, .fbbody input
+{
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    font-size: 11px;
+    color: #333333;
+}
+/* Default Anchor Style */
+.fbbody a
+{
+    color: #3b5998;
+    outline-style: none;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: bold;
+}
+.fbbody a:hover
+{
+    text-decoration: underline;
+}
+/****************** 
+    Facebook Box Styles 
+******************/
+.fbgreybox
+{
+    background-color: #f7f7f7;
+    border: 1px solid #cccccc;
+    color: #333333;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+.fbbluebox
+{
+    background-color: #eceff6;
+    border: 1px solid #d4dae8;
+    color: #333333;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+.fbinfobox
+{
+    background-color: #fff9d7;
+    border: 1px solid #e2c822;
+    color: #333333;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+.fberrorbox
+{
+    background-color: #ffebe8;
+    border: 1px solid #dd3c10;
+    color: #333333;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+/* Content Divider on White Background */
+.fbcontentdivider
+{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 520px;
+    height: 1px;
+    background-color: #d8dfea;
+}
+/* Facebook Tab Style */
+.fbtab
+{
+    padding: 8px;
+    background-color: #d8dfea;
+    color: #3b5998;
+    font-weight: bold;
+    float: left;
+    margin-right: 4px;
+    text-decoration: none;
+}
+.fbtab:hover
+{
+    background-color: #3b5998;
+    color: #ffffff;
+    cursor: hand;
+}
+
+/****************** 
+    general styles 
+******************/
+.hidden
+{
+    display: none;
+}
+
+.left
+{
+    float: left;
+}
+
+.right
+{
+    float: right;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.message-dismiss
+{
+    font-weight: normal;
+    color: #999;
+}
+
+.menu
+{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.footer
+{
+    color: #999; 
+    margin-top: 1em;
+}
+
+div.form label
+{
+    display: block;
+}
+
+/****************** 
+    default.aspx styles 
+******************/
+#gamesDiv ul
+{
+    padding-left: 1em;
+}
+.game
+{
+    padding: 5px;
+    margin: 0px;
+    list-style-type: none;
+}
+
+.game img 
+{
+    display: inline-block;
+    width: 184px;
+    height: 69px;
+    margin: 0px;
+    padding: 0px;
+}
+
+/****************** 
+    publish.aspx styles 
+******************/
+#newAchievements ul
+{
+    padding-left: 1em;
+}
+li.achievement
+{
+    list-style-type: none;
+}
+.unpublished .achievement
+{
+    height: 74px;
+    padding: 0px;
+    margin: 5px;
+    border: 1px solid #fff;
+}
+.unpublished .selected
+{
+    background-color: #fff9d7;
+    border: 1px solid #e2c822;
+}
+.unpublished .achievement input
+{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.unpublished .achievement img
+{
+    vertical-align: middle;
+    width: 64px;
+    height: 64px;
+    margin: 5px;
+}
+.unpublished .achievement .text
+{
+    margin: 5px;
+}
+.unpublished .achievement .name
+{
+    font-weight: bold;
+}
+.unpublished .achievement .description
+{
+    
+}
+
+/* publish dialog anchor hack */
+#middleAnchor
+{
+    position: absolute;
+    display: block;
+    text-decoration: none;
+    color: #fff;
+}
+
+/****************** 
+    validation 
+******************/
+.field-validation-error, .validation-summary-errors
+{
+    color: Red;
+}

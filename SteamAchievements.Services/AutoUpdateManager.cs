@@ -27,7 +27,7 @@ using Facebook;
 
 namespace SteamAchievements.Services
 {
-    public class AutoUpdateManager : IDisposable
+    public class AutoUpdateManager : IAutoUpdateManager
     {
         private readonly StringBuilder _achievementManagerLog = new StringBuilder();
         private readonly IAchievementService _achievementService;
@@ -71,7 +71,7 @@ namespace SteamAchievements.Services
             _log = log;
         }
 
-        #region IDisposable Members
+        #region IAutoUpdateManager Members
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -81,8 +81,6 @@ namespace SteamAchievements.Services
             GC.SuppressFinalize(this);
             Dispose(true);
         }
-
-        #endregion
 
         /// <summary>
         /// Gets the auto update steam user ids.
@@ -151,7 +149,7 @@ namespace SteamAchievements.Services
             Uri statsUrl = SteamCommunityManager.GetProfileUrl(user.SteamUserId, false);
             string message = String.Format("{0} earned new achievements", user.SteamUserId);
 
-            IDictionary<string, object> parameters = 
+            IDictionary<string, object> parameters =
                 new Dictionary<string, object>
                     {
                         {"link", statsUrl.ToString()},
@@ -184,6 +182,8 @@ namespace SteamAchievements.Services
             return;
         }
 
+        #endregion
+
         /// <summary>
         /// Builds the post description
         /// </summary>
@@ -206,7 +206,7 @@ namespace SteamAchievements.Services
                 }
 
                 message.AppendFormat(" {0}", achievement.Name);
-                
+
                 if (publishDescription)
                 {
                     message.AppendFormat(" ({0})", achievement.Description);

@@ -23,6 +23,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Web;
+using Microsoft.Practices.Unity;
 
 namespace SteamAchievements.Services
 {
@@ -30,8 +31,19 @@ namespace SteamAchievements.Services
     {
         private static readonly object _logLock = new object();
         private readonly StringBuilder _log = new StringBuilder();
-        private readonly string _logFilePath;
         private readonly string _logPath;
+        private string _logFilePath;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AutoUpdateLogger"/> class.
+        /// </summary>
+        [InjectionConstructor]
+        public AutoUpdateLogger()
+        {
+            _logPath = HttpContext.Current.Server.MapPath("~/App_Data/AutoUpdate");
+
+            Init();
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoUpdateLogger"/> class.
@@ -41,9 +53,7 @@ namespace SteamAchievements.Services
         {
             _logPath = logPath;
 
-            DateTime now = DateTime.UtcNow;
-            string logFileName = String.Format("{0}-{1}-{2}.log", now.Year, now.Month, now.Day);
-            _logFilePath = Path.Combine(_logPath, logFileName);
+            Init();
         }
 
         #region IAutoUpdateLogger Members
@@ -88,15 +98,6 @@ namespace SteamAchievements.Services
         }
 
         /// <summary>
-        /// Writes the log to the response.
-        /// </summary>
-        /// <param name="response"></param>
-        public void Write(HttpResponse response)
-        {
-            response.Write(_log.ToString());
-        }
-
-        /// <summary>
         /// Deletes all log files older than the given date.
         /// </summary>
         /// <param name="date">The oldest date to keep.</param>
@@ -122,5 +123,12 @@ namespace SteamAchievements.Services
         }
 
         #endregion
+
+        private void Init()
+        {
+            DateTime now = DateTime.UtcNow;
+            string logFileName = String.Format("{0}-{1}-{2}.log", now.Year, now.Month, now.Day);
+            _logFilePath = Path.Combine(_logPath, logFileName);
+        }
     }
 }
