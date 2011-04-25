@@ -61,10 +61,10 @@ namespace SteamAchievements.Services.Tests
             string[] users = new[] {"user1", "user2"};
             _userServiceMock.ExpectAndReturn("GetAutoUpdateUsers", users);
 
-            string userIds = _manager.GetAutoUpdateUsers();
+            ICollection<string> userIds = _manager.GetAutoUpdateUsers();
 
             Assert.That(userIds, Is.Not.Null.Or.Empty);
-            Assert.That(userIds, Is.EquivalentTo("user1;user2"));
+            Assert.That(String.Join(", ", userIds), Is.EquivalentTo("user1, user2"));
 
             _userServiceMock.Verify();
         }

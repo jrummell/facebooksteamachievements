@@ -48,10 +48,7 @@ namespace SteamAchievements.Web.Bootstrapping
             container.RegisterType<IWebClientWrapper, WebClientWrapper>();
 
             container.RegisterType<IAchievementManager, AchievementManager>();
-            container.RegisterType<IFacebookPublisher, FacebookPublisher>();
             container.RegisterType<IAchievementService, AchievementService>();
-            container.RegisterType<IAutoUpdateLogger, AutoUpdateLogger>();
-            container.RegisterType<IAutoUpdateManager, AutoUpdateManager>();
             container.RegisterType<ISteamCommunityManager, SteamCommunityManager>();
             container.RegisterType<IUserService, UserService>();
         }

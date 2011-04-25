@@ -25,7 +25,8 @@ using NUnit.Framework;
 
 namespace SteamAchievements.Services.Tests
 {
-    [TestFixture, Explicit("Requires internet connection")]
+    [TestFixture]
+    //[Explicit("Requires internet connection")]
     public class SteamCommunityManagerFixture
     {
         private SteamCommunityManager _manager;
@@ -42,7 +43,7 @@ namespace SteamAchievements.Services.Tests
             _manager.Dispose();
         }
 
-        [Test]
+        [Test, Explicit("Depends on recent game play")]
         public void GetAchievements()
         {
             IEnumerable<UserAchievement> achievements = _manager.GetAchievements("nullreference");

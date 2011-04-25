@@ -29,7 +29,6 @@ namespace SteamAchievements.Services
 {
     public class AutoUpdateManager : IAutoUpdateManager
     {
-        private readonly StringBuilder _achievementManagerLog = new StringBuilder();
         private readonly IAchievementService _achievementService;
         private readonly IAutoUpdateLogger _log;
         private readonly IFacebookPublisher _publisher;
@@ -85,12 +84,12 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Gets the auto update steam user ids.
         /// </summary>
-        public string GetAutoUpdateUsers()
+        public ICollection<string> GetAutoUpdateUsers()
         {
             // get users configured for auto update
             IEnumerable<string> steamUserIds = _userService.GetAutoUpdateUsers();
 
-            return String.Join(";", steamUserIds);
+            return steamUserIds.ToArray();
         }
 
         /// <summary>
@@ -231,8 +230,7 @@ namespace SteamAchievements.Services
             {
                 if (disposing)
                 {
-                    _log.Log("SQL:");
-                    _log.Log(_achievementManagerLog.ToString());
+                    _log.Flush();
 
                     _userService.Dispose();
                     _achievementService.Dispose();
