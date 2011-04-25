@@ -20,6 +20,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 
 namespace SteamAchievements.Services
 {
@@ -28,7 +29,7 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Gets the auto update steam user ids.
         /// </summary>
-        string GetAutoUpdateUsers();
+        ICollection<string> GetAutoUpdateUsers();
 
         /// <summary>
         /// Publishes the user's achievements.

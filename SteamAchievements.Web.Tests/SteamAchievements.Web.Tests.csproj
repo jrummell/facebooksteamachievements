@@ -68,7 +68,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminControllerFixture.cs" />
     <Compile Include="FakeControllerContext.cs" />
     <Compile Include="ModelMapCreatorFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
