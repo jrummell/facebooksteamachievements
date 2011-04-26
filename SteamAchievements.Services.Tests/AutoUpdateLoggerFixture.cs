@@ -32,11 +32,15 @@ namespace SteamAchievements.Services.Tests
         public void Delete()
         {
             AutoUpdateLogger log = new AutoUpdateLogger("log");
+
+            string[] files = Directory.GetFiles("log");
+            Assert.That(files.Length, Is.EqualTo(3));
+
             log.Delete(new DateTime(2011, 1, 2));
 
-            // make sure the file named 2011-1-1.log was deleted and 2011-1-2.log remains.
-            string[] files = Directory.GetFiles("log");
-            Assert.That(files.Length, Is.EqualTo(1));
+            // make sure the file named 2011-1-1.log was deleted and 2011-1-2.log and the current date remain.
+            files = Directory.GetFiles("log");
+            Assert.That(files.Length, Is.EqualTo(2));
             Assert.That(Path.GetFileName(files[0]), Is.EqualTo("2011-1-2.log"));
         }
     }
