@@ -32,7 +32,7 @@ namespace SteamAchievements.Services
         /// Gets the auto update users.
         /// </summary>
         [OperationContract]
-        IEnumerable<string> GetAutoUpdateUsers();
+        ICollection<string> GetAutoUpdateUsers();
 
         /// <summary>
         /// Gets the user.
