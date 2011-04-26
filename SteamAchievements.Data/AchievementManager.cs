@@ -89,7 +89,7 @@ namespace SteamAchievements.Data
         public ICollection<User> GetAutoUpdateUsers()
         {
             return (from user in _repository.Users
-                    where user.AutoUpdate
+                    where user.AutoUpdate && user.AccessToken != null && user.AccessToken.Length > 0
                     orderby user.SteamUserId
                     select user).ToList();
         }

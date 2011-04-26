@@ -28,6 +28,7 @@ namespace SteamAchievements.Web.Models
         public FacebookContextSettings()
         {
             FacebookWebContext context = FacebookWebContext.Current;
+            AccessToken = context.AccessToken;
             AppId = context.Settings.AppId;
             UserId = context.UserId;
         }

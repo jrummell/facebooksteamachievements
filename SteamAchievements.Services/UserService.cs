@@ -104,9 +104,9 @@ namespace SteamAchievements.Services
         /// Gets the auto update users.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<string> GetAutoUpdateUsers()
+        public ICollection<string> GetAutoUpdateUsers()
         {
-            return _manager.GetAutoUpdateUsers().Select(user => user.SteamUserId);
+            return _manager.GetAutoUpdateUsers().Select(user => user.SteamUserId).ToArray();
         }
 
         /// <summary>
