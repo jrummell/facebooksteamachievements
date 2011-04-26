@@ -22,6 +22,7 @@
 using System;
 using System.Web.Mvc;
 using AutoMapper;
+using Elmah;
 using SteamAchievements.Services;
 using SteamAchievements.Web.Models;
 
@@ -106,7 +107,15 @@ namespace SteamAchievements.Web.Controllers
 
             if (newUser)
             {
-                _achievementService.UpdateNewUserAchievements(user);
+                try
+                {
+                    _achievementService.UpdateNewUserAchievements(user);
+                }
+                catch (Exception ex)
+                {
+                    // log and swallow exceptions so that the settings can be saved
+                    ErrorSignal.FromCurrentContext().Raise(ex);
+                }
             }
 
             ViewBag.SaveSuccess = true;

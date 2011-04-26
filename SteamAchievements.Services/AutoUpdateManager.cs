@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 using Facebook;
 
 namespace SteamAchievements.Services
@@ -82,14 +83,25 @@ namespace SteamAchievements.Services
         }
 
         /// <summary>
+        /// Gets the logger.
+        /// </summary>
+        public IAutoUpdateLogger Logger
+        {
+            get { return _log; }
+        }
+
+        /// <summary>
         /// Gets the auto update steam user ids.
         /// </summary>
         public ICollection<string> GetAutoUpdateUsers()
         {
             // get users configured for auto update
             IEnumerable<string> steamUserIds = _userService.GetAutoUpdateUsers();
+            string[] users = steamUserIds.ToArray();
 
-            return steamUserIds.ToArray();
+            _log.Log("Users: {0}", String.Join(", ", users));
+
+            return users;
         }
 
         /// <summary>
@@ -106,7 +118,7 @@ namespace SteamAchievements.Services
                 return;
             }
 
-            _log.Log("User " + user.SteamUserId + " (" + user.FacebookUserId + ")");
+            _log.Log(String.Format("User {0} ({1})", user.SteamUserId, user.FacebookUserId));
 
             if (String.IsNullOrEmpty(user.AccessToken))
             {
@@ -116,14 +128,24 @@ namespace SteamAchievements.Services
                 return;
             }
 
-            // update the user's achievements
-            int updated = _achievementService.UpdateAchievements(user.SteamUserId);
-
-            if (updated == 0)
+            try
             {
-                _log.Log("No updated achievements");
+                // update the user's achievements
+                int updated = _achievementService.UpdateAchievements(user.SteamUserId);
 
-                return;
+                if (updated == 0)
+                {
+                    _log.Log("No updated achievements");
+
+                    return;
+                }
+            }
+            catch (XmlException exception)
+            {
+                _log.Log("Invalid xml for " + user.SteamUserId);
+                _log.Log(exception);
+
+                throw;
             }
 
             // get unpublished achievements earned in the last 24-48 hours to make up for time zone differences 

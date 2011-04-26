@@ -20,10 +20,11 @@
 #endregion
 
 using System;
+using System.IO;
 
 namespace SteamAchievements.Services
 {
-    public interface IAutoUpdateLogger
+    public interface IAutoUpdateLogger : IDisposable
     {
         /// <summary>
         /// Logs the specified message.
@@ -38,6 +39,13 @@ namespace SteamAchievements.Services
         void Log(Exception exception);
 
         /// <summary>
+        /// Logs the specified format.
+        /// </summary>
+        /// <param name="format">The format.</param>
+        /// <param name="args">The args.</param>
+        void Log(string format, params object[] args);
+
+        /// <summary>
         /// Flushes the log.
         /// </summary>
         void Flush();
@@ -47,5 +55,11 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="date">The oldest date to keep.</param>
         void Delete(DateTime date);
+
+        /// <summary>
+        /// Attaches the specified writer.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
+        void Attach(TextWriter writer);
     }
 }

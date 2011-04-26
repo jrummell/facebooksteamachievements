@@ -21,8 +21,6 @@
 
 using System;
 using System.Net;
-using System.Web;
-using Elmah;
 
 namespace SteamAchievements.Services
 {
@@ -40,19 +38,8 @@ namespace SteamAchievements.Services
             }
             catch (Exception ex)
             {
-                HttpContext context = HttpContext.Current;
-                if (context != null)
-                {
-                    ErrorSignal signal = ErrorSignal.FromContext(context);
-                    if (signal != null)
-                    {
-                        string message = "Could not access url: " + url;
-                        Exception exception = new InvalidOperationException(message, ex);
-                        signal.Raise(exception);
-                    }
-                }
-
-                return null;
+                string message = "Could not access url: " + url;
+                throw new InvalidOperationException(message, ex);
             }
         }
 
@@ -64,7 +51,7 @@ namespace SteamAchievements.Services
 
         #endregion
 
-        protected void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (disposing)
             {

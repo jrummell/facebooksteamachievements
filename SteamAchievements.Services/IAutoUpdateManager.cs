@@ -27,6 +27,11 @@ namespace SteamAchievements.Services
     public interface IAutoUpdateManager : IDisposable
     {
         /// <summary>
+        /// Gets the logger.
+        /// </summary>
+        IAutoUpdateLogger Logger { get; }
+
+        /// <summary>
         /// Gets the auto update steam user ids.
         /// </summary>
         ICollection<string> GetAutoUpdateUsers();
