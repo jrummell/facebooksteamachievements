@@ -20,30 +20,17 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Web;
-using Microsoft.Practices.Unity;
 
 namespace SteamAchievements.Services
 {
     public class AutoUpdateLogger : IAutoUpdateLogger
     {
         private static readonly object _logLock = new object();
-        private readonly StringBuilder _log = new StringBuilder();
         private readonly string _logPath;
+        private readonly List<TextWriter> _textWriters = new List<TextWriter>();
         private string _logFilePath;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AutoUpdateLogger"/> class.
-        /// </summary>
-        [InjectionConstructor]
-        public AutoUpdateLogger()
-        {
-            _logPath = HttpContext.Current.Server.MapPath("~/App_Data/AutoUpdate");
-
-            Init();
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoUpdateLogger"/> class.
@@ -53,7 +40,7 @@ namespace SteamAchievements.Services
         {
             _logPath = logPath;
 
-            Init();
+            InitDefaultWriter();
         }
 
         #region IAutoUpdateLogger Members
@@ -64,7 +51,22 @@ namespace SteamAchievements.Services
         /// <param name="message">The message.</param>
         public void Log(string message)
         {
-            _log.AppendFormat("{0} {1}{2}", DateTime.UtcNow, message, Environment.NewLine);
+            string formattedMessage = String.Format("{0} {1}", DateTime.UtcNow, message);
+
+            foreach (TextWriter writer in _textWriters)
+            {
+                writer.WriteLine(formattedMessage);
+            }
+        }
+
+        /// <summary>
+        /// Logs the specified format.
+        /// </summary>
+        /// <param name="format">The format.</param>
+        /// <param name="args">The args.</param>
+        public void Log(string format, params object[] args)
+        {
+            Log(String.Format(format, args));
         }
 
         /// <summary>
@@ -92,8 +94,10 @@ namespace SteamAchievements.Services
         {
             lock (_logLock)
             {
-                File.AppendAllText(_logFilePath, _log.ToString());
-                _log.Clear();
+                foreach (TextWriter writer in _textWriters)
+                {
+                    writer.Flush();
+                }
             }
         }
 
@@ -122,13 +126,50 @@ namespace SteamAchievements.Services
             }
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+            Dispose(true);
+        }
+
+        /// <summary>
+        /// Attaches the specified writer.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
+        public void Attach(TextWriter writer)
+        {
+            _textWriters.Add(writer);
+        }
+
         #endregion
 
-        private void Init()
+        private void InitDefaultWriter()
         {
             DateTime now = DateTime.UtcNow;
             string logFileName = String.Format("{0}-{1}-{2}.log", now.Year, now.Month, now.Day);
             _logFilePath = Path.Combine(_logPath, logFileName);
+
+            StreamWriter writer = new StreamWriter(_logFilePath, true);
+            Attach(writer);
+        }
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                foreach (TextWriter writer in _textWriters)
+                {
+                    writer.Flush();
+                    writer.Dispose();
+                }
+            }
         }
     }
 }
