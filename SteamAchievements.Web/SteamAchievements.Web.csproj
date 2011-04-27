@@ -192,6 +192,7 @@
     <Content Include="Scripts\jquery.message.js" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\publish.js" />
+    <Content Include="Scripts\settings.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Views\Web.config" />

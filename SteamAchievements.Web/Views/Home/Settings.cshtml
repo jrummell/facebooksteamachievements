@@ -2,27 +2,44 @@
 @{
     ViewBag.Title = "Settings";
 }
+@section head
+{
+    <style type="text/css">
+        fieldset.settings
+        {
+            padding: 1em;
+        }
+    </style>
+}
 <h1>
     Settings</h1>
 <div id="saveSuccess" style="display: none;">
     Your settings have been saved successfully.</div>
 <div id="duplicateError" style="display: none;">
     This Steam Community URL is already in use.</div>
+<div id="steamIdError" class="hidden">
+    Your Steam Community profile could not be accessed. Please verify that your custom
+    URL is correct and that your profile is public.
+    @Html.HelpLink("Help", "Configure_your_Steam_Community_Profile")
+</div>
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary()
-    <fieldset>
+    <fieldset class="settings">
         <legend>Steam Community Custom URL</legend>
         <div>
-            <p>
+            <div class="left">
                 http://steamcommunity.com/id/
                 @Html.TextBoxFor(model => model.SteamUserId, new { maxlength = 50 })
-                @Html.HelpLink("Help", "Configure_your_Steam_Community_Profile")
                 @Html.ValidationMessageFor(model => model.SteamUserId)
-            </p>
+            </div>
+            <div id="steamIdVerified" class="ui-corner-all left hidden">
+                <span class="ui-icon ui-icon-check"></span>
+            </div>
+            <br class="clear" />
         </div>
     </fieldset>
-    <fieldset>
+    <fieldset class="settings">
         <legend>Publish Options</legend>
         <div>
             @Html.CheckBoxFor(model => model.AutoUpdate)
@@ -34,7 +51,8 @@
         </div>
     </fieldset>
     <p>
-        <button type="submit" class="save">Save</button>
+        <button type="submit" class="save">
+            Save</button>
         <img id="saveImage" class="loading" src="@Url.Content("~/Content/images/ajax-loader.gif")" alt="Saving..."
             style="display: none" />
     </p>
@@ -70,3 +88,4 @@
         });
     </script>
 }
+<script type="text/javascript" src="@Url.Content("~/Scripts/settings.js")"></script>

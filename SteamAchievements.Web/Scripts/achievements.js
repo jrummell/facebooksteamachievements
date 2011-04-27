@@ -25,9 +25,9 @@ var $achievements =
         $("img.loading").hide();
     },
 
-    getProfile: function (callback, errorCallback)
+    getProfile: function (callback, errorCallback, steamUserId)
     {
-        this.callAjax("GetProfile", {}, callback, errorCallback);
+        this.callAjax("GetProfile", { steamUserId: steamUserId }, callback, errorCallback);
     },
 
     getGames: function (callback, errorCallback)

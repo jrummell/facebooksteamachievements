@@ -39,9 +39,11 @@ namespace SteamAchievements.Web.Controllers
             _achievementService = achievementService;
         }
 
-        public JsonResult GetProfile()
+        public JsonResult GetProfile(string steamUserId)
         {
-            return Json(_achievementService.GetProfile(UserSettings.SteamUserId));
+            steamUserId = steamUserId ?? UserSettings.SteamUserId;
+
+            return Json(_achievementService.GetProfile(steamUserId));
         }
 
         public JsonResult GetUnpublishedAchievements(DateTime? oldestDate)
