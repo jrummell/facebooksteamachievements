@@ -23,6 +23,7 @@ using System;
 using System.Reflection;
 using System.Text;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Microsoft.Practices.Unity;
 using SteamAchievements.Web.Models;
 using SteamAchievements.Web.Properties;
@@ -47,10 +48,15 @@ namespace SteamAchievements.Web.Helpers
             a.AddCssClass("help");
             a.SetInnerText(linkText);
 
+            if (htmlAttributes != null)
+            {
+                a.MergeAttributes(new RouteValueDictionary(htmlAttributes), false);
+            }
+
             return MvcHtmlString.Create(a.ToString());
         }
 
-        public static MvcHtmlString CanvasLink(this HtmlHelper html, string linkText, string canvasPage = null,
+        public static MvcHtmlString CanvasLink(this HtmlHelper html, string linkText, string canvasAction = null,
                                                object htmlAttributes = null)
         {
             StringBuilder canvasLink = new StringBuilder(_facebookSettings.CanvasPage);
@@ -59,14 +65,20 @@ namespace SteamAchievements.Web.Helpers
                 canvasLink.Append("/");
             }
 
-            if (canvasPage != null)
+            if (canvasAction != null)
             {
-                canvasLink.Append(canvasPage);
+                canvasLink.Append(canvasAction);
             }
 
             TagBuilder a = new TagBuilder("a");
             a.MergeAttribute("href", canvasLink.ToString());
+            a.MergeAttribute("target", "_top");
             a.SetInnerText(linkText);
+
+            if (htmlAttributes != null)
+            {
+                a.MergeAttributes(new RouteValueDictionary(htmlAttributes), false);
+            }
 
             return MvcHtmlString.Create(a.ToString());
         }
