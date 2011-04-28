@@ -22,7 +22,7 @@
     URL is correct and that your profile is public.
     @Html.HelpLink("Help", "Configure_your_Steam_Community_Profile")
 </div>
-@using (Html.BeginForm())
+@using (Html.BeginCanvasForm())
 {
     @Html.ValidationSummary()
     <fieldset class="settings">

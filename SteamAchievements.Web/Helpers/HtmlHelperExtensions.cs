@@ -23,6 +23,7 @@ using System;
 using System.Reflection;
 using System.Text;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
 using System.Web.Routing;
 using Microsoft.Practices.Unity;
 using SteamAchievements.Web.Models;
@@ -36,6 +37,11 @@ namespace SteamAchievements.Web.Helpers
             ContainerManager.Container.Resolve<IFacebookContextSettings>();
 
         private static readonly Settings _settings = Settings.Default;
+
+        public static MvcForm BeginCanvasForm(this HtmlHelper html)
+        {
+            return html.BeginForm(new {signed_request = html.ViewContext.HttpContext.Request["signed_request"]});
+        }
 
         public static MvcHtmlString HelpLink(this HtmlHelper html, string linkText, string anchor = null,
                                              object htmlAttributes = null)

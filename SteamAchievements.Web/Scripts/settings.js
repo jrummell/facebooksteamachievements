@@ -5,9 +5,9 @@
 $(document).ready(function ()
 {
     var logSelector = "#log";
-    $achievements.init("", logSelector, false);
-
     $steamUserId = $("#SteamUserId");
+    $achievements.init($steamUserId.val(), logSelector, false);
+
     $steamUserId.change(function ()
     {
         checkProfile(this.value);
