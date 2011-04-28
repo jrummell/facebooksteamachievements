@@ -9,7 +9,7 @@
 @Html.Hidden("enableLogHidden", (bool)ViewBag.EnableLog)
 <div id="steamIdError" style="display: none;">
     You haven't set your Steam Community Profile URL. Please set it on the
-    @Html.ActionLink("settings", "Settings")
+    @Html.CanvasLink("settings", "Settings")
     page.
     @Html.HelpLink("Help", "Configure_your_Steam_Community_Profile")
 </div>

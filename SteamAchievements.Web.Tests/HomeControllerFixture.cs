@@ -32,56 +32,13 @@ namespace SteamAchievements.Web.Tests
     public class HomeControllerFixture
     {
         [Test]
-        public void SettingsSuccess()
-        {
-            ModelMapCreator mapCreator = new ModelMapCreator();
-            mapCreator.CreateMap();
-
-            Mock<IAchievementService> mockAchievementService = new Mock<IAchievementService>();
-
-            MockFacebookContextSettings facebookContextSettings =
-                new MockFacebookContextSettings("AppId", 1234567890, "AccessToken123");
-
-            Mock<IUserService> mockUserService = new Mock<IUserService>();
-            User originalUser = new User
-                                    {
-                                        AutoUpdate = true,
-                                        FacebookUserId = facebookContextSettings.UserId,
-                                        PublishDescription = true,
-                                        SteamUserId = "NullReference"
-                                    };
-            mockUserService.Setup(service => service.GetUser(facebookContextSettings.UserId))
-                .Returns(() => originalUser).Verifiable();
-
-            SessionStateItemCollection sessionItems = new SessionStateItemCollection();
-            HomeController controller = new HomeController(mockAchievementService.Object, mockUserService.Object, facebookContextSettings);
-            FakeControllerContext context = new FakeControllerContext(controller, sessionItems);
-            controller.ControllerContext = context;
-
-            controller.UserSettings = originalUser;
-
-            SettingsViewModel model =
-                new SettingsViewModel
-                    {
-                        AutoUpdate = true,
-                        PublishDescription = true,
-                        SteamUserId = originalUser.SteamUserId
-                    };
-
-            controller.Settings(model);
-
-            Assert.That(controller.ViewBag.SaveSuccess);
-            mockUserService.Verify();
-        }
-
-        [Test]
         public void SettingsDuplicate()
         {
             ModelMapCreator mapCreator = new ModelMapCreator();
             mapCreator.CreateMap();
 
             MockFacebookContextSettings facebookContextSettings =
-                new MockFacebookContextSettings("AppId", 1234, "AccessToken123");
+                new MockFacebookContextSettings("AppId", 1234, "AccessToken123", "http://apps.facebook.com/canvasPage");
 
             Mock<IUserService> mockUserService = new Mock<IUserService>();
             User originalUser = new User
@@ -108,7 +65,8 @@ namespace SteamAchievements.Web.Tests
             Mock<IAchievementService> mockAchievementService = new Mock<IAchievementService>();
 
             SessionStateItemCollection sessionItems = new SessionStateItemCollection();
-            HomeController controller = new HomeController(mockAchievementService.Object, mockUserService.Object, facebookContextSettings);
+            HomeController controller = new HomeController(mockAchievementService.Object, mockUserService.Object,
+                                                           facebookContextSettings);
             FakeControllerContext context = new FakeControllerContext(controller, sessionItems);
             controller.ControllerContext = context;
             controller.UserSettings = originalUser;
@@ -125,6 +83,51 @@ namespace SteamAchievements.Web.Tests
 
             Assert.That(controller.ViewBag.DuplicateError);
 
+            mockUserService.Verify();
+        }
+
+        [Test]
+        public void SettingsSuccess()
+        {
+            ModelMapCreator mapCreator = new ModelMapCreator();
+            mapCreator.CreateMap();
+
+            Mock<IAchievementService> mockAchievementService = new Mock<IAchievementService>();
+
+            MockFacebookContextSettings facebookContextSettings =
+                new MockFacebookContextSettings("AppId", 1234567890, "AccessToken123",
+                                                "http://apps.facebook.com/canvasPage");
+
+            Mock<IUserService> mockUserService = new Mock<IUserService>();
+            User originalUser = new User
+                                    {
+                                        AutoUpdate = true,
+                                        FacebookUserId = facebookContextSettings.UserId,
+                                        PublishDescription = true,
+                                        SteamUserId = "NullReference"
+                                    };
+            mockUserService.Setup(service => service.GetUser(facebookContextSettings.UserId))
+                .Returns(() => originalUser).Verifiable();
+
+            SessionStateItemCollection sessionItems = new SessionStateItemCollection();
+            HomeController controller = new HomeController(mockAchievementService.Object, mockUserService.Object,
+                                                           facebookContextSettings);
+            FakeControllerContext context = new FakeControllerContext(controller, sessionItems);
+            controller.ControllerContext = context;
+
+            controller.UserSettings = originalUser;
+
+            SettingsViewModel model =
+                new SettingsViewModel
+                    {
+                        AutoUpdate = true,
+                        PublishDescription = true,
+                        SteamUserId = originalUser.SteamUserId
+                    };
+
+            controller.Settings(model);
+
+            Assert.That(controller.ViewBag.SaveSuccess);
             mockUserService.Verify();
         }
     }
