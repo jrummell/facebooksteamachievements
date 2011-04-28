@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using SteamAchievements.Services;
 
 namespace SteamAchievements.Updater
@@ -53,6 +54,11 @@ namespace SteamAchievements.Updater
                 try
                 {
                     _autoUpdateManager.PublishUserAchievements(user);
+                }
+                catch (SqlException ex)
+                {
+                    _autoUpdateManager.Logger.Log(ex);
+                    return;
                 }
                 catch (Exception ex)
                 {
