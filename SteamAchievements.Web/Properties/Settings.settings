@@ -11,24 +11,22 @@
     <Setting Name="BottomAdMarkup" Type="System.String" Scope="Application">
       <Value Profile="(Default)">&lt;p&gt;your ad code here&lt;/p&gt;</Value>
     </Setting>
-    <Setting Name="AutoUpdateAuthKey" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">1234</Value>
-    </Setting>
-    <Setting Name="FacebookProfileUrl" Type="System.Uri" Scope="Application">
-      <Value Profile="(Default)">http://www.facebook.com/AppProfile</Value>
-    </Setting>
-    <Setting Name="AnalyticsMarkup" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">&lt;script type="text/javascript"&gt;
-    // analytics script
-&lt;/script&gt;</Value>
-    </Setting>
     <Setting Name="DisclaimerMarkup" Type="System.String" Scope="Application">
       <Value Profile="(Default)">&lt;p&gt;Footer&lt;/p&gt;</Value>
     </Setting>
+    <Setting Name="AnalyticsMarkup" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">
+                    &lt;script type="text/javascript"&gt;
+                    // analytics script
+                    &lt;/script&gt;
+                </Value>
+    </Setting>
     <Setting Name="UserVoiceMarkup" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">&lt;script type="text/javascript"&gt;
-    // feedback script
-&lt;/script&gt;</Value>
+      <Value Profile="(Default)">
+                    &lt;script type="text/javascript"&gt;
+                    // feedback script
+                    &lt;/script&gt;
+                </Value>
     </Setting>
   </Settings>
 </SettingsFile>

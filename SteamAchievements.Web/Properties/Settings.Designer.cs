@@ -52,33 +52,6 @@ namespace SteamAchievements.Web.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1234")]
-        public string AutoUpdateAuthKey {
-            get {
-                return ((string)(this["AutoUpdateAuthKey"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://www.facebook.com/AppProfile")]
-        public global::System.Uri FacebookProfileUrl {
-            get {
-                return ((global::System.Uri)(this["FacebookProfileUrl"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<script type=\"text/javascript\">\r\n    // analytics script\r\n</script>")]
-        public string AnalyticsMarkup {
-            get {
-                return ((string)(this["AnalyticsMarkup"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<p>Footer</p>")]
         public string DisclaimerMarkup {
             get {
@@ -88,7 +61,18 @@ namespace SteamAchievements.Web.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<script type=\"text/javascript\">\r\n    // feedback script\r\n</script>")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n                    <script type=\"text/javascript\">\r\n                    // ana" +
+            "lytics script\r\n                    </script>\r\n                ")]
+        public string AnalyticsMarkup {
+            get {
+                return ((string)(this["AnalyticsMarkup"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n                    <script type=\"text/javascript\">\r\n                    // fee" +
+            "dback script\r\n                    </script>\r\n                ")]
         public string UserVoiceMarkup {
             get {
                 return ((string)(this["UserVoiceMarkup"]));

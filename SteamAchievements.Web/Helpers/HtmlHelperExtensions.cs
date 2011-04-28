@@ -21,13 +21,19 @@
 
 using System;
 using System.Reflection;
+using System.Text;
 using System.Web.Mvc;
+using Microsoft.Practices.Unity;
+using SteamAchievements.Web.Models;
 using SteamAchievements.Web.Properties;
 
 namespace SteamAchievements.Web.Helpers
 {
     public static class HtmlHelperExtensions
     {
+        private static readonly IFacebookContextSettings _facebookSettings =
+            ContainerManager.Container.Resolve<IFacebookContextSettings>();
+
         private static readonly Settings _settings = Settings.Default;
 
         public static MvcHtmlString HelpLink(this HtmlHelper html, string linkText, string anchor = null,
@@ -39,6 +45,27 @@ namespace SteamAchievements.Web.Helpers
             a.MergeAttribute("href", link);
             a.MergeAttribute("target", "_blank");
             a.AddCssClass("help");
+            a.SetInnerText(linkText);
+
+            return MvcHtmlString.Create(a.ToString());
+        }
+
+        public static MvcHtmlString CanvasLink(this HtmlHelper html, string linkText, string canvasPage = null,
+                                               object htmlAttributes = null)
+        {
+            StringBuilder canvasLink = new StringBuilder(_facebookSettings.CanvasPage);
+            if (!_facebookSettings.CanvasPage.EndsWith("/"))
+            {
+                canvasLink.Append("/");
+            }
+
+            if (canvasPage != null)
+            {
+                canvasLink.Append(canvasPage);
+            }
+
+            TagBuilder a = new TagBuilder("a");
+            a.MergeAttribute("href", canvasLink.ToString());
             a.SetInnerText(linkText);
 
             return MvcHtmlString.Create(a.ToString());

@@ -31,9 +31,12 @@ namespace SteamAchievements.Web.Models
             AccessToken = context.AccessToken;
             AppId = context.Settings.AppId;
             UserId = context.UserId;
+            CanvasPage = context.Settings.CanvasPage;
         }
 
         #region IFacebookContextSettings Members
+
+        public string CanvasPage { get; set; }
 
         public string AccessToken { get; set; }
 

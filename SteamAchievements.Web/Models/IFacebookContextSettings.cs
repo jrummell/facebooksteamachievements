@@ -40,6 +40,14 @@ namespace SteamAchievements.Web.Models
         string AppId { get; set; }
 
         /// <summary>
+        /// Gets or sets the canvas page.
+        /// </summary>
+        /// <value>
+        /// The canvas page.
+        /// </value>
+        string CanvasPage { get; set; }
+
+        /// <summary>
         /// Gets or sets the user id.
         /// </summary>
         /// <value>

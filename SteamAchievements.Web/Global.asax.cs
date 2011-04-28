@@ -19,13 +19,13 @@
 
 #endregion
 
-using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Bootstrap;
 using Bootstrap.UnityExtension;
 using SteamAchievements.Web.Bootstrapping;
+using SteamAchievements.Web.Models;
 
 namespace SteamAchievements.Web
 {
@@ -37,6 +37,7 @@ namespace SteamAchievements.Web
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new ElmahHandleErrorAttribute());
         }
 
         public static void RegisterRoutes(RouteCollection routes)
@@ -69,13 +70,6 @@ namespace SteamAchievements.Web
 
             IControllerFactory controllerFactory = new UnityControllerFactory(ContainerManager.Container);
             ControllerBuilder.Current.SetControllerFactory(controllerFactory);
-
-            string autoUpdatePath = HttpContext.Current.Server.MapPath("~/App_Data/AutoUpdate");
-            DirectoryInfo autoUpdateDirectory = new DirectoryInfo(autoUpdatePath);
-            if (!autoUpdateDirectory.Exists)
-            {
-                autoUpdateDirectory.Create();
-            }
         }
     }
 }
