@@ -39,7 +39,8 @@ namespace SteamAchievements.Web.Tests
             mapCreator.CreateMap();
 
             MockFacebookContextSettings facebookContextSettings =
-                new MockFacebookContextSettings("AppId", 1234, "AccessToken123", "http://apps.facebook.com/canvasPage");
+                new MockFacebookContextSettings("AppId", 1234, "AccessToken123", "http://apps.facebook.com/canvasPage",
+                                                "SignedRequest");
 
             Mock<IUserService> mockUserService = new Mock<IUserService>();
             User originalUser = new User
@@ -98,7 +99,7 @@ namespace SteamAchievements.Web.Tests
 
             MockFacebookContextSettings facebookContextSettings =
                 new MockFacebookContextSettings("AppId", 1234567890, "AccessToken123",
-                                                "http://apps.facebook.com/canvasPage");
+                                                "http://apps.facebook.com/canvasPage", "SignedRequest");
 
             Mock<IUserService> mockUserService = new Mock<IUserService>();
             User originalUser = new User
