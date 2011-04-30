@@ -127,10 +127,10 @@
     <None Include="Achievements.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="log\2011-1-1.log">
+    <None Include="testlog\2011-1-1.log">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="log\2011-1-2.log">
+    <None Include="testlog\2011-1-2.log">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

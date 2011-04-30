@@ -28,18 +28,20 @@ namespace SteamAchievements.Services.Tests
     [TestFixture]
     public class AutoUpdateLoggerFixture
     {
+        private const string _logPath = "testlog";
+
         [Test]
         public void Delete()
         {
-            AutoUpdateLogger log = new AutoUpdateLogger("log");
+            AutoUpdateLogger log = new AutoUpdateLogger(_logPath);
 
-            string[] files = Directory.GetFiles("log");
+            string[] files = Directory.GetFiles(_logPath);
             Assert.That(files.Length, Is.EqualTo(3));
 
             log.Delete(new DateTime(2011, 1, 2));
 
             // make sure the file named 2011-1-1.log was deleted and 2011-1-2.log and the current date remain.
-            files = Directory.GetFiles("log");
+            files = Directory.GetFiles(_logPath);
             Assert.That(files.Length, Is.EqualTo(2));
             Assert.That(Path.GetFileName(files[0]), Is.EqualTo("2011-1-2.log"));
         }
