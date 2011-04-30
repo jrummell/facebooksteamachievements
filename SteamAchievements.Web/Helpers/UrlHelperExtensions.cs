@@ -20,19 +20,46 @@
 #endregion
 
 using System;
+using System.Text;
 using System.Web.Mvc;
+using Microsoft.Practices.Unity;
+using SteamAchievements.Web.Models;
 using SteamAchievements.Web.Properties;
 
 namespace SteamAchievements.Web.Helpers
 {
     public static class UrlHelperExtensions
     {
+        private static readonly IFacebookContextSettings _facebookSettings =
+            ContainerManager.Container.Resolve<IFacebookContextSettings>();
+
         private static readonly Settings _settings = Settings.Default;
+
+        public static MvcHtmlString CanvasAction(this UrlHelper url, string canvasAction)
+        {
+            return MvcHtmlString.Create(GetCanvasUrl(canvasAction));
+        }
 
         public static MvcHtmlString Help(this UrlHelper url, string anchor = null)
         {
             return MvcHtmlString.Create(String.Format("{0}#{1}",
                                                       _settings.HelpUrl, anchor ?? String.Empty));
+        }
+
+        public static string GetCanvasUrl(string canvasAction)
+        {
+            StringBuilder canvasLink = new StringBuilder(_facebookSettings.CanvasPage);
+            if (!_facebookSettings.CanvasPage.EndsWith("/"))
+            {
+                canvasLink.Append("/");
+            }
+
+            if (canvasAction != null)
+            {
+                canvasLink.Append(canvasAction);
+            }
+
+            return canvasLink.ToString();
         }
     }
 }

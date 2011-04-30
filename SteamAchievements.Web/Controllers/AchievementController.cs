@@ -22,6 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using AutoMapper;
+using Elmah;
 using SteamAchievements.Services;
 using SteamAchievements.Web.Models;
 
@@ -39,6 +41,7 @@ namespace SteamAchievements.Web.Controllers
             _achievementService = achievementService;
         }
 
+        [HttpPost]
         public JsonResult GetProfile(string steamUserId)
         {
             steamUserId = steamUserId ?? UserSettings.SteamUserId;
@@ -46,29 +49,84 @@ namespace SteamAchievements.Web.Controllers
             return Json(_achievementService.GetProfile(steamUserId));
         }
 
+        [HttpPost]
         public JsonResult GetUnpublishedAchievements(DateTime? oldestDate)
         {
             return Json(_achievementService.GetUnpublishedAchievements(UserSettings.SteamUserId, oldestDate));
         }
 
+        [HttpPost]
         public JsonResult GetGames()
         {
             return Json(_achievementService.GetGames(UserSettings.SteamUserId));
         }
 
+        [HttpPost]
         public JsonResult UpdateAchievements()
         {
             return Json(_achievementService.UpdateAchievements(UserSettings.SteamUserId));
         }
 
+        [HttpPost]
         public JsonResult PublishAchievements(IEnumerable<int> achievementIds)
         {
             return Json(_achievementService.PublishAchievements(UserSettings.SteamUserId, achievementIds));
         }
 
+        [HttpPost]
         public JsonResult HideAchievements(IEnumerable<int> achievementIds)
         {
             return Json(_achievementService.HideAchievements(UserSettings.SteamUserId, achievementIds));
+        }
+
+        [HttpPost]
+        public JsonResult SaveSettings(SettingsViewModel model)
+        {
+            ViewBag.SaveSuccess = false;
+            ViewBag.DuplicateError = false;
+
+            if (!ModelState.IsValid)
+            {
+                return Json("Invalid");
+            }
+
+            User user = UserService.GetUser(FacebookUserId);
+            bool newUser = false;
+            if (user == null)
+            {
+                newUser = true;
+                user = new User {FacebookUserId = FacebookUserId, AccessToken = String.Empty};
+            }
+
+            Mapper.Map(model, user);
+
+            try
+            {
+                UserService.UpdateUser(user);
+
+                UserSettings = user;
+            }
+            catch (DuplicateSteamUserException)
+            {
+                ViewBag.DuplicateError = true;
+
+                return Json("DuplicateError");
+            }
+
+            if (newUser)
+            {
+                try
+                {
+                    _achievementService.UpdateNewUserAchievements(user);
+                }
+                catch (Exception ex)
+                {
+                    // log and swallow exceptions so that the settings can be saved
+                    ErrorSignal.FromCurrentContext().Raise(ex);
+                }
+            }
+
+            return Json("Success");
         }
 
         protected override void Dispose(bool disposing)

@@ -22,9 +22,7 @@
     URL is correct and that your profile is public.
     @Html.HelpLink("Help", "Configure_your_Steam_Community_Profile")
 </div>
-@using (Html.BeginCanvasForm())
-{
-    @Html.ValidationSummary()
+<div id="settingsForm">
     <fieldset class="settings">
         <legend>Steam Community Custom URL</legend>
         <div>
@@ -51,41 +49,10 @@
         </div>
     </fieldset>
     <p>
-        <button type="submit" class="save">
+        <button type="submit" id="saveButton" class="save">
             Save</button>
         <img id="saveImage" class="loading" src="@Url.Content("~/Content/images/ajax-loader.gif")" alt="Saving..."
             style="display: none" />
     </p>
-}
-<script type="text/javascript">
-    $(document).ready(function ()
-    {
-        var steamUserId = $("#SteamUserId").val();
-        $achievements.init(steamUserId);
-
-        $("button.save").button({ icons: { primary: "ui-icon-disk"} })
-                       .click(function ()
-                       {
-                           $("#saveImage").show();
-                       });
-    });
-</script>
-@if (ViewBag.SaveSuccess)
-{
-    <script type="text/javascript">
-        $(document).ready(function ()
-        {
-            $("#saveSuccess").message({ type: "info" });
-        });
-    </script>
-}
-@if (ViewBag.DuplicateError)
-{
-    <script type="text/javascript">
-        $(document).ready(function ()
-        {
-            $("#duplicateError").message({ type: "info" });
-        });
-    </script>
-}
+</div>
 <script type="text/javascript" src="@Url.Content("~/Scripts/settings.js")"></script>

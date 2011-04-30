@@ -21,27 +21,15 @@
 
 using System;
 using System.Reflection;
-using System.Text;
 using System.Web.Mvc;
-using System.Web.Mvc.Html;
 using System.Web.Routing;
-using Microsoft.Practices.Unity;
-using SteamAchievements.Web.Models;
 using SteamAchievements.Web.Properties;
 
 namespace SteamAchievements.Web.Helpers
 {
     public static class HtmlHelperExtensions
     {
-        private static readonly IFacebookContextSettings _facebookSettings =
-            ContainerManager.Container.Resolve<IFacebookContextSettings>();
-
         private static readonly Settings _settings = Settings.Default;
-
-        public static MvcForm BeginCanvasForm(this HtmlHelper html)
-        {
-            return html.BeginForm(new {signed_request = html.ViewContext.HttpContext.Request["signed_request"]});
-        }
 
         public static MvcHtmlString HelpLink(this HtmlHelper html, string linkText, string anchor = null,
                                              object htmlAttributes = null)
@@ -65,19 +53,8 @@ namespace SteamAchievements.Web.Helpers
         public static MvcHtmlString CanvasLink(this HtmlHelper html, string linkText, string canvasAction = null,
                                                object htmlAttributes = null)
         {
-            StringBuilder canvasLink = new StringBuilder(_facebookSettings.CanvasPage);
-            if (!_facebookSettings.CanvasPage.EndsWith("/"))
-            {
-                canvasLink.Append("/");
-            }
-
-            if (canvasAction != null)
-            {
-                canvasLink.Append(canvasAction);
-            }
-
             TagBuilder a = new TagBuilder("a");
-            a.MergeAttribute("href", canvasLink.ToString());
+            a.MergeAttribute("href", UrlHelperExtensions.GetCanvasUrl(canvasAction));
             a.MergeAttribute("target", "_top");
             a.SetInnerText(linkText);
 

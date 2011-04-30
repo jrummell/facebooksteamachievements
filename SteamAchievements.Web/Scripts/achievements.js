@@ -35,6 +35,11 @@ var $achievements =
         this.callAjax("GetGames", {}, callback, errorCallback);
     },
 
+    saveSettings: function (settings, callback, errorCallback)
+    {
+        this.callAjax("SaveSettings", settings, callback, errorCallback);
+    },
+
     updateAchievements: function (callback, errorCallback)
     {
         var ondone = function (updateCount)

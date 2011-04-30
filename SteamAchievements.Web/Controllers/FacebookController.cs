@@ -21,7 +21,6 @@
 
 using System.Web.Mvc;
 using System.Web.Routing;
-using Microsoft.Practices.Unity;
 using SteamAchievements.Services;
 using SteamAchievements.Web.Models;
 
@@ -41,17 +40,9 @@ namespace SteamAchievements.Web.Controllers
         }
 
         /// <summary>
-        /// Gets the container.
-        /// </summary>
-        protected IUnityContainer Container
-        {
-            get { return ContainerManager.Container; }
-        }
-
-        /// <summary>
         /// Gets the facebook user id.
         /// </summary>
-        public long FacebookUserId
+        protected long FacebookUserId
         {
             get { return _facebookSettings.UserId; } 
         }
@@ -68,7 +59,7 @@ namespace SteamAchievements.Web.Controllers
         /// <summary>
         /// Gets the user service.
         /// </summary>
-        public IUserService UserService
+        protected IUserService UserService
         {
             get { return _userService; }
         }
