@@ -176,8 +176,16 @@ var $achievements =
             };
         }
 
+        if (query == null)
+        {
+            query = {};
+        }
+
+        // since this is an ajax request, we need to add the signed_request parameter explicitly
+        var signedRequest = $("#SignedRequest").val();
+
         $.ajax({
-            url: this.serviceBase + method,
+            url: this.serviceBase + method + "?signed_request=" + signedRequest,
             data: JSON.stringify(query),
             type: "POST",
             processData: true,
@@ -241,6 +249,26 @@ var $achievements =
         {
             $(this.logSelector).append(message);
             this.updateSize();
+        }
+    },
+
+    _getSignedRequest: function ()
+    {
+        return getQueryString()["signed_request"];
+
+        function getQueryString()
+        {
+            var result = {};
+            var queryString = location.search.substring(1);
+            var regex = /([^&=]+)=([^&]*)/g;
+            var match;
+
+            while (match = regex.exec(queryString))
+            {
+                result[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
+            }
+
+            return result;
         }
     }
 }

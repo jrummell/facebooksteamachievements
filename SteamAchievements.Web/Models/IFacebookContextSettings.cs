@@ -24,35 +24,28 @@ namespace SteamAchievements.Web.Models
     public interface IFacebookContextSettings
     {
         /// <summary>
-        /// Gets or sets the access token.
+        /// Gets the access token.
         /// </summary>
-        /// <value>
-        /// The access token.
-        /// </value>
-        string AccessToken { get; set; }
+        string AccessToken { get; }
 
         /// <summary>
-        /// Gets or sets the app id.
+        /// Gets the app id.
         /// </summary>
-        /// <value>
-        /// The app id.
-        /// </value>
-        string AppId { get; set; }
+        string AppId { get; }
 
         /// <summary>
-        /// Gets or sets the canvas page.
+        /// Gets the canvas page.
         /// </summary>
-        /// <value>
-        /// The canvas page.
-        /// </value>
-        string CanvasPage { get; set; }
+        string CanvasPage { get; }
 
         /// <summary>
-        /// Gets or sets the user id.
+        /// Gets the user id.
         /// </summary>
-        /// <value>
-        /// The user id.
-        /// </value>
-        long UserId { get; set; }
+        long UserId { get; }
+
+        /// <summary>
+        /// Gets the signed request.
+        /// </summary>
+        string SignedRequest { get; }
     }
 }

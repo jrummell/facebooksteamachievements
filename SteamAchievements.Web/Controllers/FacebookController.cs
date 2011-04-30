@@ -72,7 +72,9 @@ namespace SteamAchievements.Web.Controllers
         {
             base.Initialize(requestContext);
 
+            // these values are used in the FacebookInitPartial view
             ViewBag.FacebookClientId = _facebookSettings.AppId;
+            ViewBag.SignedRequest = _facebookSettings.SignedRequest;
 
             if (UserSettings != null)
             {

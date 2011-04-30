@@ -19,6 +19,8 @@
 
 #endregion
 
+using System.Web;
+using Facebook;
 using Facebook.Web;
 
 namespace SteamAchievements.Web.Models
@@ -27,22 +29,43 @@ namespace SteamAchievements.Web.Models
     {
         public FacebookContextSettings()
         {
-            FacebookWebContext context = FacebookWebContext.Current;
-            AccessToken = context.AccessToken;
-            AppId = context.Settings.AppId;
-            UserId = context.UserId;
-            CanvasPage = context.Settings.CanvasPage;
+            FacebookWebContext facebookContext = FacebookWebContext.Current;
+
+            IFacebookApplication settings;
+            FacebookSignedRequest signedRequest;
+            if (facebookContext.SignedRequest == null)
+            {
+                // ajax requests won't have a signed request, so we need to build it from the current http request
+                // see http://facebooksdk.codeplex.com/discussions/251878
+                settings = FacebookApplication.Current;
+                signedRequest = FacebookSignedRequest.Parse(settings, SignedRequest);
+            }
+            else
+            {
+                settings = facebookContext.Settings;
+                signedRequest = facebookContext.SignedRequest;
+            }
+
+            CanvasPage = settings.CanvasPage;
+            AccessToken = signedRequest.AccessToken;
+            AppId = settings.AppId;
+            UserId = signedRequest.UserId;
         }
 
         #region IFacebookContextSettings Members
 
-        public string CanvasPage { get; set; }
+        public string CanvasPage { get; private set; }
 
-        public string AccessToken { get; set; }
+        public string AccessToken { get; private set; }
 
-        public string AppId { get; set; }
+        public string AppId { get; private set; }
 
-        public long UserId { get; set; }
+        public long UserId { get; private set; }
+
+        public string SignedRequest
+        {
+            get { return HttpContext.Current.Request.Params["signed_request"]; }
+        }
 
         #endregion
     }

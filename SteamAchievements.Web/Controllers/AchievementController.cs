@@ -24,11 +24,15 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using AutoMapper;
 using Elmah;
+using Facebook.Web.Mvc;
 using SteamAchievements.Services;
 using SteamAchievements.Web.Models;
 
 namespace SteamAchievements.Web.Controllers
 {
+#if !DEBUG
+    [CanvasAuthorize(Permissions = "publish_stream,offline_access")]
+#endif
     [ElmahHandleError]
     public class AchievementController : FacebookController
     {
@@ -82,9 +86,6 @@ namespace SteamAchievements.Web.Controllers
         [HttpPost]
         public JsonResult SaveSettings(SettingsViewModel model)
         {
-            ViewBag.SaveSuccess = false;
-            ViewBag.DuplicateError = false;
-
             if (!ModelState.IsValid)
             {
                 return Json("Invalid");
@@ -108,8 +109,6 @@ namespace SteamAchievements.Web.Controllers
             }
             catch (DuplicateSteamUserException)
             {
-                ViewBag.DuplicateError = true;
-
                 return Json("DuplicateError");
             }
 

@@ -116,5 +116,6 @@ function displayAchievements(achievements)
 
 function displayError()
 {
-    $("#achievementsUpdateFailure").message({ type: "error" });
+    $achievements.hideLoading("#newAchievementsLoading");
+    $("#achievementsUpdateFailure").message({ type: "error", dismiss: false });
 }
