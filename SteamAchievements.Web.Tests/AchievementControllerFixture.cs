@@ -19,6 +19,7 @@
 
 #endregion
 
+using System.Web.Mvc;
 using System.Web.SessionState;
 using Moq;
 using NUnit.Framework;
@@ -80,9 +81,9 @@ namespace SteamAchievements.Web.Tests
                         SteamUserId = "NullReference"
                     };
 
-            controller.SaveSettings(model);
+            JsonResult result = controller.SaveSettings(model);
 
-            Assert.That(controller.ViewBag.DuplicateError);
+            Assert.That((string) result.Data == "DuplicateError");
 
             mockUserService.Verify();
         }
@@ -127,9 +128,9 @@ namespace SteamAchievements.Web.Tests
                         SteamUserId = originalUser.SteamUserId
                     };
 
-            controller.SaveSettings(model);
+            JsonResult result = controller.SaveSettings(model);
 
-            Assert.That(controller.ViewBag.SaveSuccess);
+            Assert.That((string) result.Data == "Success");
             mockUserService.Verify();
         }
     }

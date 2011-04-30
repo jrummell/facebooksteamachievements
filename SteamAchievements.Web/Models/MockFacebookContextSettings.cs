@@ -27,16 +27,18 @@ namespace SteamAchievements.Web.Models
     {
         [InjectionConstructor]
         public MockFacebookContextSettings()
-            : this("AppId", 1234567890, "AccessToken", "http://apps.facebook.com/canvasPage/")
+            : this("AppId", 1234567890, "AccessToken", "http://apps.facebook.com/canvasPage/", "signed_request")
         {
         }
 
-        public MockFacebookContextSettings(string appId, long userId, string accessToken, string canvasPage)
+        public MockFacebookContextSettings(string appId, long userId, string accessToken, string canvasPage,
+                                           string signedRequest)
         {
             AppId = appId;
             UserId = userId;
             AccessToken = accessToken;
             CanvasPage = canvasPage;
+            SignedRequest = signedRequest;
         }
 
         #region IFacebookContextSettings Members
@@ -48,6 +50,8 @@ namespace SteamAchievements.Web.Models
         public string CanvasPage { get; set; }
 
         public long UserId { get; set; }
+
+        public string SignedRequest { get; set; }
 
         #endregion
     }
