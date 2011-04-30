@@ -19,23 +19,23 @@
 
 #endregion
 
-using System;
 using System.Web.Mvc;
 using AutoMapper;
-using Elmah;
+using Facebook.Web.Mvc;
 using SteamAchievements.Services;
 using SteamAchievements.Web.Models;
 
 namespace SteamAchievements.Web.Controllers
 {
 #if !DEBUG
-    [Facebook.Web.Mvc.CanvasAuthorize(Permissions = "publish_stream,offline_access")]
+    [CanvasAuthorize(Permissions = "publish_stream,offline_access")]
 #endif
     public class HomeController : FacebookController
     {
         private readonly IAchievementService _achievementService;
 
-        public HomeController(IAchievementService achievementService, IUserService userService, IFacebookContextSettings facebookSettings)
+        public HomeController(IAchievementService achievementService, IUserService userService,
+                              IFacebookContextSettings facebookSettings)
             : base(userService, facebookSettings)
         {
             _achievementService = achievementService;
@@ -60,66 +60,10 @@ namespace SteamAchievements.Web.Controllers
             return View(model);
         }
 
-        [HttpGet]
         public ActionResult Settings()
         {
-            ViewBag.SaveSuccess = false;
-            ViewBag.DuplicateError = false;
-
             User user = UserSettings ?? new User();
             SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(user);
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult Settings(SettingsViewModel model)
-        {
-            ViewBag.SaveSuccess = false;
-            ViewBag.DuplicateError = false;
-
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            User user = UserService.GetUser(FacebookUserId);
-            bool newUser = false;
-            if (user == null)
-            {
-                newUser = true;
-                user = new User {FacebookUserId = FacebookUserId, AccessToken = String.Empty};
-            }
-
-            Mapper.Map(model, user);
-
-            try
-            {
-                UserService.UpdateUser(user);
-
-                UserSettings = user;
-            }
-            catch (DuplicateSteamUserException)
-            {
-                ViewBag.DuplicateError = true;
-
-                return View(model);
-            }
-
-            if (newUser)
-            {
-                try
-                {
-                    _achievementService.UpdateNewUserAchievements(user);
-                }
-                catch (Exception ex)
-                {
-                    // log and swallow exceptions so that the settings can be saved
-                    ErrorSignal.FromCurrentContext().Raise(ex);
-                }
-            }
-
-            ViewBag.SaveSuccess = true;
-
             return View(model);
         }
 

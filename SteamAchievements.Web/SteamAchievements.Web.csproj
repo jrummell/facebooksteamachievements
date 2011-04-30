@@ -188,6 +188,7 @@
     <Content Include="Scripts\achievements.js" />
     <Content Include="Scripts\columnizer.js" />
     <Content Include="Scripts\default.js" />
+    <None Include="Scripts\jquery-vsdoc.js" />
     <Content Include="Scripts\jquery.message.js" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\publish.js" />
