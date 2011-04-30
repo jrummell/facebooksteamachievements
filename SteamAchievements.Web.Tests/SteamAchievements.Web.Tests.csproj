@@ -71,7 +71,7 @@
     <Compile Include="FakeControllerContext.cs" />
     <Compile Include="ModelMapCreatorFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="HomeControllerFixture.cs" />
+    <Compile Include="AchievementControllerFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
