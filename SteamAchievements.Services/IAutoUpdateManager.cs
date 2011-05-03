@@ -41,5 +41,11 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         void PublishUserAchievements(string steamUserId);
+
+        /// <summary>
+        /// Resets the access token.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        void ResetAccessToken(string steamUserId);
     }
 }

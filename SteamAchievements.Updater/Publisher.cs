@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using Facebook;
 using SteamAchievements.Services;
 
 namespace SteamAchievements.Updater
@@ -54,6 +55,19 @@ namespace SteamAchievements.Updater
                 try
                 {
                     _autoUpdateManager.PublishUserAchievements(user);
+                }
+                catch (FacebookOAuthException ex)
+                {
+                    // The user's access token is invalid. They may have changed their password performed another action to invalidate it.
+                    string message = String.Format("User {0} has an invalid AccessToken, the value will be removed.",
+                                                   user);
+                    ApplicationException exception = new ApplicationException(message, ex);
+                    _autoUpdateManager.Logger.Log(exception);
+
+                    // Reset the user's access token.
+                    _autoUpdateManager.ResetAccessToken(user);
+
+                    continue;
                 }
                 catch (SqlException ex)
                 {
