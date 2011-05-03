@@ -83,14 +83,6 @@ namespace SteamAchievements.Services
         }
 
         /// <summary>
-        /// Gets the logger.
-        /// </summary>
-        public IAutoUpdateLogger Logger
-        {
-            get { return _log; }
-        }
-
-        /// <summary>
         /// Gets the auto update steam user ids.
         /// </summary>
         public ICollection<string> GetAutoUpdateUsers()
@@ -102,6 +94,14 @@ namespace SteamAchievements.Services
             _log.Log("Users: {0}", String.Join(", ", users));
 
             return users;
+        }
+
+        /// <summary>
+        /// Gets the logger.
+        /// </summary>
+        public IAutoUpdateLogger Logger
+        {
+            get { return _log; }
         }
 
         /// <summary>
@@ -201,6 +201,20 @@ namespace SteamAchievements.Services
             _log.Log("User achievements published");
 
             return;
+        }
+
+        /// <summary>
+        /// Resets the access token.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        public void ResetAccessToken(string steamUserId)
+        {
+            User user = _userService.GetUser(steamUserId);
+            if (user != null)
+            {
+                user.AccessToken = String.Empty;
+                _userService.UpdateUser(user);
+            }
         }
 
         #endregion
