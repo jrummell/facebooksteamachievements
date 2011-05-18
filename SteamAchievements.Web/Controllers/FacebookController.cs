@@ -24,7 +24,6 @@ using System.Web.Routing;
 using System.Web.Security;
 using SteamAchievements.Services;
 using SteamAchievements.Web.Models;
-using Microsoft.Practices.Unity;
 
 namespace SteamAchievements.Web.Controllers
 {
@@ -32,12 +31,13 @@ namespace SteamAchievements.Web.Controllers
     public abstract class FacebookController : Controller
     {
         private const string _userSettingsKey = "UserSettings";
-        private IFacebookContextSettings _facebookSettings;
+        private readonly IFacebookContextSettings _facebookSettings;
         private readonly IUserService _userService;
 
-        protected FacebookController(IUserService userService)
+        protected FacebookController(IUserService userService, IFacebookContextSettings facebookSettings)
         {
             _userService = userService;
+            _facebookSettings = facebookSettings;
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace SteamAchievements.Web.Controllers
         /// </summary>
         protected long FacebookUserId
         {
-            get { return _facebookSettings.UserId; }
+            get { return _facebookSettings.UserId; } 
         }
 
         /// <summary>
@@ -72,8 +72,6 @@ namespace SteamAchievements.Web.Controllers
         protected override void Initialize(RequestContext requestContext)
         {
             base.Initialize(requestContext);
-
-            _facebookSettings = ContainerManager.Container.Resolve<IFacebookContextSettings>();
 
             // these values are used in the FacebookInitPartial view
             ViewBag.FacebookClientId = _facebookSettings.AppId;
