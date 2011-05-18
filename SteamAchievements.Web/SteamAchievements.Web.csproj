@@ -55,17 +55,17 @@
     <Reference Include="Elmah, Version=1.1.11517.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
     </Reference>
-    <Reference Include="Facebook, Version=5.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+    <Reference Include="Facebook, Version=5.0.25.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Facebook.5.0.10.0\lib\net40-client\Facebook.dll</HintPath>
+      <HintPath>..\packages\Facebook.5.0.25.0\lib\net40-client\Facebook.dll</HintPath>
     </Reference>
-    <Reference Include="Facebook.Web, Version=5.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+    <Reference Include="Facebook.Web, Version=5.0.25.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FacebookWeb.5.0.10.0\lib\net40\Facebook.Web.dll</HintPath>
+      <HintPath>..\packages\FacebookWeb.5.0.25.0\lib\net40\Facebook.Web.dll</HintPath>
     </Reference>
-    <Reference Include="Facebook.Web.Mvc, Version=5.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+    <Reference Include="Facebook.Web.Mvc, Version=5.0.25.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FacebookWebMvc.5.0.10.0\lib\net40\Facebook.Web.Mvc.dll</HintPath>
+      <HintPath>..\packages\FacebookWebMvc.5.0.25.0\lib\net40\Facebook.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -134,6 +134,7 @@
     <Compile Include="Controllers\FacebookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Models\IFacebookContextSettings.cs" />
+    <Compile Include="Models\InvalidSignedRequestException.cs" />
     <Compile Include="Models\MockFacebookContextSettings.cs" />
     <Compile Include="Models\LogOnViewModel.cs" />
     <Compile Include="Global.asax.cs">
