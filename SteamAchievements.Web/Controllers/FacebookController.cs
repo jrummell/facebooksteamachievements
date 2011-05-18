@@ -21,8 +21,10 @@
 
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
 using SteamAchievements.Services;
 using SteamAchievements.Web.Models;
+using Microsoft.Practices.Unity;
 
 namespace SteamAchievements.Web.Controllers
 {
@@ -30,13 +32,12 @@ namespace SteamAchievements.Web.Controllers
     public abstract class FacebookController : Controller
     {
         private const string _userSettingsKey = "UserSettings";
-        private readonly IFacebookContextSettings _facebookSettings;
+        private IFacebookContextSettings _facebookSettings;
         private readonly IUserService _userService;
 
-        protected FacebookController(IUserService userService, IFacebookContextSettings facebookSettings)
+        protected FacebookController(IUserService userService)
         {
             _userService = userService;
-            _facebookSettings = facebookSettings;
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace SteamAchievements.Web.Controllers
         /// </summary>
         protected long FacebookUserId
         {
-            get { return _facebookSettings.UserId; } 
+            get { return _facebookSettings.UserId; }
         }
 
         /// <summary>
@@ -72,6 +73,8 @@ namespace SteamAchievements.Web.Controllers
         {
             base.Initialize(requestContext);
 
+            _facebookSettings = ContainerManager.Container.Resolve<IFacebookContextSettings>();
+
             // these values are used in the FacebookInitPartial view
             ViewBag.FacebookClientId = _facebookSettings.AppId;
             ViewBag.SignedRequest = _facebookSettings.SignedRequest;
@@ -96,6 +99,18 @@ namespace SteamAchievements.Web.Controllers
                     UserSettings.AccessToken = _facebookSettings.AccessToken;
 
                     UserService.UpdateUser(UserSettings);
+                }
+
+                // make sure the user is signed in so that User.Identity.Name is thier FacebookUserId
+                string userName = _facebookSettings.UserId.ToString();
+                if (!User.Identity.IsAuthenticated)
+                {
+                    FormsAuthentication.SetAuthCookie(userName, false);
+                }
+                else if (User.Identity.Name != userName)
+                {
+                    FormsAuthentication.SignOut();
+                    FormsAuthentication.SetAuthCookie(userName, false);
                 }
             }
         }

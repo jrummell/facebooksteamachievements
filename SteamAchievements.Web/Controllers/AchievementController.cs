@@ -38,9 +38,8 @@ namespace SteamAchievements.Web.Controllers
     {
         private readonly IAchievementService _achievementService;
 
-        public AchievementController(IAchievementService achievementService, IUserService userService,
-                                     IFacebookContextSettings facebookSettings)
-            : base(userService, facebookSettings)
+        public AchievementController(IAchievementService achievementService, IUserService userService)
+            : base(userService)
         {
             _achievementService = achievementService;
         }

@@ -19,6 +19,7 @@
 
 #endregion
 
+using System;
 using System.Web;
 using Facebook;
 using Facebook.Web;
@@ -38,7 +39,24 @@ namespace SteamAchievements.Web.Models
                 // ajax requests won't have a signed request, so we need to build it from the current http request
                 // see http://facebooksdk.codeplex.com/discussions/251878
                 settings = FacebookApplication.Current;
-                signedRequest = FacebookSignedRequest.Parse(settings, SignedRequest);
+
+                try
+                {
+                    signedRequest = FacebookSignedRequest.Parse(settings, SignedRequest);
+                }
+                catch (Exception exception)
+                {
+                    // Facebook posts to the iframe, but only IE supports this so the first request will always fail for non IE browsers
+                    if (HttpContext.Current.Request.Browser.Browser.Contains("IE"))
+                    {
+                        throw;
+                    }
+
+                    // it doesn't break anything so we'll throw a custom exception so that we can filter it out later
+                    InvalidSignedRequestException signedRequestException =
+                        new InvalidSignedRequestException("Invalid SignedRequest - Non - IE (" + SignedRequest + ")", exception);
+                    throw signedRequestException;
+                }
             }
             else
             {
