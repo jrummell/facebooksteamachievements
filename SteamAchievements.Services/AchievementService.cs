@@ -22,7 +22,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Practices.Unity;
 using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
@@ -36,21 +35,12 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="AchievementService"/> class.
         /// </summary>
-        public AchievementService()
-            : this(null, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AchievementService"/> class.
-        /// </summary>
         /// <param name="achievementManager">The achievement manager.</param>
         /// <param name="communityManager">The community manager.</param>
         public AchievementService(IAchievementManager achievementManager, ISteamCommunityManager communityManager)
         {
-            IUnityContainer container = ContainerManager.Container;
-            _achievementManager = achievementManager ?? container.Resolve<IAchievementManager>();
-            _communityService = communityManager ?? container.Resolve<ISteamCommunityManager>();
+            _achievementManager = achievementManager;
+            _communityService = communityManager;
         }
 
         #region IAchievementService Members
@@ -59,7 +49,7 @@ namespace SteamAchievements.Services
         /// Gets the games.
         /// </summary>
         /// <returns>All <see cref="Game"/>s.</returns>
-        public List<Game> GetGames(string steamUserId)
+        public ICollection<Game> GetGames(string steamUserId)
         {
             if (steamUserId == null)
             {
@@ -113,7 +103,7 @@ namespace SteamAchievements.Services
         /// <returns>
         /// The achievements that haven't been published yet.
         /// </returns>
-        public List<SimpleAchievement> GetUnpublishedAchievements(string steamUserId, DateTime? oldestDate)
+        public ICollection<SimpleAchievement> GetUnpublishedAchievements(string steamUserId, DateTime? oldestDate)
         {
             if (steamUserId == null)
             {
@@ -198,7 +188,7 @@ namespace SteamAchievements.Services
             if (updatedCount > 0)
             {
                 // hide achievements more than two days old
-                List<SimpleAchievement> achievements =
+                ICollection<SimpleAchievement> achievements =
                     GetUnpublishedAchievements(user.SteamUserId, DateTime.UtcNow.Date.AddDays(-2));
                 IEnumerable<int> achievementIds = achievements.Select(achievement => achievement.Id);
                 HideAchievements(user.SteamUserId, achievementIds);
@@ -211,7 +201,7 @@ namespace SteamAchievements.Services
         /// Releases unmanaged and - optionally - managed resources
         /// </summary>
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             lock (this)
             {

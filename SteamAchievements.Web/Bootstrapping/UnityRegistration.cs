@@ -19,7 +19,6 @@
 
 #endregion
 
-using Bootstrap.UnityExtension;
 using Microsoft.Practices.Unity;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
@@ -27,32 +26,35 @@ using SteamAchievements.Web.Models;
 
 namespace SteamAchievements.Web.Bootstrapping
 {
-    public class UnityRegistration : IUnityRegistration
+    public class UnityRegistration
     {
-        #region IUnityRegistration Members
+        private readonly IUnityContainer _container;
 
-        public void Register(IUnityContainer container)
+        public UnityRegistration(IUnityContainer container)
+        {
+            _container = container;
+        }
+
+        public void Register()
         {
 #if DEBUG
             LifetimeManager lifetimeManager = new ContainerControlledLifetimeManager();
-            container.RegisterType<ISteamRepository, MockSteamRepository>(lifetimeManager);
-            container.RegisterType<IFacebookContextSettings, MockFacebookContextSettings>();
+            _container.RegisterType<ISteamRepository, MockSteamRepository>(lifetimeManager);
+            _container.RegisterType<IFacebookContextSettings, MockFacebookContextSettings>();
 #else
-            container.RegisterType<ISteamRepository, SteamRepository>();
-            container.RegisterType<IFacebookContextSettings, FacebookContextSettings>();
+            _container.RegisterType<ISteamRepository, SteamRepository>();
+            _container.RegisterType<IFacebookContextSettings, FacebookContextSettings>();
 #endif
 
-            container.RegisterType<IAchievementXmlParser, AchievementXmlParser>();
-            container.RegisterType<IGameXmlParser, GameXmlParser>();
-            container.RegisterType<ISteamProfileXmlParser, SteamProfileXmlParser>();
-            container.RegisterType<IWebClientWrapper, WebClientWrapper>();
+            _container.RegisterType<IAchievementXmlParser, AchievementXmlParser>();
+            _container.RegisterType<IGameXmlParser, GameXmlParser>();
+            _container.RegisterType<ISteamProfileXmlParser, SteamProfileXmlParser>();
+            _container.RegisterType<IWebClientWrapper, WebClientWrapper>();
 
-            container.RegisterType<IAchievementManager, AchievementManager>();
-            container.RegisterType<IAchievementService, AchievementService>();
-            container.RegisterType<ISteamCommunityManager, SteamCommunityManager>();
-            container.RegisterType<IUserService, UserService>();
+            _container.RegisterType<IAchievementManager, AchievementManager>();
+            _container.RegisterType<IAchievementService, AchievementService>();
+            _container.RegisterType<ISteamCommunityManager, SteamCommunityManager>();
+            _container.RegisterType<IUserService, UserService>();
         }
-
-        #endregion
     }
 }

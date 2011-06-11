@@ -20,15 +20,12 @@
 #endregion
 
 using AutoMapper;
-using Bootstrap;
 using SteamAchievements.Services;
 
 namespace SteamAchievements.Web.Models
 {
-    public class ModelMapCreator : IMapCreator
+    public class ModelMapCreator
     {
-        #region IMapCreator Members
-
         public void CreateMap()
         {
             Mapper.CreateMap<User, SettingsViewModel>();
@@ -37,7 +34,5 @@ namespace SteamAchievements.Web.Models
                 .ForMember(user => user.AccessToken, options => options.Ignore())
                 .ForMember(user => user.FacebookUserId, options => options.Ignore());
         }
-
-        #endregion
     }
 }

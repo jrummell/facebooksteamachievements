@@ -22,8 +22,7 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Bootstrap;
-using Bootstrap.UnityExtension;
+using Microsoft.Practices.Unity;
 using SteamAchievements.Web.Bootstrapping;
 using SteamAchievements.Web.Models;
 
@@ -34,13 +33,13 @@ namespace SteamAchievements.Web
 
     public class MvcApplication : HttpApplication
     {
-        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+        private static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
             filters.Add(new ElmahHandleErrorAttribute());
         }
 
-        public static void RegisterRoutes(RouteCollection routes)
+        private static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
@@ -64,11 +63,27 @@ namespace SteamAchievements.Web
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
-            //TODO: move to IStartupTask implementation(s)
-            UnityContainerExtension containerExtension = new UnityContainerExtension();
-            Bootstrapper.With.Container(containerExtension).Start();
+            RegisterDependencyResolver();
 
-            IControllerFactory controllerFactory = new UnityControllerFactory(ContainerManager.Container);
+            RegisterMappings();
+        }
+
+        private static void RegisterMappings()
+        {
+            ModelMapCreator mapCreator = new ModelMapCreator();
+            mapCreator.CreateMap();
+        }
+
+        private static void RegisterDependencyResolver()
+        {
+            UnityContainer unityContainer = new UnityContainer();
+            UnityRegistration unityRegistration = new UnityRegistration(unityContainer);
+            unityRegistration.Register();
+
+            IDependencyResolver unityDependencyResolver = new UnityDependencyResolver(unityContainer);
+            DependencyResolver.SetResolver(unityDependencyResolver);
+
+            IControllerFactory controllerFactory = new DependencyResolverControllerFactory(unityDependencyResolver);
             ControllerBuilder.Current.SetControllerFactory(controllerFactory);
         }
     }
