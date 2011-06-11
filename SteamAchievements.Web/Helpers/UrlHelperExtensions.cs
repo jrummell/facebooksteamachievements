@@ -22,7 +22,6 @@
 using System;
 using System.Text;
 using System.Web.Mvc;
-using Microsoft.Practices.Unity;
 using SteamAchievements.Web.Models;
 using SteamAchievements.Web.Properties;
 
@@ -31,7 +30,7 @@ namespace SteamAchievements.Web.Helpers
     public static class UrlHelperExtensions
     {
         private static readonly IFacebookContextSettings _facebookSettings =
-            ContainerManager.Container.Resolve<IFacebookContextSettings>();
+            DependencyResolver.Current.GetService<IFacebookContextSettings>();
 
         private static readonly Settings _settings = Settings.Default;
 
