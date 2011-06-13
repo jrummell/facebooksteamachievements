@@ -170,7 +170,11 @@
     <Content Include="Scripts\achievements.js" />
     <Content Include="Scripts\columnizer.js" />
     <Content Include="Scripts\default.js" />
-    <None Include="Scripts\jquery-vsdoc.js" />
+    <None Include="Scripts\jquery-1.4.4-vsdoc.js" />
+    <None Include="Scripts\jquery-1.4.4.js" />
+    <None Include="Scripts\jquery-1.4.4.min.js" />
+    <None Include="Scripts\jquery.ui.core.js" />
+    <None Include="Scripts\jquery.ui.core.min.js" />
     <Content Include="Scripts\jquery.message.js" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\publish.js" />
