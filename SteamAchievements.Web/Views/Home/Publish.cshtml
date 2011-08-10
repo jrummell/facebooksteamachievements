@@ -1,6 +1,6 @@
 ﻿@model SteamAchievements.Web.Models.SettingsViewModel
 @{
-    ViewBag.Title = "Publish";
+    ViewBag.Title = Strings.TitlePublish;
 }
 <h1>
     Publish</h1>
@@ -11,21 +11,19 @@
     You haven't set your Steam Community Profile URL. Please set it on the
     @Html.CanvasLink("settings", "Settings")
     page.
-    @Html.HelpLink("Help", "Configure_your_Steam_Community_Profile")
+    @Html.HelpLink(Strings.ButtonHelp, "Configure_your_Steam_Community_Profile")
 </div>
 <div id="achievementsUpdateFailure" style="display: none;">
     Your achievements could not be updated. Please verify that your Custom Url is correct
     and that your Steam Community Profile is public.
-    @Html.HelpLink("Help", "Configure_your_Steam_Community_Profile")
+    @Html.HelpLink(Strings.ButtonHelp, "Configure_your_Steam_Community_Profile")
 </div>
 <fieldset>
     <legend>Unpublished Achievements</legend>
     <p>
-        Click an achievement icon to select it. You can select up to five at a time. If
-        you don't see the publish dialog after clicking Publish, scroll down. If you hide
-        an achievement, you will no longer see it on this page and it can not be published.</p>
+        @Strings.PublishInstructions</p>
     <p id="buttons" class="hidden">
-        <a id="publishSelectedButton" class="button" href="#">Publish</a> <a id="hideSelectedButton"
+        <a id="publishSelectedButton" class="button" href="#">@Strings.ButtonPublish</a> <a id="hideSelectedButton"
             class="button" href="#">Hide</a>
     </p>
     <div id="noUnpublishedMessage" style="display: none;">

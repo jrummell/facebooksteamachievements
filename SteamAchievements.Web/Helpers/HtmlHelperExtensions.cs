@@ -71,6 +71,11 @@ namespace SteamAchievements.Web.Helpers
             return MvcHtmlString.Create(location == AdLocation.Top ? _settings.TopAdMarkup : _settings.BottomAdMarkup);
         }
 
+        public static MvcHtmlString Analytics(this HtmlHelper html)
+        {
+            return MvcHtmlString.Create(_settings.AnalyticsMarkup);
+        }
+
         public static MvcHtmlString UserVoice(this HtmlHelper html)
         {
             return MvcHtmlString.Create(_settings.UserVoiceMarkup);

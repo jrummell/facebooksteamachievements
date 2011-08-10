@@ -1,6 +1,6 @@
 ﻿@model SteamAchievements.Web.Models.SettingsViewModel
 @{
-    ViewBag.Title = "Home";
+    ViewBag.Title = Strings.TitleHome;
 }
 @section head
 {
@@ -22,7 +22,7 @@
     You haven't set your Steam Community Profile URL. Please set it on the
     @Html.CanvasLink("settings", "Settings")
     page.
-    @Html.HelpLink("Help", "Configure_your_Steam_Community_Profile")
+    @Html.HelpLink(Strings.ButtonHelp, "Configure_your_Steam_Community_Profile")
 </div>
 <div id="heading" class="hidden">
     <img id="profileImage" src="" align="left" />
@@ -41,9 +41,8 @@
     <legend>Games</legend>
     <div>
         <p>
-            Your games. This list includes all Steam games that you own (including some free
-            Source Mods) that support achievements.
-            @Html.HelpLink("Help", "Supported_Games")
+            @Strings.GamesIntructions
+            @Html.HelpLink(Strings.ButtonHelp, "Supported_Games")
         </p>
         <img id="loadingGames" class="loading" src="@Url.Content("~/Content/images/ajax-loader.gif")" alt="Loading..." />
     </div>
