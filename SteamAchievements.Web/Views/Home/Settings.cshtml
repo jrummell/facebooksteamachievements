@@ -1,6 +1,6 @@
 ﻿@model SteamAchievements.Web.Models.SettingsViewModel
 @{
-    ViewBag.Title = "Settings";
+    ViewBag.Title = Strings.TitleSettings;
 }
 @section head
 {
@@ -20,7 +20,7 @@
 <div id="steamIdError" class="hidden">
     Your Steam Community profile could not be accessed. Please verify that your custom
     URL is correct and that your profile is public.
-    @Html.HelpLink("Help", "Configure_your_Steam_Community_Profile")
+    @Html.HelpLink(Strings.ButtonHelp, "Configure_your_Steam_Community_Profile")
 </div>
 <div id="settingsForm">
     <fieldset class="settings">
@@ -41,11 +41,11 @@
         <legend>Publish Options</legend>
         <div>
             @Html.CheckBoxFor(model => model.AutoUpdate)
-            @Html.LabelFor(model => model.AutoUpdate, "Update and publish my achievements automatically.")
+            @Html.LabelFor(model => model.AutoUpdate, Strings.SettingsAutoUpdateLabel)
         </div>
         <div>
             @Html.CheckBoxFor(model => model.PublishDescription)
-            @Html.LabelFor(model => model.PublishDescription, "Include achievement descriptions when publishing.")
+            @Html.LabelFor(model => model.PublishDescription, Strings.SettingsPublishDescriptionLabel)
         </div>
     </fieldset>
     <p>
