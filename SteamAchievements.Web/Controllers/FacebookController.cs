@@ -27,13 +27,17 @@ using SteamAchievements.Web.Models;
 
 namespace SteamAchievements.Web.Controllers
 {
-    [ElmahHandleError]
     public abstract class FacebookController : Controller
     {
         private const string _userSettingsKey = "UserSettings";
         private readonly IFacebookContextSettings _facebookSettings;
         private readonly IUserService _userService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FacebookController"/> class.
+        /// </summary>
+        /// <param name="userService">The user service.</param>
+        /// <param name="facebookSettings">The facebook settings.</param>
         protected FacebookController(IUserService userService, IFacebookContextSettings facebookSettings)
         {
             _userService = userService;
@@ -45,7 +49,7 @@ namespace SteamAchievements.Web.Controllers
         /// </summary>
         protected long FacebookUserId
         {
-            get { return _facebookSettings.UserId; } 
+            get { return _facebookSettings.UserId; }
         }
 
         /// <summary>

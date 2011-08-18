@@ -22,9 +22,8 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Microsoft.Practices.Unity;
-using SteamAchievements.Web.Bootstrapping;
-using SteamAchievements.Web.Models;
+using Elmah.Contrib.Mvc;
+using SteamAchievements.Web.Controllers;
 
 namespace SteamAchievements.Web
 {
@@ -35,7 +34,7 @@ namespace SteamAchievements.Web
     {
         private static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new RequestCultureAttribute());
             filters.Add(new ElmahHandleErrorAttribute());
         }
 
@@ -63,28 +62,7 @@ namespace SteamAchievements.Web
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
-            RegisterDependencyResolver();
-
-            RegisterMappings();
-        }
-
-        private static void RegisterMappings()
-        {
-            ModelMapCreator mapCreator = new ModelMapCreator();
-            mapCreator.CreateMap();
-        }
-
-        private static void RegisterDependencyResolver()
-        {
-            UnityContainer unityContainer = new UnityContainer();
-            UnityRegistration unityRegistration = new UnityRegistration(unityContainer);
-            unityRegistration.Register();
-
-            IDependencyResolver unityDependencyResolver = new UnityDependencyResolver(unityContainer);
-            DependencyResolver.SetResolver(unityDependencyResolver);
-
-            IControllerFactory controllerFactory = new DependencyResolverControllerFactory(unityDependencyResolver);
-            ControllerBuilder.Current.SetControllerFactory(controllerFactory);
+            Bootstrapper.Initialize();
         }
     }
 }
