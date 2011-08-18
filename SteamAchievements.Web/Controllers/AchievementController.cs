@@ -33,7 +33,6 @@ namespace SteamAchievements.Web.Controllers
 #if !DEBUG
     [CanvasAuthorize(Permissions = "publish_stream,offline_access")]
 #endif
-    [ElmahHandleError]
     public class AchievementController : FacebookController
     {
         private readonly IAchievementService _achievementService;

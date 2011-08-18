@@ -25,6 +25,8 @@ namespace SteamAchievements.Web.Models
 {
     public class SettingsViewModel
     {
+        //TODO: localize model display names and error messages.
+
         [Required(ErrorMessage = "Custom Profile URL is required")]
         public string SteamUserId { get; set; }
 
