@@ -49,8 +49,8 @@ namespace SteamAchievements.Web
             container.RegisterType<ISteamRepository, MockSteamRepository>(lifetimeManager);
             container.RegisterType<IFacebookContextSettings, MockFacebookContextSettings>();
 #else
-            _container.RegisterType<ISteamRepository, SteamRepository>();
-            _container.RegisterType<IFacebookContextSettings, FacebookContextSettings>();
+            container.RegisterType<ISteamRepository, SteamRepository>();
+            container.RegisterType<IFacebookContextSettings, FacebookContextSettings>();
 #endif
 
             container.RegisterType<IAchievementXmlParser, AchievementXmlParser>();
