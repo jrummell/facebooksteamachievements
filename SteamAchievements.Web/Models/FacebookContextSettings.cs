@@ -31,55 +31,62 @@ namespace SteamAchievements.Web.Models
     {
         public FacebookContextSettings()
         {
-            HttpContext context = HttpContext.Current;
-            if (context == null)
-            {
-                return;
-            }
-
-            IFacebookApplication settings;
-            FacebookSignedRequest signedRequest;
-
-            HttpContextWrapper contextWrapper = new HttpContextWrapper(context);
-            if (contextWrapper.Request.IsAjaxRequest())
-            {
-                // ajax requests won't have a signed request, so we need to build it from the current http request
-                // see http://facebooksdk.codeplex.com/discussions/251878
-                settings = FacebookApplication.Current;
-
-                try
-                {
-                    signedRequest = FacebookSignedRequest.Parse(settings, SignedRequest);
-                }
-                catch (Exception exception)
-                {
-                    // Facebook posts to the iframe, but only IE supports this so the first request will always fail for non IE browsers
-                    if (context.Request.Browser.Browser.Contains("IE"))
-                    {
-                        throw;
-                    }
-
-                    // it doesn't break anything so we'll throw a custom exception so that we can filter it out later
-                    InvalidSignedRequestException signedRequestException =
-                        new InvalidSignedRequestException("Invalid SignedRequest - Non - IE (" + SignedRequest + ")",
-                                                          exception);
-                    throw signedRequestException;
-                }
-            }
-            else
-            {
-                FacebookWebContext facebookContext = FacebookWebContext.Current;
-                settings = facebookContext.Settings;
-                signedRequest = facebookContext.SignedRequest;
-            }
-
-            if (settings != null && signedRequest != null)
+            IFacebookApplication settings = FacebookApplication.Current;
+            if (settings != null)
             {
                 CanvasPage = settings.CanvasPage;
-                AccessToken = signedRequest.AccessToken;
                 AppId = settings.AppId;
+            }
+
+            FacebookWebContext facebookContext = FacebookWebContext.Current;
+            FacebookSignedRequest signedRequest = facebookContext.SignedRequest;
+
+            if (settings != null && signedRequest == null)
+            {
+                signedRequest = ParseSignedRequest(settings);
+            }
+
+            if (signedRequest != null)
+            {
+                AccessToken = signedRequest.AccessToken;
                 UserId = signedRequest.UserId;
             }
+        }
+
+        private FacebookSignedRequest ParseSignedRequest(IFacebookApplication settings)
+        {
+            HttpContext context = HttpContext.Current;
+            if (context != null)
+            {
+                HttpContextWrapper contextWrapper = new HttpContextWrapper(context);
+                if (contextWrapper.Request.IsAjaxRequest())
+                {
+                    // ajax requests won't have a signed request, so we need to build it from the current http request
+                    // see http://facebooksdk.codeplex.com/discussions/251878
+
+                    try
+                    {
+                        return FacebookSignedRequest.Parse(settings, SignedRequest);
+                    }
+                    catch (Exception exception)
+                    {
+                        // Facebook posts to the iframe, but only IE supports this so the first request will always fail for non IE browsers
+                        if (context.Request.Browser.Browser.Contains("IE"))
+                        {
+                            throw;
+                        }
+
+                        // it doesn't break anything so we'll throw a custom exception so that we can filter it out later
+                        InvalidSignedRequestException signedRequestException =
+                            new InvalidSignedRequestException(
+                                "Invalid SignedRequest - Non - IE (" + SignedRequest + ")",
+                                exception);
+                        throw signedRequestException;
+                    }
+                }
+            }
+
+            return null;
         }
 
         #region IFacebookContextSettings Members
