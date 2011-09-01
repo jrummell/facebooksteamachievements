@@ -1,7 +1,7 @@
-﻿/// <reference path="js/jquery-vsdoc.js" />
-/// <reference path="js/jquery.message.js" />
-/// <reference path="js/json2.js" />
-/// <reference path="js/columnizer.js" />
+﻿/// <reference path="jquery-1.4.4.js" />
+/// <reference path="jquery.message.js" />
+/// <reference path="json2.js" />
+/// <reference path="columnizer.js" />
 
 var $achievements =
 {

@@ -22,7 +22,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SteamAchievements.Web.Controllers
+namespace SteamAchievements.Web.Helpers
 {
     public static class CultureHelper
     {

@@ -121,7 +121,7 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AchievementController.cs" />
-    <Compile Include="Controllers\CultureHelper.cs" />
+    <Compile Include="Helpers\CultureHelper.cs" />
     <Compile Include="Controllers\RequestCultureAttribute.cs" />
     <Compile Include="Models\FacebookContextSettings.cs" />
     <Compile Include="Controllers\FacebookController.cs" />

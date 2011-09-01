@@ -21,6 +21,7 @@
 
 using System;
 using System.Web;
+using System.Web.Mvc;
 using Facebook;
 using Facebook.Web;
 
@@ -30,11 +31,17 @@ namespace SteamAchievements.Web.Models
     {
         public FacebookContextSettings()
         {
-            FacebookWebContext facebookContext = FacebookWebContext.Current;
+            HttpContext context = HttpContext.Current;
+            if (context == null)
+            {
+                return;
+            }
 
             IFacebookApplication settings;
             FacebookSignedRequest signedRequest;
-            if (facebookContext.SignedRequest == null)
+
+            HttpContextWrapper contextWrapper = new HttpContextWrapper(context);
+            if (contextWrapper.Request.IsAjaxRequest())
             {
                 // ajax requests won't have a signed request, so we need to build it from the current http request
                 // see http://facebooksdk.codeplex.com/discussions/251878
@@ -47,27 +54,32 @@ namespace SteamAchievements.Web.Models
                 catch (Exception exception)
                 {
                     // Facebook posts to the iframe, but only IE supports this so the first request will always fail for non IE browsers
-                    if (HttpContext.Current.Request.Browser.Browser.Contains("IE"))
+                    if (context.Request.Browser.Browser.Contains("IE"))
                     {
                         throw;
                     }
 
                     // it doesn't break anything so we'll throw a custom exception so that we can filter it out later
                     InvalidSignedRequestException signedRequestException =
-                        new InvalidSignedRequestException("Invalid SignedRequest - Non - IE (" + SignedRequest + ")", exception);
+                        new InvalidSignedRequestException("Invalid SignedRequest - Non - IE (" + SignedRequest + ")",
+                                                          exception);
                     throw signedRequestException;
                 }
             }
             else
             {
+                FacebookWebContext facebookContext = FacebookWebContext.Current;
                 settings = facebookContext.Settings;
                 signedRequest = facebookContext.SignedRequest;
             }
 
-            CanvasPage = settings.CanvasPage;
-            AccessToken = signedRequest.AccessToken;
-            AppId = settings.AppId;
-            UserId = signedRequest.UserId;
+            if (settings != null && signedRequest != null)
+            {
+                CanvasPage = settings.CanvasPage;
+                AccessToken = signedRequest.AccessToken;
+                AppId = settings.AppId;
+                UserId = signedRequest.UserId;
+            }
         }
 
         #region IFacebookContextSettings Members
