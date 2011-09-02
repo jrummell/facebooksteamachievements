@@ -27,7 +27,7 @@ namespace SteamAchievements.Services
 {
     public class SteamProfileXmlParser : ISteamProfileXmlParser
     {
-        #region IXmlParser<SteamProfile> Members
+        #region ISteamProfileXmlParser Members
 
         /// <summary>
         /// Parses the specified XML.
@@ -61,15 +61,5 @@ namespace SteamAchievements.Services
         }
 
         #endregion
-
-        /// <summary>
-        /// Parses the profile XML.
-        /// </summary>
-        /// <param name="xml">The XML.</param>
-        /// <returns></returns>
-        public SteamProfile ParseProfile(string xml)
-        {
-            return Parse(xml).SingleOrDefault();
-        }
     }
 }
