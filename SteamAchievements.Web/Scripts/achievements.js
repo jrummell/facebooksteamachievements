@@ -250,25 +250,5 @@ var $achievements =
             $(this.logSelector).append(message);
             this.updateSize();
         }
-    },
-
-    _getSignedRequest: function ()
-    {
-        return getQueryString()["signed_request"];
-
-        function getQueryString()
-        {
-            var result = {};
-            var queryString = location.search.substring(1);
-            var regex = /([^&=]+)=([^&]*)/g;
-            var match;
-
-            while (match = regex.exec(queryString))
-            {
-                result[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
-            }
-
-            return result;
-        }
     }
 }

@@ -5,7 +5,7 @@
 $(document).ready(function ()
 {
     var logSelector = "#log";
-    $steamUserId = $("#SteamUserId");
+    var $steamUserId = $("#SteamUserId");
     $achievements.init($steamUserId.val(), logSelector, false);
 
     $steamUserId.change(function ()
@@ -15,35 +15,35 @@ $(document).ready(function ()
 
     $("#steamIdError").message({ type: "error", dismiss: false }).hide();
 
-    $("#saveButton").button({ icons: { primary: "ui-icon-disk"} })
-                       .click(function ()
-                       {
-                           $("#saveImage").show();
-                           $("#saveSuccess").hide();
-                           $("#duplicateError").hide();
+    $("#saveButton").button({ icons: { primary: "ui-icon-disk" } })
+        .click(function()
+            {
+            $("#saveImage").show();
+            $("#saveSuccess").hide();
+            $("#duplicateError").hide();
 
-                           var settings = {
-                               SteamUserId: $("#SteamUserId").val(),
-                               AutoUpdate: $("#AutoUpdate")[0].checked,
-                               PublishDescription: $("#PublishDescription")[0].checked
-                           };
+            var settings = {
+                SteamUserId: $("#SteamUserId").val(),
+                AutoUpdate: $("#AutoUpdate")[0].checked,
+                PublishDescription: $("#PublishDescription")[0].checked
+            };
 
-                           var ondone = function (status)
-                           {
-                               $("#saveImage").hide();
+            var ondone = function(status)
+            {
+                $("#saveImage").hide();
 
-                               if (status == "Success")
-                               {
-                                   $("#saveSuccess").message({ type: "info" });
-                               }
-                               else if (status == "DuplicateError")
-                               {
-                                   $("#duplicateError").message({ type: "error" });
-                               }
-                           };
+                if (status == "Success")
+                {
+                    $("#saveSuccess").message({ type: "info" });
+                }
+                else if (status == "DuplicateError")
+                {
+                    $("#duplicateError").message({ type: "error" });
+                }
+            };
 
-                           $achievements.saveSettings(settings, ondone);
-                       });
+            $achievements.saveSettings(settings, ondone);
+        });
 });
 
 function checkProfile(steamUserId)
