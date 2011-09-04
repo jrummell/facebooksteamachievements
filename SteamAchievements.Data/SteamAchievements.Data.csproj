@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="AchievementManager.cs" />
     <Compile Include="DebuggerWriter.cs" />
+    <Compile Include="Disposable.cs" />
     <Compile Include="IAchievementManager.cs" />
     <Compile Include="ISteamRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

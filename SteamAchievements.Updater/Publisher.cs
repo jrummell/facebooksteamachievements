@@ -22,33 +22,38 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using Facebook;
+using SteamAchievements.Data;
 using SteamAchievements.Services;
 
 namespace SteamAchievements.Updater
 {
-    public class Publisher : IDisposable
+    public class Publisher : Disposable
     {
         private readonly IAutoUpdateManager _autoUpdateManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Publisher"/> class.
+        /// </summary>
+        /// <param name="autoUpdateManager">The auto update manager.</param>
         public Publisher(IAutoUpdateManager autoUpdateManager)
         {
             _autoUpdateManager = autoUpdateManager;
         }
 
-        #region IDisposable Members
-
-        public void Dispose()
+        /// <summary>
+        /// Gets the logger.
+        /// </summary>
+        public IAutoUpdateLogger Logger
         {
-            GC.SuppressFinalize(this);
-            Dispose(true);
+            get { return _autoUpdateManager.Logger; }
         }
 
-        #endregion
-
+        /// <summary>
+        /// Publishes this instance.
+        /// </summary>
         public void Publish()
         {
-            ICollection<string> users = _autoUpdateManager.GetAutoUpdateUsers();
+            IEnumerable<string> users = _autoUpdateManager.GetAutoUpdateUsers();
 
             foreach (string user in users)
             {
@@ -56,26 +61,15 @@ namespace SteamAchievements.Updater
                 {
                     _autoUpdateManager.PublishUserAchievements(user);
                 }
-                catch (FacebookOAuthException ex)
-                {
-                    // The user's access token is invalid. They may have changed their password performed another action to invalidate it.
-                    string message = String.Format("User {0} has an invalid AccessToken, the value will be removed.",
-                                                   user);
-                    ApplicationException exception = new ApplicationException(message, ex);
-                    _autoUpdateManager.Logger.Log(exception);
-
-                    // Reset the user's access token.
-                    _autoUpdateManager.ResetAccessToken(user);
-
-                    continue;
-                }
                 catch (SqlException ex)
                 {
+                    // a sql exception usually insn't recoverable, so return
                     _autoUpdateManager.Logger.Log(ex);
                     return;
                 }
                 catch (Exception ex)
                 {
+                    // log any other errors and continue to the next user
                     _autoUpdateManager.Logger.Log(ex);
                     continue;
                 }
@@ -84,12 +78,12 @@ namespace SteamAchievements.Updater
             _autoUpdateManager.Logger.Log("All users published.");
         }
 
-        protected virtual void Dispose(bool disposing)
+        /// <summary>
+        /// Disposes the managed resources.
+        /// </summary>
+        protected override void DisposeManaged()
         {
-            if (disposing)
-            {
-                _autoUpdateManager.Dispose();
-            }
+            _autoUpdateManager.Dispose();
         }
     }
 }

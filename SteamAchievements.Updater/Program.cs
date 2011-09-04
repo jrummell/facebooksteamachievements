@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Microsoft.Practices.Unity;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
 
@@ -7,9 +8,16 @@ namespace SteamAchievements.Updater
 {
     internal class Program
     {
+        private static IUnityContainer _container;
+        private static readonly DirectoryInfo _logDirectory = new DirectoryInfo("logs");
+
         private static void Main(string[] args)
         {
-            Publisher publisher = new Publisher(GetAutoUpdateManager());
+            _container = BuildContainer();
+
+            Publisher publisher = _container.Resolve<Publisher>();
+
+            PrepareLog(publisher);
 
             try
             {
@@ -21,35 +29,48 @@ namespace SteamAchievements.Updater
             }
         }
 
-        private static AutoUpdateManager GetAutoUpdateManager()
+        /// <summary>
+        /// Prepares the log.
+        /// </summary>
+        /// <param name="publisher">The publisher.</param>
+        private static void PrepareLog(Publisher publisher)
         {
-            // build up AutoUpdateManager - use DI instead?
-            SteamCommunityManager steamCommunityManager =
-                new SteamCommunityManager(new WebClientWrapper(), new SteamProfileXmlParser(), new GameXmlParser(),
-                                          new AchievementXmlParser());
-            AchievementService achievementService =
-                new AchievementService(
-                    new AchievementManager(new SteamRepository()), steamCommunityManager);
-            UserService userService = new UserService(new AchievementManager(new SteamRepository()));
+            IAutoUpdateLogger autoUpdateLogger = publisher.Logger;
 
-            // verify the log path
-            DirectoryInfo logDirectory = new DirectoryInfo("logs");
-            if (!logDirectory.Exists)
-            {
-                logDirectory.Create();
-            }
-
-            IAutoUpdateLogger autoUpdateLogger = new AutoUpdateLogger(logDirectory.FullName);
             // only keeps logs for the past 10 days
             autoUpdateLogger.Delete(DateTime.Now.AddDays(-10));
             // the default writer saves output to a file, this will display it in the console as well
             autoUpdateLogger.Attach(Console.Out);
+        }
 
-            AutoUpdateManager autoUpdateManager =
-                new AutoUpdateManager(achievementService, userService, new FacebookPublisher(),
-                                      autoUpdateLogger);
+        private static IUnityContainer BuildContainer()
+        {
+            UnityContainer container = new UnityContainer();
 
-            return autoUpdateManager;
+            container.RegisterType<ISteamCommunityManager, SteamCommunityManager>();
+            container.RegisterType<IWebClientWrapper, WebClientWrapper>();
+            container.RegisterType<ISteamProfileXmlParser, SteamProfileXmlParser>();
+            container.RegisterType<IGameXmlParser, GameXmlParser>();
+            container.RegisterType<IAchievementXmlParser, AchievementXmlParser>();
+
+            container.RegisterType<IAchievementService, AchievementService>();
+            container.RegisterType<IAchievementManager, AchievementManager>();
+
+#if DEBUG
+            container.RegisterType<ISteamRepository, MockSteamRepository>();
+#else
+            container.RegisterType<ISteamRepository, SteamRepository>();
+#endif
+
+            container.RegisterType<IUserService, UserService>();
+
+            container.RegisterType<IAutoUpdateLogger, AutoUpdateLogger>(new InjectionConstructor(_logDirectory.FullName));
+            container.RegisterType<IAutoUpdateManager, AutoUpdateManager>();
+            container.RegisterType<IFacebookPublisher, FacebookPublisher>();
+
+            container.RegisterType<Publisher>();
+
+            return container;
         }
     }
 }
