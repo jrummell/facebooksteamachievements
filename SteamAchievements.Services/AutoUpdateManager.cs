@@ -134,7 +134,7 @@ namespace SteamAchievements.Services
             }
             catch (InvalidGamesXmlException exception)
             {
-                _log.Log("Invalid games xml for {0}. Disabling auto update.", user.SteamUserId);
+                _log.Log("Invalid games URL for {0}. Disabling auto update.", user.SteamUserId);
                 _log.Log(exception);
 
                 user.AutoUpdate = false;
@@ -193,7 +193,7 @@ namespace SteamAchievements.Services
             catch (FacebookOAuthException exception)
             {
                 // The user's access token is invalid. They may have changed their password performed another action to invalidate it.
-                _log.Log("User {0} has an invalid AccessToken, the value will be removed.", user);
+                _log.Log("User {0} has an invalid AccessToken, the value will be removed.", user.SteamUserId);
                 _log.Log(exception);
 
                 // Reset the user's access token.
@@ -212,7 +212,7 @@ namespace SteamAchievements.Services
             // update the published flag
             _achievementService.PublishAchievements(user.SteamUserId, publishedAchievements);
 
-            _log.Log("User achievements published");
+            _log.Log("Published {0} achievements.", publishedAchievements.Count);
 
             return;
         }
