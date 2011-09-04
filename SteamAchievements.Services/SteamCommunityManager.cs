@@ -116,8 +116,8 @@ namespace SteamAchievements.Services
                         ErrorSignal signal = ErrorSignal.FromContext(context);
                         if (signal != null)
                         {
-                            string message = "Invalid xml for " + game.Name + " stats: " + game.StatsUrl;
-                            Exception exception = new InvalidOperationException(message, ex);
+                            string message = String.Format("Invalid xml for {0} stats: {1}.", game.Name, game.StatsUrl);
+                            Exception exception = new InvalidStatsXmlException(message, ex);
                             signal.Raise(exception);
                         }
                     }
@@ -161,7 +161,15 @@ namespace SteamAchievements.Services
                 return new Game[0];
             }
 
-            return _gamesParser.Parse(xml);
+            try
+            {
+                return _gamesParser.Parse(xml);
+            }
+            catch (XmlException ex)
+            {
+                string message = String.Format("Invalid games URL for {0}.", steamUserId);
+                throw new InvalidGamesXmlException(message, ex);
+            }
         }
 
         #endregion
@@ -192,6 +200,11 @@ namespace SteamAchievements.Services
             return new Uri(url, UriKind.Absolute);
         }
 
+        /// <summary>
+        /// Gets the XML parameter.
+        /// </summary>
+        /// <param name="xml">if set to <c>true</c> [XML].</param>
+        /// <returns></returns>
         private static string GetXmlParameter(bool xml)
         {
             return xml ? "?xml=1" : String.Empty;

@@ -22,10 +22,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
-    public class AutoUpdateLogger : IAutoUpdateLogger
+    public class AutoUpdateLogger : Disposable, IAutoUpdateLogger
     {
         private static readonly object _logLock = new object();
         private readonly string _logPath;
@@ -127,15 +128,6 @@ namespace SteamAchievements.Services
         }
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
-            Dispose(true);
-        }
-
-        /// <summary>
         /// Attaches the specified writer.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -146,8 +138,17 @@ namespace SteamAchievements.Services
 
         #endregion
 
+        /// <summary>
+        /// Inits the default writer.
+        /// </summary>
         private void InitDefaultWriter()
         {
+            DirectoryInfo logDirectory = new DirectoryInfo(_logPath);
+            if (!logDirectory.Exists)
+            {
+                logDirectory.Create();
+            }
+
             DateTime now = DateTime.UtcNow;
             string logFileName = String.Format("{0}-{1}-{2}.log", now.Year, now.Month, now.Day);
             _logFilePath = Path.Combine(_logPath, logFileName);
@@ -157,18 +158,14 @@ namespace SteamAchievements.Services
         }
 
         /// <summary>
-        /// Releases unmanaged and - optionally - managed resources
+        /// Disposes the managed resources.
         /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        private void Dispose(bool disposing)
+        protected override void DisposeManaged()
         {
-            if (disposing)
+            foreach (TextWriter writer in _textWriters)
             {
-                foreach (TextWriter writer in _textWriters)
-                {
-                    writer.Flush();
-                    writer.Dispose();
-                }
+                writer.Flush();
+                writer.Dispose();
             }
         }
     }

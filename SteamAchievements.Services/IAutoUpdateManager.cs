@@ -34,18 +34,12 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Gets the auto update steam user ids.
         /// </summary>
-        ICollection<string> GetAutoUpdateUsers();
+        IEnumerable<string> GetAutoUpdateUsers();
 
         /// <summary>
         /// Publishes the user's achievements.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         void PublishUserAchievements(string steamUserId);
-
-        /// <summary>
-        /// Resets the access token.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        void ResetAccessToken(string steamUserId);
     }
 }

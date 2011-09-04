@@ -25,10 +25,11 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using Facebook;
+using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
-    public class AutoUpdateManager : IAutoUpdateManager
+    public class AutoUpdateManager : Disposable, IAutoUpdateManager
     {
         private readonly IAchievementService _achievementService;
         private readonly IAutoUpdateLogger _log;
@@ -74,18 +75,9 @@ namespace SteamAchievements.Services
         #region IAutoUpdateManager Members
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
-            Dispose(true);
-        }
-
-        /// <summary>
         /// Gets the auto update steam user ids.
         /// </summary>
-        public ICollection<string> GetAutoUpdateUsers()
+        public IEnumerable<string> GetAutoUpdateUsers()
         {
             // get users configured for auto update
             IEnumerable<string> steamUserIds = _userService.GetAutoUpdateUsers();
@@ -140,9 +132,19 @@ namespace SteamAchievements.Services
                     return;
                 }
             }
+            catch (InvalidGamesXmlException exception)
+            {
+                _log.Log("Invalid games xml for {0}. Disabling auto update.", user.SteamUserId);
+                _log.Log(exception);
+
+                user.AutoUpdate = false;
+                _userService.UpdateUser(user);
+
+                throw;
+            }
             catch (XmlException exception)
             {
-                _log.Log("Invalid xml for " + user.SteamUserId);
+                _log.Log("Invalid xml for {0}.", user.SteamUserId);
                 _log.Log(exception);
 
                 throw;
@@ -188,9 +190,21 @@ namespace SteamAchievements.Services
 
                 publishedAchievements.AddRange(achievements.Select(a => a.Id));
             }
-            catch (FacebookApiException ex)
+            catch (FacebookOAuthException exception)
             {
-                _log.Log(ex);
+                // The user's access token is invalid. They may have changed their password performed another action to invalidate it.
+                _log.Log("User {0} has an invalid AccessToken, the value will be removed.", user);
+                _log.Log(exception);
+
+                // Reset the user's access token.
+                user.AccessToken = String.Empty;
+                _userService.UpdateUser(user);
+
+                return;
+            }
+            catch (FacebookApiException exception)
+            {
+                _log.Log(exception);
 
                 return;
             }
@@ -201,20 +215,6 @@ namespace SteamAchievements.Services
             _log.Log("User achievements published");
 
             return;
-        }
-
-        /// <summary>
-        /// Resets the access token.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        public void ResetAccessToken(string steamUserId)
-        {
-            User user = _userService.GetUser(steamUserId);
-            if (user != null)
-            {
-                user.AccessToken = String.Empty;
-                _userService.UpdateUser(user);
-            }
         }
 
         #endregion
@@ -257,21 +257,14 @@ namespace SteamAchievements.Services
         }
 
         /// <summary>
-        /// Releases unmanaged and - optionally - managed resources
+        /// Disposes the managed resources.
         /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected virtual void Dispose(bool disposing)
+        protected override void DisposeManaged()
         {
-            lock (this)
-            {
-                if (disposing)
-                {
-                    _log.Flush();
+            _log.Flush();
 
-                    _userService.Dispose();
-                    _achievementService.Dispose();
-                }
-            }
+            _userService.Dispose();
+            _achievementService.Dispose();
         }
     }
 }
