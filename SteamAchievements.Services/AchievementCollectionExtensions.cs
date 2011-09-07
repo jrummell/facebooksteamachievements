@@ -21,27 +21,27 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
     public static class AchievementCollectionExtensions
     {
         /// <summary>
-        /// Converts the <see cref="Achievement"/>s <see cref="SimpleAchievement"/>s.
+        /// Converts the <see cref="Data.Achievement"/>s to <see cref="Achievement"/>s.
         /// </summary>
         /// <param name="achievements">The achievements.</param>
         /// <param name="games">The games.</param>
         /// <returns></returns>
-        public static List<SimpleAchievement> ToSimpleAchievementList(
-            this IEnumerable<Achievement> achievements, IEnumerable<Game> games)
+        public static List<Achievement> ToSimpleAchievementList(
+            this IEnumerable<Data.Achievement> achievements, IEnumerable<Game> games)
         {
             return (from game in games
                     from achievement in achievements
                     where achievement.GameId == game.Id
-                    select new SimpleAchievement
+                    select new Achievement
                                {
                                    Id = achievement.Id,
+                                   ApiName = achievement.ApiName,
                                    ImageUrl = achievement.ImageUrl,
                                    Name = achievement.Name,
                                    Description = achievement.Description,
@@ -63,8 +63,9 @@ namespace SteamAchievements.Services
                                {
                                    Date = achievement.Date,
                                    FacebookUserId = facebookUserId,
-                                   Achievement = new Achievement
+                                   Achievement = new Data.Achievement
                                                      {
+                                                         ApiName = achievement.AchievementApiName,
                                                          Name = achievement.Name,
                                                          Description = achievement.Description,
                                                          ImageUrl = achievement.ImageUrl.ToString(),

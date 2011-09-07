@@ -46,7 +46,7 @@ namespace SteamAchievements.Services.Tests
         [Test, Explicit("Depends on recent game play")]
         public void GetAchievements()
         {
-            IEnumerable<UserAchievement> achievements = _manager.GetAchievements("nullreference");
+            IEnumerable<UserAchievement> achievements = _manager.GetClosedAchievements("nullreference");
 
             Assert.That(achievements.Any());
             Assert.That(achievements.Any(a => a.Name == "Acid Reflex"));

@@ -28,17 +28,17 @@ namespace SteamAchievements.Services
 {
     public class MockSteamRepository : ISteamRepository
     {
-        private readonly Dictionary<int, Achievement> _achievements;
+        private readonly Dictionary<int, Data.Achievement> _achievements;
         private readonly Dictionary<int, Data.UserAchievement> _userAchievements;
         private readonly Dictionary<long, Data.User> _users;
 
         public MockSteamRepository()
         {
-            _achievements = new Dictionary<int, Achievement>
+            _achievements = new Dictionary<int, Data.Achievement>
                                 {
                                     {
                                         1,
-                                        new Achievement
+                                        new Data.Achievement
                                             {
                                                 Id = 1,
                                                 Description = "Achievement 1 Description",
@@ -88,7 +88,7 @@ namespace SteamAchievements.Services
         {
         }
 
-        public IQueryable<Achievement> Achievements
+        public IQueryable<Data.Achievement> Achievements
         {
             get { return _achievements.Values.AsQueryable(); }
             set { throw new NotSupportedException(); }
@@ -128,7 +128,7 @@ namespace SteamAchievements.Services
         {
         }
 
-        public void InsertOnSubmit(Achievement achievement)
+        public void InsertOnSubmit(Data.Achievement achievement)
         {
             achievement.Id = _achievements.Keys.Max() + 1;
             _achievements.Add(achievement.Id, achievement);

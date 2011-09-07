@@ -39,15 +39,15 @@ namespace SteamAchievements.Data.Tests
             _achievements = (new[]
                                  {
                                      new Achievement
-                                         {Id = 1, GameId = 1, Name = "Achievement 1 for Game 1", Description = ""},
+                                         {Id = 1, GameId = 1, Name = "Achievement 1 for Game 1", Description = "", ApiName = "1"},
                                      new Achievement
-                                         {Id = 2, GameId = 1, Name = "Achievement 2 for Game 1", Description = ""},
+                                         {Id = 2, GameId = 1, Name = "Achievement 2 for Game 1", Description = "", ApiName = "2"},
                                      new Achievement
-                                         {Id = 3, GameId = 1, Name = "Achievement 3 for Game 1", Description = ""},
+                                         {Id = 3, GameId = 1, Name = "Achievement 3 for Game 1", Description = "", ApiName = "3"},
                                      new Achievement
-                                         {Id = 4, GameId = 2, Name = "Achievement 1 for Game 2", Description = ""},
+                                         {Id = 4, GameId = 2, Name = "Achievement 1 for Game 2", Description = "", ApiName = "4"},
                                      new Achievement
-                                         {Id = 5, GameId = 2, Name = "Achievement 2 for Game 2", Description = ""}
+                                         {Id = 5, GameId = 2, Name = "Achievement 2 for Game 2", Description = "", ApiName = "5"}
                                  }).AsQueryable();
 
             _users = (new[]
@@ -119,7 +119,8 @@ namespace SteamAchievements.Data.Tests
                                               {
                                                   Name = "Achievement " + i,
                                                   Description = "Achievement " + i,
-                                                  ImageUrl = "http://example.com/achievement" + i + ".gif"
+                                                  ImageUrl = "http://example.com/achievement" + i + ".gif",
+                                                  ApiName = i.ToString()
                                               };
                 gameAchievements.Add(achievement);
             }
@@ -171,14 +172,14 @@ namespace SteamAchievements.Data.Tests
         [Test]
         public void GetMissingAchievements()
         {
-            Achievement achievement1Game5 = new Achievement {GameId = 5, Name = "Achievement 1 for Game 5"};
-            Achievement achievement2Game5 = new Achievement {GameId = 5, Name = "Achievement 2 for Game 5"};
+            Achievement achievement1Game5 = new Achievement {GameId = 5, Name = "Achievement 1 for Game 5", ApiName = "1"};
+            Achievement achievement2Game5 = new Achievement {GameId = 5, Name = "Achievement 2 for Game 5", ApiName = "2"};
             ICollection<Achievement> communityAchievements =
                 new[]
                     {
-                        new Achievement {GameId = 1, Name = "Achievement 1 for Game 1"},
-                        new Achievement {GameId = 1, Name = "Achievement 2 for Game 1"},
-                        new Achievement {GameId = 1, Name = "Achievement 3 for Game 1"},
+                        new Achievement {GameId = 1, Name = "Achievement 1 for Game 1", ApiName = "1"},
+                        new Achievement {GameId = 1, Name = "Achievement 2 for Game 1", ApiName = "2"},
+                        new Achievement {GameId = 1, Name = "Achievement 3 for Game 1", ApiName = "3"},
                         achievement1Game5,
                         achievement2Game5
                     };
@@ -239,7 +240,8 @@ namespace SteamAchievements.Data.Tests
                         GameId = 5,
                         Name = "Achievement 1 for Game 5",
                         Description = "",
-                        ImageUrl = ""
+                        ImageUrl = "",
+                        ApiName = "1"
                     };
             Achievement achievement2Game5 =
                 new Achievement
@@ -248,7 +250,8 @@ namespace SteamAchievements.Data.Tests
                         GameId = 5,
                         Name = "Achievement 2 for Game 5",
                         Description = "",
-                        ImageUrl = ""
+                        ImageUrl = "",
+                        ApiName = "2"
                     };
 
             Achievement[] missingAchievements = new[] {achievement1Game5, achievement2Game5};
@@ -277,7 +280,8 @@ namespace SteamAchievements.Data.Tests
                                                       Id = 1,
                                                       GameId = 1,
                                                       Name = "Achievement 1 for Game 1",
-                                                      Description = ""
+                                                      Description = "",
+                                                      ApiName = "1"
                                                   }
                             },
                         new UserAchievement
@@ -289,7 +293,8 @@ namespace SteamAchievements.Data.Tests
                                                       Id = 2,
                                                       GameId = 1,
                                                       Name = "Achievement 2 for Game 1",
-                                                      Description = ""
+                                                      Description = "",
+                                                      ApiName = "2"
                                                   }
                             },
                         new UserAchievement
@@ -301,7 +306,8 @@ namespace SteamAchievements.Data.Tests
                                                       Id = 3,
                                                       GameId = 1,
                                                       Name = "Achievement 3 for Game 1",
-                                                      Description = ""
+                                                      Description = "",
+                                                      ApiName = "3"
                                                   }
                             },
                         new UserAchievement
@@ -313,7 +319,8 @@ namespace SteamAchievements.Data.Tests
                                                       Id = 4,
                                                       GameId = 2,
                                                       Name = "Achievement 1 for Game 2",
-                                                      Description = ""
+                                                      Description = "",
+                                                      ApiName = "4"
                                                   }
                             },
                         new UserAchievement
@@ -325,7 +332,8 @@ namespace SteamAchievements.Data.Tests
                                                       Id = 5,
                                                       GameId = 2,
                                                       Name = "Achievement 2 for Game 2",
-                                                      Description = ""
+                                                      Description = "",
+                                                      ApiName = "5"
                                                   }
                             },
                         new UserAchievement
@@ -337,7 +345,8 @@ namespace SteamAchievements.Data.Tests
                                                       Id = 6,
                                                       GameId = 3,
                                                       Name = "Achievement for Game",
-                                                      Description = "Game 3 Achievement 1"
+                                                      Description = "Game 3 Achievement 1",
+                                                      ApiName = "6"
                                                   }
                             },
                         new UserAchievement
@@ -349,7 +358,8 @@ namespace SteamAchievements.Data.Tests
                                                       Id = 7,
                                                       GameId = 3,
                                                       Name = "Achievement for Game",
-                                                      Description = "Game 3 Achievement 2"
+                                                      Description = "Game 3 Achievement 2",
+                                                      ApiName = "7"
                                                   }
                             },
                         new UserAchievement
@@ -361,7 +371,8 @@ namespace SteamAchievements.Data.Tests
                                                       Id = 8,
                                                       GameId = 4,
                                                       Name = "Achievement for Game",
-                                                      Description = "Game 4 Achievement 1"
+                                                      Description = "Game 4 Achievement 1",
+                                                      ApiName = "8"
                                                   }
                             }
                     };

@@ -31,6 +31,13 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <returns></returns>
+        ICollection<UserAchievement> GetClosedAchievements(string steamUserId);
+
+        /// <summary>
+        /// Gets the achievements from http://steamcommunity.com/id/[customurl]/[game]/?xml=1.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns></returns>
         ICollection<UserAchievement> GetAchievements(string steamUserId);
 
         /// <summary>

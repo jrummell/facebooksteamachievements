@@ -72,7 +72,7 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            ICollection<UserAchievement> achievements = _communityService.GetAchievements(steamUserId);
+            ICollection<UserAchievement> achievements = _communityService.GetClosedAchievements(steamUserId);
 
             Data.User user = _achievementManager.GetUser(steamUserId);
             if (user == null)
@@ -103,7 +103,7 @@ namespace SteamAchievements.Services
         /// <returns>
         /// The achievements that haven't been published yet.
         /// </returns>
-        public ICollection<SimpleAchievement> GetUnpublishedAchievements(string steamUserId, DateTime? oldestDate)
+        public ICollection<Achievement> GetUnpublishedAchievements(string steamUserId, DateTime? oldestDate)
         {
             if (steamUserId == null)
             {
@@ -112,7 +112,7 @@ namespace SteamAchievements.Services
 
             IEnumerable<Game> games = _communityService.GetGames(steamUserId);
 
-            IEnumerable<Achievement> achievements;
+            ICollection<Data.Achievement> achievements;
             if (oldestDate == null)
             {
                 achievements = _achievementManager.GetUnpublishedAchievements(steamUserId);
@@ -188,7 +188,7 @@ namespace SteamAchievements.Services
             if (updatedCount > 0)
             {
                 // hide achievements more than two days old
-                ICollection<SimpleAchievement> achievements =
+                ICollection<Achievement> achievements =
                     GetUnpublishedAchievements(user.SteamUserId, DateTime.UtcNow.Date.AddDays(-2));
                 IEnumerable<int> achievementIds = achievements.Select(achievement => achievement.Id);
                 HideAchievements(user.SteamUserId, achievementIds);
