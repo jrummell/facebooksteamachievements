@@ -25,6 +25,7 @@ using System.Linq;
 using System.Web;
 using System.Xml;
 using Elmah;
+using System.Diagnostics;
 
 namespace SteamAchievements.Services
 {
@@ -81,7 +82,63 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <returns></returns>
+        public ICollection<UserAchievement> GetClosedAchievements(string steamUserId)
+        {
+            return GetAchievements(steamUserId, true);
+        }
+
+        /// <summary>
+        /// Gets the achievements from http://steamcommunity.com/id/[customurl]/[game]/?xml=1.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns></returns>
         public ICollection<UserAchievement> GetAchievements(string steamUserId)
+        {
+            return GetAchievements(steamUserId, false);
+        }
+
+        /// <summary>
+        /// Gets the games from http://steamcommunity.com/id/[customurl]/games/?xml=1.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns></returns>
+        public ICollection<Game> GetGames(string steamUserId)
+        {
+            if (steamUserId == null)
+            {
+                throw new ArgumentNullException("steamUserId");
+            }
+
+            Uri gamesUrl = GetGamesUrl(steamUserId, true);
+            Debug.WriteLine(gamesUrl);
+
+            string xml = _webClient.DownloadString(gamesUrl);
+
+            if (xml == null)
+            {
+                return new Game[0];
+            }
+
+            try
+            {
+                return _gamesParser.Parse(xml);
+            }
+            catch (XmlException ex)
+            {
+                string message = String.Format("Invalid games URL for {0}.", steamUserId);
+                throw new InvalidGamesXmlException(message, ex);
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Gets the achievements from http://steamcommunity.com/id/[customurl]/[game]/?xml=1.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="closedOnly">if set to <c>true</c> [closed only].</param>
+        /// <returns></returns>
+        private ICollection<UserAchievement> GetAchievements(string steamUserId, bool closedOnly)
         {
             if (steamUserId == null)
             {
@@ -91,9 +148,14 @@ namespace SteamAchievements.Services
             List<UserAchievement> achievements = new List<UserAchievement>();
 
             IEnumerable<Game> games = GetGames(steamUserId);
-            foreach (Game game in games.Where(g => g.PlayedRecently))
+            if (closedOnly)
+            {
+                games = games.Where(g => g.PlayedRecently);
+            }
+            foreach (Game game in games)
             {
                 Uri xmlStatsUrl = new Uri(game.StatsUrl + "/?xml=1", UriKind.Absolute);
+                Debug.WriteLine(xmlStatsUrl);
 
                 string xml = _webClient.DownloadString(xmlStatsUrl);
 
@@ -105,7 +167,14 @@ namespace SteamAchievements.Services
                 IEnumerable<UserAchievement> gameAchievements;
                 try
                 {
-                    gameAchievements = _achievementParser.ParseClosed(xml);
+                    if (closedOnly)
+                    {
+                        gameAchievements = _achievementParser.ParseClosed(xml);
+                    }
+                    else
+                    {
+                        gameAchievements = _achievementParser.Parse(xml);
+                    }
                 }
                 catch (XmlException ex)
                 {
@@ -139,40 +208,6 @@ namespace SteamAchievements.Services
 
             return achievements;
         }
-
-        /// <summary>
-        /// Gets the games from http://steamcommunity.com/id/[customurl]/games/?xml=1.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <returns></returns>
-        public ICollection<Game> GetGames(string steamUserId)
-        {
-            if (steamUserId == null)
-            {
-                throw new ArgumentNullException("steamUserId");
-            }
-
-            Uri gamesUrl = GetGamesUrl(steamUserId, true);
-
-            string xml = _webClient.DownloadString(gamesUrl);
-
-            if (xml == null)
-            {
-                return new Game[0];
-            }
-
-            try
-            {
-                return _gamesParser.Parse(xml);
-            }
-            catch (XmlException ex)
-            {
-                string message = String.Format("Invalid games URL for {0}.", steamUserId);
-                throw new InvalidGamesXmlException(message, ex);
-            }
-        }
-
-        #endregion
 
         /// <summary>
         /// Gets the profile URL.

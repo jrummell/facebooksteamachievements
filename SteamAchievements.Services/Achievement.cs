@@ -23,12 +23,20 @@ using System;
 
 namespace SteamAchievements.Services
 {
-    public class SimpleAchievement : IEquatable<SimpleAchievement>
+    public class Achievement : IEquatable<Achievement>
     {
         /// <summary>
         /// Gets or sets the id.
         /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the API name.
+        /// </summary>
+        /// <value>
+        /// The API name.
+        /// </value>
+        public string ApiName { get; set; }
 
         /// <summary>
         /// Gets or sets the image URL.
@@ -63,7 +71,7 @@ namespace SteamAchievements.Services
         /// <returns>
         /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
         /// </returns>
-        public bool Equals(SimpleAchievement other)
+        public bool Equals(Achievement other)
         {
             if (ReferenceEquals(null, other))
             {
@@ -73,8 +81,10 @@ namespace SteamAchievements.Services
             {
                 return true;
             }
-            return other.Id == Id && Equals(other.ImageUrl, ImageUrl) && Equals(other.Name, Name) &&
-                   Equals(other.Description, Description);
+            return other.Id == Id && Equals(other.ApiName, ApiName)
+                   && Equals(other.ImageUrl, ImageUrl)
+                   && Equals(other.Name, Name)
+                   && Equals(other.Description, Description);
         }
 
         #endregion
@@ -96,11 +106,11 @@ namespace SteamAchievements.Services
             {
                 return true;
             }
-            if (obj.GetType() != typeof (SimpleAchievement))
+            if (obj.GetType() != typeof (Achievement))
             {
                 return false;
             }
-            return Equals((SimpleAchievement) obj);
+            return Equals((Achievement) obj);
         }
 
         /// <summary>
@@ -114,6 +124,7 @@ namespace SteamAchievements.Services
             unchecked
             {
                 int result = Id;
+                result = (result*397) ^ (ApiName != null ? ApiName.GetHashCode() : 0);
                 result = (result*397) ^ (ImageUrl != null ? ImageUrl.GetHashCode() : 0);
                 result = (result*397) ^ (Name != null ? Name.GetHashCode() : 0);
                 result = (result*397) ^ (Description != null ? Description.GetHashCode() : 0);

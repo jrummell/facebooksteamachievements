@@ -32,7 +32,7 @@ namespace SteamAchievements.Services
     {
         private readonly TextInfo _textInfo = Thread.CurrentThread.CurrentCulture.TextInfo;
 
-        #region IXmlParser<UserAchievement> Members
+        #region IAchievementXmlParser Members
 
         /// <summary>
         /// Returns a collection of <see cref="UserAchievement"/>s from the given xml and gameId.
@@ -42,8 +42,6 @@ namespace SteamAchievements.Services
             return Parse(xml, false);
         }
 
-        #endregion
-
         /// <summary>
         /// Returns a collection of closed <see cref="UserAchievement"/>s from the given xml.
         /// </summary>
@@ -51,6 +49,8 @@ namespace SteamAchievements.Services
         {
             return Parse(xml, true);
         }
+
+        #endregion
 
         /// <summary>
         /// Returns a collection of <see cref="UserAchievement"/>s from the given xml.
@@ -63,24 +63,33 @@ namespace SteamAchievements.Services
             XDocument document = XDocument.Parse(xml);
 
             // xpath: player/customURL
-            XElement customUrlElement = document.Descendants("player").First().Element("customURL");
+            XElement playerElement = document.Descendants("player").FirstOrDefault();
+            if (playerElement == null)
+            {
+                // game is missing xml achievements
+                return new List<UserAchievement>();
+            }
+
+            XElement customUrlElement = playerElement.Element("customURL");
 
             var achievements =
                 from element in document.Descendants("achievement")
+                let apiname = element.Element("apiname")
                 let iconClosed = element.Element("iconClosed")
                 let description = element.Element("description")
                 let name = element.Element("name")
                 let closed = element.Attribute("closed")
-                let dateElement = element.Element("unlockTimestamp")
-                where iconClosed != null && description != null && name != null && closed != null
+                let date = element.Element("unlockTimestamp")
+                where apiname != null && iconClosed != null && description != null && name != null && closed != null
                 select new
                            {
+                               apiname = apiname.Value,
                                closed = closed.Value == "1",
                                // name is in all caps - fix it
                                name = _textInfo.ToTitleCase(name.Value.ToLower()),
                                description = description.Value,
                                image = iconClosed.Value,
-                               date = dateElement == null ? null : dateElement.Value
+                               date = date == null ? null : date.Value
                            };
 
             if (closedOnly)
@@ -94,6 +103,7 @@ namespace SteamAchievements.Services
                     select new UserAchievement
                                {
                                    SteamUserId = customUrlElement.Value,
+                                   AchievementApiName = achievement.apiname,
                                    Name = achievement.name,
                                    Description = achievement.description,
                                    ImageUrl = new Uri(achievement.image, UriKind.Absolute),

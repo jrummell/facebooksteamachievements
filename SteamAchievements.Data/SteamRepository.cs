@@ -21,13 +21,22 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
 
 namespace SteamAchievements.Data
 {
-    public class SteamRepository : ISteamRepository
+    public class SteamRepository : Disposable, ISteamRepository
     {
         private readonly SteamDataContext _context = new SteamDataContext();
+
+        /// <summary>
+        /// Gets the context.
+        /// </summary>
+        public DataContext Context
+        {
+            get { return _context; }
+        }
 
         #region ISteamRepository Members
 
@@ -114,27 +123,14 @@ namespace SteamAchievements.Data
             _context.UserAchievements.InsertAllOnSubmit(achievements);
         }
 
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
         #endregion
 
         /// <summary>
-        /// Releases unmanaged and - optionally - managed resources
+        /// Disposes the managed resources.
         /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected void Dispose(bool disposing)
+        protected override void DisposeManaged()
         {
-            if (disposing)
-            {
-                _context.Dispose();
-            }
+            _context.Dispose();
         }
     }
 }

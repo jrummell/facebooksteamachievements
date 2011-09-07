@@ -41,7 +41,7 @@ namespace SteamAchievements.Services
         /// <returns>
         /// The achievements that haven't been published yet.
         /// </returns>
-        ICollection<SimpleAchievement> GetUnpublishedAchievements(string steamUserId, DateTime? oldestDate);
+        ICollection<Achievement> GetUnpublishedAchievements(string steamUserId, DateTime? oldestDate);
 
         /// <summary>
         /// Gets the games.

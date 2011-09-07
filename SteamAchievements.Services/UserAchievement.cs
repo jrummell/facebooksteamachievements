@@ -26,6 +26,14 @@ namespace SteamAchievements.Services
     public class UserAchievement : IEquatable<UserAchievement>
     {
         /// <summary>
+        /// Gets or sets the API name of the achievement.
+        /// </summary>
+        /// <value>
+        /// The API name of the achievement.
+        /// </value>
+        public string AchievementApiName { get; set; }
+
+        /// <summary>
         /// Gets or sets the steam user ID.
         /// </summary>
         /// <value>The user ID</value>

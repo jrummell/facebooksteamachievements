@@ -76,9 +76,9 @@ namespace SteamAchievements.Services.Tests
             _userServiceMock.ExpectAndReturn("GetUser", user, "user1");
             _achievementServiceMock.ExpectAndReturn("UpdateAchievements", 1, "user1");
             _achievementServiceMock.ExpectAndReturn("GetUnpublishedAchievements",
-                                                    new List<SimpleAchievement>
+                                                    new List<Achievement>
                                                         {
-                                                            new SimpleAchievement
+                                                            new Achievement
                                                                 {
                                                                     Id = 1,
                                                                     Name = "achievement 1",

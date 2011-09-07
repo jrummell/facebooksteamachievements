@@ -417,15 +417,13 @@ namespace SteamAchievements.Data
                 join userAchievement in achievements on
                     new
                         {
-                            Name = achievement.Name.ToUpper(),
-                            achievement.GameId,
-                            achievement.Description
+                            achievement.ApiName,
+                            achievement.GameId
                         } equals
                     new
                         {
-                            Name = userAchievement.Achievement.Name.ToUpper(),
-                            userAchievement.Achievement.GameId,
-                            userAchievement.Achievement.Description
+                            userAchievement.Achievement.ApiName,
+                            userAchievement.Achievement.GameId
                         }
                 select new UserAchievement
                            {
@@ -480,13 +478,13 @@ namespace SteamAchievements.Data
             IEnumerable<int> gameIds = (from a in allAchievements
                                         select a.GameId).Distinct();
 
-            IEnumerable<string> achievementNames = (from a in allAchievements
-                                                    where gameIds.Contains(a.GameId)
-                                                    select a.Name).Distinct();
+            IEnumerable<string> achievementApiNames = (from a in allAchievements
+                                                       where gameIds.Contains(a.GameId)
+                                                       select a.ApiName).Distinct();
 
             // get the possible achievements by name
             IEnumerable<Achievement> possibleAchievements = (from a in _repository.Achievements
-                                                             where achievementNames.Contains(a.Name)
+                                                             where achievementApiNames.Contains(a.ApiName)
                                                              select a).ToList();
 
             if (!possibleAchievements.Any())
@@ -503,9 +501,9 @@ namespace SteamAchievements.Data
             // add a great deal of complexity to the following query.
             return (from achievement in allAchievements
                     join possibleAchievement in possibleAchievements
-                        on new {achievement.GameId, achievement.Name, achievement.Description}
+                        on new {achievement.GameId, achievement.ApiName}
                         equals
-                        new {possibleAchievement.GameId, possibleAchievement.Name, possibleAchievement.Description}
+                        new {possibleAchievement.GameId, possibleAchievement.ApiName}
                     join assignedAchievement in assignedAchievements
                         on possibleAchievement.Id equals assignedAchievement.Id into joinedAssignedAchievements
                     from joinedAssignedAchievement in joinedAssignedAchievements.DefaultIfEmpty()
@@ -528,6 +526,7 @@ namespace SteamAchievements.Data
             {
                 Achievement newAchievement = new Achievement
                                                  {
+                                                     ApiName = achievement.ApiName,
                                                      Name = achievement.Name,
                                                      GameId = achievement.GameId,
                                                      Description = achievement.Description,
@@ -558,11 +557,11 @@ namespace SteamAchievements.Data
 
             IEnumerable<string> communityAchievementIds =
                 from achievement in communityAchievements
-                select achievement.GameId + achievement.Name.ToUpper();
+                select achievement.GameId + achievement.ApiName;
 
             List<Achievement> dbAchievements =
                 (from achievement in _repository.Achievements
-                 let achievementId = achievement.GameId + achievement.Name.ToUpper()
+                 let achievementId = achievement.GameId + achievement.ApiName
                  where communityAchievementIds.Contains(achievementId)
                  select achievement).ToList();
 
@@ -575,7 +574,7 @@ namespace SteamAchievements.Data
                     Achievement missingAchievement =
                         dbAchievements.Where(
                             a => a.GameId == communityAchievement.GameId
-                                 && a.Name.ToUpper() == communityAchievement.Name.ToUpper())
+                                 && a.ApiName == communityAchievement.ApiName)
                             .FirstOrDefault();
 
                     if (missingAchievement == null)
@@ -604,8 +603,8 @@ namespace SteamAchievements.Data
             {
                 achievement.GameId = gameId;
 
-                string name = achievement.Name;
-                if (!_repository.Achievements.Where(a => a.GameId == gameId && a.Name.ToUpper() == name.ToUpper()).Any())
+                string apiName = achievement.ApiName;
+                if (!_repository.Achievements.Where(a => a.GameId == gameId && a.ApiName == apiName).Any())
                 {
                     _repository.InsertOnSubmit(achievement);
                 }

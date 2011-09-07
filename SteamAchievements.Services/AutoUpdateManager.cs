@@ -153,7 +153,7 @@ namespace SteamAchievements.Services
             // get unpublished achievements earned in the last 24-48 hours to make up for time zone differences 
             // and the time it takes to run the Auto Update process
             DateTime oldestDate = DateTime.UtcNow.AddHours(-48).Date;
-            IEnumerable<SimpleAchievement> achievements =
+            IEnumerable<Achievement> achievements =
                 _achievementService.GetUnpublishedAchievements(user.SteamUserId, oldestDate);
 
             if (!achievements.Any())
@@ -168,7 +168,7 @@ namespace SteamAchievements.Services
 
             // since the api only supports one attachment, use the first achievement's image
             // and build the description from all achievements
-            SimpleAchievement firstAchievement = achievements.First();
+            Achievement firstAchievement = achievements.First();
             Uri statsUrl = SteamCommunityManager.GetProfileUrl(user.SteamUserId, false);
             string message = String.Format("{0} earned new achievements", user.SteamUserId);
 
@@ -225,12 +225,12 @@ namespace SteamAchievements.Services
         /// <param name="achievements">The achievements.</param>
         /// <param name="publishDescription">if set to <c>true</c> [publish description].</param>
         /// <returns></returns>
-        private static string BuildDescription(IEnumerable<SimpleAchievement> achievements, bool publishDescription)
+        private static string BuildDescription(IEnumerable<Achievement> achievements, bool publishDescription)
         {
             StringBuilder message = new StringBuilder();
 
             int currentGameId = 0;
-            foreach (SimpleAchievement achievement in achievements)
+            foreach (Achievement achievement in achievements)
             {
                 message.Append(" ");
 
