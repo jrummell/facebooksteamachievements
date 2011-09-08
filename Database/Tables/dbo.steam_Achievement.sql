@@ -7,6 +7,8 @@ CREATE TABLE [dbo].[steam_Achievement]
 [Description] [nvarchar] (1000) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 [ImageUrl] [varchar] (500) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL
 ) ON [PRIMARY]
+CREATE UNIQUE NONCLUSTERED INDEX [IX_steam_Achievement] ON [dbo].[steam_Achievement] ([GameId], [ApiName]) ON [PRIMARY]
+
 
 
 
