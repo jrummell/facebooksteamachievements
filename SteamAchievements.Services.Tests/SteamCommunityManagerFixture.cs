@@ -58,11 +58,17 @@ namespace SteamAchievements.Services.Tests
                     .Select(a => a.Achievement);
 
             // create a copy that doesn't have Name, Description and ImageUrl
+            int idCount = 0;
             IEnumerable<Achievement> unfilledAchievements =
-                achievements.Select(a => new Achievement {ApiName = a.ApiName, Game = a.Game}).ToArray();
+                achievements.Select(a => new Achievement
+                                             {
+                                                 ApiName = a.ApiName,
+                                                 Game = a.Game,
+                                                 Id = idCount++
+                                             }).ToArray();
 
             // fill
-            _manager.FillAchievements(unfilledAchievements);
+            _manager.FillAchievements(unfilledAchievements, "french");
 
             // assert they are filled
             foreach (Achievement achievement in unfilledAchievements)

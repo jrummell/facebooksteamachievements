@@ -57,6 +57,14 @@ namespace SteamAchievements.Services
         public string Description { get; set; }
 
         /// <summary>
+        /// Gets or sets the language.
+        /// </summary>
+        /// <value>
+        /// The language.
+        /// </value>
+        public string Language { get; set; }
+
+        /// <summary>
         /// Gets or sets the game.
         /// </summary>
         /// <value>The game.</value>
@@ -82,7 +90,8 @@ namespace SteamAchievements.Services
                 return true;
             }
             return other.Id == Id && Equals(other.ApiName, ApiName)
-                   && Equals(other.Game, Game);
+                   && Equals(other.Game, Game)
+                   && Equals(other.Language, Language);
         }
 
         #endregion
@@ -121,9 +130,10 @@ namespace SteamAchievements.Services
         {
             unchecked
             {
-                int result = Id;
+                int result = 0;
                 result = (result*397) ^ (ApiName != null ? ApiName.GetHashCode() : 0);
                 result = (result*397) ^ (Game != null ? Game.GetHashCode() : 0);
+                result = (result*397) ^ (Language != null ? Language.GetHashCode() : 0);
                 return result;
             }
         }
