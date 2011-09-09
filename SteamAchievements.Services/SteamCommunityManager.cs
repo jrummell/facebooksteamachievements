@@ -162,10 +162,12 @@ namespace SteamAchievements.Services
         /// Sets Name, Description, and ImageUrl from the achievement cache.
         /// </summary>
         /// <param name="achievements">The achievements.</param>
-        public void FillAchievements(IEnumerable<Achievement> achievements)
+        /// <param name="language"></param>
+        public void FillAchievements(IEnumerable<Achievement> achievements, string language)
         {
             foreach (Achievement achievement in achievements)
             {
+                achievement.Language = language;
                 int hashCode = achievement.GetHashCode();
                 if (AchievementCache.ContainsKey(hashCode))
                 {
@@ -249,7 +251,11 @@ namespace SteamAchievements.Services
 
                 List<UserAchievement> achievementList = gameAchievements.ToList();
                 Game game1 = game;
-                achievementList.ForEach(a => a.Achievement.Game = game1);
+                achievementList.ForEach(a =>
+                                            {
+                                                a.Achievement.Game = game1;
+                                                a.Achievement.Language = language;
+                                            });
 
                 achievements.AddRange(achievementList);
             }

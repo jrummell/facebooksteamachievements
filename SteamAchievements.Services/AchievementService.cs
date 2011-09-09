@@ -111,7 +111,8 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            IEnumerable<Game> games = _communityService.GetGames(steamUserId, CultureHelper.GetLanguage());
+            string language = CultureHelper.GetLanguage();
+            IEnumerable<Game> games = _communityService.GetGames(steamUserId, language);
 
             ICollection<Data.Achievement> dataAchievements;
             if (oldestDate == null)
@@ -125,7 +126,7 @@ namespace SteamAchievements.Services
 
             List<Achievement> achievements = dataAchievements.ToSimpleAchievementList(games);
 
-            _communityService.FillAchievements(achievements);
+            _communityService.FillAchievements(achievements, language);
 
             return achievements;
         }

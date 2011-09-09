@@ -61,6 +61,7 @@ namespace SteamAchievements.Services
         /// Sets Name, Description, and ImageUrl from the achievement cache.
         /// </summary>
         /// <param name="achievements">The achievements.</param>
-        void FillAchievements(IEnumerable<Achievement> achievements);
+        /// <param name="language"></param>
+        void FillAchievements(IEnumerable<Achievement> achievements, string language);
     }
 }
