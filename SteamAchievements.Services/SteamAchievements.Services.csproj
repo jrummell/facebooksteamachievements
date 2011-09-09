@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="AutoUpdateLogger.cs" />
     <Compile Include="AutoUpdateManager.cs" />
+    <Compile Include="CultureHelper.cs" />
     <Compile Include="DuplicateSteamUserException.cs" />
     <Compile Include="FacebookPublisher.cs" />
     <Compile Include="IAchievementXmlParser.cs" />

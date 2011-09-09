@@ -56,7 +56,7 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            return _communityService.GetGames(steamUserId).ToList();
+            return _communityService.GetGames(steamUserId, CultureHelper.GetLanguage()).ToList();
         }
 
         /// <summary>
@@ -72,7 +72,8 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            ICollection<UserAchievement> achievements = _communityService.GetClosedAchievements(steamUserId);
+            ICollection<UserAchievement> achievements =
+                _communityService.GetClosedAchievements(steamUserId, CultureHelper.GetLanguage());
 
             Data.User user = _achievementManager.GetUser(steamUserId);
             if (user == null)
@@ -110,7 +111,7 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("steamUserId");
             }
 
-            IEnumerable<Game> games = _communityService.GetGames(steamUserId);
+            IEnumerable<Game> games = _communityService.GetGames(steamUserId, CultureHelper.GetLanguage());
 
             ICollection<Data.Achievement> dataAchievements;
             if (oldestDate == null)
