@@ -62,7 +62,7 @@ namespace SteamAchievements.Services
         /// <value>The game.</value>
         public Game Game { get; set; }
 
-        #region IEquatable<SimpleAchievement> Members
+        #region IEquatable<Achievement> Members
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
@@ -82,9 +82,7 @@ namespace SteamAchievements.Services
                 return true;
             }
             return other.Id == Id && Equals(other.ApiName, ApiName)
-                   && Equals(other.ImageUrl, ImageUrl)
-                   && Equals(other.Name, Name)
-                   && Equals(other.Description, Description);
+                   && Equals(other.Game, Game);
         }
 
         #endregion
@@ -125,9 +123,7 @@ namespace SteamAchievements.Services
             {
                 int result = Id;
                 result = (result*397) ^ (ApiName != null ? ApiName.GetHashCode() : 0);
-                result = (result*397) ^ (ImageUrl != null ? ImageUrl.GetHashCode() : 0);
-                result = (result*397) ^ (Name != null ? Name.GetHashCode() : 0);
-                result = (result*397) ^ (Description != null ? Description.GetHashCode() : 0);
+                result = (result*397) ^ (Game != null ? Game.GetHashCode() : 0);
                 return result;
             }
         }

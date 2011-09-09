@@ -49,7 +49,7 @@ namespace SteamAchievements.Services.Tests
             IEnumerable<UserAchievement> achievements = _manager.GetClosedAchievements("nullreference");
 
             Assert.That(achievements.Any());
-            Assert.That(achievements.Any(a => a.Name == "Acid Reflex"));
+            Assert.That(achievements.Any(a => a.Achievement.Name == "Acid Reflex"));
         }
 
         [Test]

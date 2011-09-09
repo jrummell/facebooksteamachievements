@@ -26,12 +26,12 @@ namespace SteamAchievements.Services
     public class UserAchievement : IEquatable<UserAchievement>
     {
         /// <summary>
-        /// Gets or sets the API name of the achievement.
+        /// Gets or sets the achievement.
         /// </summary>
         /// <value>
-        /// The API name of the achievement.
+        /// The achievement.
         /// </value>
-        public string AchievementApiName { get; set; }
+        public Achievement Achievement { get; set; }
 
         /// <summary>
         /// Gets or sets the steam user ID.
@@ -40,34 +40,10 @@ namespace SteamAchievements.Services
         public string SteamUserId { get; set; }
 
         /// <summary>
-        /// Gets or sets the name.
-        /// </summary>
-        /// <value>The name.</value>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the description.
-        /// </summary>
-        /// <value>The description.</value>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets the image URL.
-        /// </summary>
-        /// <value>The image URL.</value>
-        public Uri ImageUrl { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether this <see cref="UserAchievement"/> is closed.
         /// </summary>
         /// <value><c>true</c> if closed; otherwise, <c>false</c>.</value>
         public bool Closed { get; set; }
-
-        /// <summary>
-        /// Gets or sets the game.
-        /// </summary>
-        /// <value>The game.</value>
-        public Game Game { get; set; }
 
         /// <summary>
         /// Gets or sets the unlocked date.
@@ -94,9 +70,10 @@ namespace SteamAchievements.Services
             {
                 return true;
             }
-            return Equals(other.SteamUserId, SteamUserId) && Equals(other.Name, Name) &&
-                   Equals(other.Description, Description) && Equals(other.ImageUrl, ImageUrl) &&
-                   other.Closed.Equals(Closed) && /*Equals(other.Game, Game) &&*/ other.Date.Equals(Date);
+            return Equals(other.SteamUserId, SteamUserId)
+                   && other.Closed.Equals(Closed)
+                   && other.Date.Equals(Date)
+                   && Equals(other.Achievement, Achievement);
         }
 
         #endregion
@@ -136,11 +113,8 @@ namespace SteamAchievements.Services
             unchecked
             {
                 int result = (SteamUserId != null ? SteamUserId.GetHashCode() : 0);
-                result = (result*397) ^ (Name != null ? Name.GetHashCode() : 0);
-                result = (result*397) ^ (Description != null ? Description.GetHashCode() : 0);
-                result = (result*397) ^ (ImageUrl != null ? ImageUrl.GetHashCode() : 0);
                 result = (result*397) ^ Closed.GetHashCode();
-                /*result = (result*397) ^ (Game != null ? Game.GetHashCode() : 0);*/
+                result = (result*397) ^ (Achievement != null ? Achievement.GetHashCode() : 0);
                 result = (result*397) ^ Date.GetHashCode();
                 return result;
             }

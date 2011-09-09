@@ -43,10 +43,10 @@ namespace SteamAchievements.Services.Tests
 
             Assert.That(achievements.Any());
             Assert.That(achievements.All(a => a.SteamUserId == "nullreference"));
-            Assert.That(achievements.Any(a => a.Name == "Fried Piper" && a.Closed));
+            Assert.That(achievements.Any(a => a.Achievement.Name == "Fried Piper" && a.Closed));
             Assert.That(!achievements.Any(a => !a.Closed));
             Assert.That(
-                achievements.Any(a => a.Name == "Midnight Rider" && a.Closed && a.Date.Ticks == expectedUnlockDate.Ticks));
+                achievements.Any(a => a.Achievement.Name == "Midnight Rider" && a.Closed && a.Date.Ticks == expectedUnlockDate.Ticks));
         }
 
         [Test]
@@ -76,8 +76,8 @@ namespace SteamAchievements.Services.Tests
 
             Assert.That(achievements.Any());
             Assert.That(achievements.All(a => a.SteamUserId == "nullreference"));
-            Assert.That(achievements.Any(a => a.Name == "Fried Piper" && a.Closed));
-            Assert.That(achievements.Any(a => a.Name == "Cl0wnd" && !a.Closed));
+            Assert.That(achievements.Any(a => a.Achievement.Name == "Fried Piper" && a.Closed));
+            Assert.That(achievements.Any(a => a.Achievement.Name == "Cl0wnd" && !a.Closed));
         }
     }
 }

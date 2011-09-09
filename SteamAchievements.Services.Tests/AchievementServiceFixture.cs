@@ -190,8 +190,8 @@ namespace SteamAchievements.Services.Tests
                 }
 
                 communityAchievements =
-                    userCommunityAchievements.Values.SelectMany(v => v.Select(ua => ua)).OrderBy(ua => ua.Game.Id)
-                        .OrderBy(ua => ua.AchievementApiName).Distinct().ToArray();
+                    userCommunityAchievements.Values.SelectMany(v => v.Select(ua => ua)).OrderBy(ua => ua.Achievement.Game.Id)
+                        .OrderBy(ua => ua.Achievement.ApiName).Distinct().ToArray();
 
                 Serialize("CommunityAchievements.xml", communityAchievements);
 
@@ -201,13 +201,13 @@ namespace SteamAchievements.Services.Tests
                     UserAchievement achievement =
                         communityAchievements
                             .Where(a =>
-                                   a.Game.Id == dataAchievement.GameId
-                                   && a.Name.ToUpper() == dataAchievement.Name.ToUpper()
-                                   && a.Description.ToUpper() == dataAchievement.Description.ToUpper())
+                                   a.Achievement.Game.Id == dataAchievement.GameId
+                                   && a.Achievement.Name.ToUpper() == dataAchievement.Name.ToUpper()
+                                   && a.Achievement.Description.ToUpper() == dataAchievement.Description.ToUpper())
                             .FirstOrDefault();
                     if (achievement != null)
                     {
-                        dataAchievement.ApiName = achievement.AchievementApiName;
+                        dataAchievement.ApiName = achievement.Achievement.ApiName;
                         //Debug.WriteLine("Id: {0}, GameId: {1}, Name: {2}, ApiName: {3}",
                         //                dataAchievement.Id, dataAchievement.GameId,
                         //                dataAchievement.Name, dataAchievement.ApiName);
@@ -273,7 +273,7 @@ namespace SteamAchievements.Services.Tests
                 achievementXmlParser.ParseClosed(File.ReadAllText("cssAchievements.xml")).ToList();
             userAchievements.ForEach(
                 userAchievement =>
-                userAchievement.Game =
+                userAchievement.Achievement.Game =
                 new Game
                     {
                         Id = 240,
