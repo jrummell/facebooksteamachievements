@@ -19,6 +19,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -29,18 +30,47 @@ namespace SteamAchievements.Services.Tests
     //[Explicit("Requires internet connection")]
     public class SteamCommunityManagerFixture
     {
-        private SteamCommunityManager _manager;
+        #region Setup/Teardown
 
         [SetUp]
         public void SetUp()
         {
-            _manager = new SteamCommunityManager(new WebClientWrapper(), new SteamProfileXmlParser(), new GameXmlParser(), new AchievementXmlParser());
+            _manager = new SteamCommunityManager(new WebClientWrapper(), new SteamProfileXmlParser(),
+                                                 new GameXmlParser(), new AchievementXmlParser());
         }
-        
+
         [TearDown]
         public void TearDown()
         {
             _manager.Dispose();
+        }
+
+        #endregion
+
+        private SteamCommunityManager _manager;
+
+        [Test, Explicit("Depends on recent game play")]
+        public void FillAchievements()
+        {
+            // get the achievements
+            IEnumerable<Achievement> achievements =
+                _manager.GetClosedAchievements("nullreference")
+                    .Select(a => a.Achievement);
+
+            // create a copy that doesn't have Name, Description and ImageUrl
+            IEnumerable<Achievement> unfilledAchievements =
+                achievements.Select(a => new Achievement {ApiName = a.ApiName, Game = a.Game}).ToArray();
+
+            // fill
+            _manager.FillAchievements(unfilledAchievements);
+
+            // assert they are filled
+            foreach (Achievement achievement in unfilledAchievements)
+            {
+                Assert.That(!String.IsNullOrEmpty(achievement.Name));
+                Assert.That(!String.IsNullOrEmpty(achievement.Description));
+                Assert.That(!String.IsNullOrEmpty(achievement.ImageUrl));
+            }
         }
 
         [Test, Explicit("Depends on recent game play")]

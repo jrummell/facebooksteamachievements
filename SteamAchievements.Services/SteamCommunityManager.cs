@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Web;
 using System.Xml;
 using Elmah;
@@ -32,7 +33,6 @@ namespace SteamAchievements.Services
 {
     public class SteamCommunityManager : Disposable, ISteamCommunityManager
     {
-        private static readonly Dictionary<int, Achievement> _achievementCache = new Dictionary<int, Achievement>();
         private static readonly object _achievementCacheLock = new object();
         private readonly IAchievementXmlParser _achievementParser;
         private readonly IGameXmlParser _gamesParser;
@@ -53,6 +53,28 @@ namespace SteamAchievements.Services
             _achievementParser = achievementParser;
             _gamesParser = gamesParser;
             _profileParser = profileParser;
+        }
+
+        private static IDictionary<int, Achievement> AchievementCache
+        {
+            get
+            {
+                lock (_achievementCacheLock)
+                {
+                    string key = typeof (SteamCommunityManager) + ".AchievementCache";
+                    MemoryCache cache = MemoryCache.Default;
+                    IDictionary<int, Achievement> dictionary =
+                        cache.Get(key) as IDictionary<int, Achievement>;
+
+                    if (dictionary == null)
+                    {
+                        dictionary = new Dictionary<int, Achievement>();
+                        cache.Add(key, dictionary, DateTime.Now.AddDays(1));
+                    }
+
+                    return dictionary;
+                }
+            }
         }
 
         #region ISteamCommunityManager Members
@@ -141,9 +163,9 @@ namespace SteamAchievements.Services
             foreach (Achievement achievement in achievements)
             {
                 int hashCode = achievement.GetHashCode();
-                if (_achievementCache.ContainsKey(hashCode))
+                if (AchievementCache.ContainsKey(hashCode))
                 {
-                    Achievement cachedAchievement = _achievementCache[hashCode];
+                    Achievement cachedAchievement = AchievementCache[hashCode];
                     achievement.Name = cachedAchievement.Name;
                     achievement.Description = cachedAchievement.Description;
                     achievement.ImageUrl = cachedAchievement.ImageUrl;
@@ -233,9 +255,9 @@ namespace SteamAchievements.Services
                 foreach (Achievement achievement in achievements.Select(a => a.Achievement))
                 {
                     int hashCode = achievement.GetHashCode();
-                    if (!_achievementCache.ContainsKey(hashCode))
+                    if (!AchievementCache.ContainsKey(hashCode))
                     {
-                        _achievementCache.Add(hashCode, achievement);
+                        AchievementCache.Add(hashCode, achievement);
                     }
                 }
             }
