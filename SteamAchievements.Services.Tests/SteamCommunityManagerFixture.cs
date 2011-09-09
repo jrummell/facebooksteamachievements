@@ -54,7 +54,7 @@ namespace SteamAchievements.Services.Tests
         {
             // get the achievements
             IEnumerable<Achievement> achievements =
-                _manager.GetClosedAchievements("nullreference")
+                _manager.GetClosedAchievements("nullreference", "french")
                     .Select(a => a.Achievement);
 
             // create a copy that doesn't have Name, Description and ImageUrl
@@ -76,7 +76,8 @@ namespace SteamAchievements.Services.Tests
         [Test, Explicit("Depends on recent game play")]
         public void GetAchievements()
         {
-            IEnumerable<UserAchievement> achievements = _manager.GetClosedAchievements("nullreference");
+            IEnumerable<UserAchievement> achievements = 
+                _manager.GetClosedAchievements("nullreference", "english");
 
             Assert.That(achievements.Any());
             Assert.That(achievements.Any(a => a.Achievement.Name == "Acid Reflex"));
@@ -85,7 +86,7 @@ namespace SteamAchievements.Services.Tests
         [Test]
         public void GetGames()
         {
-            IEnumerable<Game> games = _manager.GetGames("nullreference");
+            IEnumerable<Game> games = _manager.GetGames("nullreference", "english");
 
             Assert.That(games.Any());
             Assert.That(games.Any(game => game.Name == "Left 4 Dead"));

@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace SteamAchievements.Web.Helpers
+namespace SteamAchievements.Services
 {
     public static class CultureHelper
     {

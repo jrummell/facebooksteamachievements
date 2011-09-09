@@ -30,22 +30,25 @@ namespace SteamAchievements.Services
         /// Gets the closed achievements from http://steamcommunity.com/id/[customurl]/statsfeed/[game]/?xml=1.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="language">The language.</param>
         /// <returns></returns>
-        ICollection<UserAchievement> GetClosedAchievements(string steamUserId);
+        ICollection<UserAchievement> GetClosedAchievements(string steamUserId, string language);
 
         /// <summary>
         /// Gets the achievements from http://steamcommunity.com/id/[customurl]/[game]/?xml=1.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="language">The language.</param>
         /// <returns></returns>
-        ICollection<UserAchievement> GetAchievements(string steamUserId);
+        ICollection<UserAchievement> GetAchievements(string steamUserId, string language);
 
         /// <summary>
         /// Gets the games from http://steamcommunity.com/id/[customurl]/games/?xml=1.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="language">The language.</param>
         /// <returns></returns>
-        ICollection<Game> GetGames(string steamUserId);
+        ICollection<Game> GetGames(string steamUserId, string language);
 
         /// <summary>
         /// Gets the profile.

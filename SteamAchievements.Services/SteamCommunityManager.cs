@@ -33,6 +33,7 @@ namespace SteamAchievements.Services
 {
     public class SteamCommunityManager : Disposable, ISteamCommunityManager
     {
+        private const string _defaultLanguage = "english";
         private static readonly object _achievementCacheLock = new object();
         private readonly IAchievementXmlParser _achievementParser;
         private readonly IGameXmlParser _gamesParser;
@@ -105,35 +106,38 @@ namespace SteamAchievements.Services
         /// Gets the closed achievements from http://steamcommunity.com/id/[customurl]/[game]/?xml=1.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="language">The language.</param>
         /// <returns></returns>
-        public ICollection<UserAchievement> GetClosedAchievements(string steamUserId)
+        public ICollection<UserAchievement> GetClosedAchievements(string steamUserId, string language)
         {
-            return GetAchievements(steamUserId, true);
+            return GetAchievements(steamUserId, true, language);
         }
 
         /// <summary>
         /// Gets the achievements from http://steamcommunity.com/id/[customurl]/[game]/?xml=1.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="language">The language.</param>
         /// <returns></returns>
-        public ICollection<UserAchievement> GetAchievements(string steamUserId)
+        public ICollection<UserAchievement> GetAchievements(string steamUserId, string language)
         {
-            return GetAchievements(steamUserId, false);
+            return GetAchievements(steamUserId, false, language);
         }
 
         /// <summary>
         /// Gets the games from http://steamcommunity.com/id/[customurl]/games/?xml=1.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="language">The language.</param>
         /// <returns></returns>
-        public ICollection<Game> GetGames(string steamUserId)
+        public ICollection<Game> GetGames(string steamUserId, string language)
         {
             if (steamUserId == null)
             {
                 throw new ArgumentNullException("steamUserId");
             }
 
-            Uri gamesUrl = GetGamesUrl(steamUserId, true);
+            Uri gamesUrl = GetGamesUrl(steamUserId, true, language);
             Debug.WriteLine(gamesUrl);
 
             string xml = _webClient.DownloadString(gamesUrl);
@@ -180,8 +184,9 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="closedOnly">if set to <c>true</c> [closed only].</param>
+        /// <param name="language">The language.</param>
         /// <returns></returns>
-        private ICollection<UserAchievement> GetAchievements(string steamUserId, bool closedOnly)
+        private ICollection<UserAchievement> GetAchievements(string steamUserId, bool closedOnly, string language)
         {
             if (steamUserId == null)
             {
@@ -190,14 +195,14 @@ namespace SteamAchievements.Services
 
             List<UserAchievement> achievements = new List<UserAchievement>();
 
-            IEnumerable<Game> games = GetGames(steamUserId);
+            IEnumerable<Game> games = GetGames(steamUserId, language);
             if (closedOnly)
             {
                 games = games.Where(g => g.PlayedRecently);
             }
             foreach (Game game in games)
             {
-                Uri xmlStatsUrl = new Uri(game.StatsUrl + "/?xml=1", UriKind.Absolute);
+                Uri xmlStatsUrl = GetStatsUrl(game.StatsUrl, language);
                 Debug.WriteLine(xmlStatsUrl);
 
                 string xml = _webClient.DownloadString(xmlStatsUrl);
@@ -266,6 +271,22 @@ namespace SteamAchievements.Services
         }
 
         /// <summary>
+        /// Gets the stats URL.
+        /// </summary>
+        /// <param name="statsUrlBase">The stats URL base.</param>
+        /// <param name="language">The language.</param>
+        /// <returns></returns>
+        private static Uri GetStatsUrl(string statsUrlBase, string language)
+        {
+            UriBuilder uriBuilder =
+                new UriBuilder(statsUrlBase)
+                    {
+                        Query = "xml=1&l=" + (language ?? _defaultLanguage)
+                    };
+            return uriBuilder.Uri;
+        }
+
+        /// <summary>
         /// Gets the profile URL.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
@@ -283,11 +304,13 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="xml">if set to <c>true</c> gets the xml url.</param>
+        /// <param name="language">The language.</param>
         /// <returns></returns>
-        private static Uri GetGamesUrl(string steamUserId, bool xml)
+        private static Uri GetGamesUrl(string steamUserId, bool xml, string language)
         {
-            string url = String.Format("http://steamcommunity.com/id/{0}/games/{1}",
-                                       steamUserId, GetXmlParameter(xml));
+            string url = String.Format("http://steamcommunity.com/id/{0}/games/{1}&l={2}",
+                                       steamUserId, GetXmlParameter(xml), language ?? _defaultLanguage);
+
             return new Uri(url, UriKind.Absolute);
         }
 
