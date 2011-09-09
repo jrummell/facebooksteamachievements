@@ -56,7 +56,7 @@ namespace SteamAchievements.Services
         /// <param name="facebookUserId">The facebook user id.</param>
         /// <returns></returns>
         public static ICollection<Data.UserAchievement> ToDataAchievements(
-            this ICollection<UserAchievement> achievements, long facebookUserId)
+            this IEnumerable<UserAchievement> achievements, long facebookUserId)
         {
             return (from achievement in achievements
                     select new Data.UserAchievement
@@ -65,11 +65,11 @@ namespace SteamAchievements.Services
                                    FacebookUserId = facebookUserId,
                                    Achievement = new Data.Achievement
                                                      {
-                                                         ApiName = achievement.AchievementApiName,
-                                                         Name = achievement.Name,
-                                                         Description = achievement.Description,
-                                                         ImageUrl = achievement.ImageUrl.ToString(),
-                                                         GameId = achievement.Game.Id
+                                                         ApiName = achievement.Achievement.ApiName,
+                                                         Name = achievement.Achievement.Name,
+                                                         Description = achievement.Achievement.Description,
+                                                         ImageUrl = achievement.Achievement.ImageUrl,
+                                                         GameId = achievement.Achievement.Game.Id
                                                      }
                                }).ToList();
         }

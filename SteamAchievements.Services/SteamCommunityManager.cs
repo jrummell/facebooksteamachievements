@@ -21,21 +21,31 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Xml;
 using Elmah;
-using System.Diagnostics;
+using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
-    public class SteamCommunityManager : ISteamCommunityManager
+    public class SteamCommunityManager : Disposable, ISteamCommunityManager
     {
+        private static readonly Dictionary<int, Achievement> _achievementCache = new Dictionary<int, Achievement>();
+        private static readonly object _achievementCacheLock = new object();
         private readonly IAchievementXmlParser _achievementParser;
         private readonly IGameXmlParser _gamesParser;
         private readonly ISteamProfileXmlParser _profileParser;
         private readonly IWebClientWrapper _webClient;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SteamCommunityManager"/> class.
+        /// </summary>
+        /// <param name="webClient">The web client.</param>
+        /// <param name="profileParser">The profile parser.</param>
+        /// <param name="gamesParser">The games parser.</param>
+        /// <param name="achievementParser">The achievement parser.</param>
         public SteamCommunityManager(IWebClientWrapper webClient, ISteamProfileXmlParser profileParser,
                                      IGameXmlParser gamesParser, IAchievementXmlParser achievementParser)
         {
@@ -46,14 +56,6 @@ namespace SteamAchievements.Services
         }
 
         #region ISteamCommunityManager Members
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            _webClient.Dispose();
-        }
 
         /// <summary>
         /// Gets the profile from http://steamcommunity.com/id/[customurl]/?xml=1.
@@ -130,6 +132,25 @@ namespace SteamAchievements.Services
             }
         }
 
+        /// <summary>
+        /// Sets Name, Description, and ImageUrl from the achievement cache.
+        /// </summary>
+        /// <param name="achievements">The achievements.</param>
+        public void FillAchievements(IEnumerable<Achievement> achievements)
+        {
+            foreach (Achievement achievement in achievements)
+            {
+                int hashCode = achievement.GetHashCode();
+                if (_achievementCache.ContainsKey(hashCode))
+                {
+                    Achievement cachedAchievement = _achievementCache[hashCode];
+                    achievement.Name = cachedAchievement.Name;
+                    achievement.Description = cachedAchievement.Description;
+                    achievement.ImageUrl = cachedAchievement.ImageUrl;
+                }
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -201,9 +222,22 @@ namespace SteamAchievements.Services
 
                 List<UserAchievement> achievementList = gameAchievements.ToList();
                 Game game1 = game;
-                achievementList.ForEach(a => a.Game = game1);
+                achievementList.ForEach(a => a.Achievement.Game = game1);
 
                 achievements.AddRange(achievementList);
+            }
+
+            lock (_achievementCacheLock)
+            {
+                // cache the achievements
+                foreach (Achievement achievement in achievements.Select(a => a.Achievement))
+                {
+                    int hashCode = achievement.GetHashCode();
+                    if (!_achievementCache.ContainsKey(hashCode))
+                    {
+                        _achievementCache.Add(hashCode, achievement);
+                    }
+                }
             }
 
             return achievements;
@@ -243,6 +277,11 @@ namespace SteamAchievements.Services
         private static string GetXmlParameter(bool xml)
         {
             return xml ? "?xml=1" : String.Empty;
+        }
+
+        protected override void DisposeManaged()
+        {
+            _webClient.Dispose();
         }
     }
 }

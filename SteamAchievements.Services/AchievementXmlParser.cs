@@ -103,15 +103,20 @@ namespace SteamAchievements.Services
                     select new UserAchievement
                                {
                                    SteamUserId = customUrlElement.Value,
-                                   AchievementApiName = achievement.apiname,
-                                   Name = achievement.name,
-                                   Description = achievement.description,
-                                   ImageUrl = new Uri(achievement.image, UriKind.Absolute),
                                    Closed = achievement.closed,
                                    Date =
                                        achievement.date == null
                                            ? DateTime.MinValue
-                                           : GetDate(Convert.ToInt32(achievement.date))
+                                           : GetDate(Convert.ToInt32(achievement.date)),
+                                   Achievement =
+                                       new Achievement
+                                           {
+                                               ApiName = achievement.apiname,
+                                               Name = achievement.name,
+                                               Description = achievement.description,
+                                               ImageUrl =
+                                                   new Uri(achievement.image, UriKind.Absolute).ToString()
+                                           }
                                }).ToList();
         }
 

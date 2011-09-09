@@ -112,17 +112,21 @@ namespace SteamAchievements.Services
 
             IEnumerable<Game> games = _communityService.GetGames(steamUserId);
 
-            ICollection<Data.Achievement> achievements;
+            ICollection<Data.Achievement> dataAchievements;
             if (oldestDate == null)
             {
-                achievements = _achievementManager.GetUnpublishedAchievements(steamUserId);
+                dataAchievements = _achievementManager.GetUnpublishedAchievements(steamUserId);
             }
             else
             {
-                achievements = _achievementManager.GetUnpublishedAchievements(steamUserId, oldestDate.Value);
+                dataAchievements = _achievementManager.GetUnpublishedAchievements(steamUserId, oldestDate.Value);
             }
 
-            return achievements.ToSimpleAchievementList(games);
+            List<Achievement> achievements = dataAchievements.ToSimpleAchievementList(games);
+
+            _communityService.FillAchievements(achievements);
+
+            return achievements;
         }
 
         /// <summary>
