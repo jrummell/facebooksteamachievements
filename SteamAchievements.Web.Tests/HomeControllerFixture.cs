@@ -30,7 +30,7 @@ using SteamAchievements.Web.Models;
 namespace SteamAchievements.Web.Tests
 {
     [TestFixture]
-    public class AchievementControllerFixture
+    public class HomeControllerFixture
     {
         [Test]
         public void SettingsDuplicate()
@@ -67,9 +67,9 @@ namespace SteamAchievements.Web.Tests
             Mock<IAchievementService> mockAchievementService = new Mock<IAchievementService>();
 
             SessionStateItemCollection sessionItems = new SessionStateItemCollection();
-            AchievementController controller = new AchievementController(mockAchievementService.Object,
-                                                                         mockUserService.Object,
-                                                                         facebookContextSettings);
+            HomeController controller = new HomeController(mockAchievementService.Object,
+                                                           mockUserService.Object,
+                                                           facebookContextSettings);
             FakeControllerContext context = new FakeControllerContext(controller, sessionItems);
             controller.ControllerContext = context;
             controller.UserSettings = originalUser;
@@ -82,9 +82,7 @@ namespace SteamAchievements.Web.Tests
                         SteamUserId = "NullReference"
                     };
 
-            JsonResult result = controller.SaveSettings(model);
-
-            Assert.That((string) result.Data == "DuplicateError");
+            Assert.That(() => controller.Settings(model), Throws.InstanceOf<DuplicateSteamUserException>());
 
             mockUserService.Verify();
         }
@@ -113,9 +111,9 @@ namespace SteamAchievements.Web.Tests
                 .Returns(() => originalUser).Verifiable();
 
             SessionStateItemCollection sessionItems = new SessionStateItemCollection();
-            AchievementController controller = new AchievementController(mockAchievementService.Object,
-                                                                         mockUserService.Object,
-                                                                         facebookContextSettings);
+            HomeController controller = new HomeController(mockAchievementService.Object,
+                                                           mockUserService.Object,
+                                                           facebookContextSettings);
             FakeControllerContext context = new FakeControllerContext(controller, sessionItems);
             controller.ControllerContext = context;
 
@@ -129,9 +127,9 @@ namespace SteamAchievements.Web.Tests
                         SteamUserId = originalUser.SteamUserId
                     };
 
-            JsonResult result = controller.SaveSettings(model);
+            ViewResult result = (ViewResult) controller.Settings(model);
 
-            Assert.That((string) result.Data == "Success");
+            Assert.That((bool) result.ViewBag.Success, Is.True);
             mockUserService.Verify();
         }
     }

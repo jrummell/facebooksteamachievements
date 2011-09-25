@@ -22,8 +22,6 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using AutoMapper;
-using Elmah;
 using Facebook.Web.Mvc;
 using SteamAchievements.Services;
 using SteamAchievements.Web.Models;
@@ -80,51 +78,6 @@ namespace SteamAchievements.Web.Controllers
         public JsonResult HideAchievements(IEnumerable<int> achievementIds)
         {
             return Json(_achievementService.HideAchievements(UserSettings.SteamUserId, achievementIds));
-        }
-
-        [HttpPost]
-        public JsonResult SaveSettings(SettingsViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return Json("Invalid");
-            }
-
-            User user = UserService.GetUser(FacebookUserId);
-            bool newUser = false;
-            if (user == null)
-            {
-                newUser = true;
-                user = new User {FacebookUserId = FacebookUserId, AccessToken = String.Empty};
-            }
-
-            Mapper.Map(model, user);
-
-            try
-            {
-                UserService.UpdateUser(user);
-
-                UserSettings = user;
-            }
-            catch (DuplicateSteamUserException)
-            {
-                return Json("DuplicateError");
-            }
-
-            if (newUser)
-            {
-                try
-                {
-                    _achievementService.UpdateNewUserAchievements(user);
-                }
-                catch (Exception ex)
-                {
-                    // log and swallow exceptions so that the settings can be saved
-                    ErrorSignal.FromCurrentContext().Raise(ex);
-                }
-            }
-
-            return Json("Success");
         }
 
         protected override void Dispose(bool disposing)

@@ -35,14 +35,9 @@ var $achievements =
         this.callAjax("GetGames", {}, callback, errorCallback);
     },
 
-    saveSettings: function (settings, callback, errorCallback)
-    {
-        this.callAjax("SaveSettings", settings, callback, errorCallback);
-    },
-
     updateAchievements: function (callback, errorCallback)
     {
-        var ondone = function (updateCount)
+        var ondone = function ()
         {
             $achievements.callAjax("GetUnpublishedAchievements", {}, callback, errorCallback);
         };
@@ -139,7 +134,7 @@ var $achievements =
                 // on successful publish, update published field on each published achievement.
 
                 var achievementIds = new Array();
-                for (i = 0; i < achievements.length; i++)
+                for (var i = 0; i < achievements.length; i++)
                 {
                     achievementIds.push(achievements[i].Id);
                 }

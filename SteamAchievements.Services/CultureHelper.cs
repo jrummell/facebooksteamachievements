@@ -34,7 +34,29 @@ namespace SteamAchievements.Services
                     // first culture is the DEFAULT
                     // key: culture name, value: steam community language name
                     {"en-US", "english"},
-                    {"fr-FR", "french"}
+                    {"fr-FR", "french"},
+                    {"bg-BG", "bulgarian"},
+                    {"cs-CZ", "czech"},
+                    {"da-DK", "danish"},
+                    {"nl-NL", "dutch"},
+                    {"fi-FI", "finnish"},
+                    {"de-DE", "german"},
+                    {"hu-HU", "hungarian"},
+                    {"it-IT", "italian"},
+                    {"ja-JP", "japanese"},
+                    {"ko-KR", "koreana"},
+                    {"nn-NO", "norwegian"},
+                    {"pl-PL", "polish"},
+                    {"pt-PT", "portuguese"},
+                    {"pt-BR", "brazilian"},
+                    {"ro-RO", "romanian"},
+                    {"ru-RU", "russian"},
+                    {"zh-CHS", "schinese"},
+                    {"es-ES", "spanish"},
+                    {"sv-SE", "swedish"},
+                    {"zh-CHT", "tchinese"},
+                    {"th-TH", "thai"},
+                    {"tr-TR", "turkish"}
                 };
 
         /// <summary>

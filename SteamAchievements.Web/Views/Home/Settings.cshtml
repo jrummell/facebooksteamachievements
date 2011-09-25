@@ -13,46 +13,48 @@
 }
 <h1>
     Settings</h1>
-<div id="saveSuccess" style="display: none;">
-    Your settings have been saved successfully.</div>
-<div id="duplicateError" style="display: none;">
-    This Steam Community URL is already in use.</div>
-<div id="steamIdError" class="hidden">
-    Your Steam Community profile could not be accessed. Please verify that your custom
-    URL is correct and that your profile is public.
-    @Html.HelpLink(Strings.ButtonHelp, "Configure_your_Steam_Community_Profile")
-</div>
-<div id="settingsForm">
+@if (ViewBag.Success == true)
+{
+    <div id="saveSuccess" style="display: none;">
+        @Strings.SettingsSuccess</div>
+}
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.FacebookUserId)
+    @Html.ValidationMessageFor(model => model.SteamUserId)
     <fieldset class="settings">
-        <legend>Steam Community Custom URL</legend>
+        <legend>@Strings.SettingsCustomUrl</legend>
         <div>
             <div class="left">
                 http://steamcommunity.com/id/
                 @Html.TextBoxFor(model => model.SteamUserId, new { maxlength = 50 })
-                @Html.ValidationMessageFor(model => model.SteamUserId)
             </div>
             <div id="steamIdVerified" class="ui-corner-all left hidden">
                 <span class="ui-icon ui-icon-check"></span>
             </div>
+            <div id="steamIdError" class="ui-corner-all ui-state-error-text left hidden">
+                <span class="ui-icon ui-icon-alert"></span>
+            </div>
             <br class="clear" />
         </div>
+        @Html.HelpLink(Strings.ButtonHelp, "Configure_your_Steam_Community_Profile")
     </fieldset>
     <fieldset class="settings">
         <legend>Publish Options</legend>
         <div>
             @Html.CheckBoxFor(model => model.AutoUpdate)
-            @Html.LabelFor(model => model.AutoUpdate, Strings.SettingsAutoUpdateLabel)
+            @Html.LabelFor(model => model.AutoUpdate)
         </div>
         <div>
             @Html.CheckBoxFor(model => model.PublishDescription)
-            @Html.LabelFor(model => model.PublishDescription, Strings.SettingsPublishDescriptionLabel)
+            @Html.LabelFor(model => model.PublishDescription)
         </div>
     </fieldset>
     <p>
         <button type="submit" id="saveButton" class="save">
             Save</button>
         <img id="saveImage" class="loading" src="@Url.Content("~/Content/images/ajax-loader.gif")" alt="Saving..."
-            style="display: none" />
+                 style="display: none" />
     </p>
-</div>
+}
 <script type="text/javascript" src="@Url.Content("~/Scripts/settings.js")"></script>
