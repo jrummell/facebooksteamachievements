@@ -5,8 +5,6 @@
 
 $(document).ready(function ()
 {
-    $("#publishPageMessage").message({ type: "info" });
-
     var steamUserId = $("#steamUserIdHidden").val();
     var logSelector = "#log";
     $achievements.init(steamUserId, logSelector, false);

@@ -19,9 +19,10 @@
 
 #endregion
 
+using System;
 using System.Web.Mvc;
 using AutoMapper;
-using Facebook.Web.Mvc;
+using Elmah;
 using SteamAchievements.Services;
 using SteamAchievements.Web.Models;
 
@@ -30,6 +31,7 @@ namespace SteamAchievements.Web.Controllers
 #if !DEBUG
     [CanvasAuthorize(Permissions = "publish_stream,offline_access")]
 #endif
+
     public class HomeController : FacebookController
     {
         private readonly IAchievementService _achievementService;
@@ -64,6 +66,46 @@ namespace SteamAchievements.Web.Controllers
         {
             User user = UserSettings ?? new User();
             SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(user);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Settings(SettingsViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            User user = UserService.GetUser(FacebookUserId);
+            bool newUser = false;
+            if (user == null)
+            {
+                newUser = true;
+                user = new User {FacebookUserId = FacebookUserId, AccessToken = String.Empty};
+            }
+
+            Mapper.Map(model, user);
+
+            UserService.UpdateUser(user);
+
+            UserSettings = user;
+
+            if (newUser)
+            {
+                try
+                {
+                    _achievementService.UpdateNewUserAchievements(user);
+                }
+                catch (Exception ex)
+                {
+                    // log and swallow exceptions so that the settings can be saved
+                    ErrorSignal.FromCurrentContext().Raise(ex);
+                }
+            }
+
+            ViewBag.Success = true;
+
             return View(model);
         }
 

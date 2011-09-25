@@ -118,75 +118,63 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonHelp" xml:space="preserve">
-    <value>Help</value>
+    <value>Pomoc</value>
   </data>
   <data name="ButtonHide" xml:space="preserve">
-    <value>Hide</value>
+    <value>Ukryj</value>
   </data>
   <data name="ButtonPublish" xml:space="preserve">
-    <value>Publish</value>
+    <value>Publikuj</value>
   </data>
   <data name="GamesIntructions" xml:space="preserve">
-    <value>Use the publish page to update and publish new achievements to your profile.</value>
+    <value>Użyj strony publikacji by zaktualizować i opublikować nowe osiągnięcia w swoim profilu.</value>
   </data>
   <data name="GamesViewAchievements" xml:space="preserve">
-    <value>View Achievements</value>
+    <value>Pokaż osiągnięcia</value>
   </data>
   <data name="GamesYourGames" xml:space="preserve">
-    <value>Your games. This list includes all Steam games that you own (including some free Source Mods) that support achievements.</value>
+    <value>Twoje gry. Ta lista zawiera wszystkie gry Steam które posiadasz (włączając niektóre darmowe mody) które wspierają osiągnięcia.</value>
   </data>
   <data name="MenuHelp" xml:space="preserve">
-    <value>Help</value>
+    <value>Pomoc</value>
   </data>
   <data name="MenuHome" xml:space="preserve">
-    <value>Home</value>
+    <value>Start</value>
   </data>
   <data name="MenuPublish" xml:space="preserve">
-    <value>Publish</value>
+    <value>Publikuj</value>
   </data>
   <data name="MenuSettings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Ustawienia</value>
   </data>
   <data name="PublishInstructions" xml:space="preserve">
-    <value>Click an achievement icon to select it. You can select up to five at a time. If you don't see the publish dialog after clicking Publish, scroll down. If you hide an achievement, you will no longer see it on this page and it can not be published.</value>
+    <value>Kliknij na ikonę osiągnięcia aby je wybrać. Możesz wybrać do pięciu osiągnięć na raz. Jeżeli nie widzisz okna dialogowego publikacji po kliknięciu w 'Publikuj', przewiń w dół. Jeżeli ukryjesz osiągnięcie nie zobaczysz go więcej na tej stronie i nie będziesz mógł go opublikować.</value>
   </data>
   <data name="PublishUnpublishedAchievements" xml:space="preserve">
-    <value>Unpublished Achievements</value>
+    <value>Nieopublikowanie Osiągnięcia</value>
   </data>
   <data name="SettingsAutoUpdateLabel" xml:space="preserve">
-    <value>Update and publish my achievements automatically.</value>
+    <value>Aktualizuj i publikuj moje osiągnięcia automatycznie.</value>
   </data>
   <data name="SettingsCustomUrl" xml:space="preserve">
-    <value>Steam Community Custom URL</value>
-  </data>
-  <data name="SettingsCustomUrlRequired" xml:space="preserve">
-    <value>{0} is required.</value>
-  </data>
-  <data name="SettingsDuplicateCustomUrl" xml:space="preserve">
-    <value>This Steam Community URL is already in use.</value>
-  </data>
-  <data name="SettingsInvalidCustomUrl" xml:space="preserve">
-    <value>Your Steam Community profile could not be accessed. Please verify that your custom URL is correct and that your profile is public.</value>
+    <value>Niestandardowy adres URL Steam Community</value>
   </data>
   <data name="SettingsPublishDescriptionLabel" xml:space="preserve">
-    <value>Include achievement descriptions when publishing.</value>
+    <value>Dołączaj opisy osiągnięć przy publikacji.</value>
   </data>
   <data name="SettingsPublishOptions" xml:space="preserve">
-    <value>Publish Options</value>
-  </data>
-  <data name="SettingsSuccess" xml:space="preserve">
-    <value>Your settings have been saved successfully.</value>
+    <value>Opcje publikacji</value>
   </data>
   <data name="TitleGames" xml:space="preserve">
-    <value>Games</value>
+    <value>Gry</value>
   </data>
   <data name="TitleHome" xml:space="preserve">
-    <value>Home</value>
+    <value>Start</value>
   </data>
   <data name="TitlePublish" xml:space="preserve">
-    <value>Publish</value>
+    <value>Publikuj</value>
   </data>
   <data name="TitleSettings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Ustawienia</value>
   </data>
 </root>

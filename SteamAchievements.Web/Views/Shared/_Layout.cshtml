@@ -48,6 +48,8 @@
         {
             $("a.help, button.help, input.help").button({ icons: { primary: "ui-icon-help"} });
             $("a.button").button();
+            
+            $("form .field-validation-error").message({ type: "error", dismiss: false });
         });
     </script>
     @Html.UserVoice()

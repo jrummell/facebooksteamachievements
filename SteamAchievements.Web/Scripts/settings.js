@@ -8,48 +8,36 @@ $(document).ready(function ()
     var $steamUserId = $("#SteamUserId");
     $achievements.init($steamUserId.val(), logSelector, false);
 
+    // check the user's profile when they change it
     $steamUserId.change(function ()
     {
-        checkProfile(this.value);
+        checkProfile();
     });
 
-    $("#steamIdError").message({ type: "error", dismiss: false }).hide();
+    // check the user's profile on load
+    checkProfile();
 
-    $("#saveButton").button({ icons: { primary: "ui-icon-disk" } })
-        .click(function()
-            {
+    // init save success message
+    $("#saveSuccess").message({ type: "info" });
+
+    // show loading on click
+    $("#saveButton").button({ icons: { primary: "ui-icon-disk"} })
+        .click(function ()
+        {
             $("#saveImage").show();
             $("#saveSuccess").hide();
-            $("#duplicateError").hide();
 
-            var settings = {
-                SteamUserId: $("#SteamUserId").val(),
-                AutoUpdate: $("#AutoUpdate")[0].checked,
-                PublishDescription: $("#PublishDescription")[0].checked
-            };
-
-            var ondone = function(status)
-            {
-                $("#saveImage").hide();
-
-                if (status == "Success")
-                {
-                    $("#saveSuccess").message({ type: "info" });
-                }
-                else if (status == "DuplicateError")
-                {
-                    $("#duplicateError").message({ type: "error" });
-                }
-            };
-
-            $achievements.saveSettings(settings, ondone);
+            return true;
         });
 });
 
-function checkProfile(steamUserId)
+function checkProfile()
 {
+    var steamUserId = $("#SteamUserId").val();
+    
     $("#steamIdError").hide();
     $("#steamIdVerified").hide();
+    
     var ondone = function (profile)
     {
         if (profile == null)
