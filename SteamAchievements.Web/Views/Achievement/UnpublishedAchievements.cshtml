@@ -1,0 +1,19 @@
+﻿@model IEnumerable<SteamAchievements.Services.Achievement>
+<ul>
+    @foreach (var achievement in Model)
+    {
+        <li class="achievement">
+            <input type="checkbox" value="@achievement.Id" class="hidden" />
+            <img class="left" src="@achievement.ImageUrl" alt="@achievement.Name" />
+            <div class="text">
+                <h3>@achievement.Game.Name</h3>
+                <div class="name">@achievement.Name</div>
+                <div class="description">@achievement.Description</div>
+            </div>
+        </li>
+    }
+</ul>
+
+<script type="text/javascript">
+    _newAchievements = @Html.Raw(ViewBag.Achievements) ;
+</script>

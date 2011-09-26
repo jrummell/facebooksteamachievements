@@ -67,51 +67,52 @@ function getNewAchievements()
     $achievements.updateAchievements(displayAchievements, displayError);
 }
 
+// achievement array set by ajax request
 var _newAchievements = new Array();
-function displayAchievements(achievements)
+function displayAchievements()
 {
-    _newAchievements = achievements;
-
-    $("#newAchievements").empty().append("<ul></ul>");
-    $("#achievementTemplate").tmpl(achievements).appendTo("#newAchievements ul");
-
-    // allow user to select only 5 achievements since only 5 images can be displayed at a time
-    $("#newAchievements .achievement :checkbox, #newAchievements .achievement img").click(function ()
+    var ondone = function ()
     {
-        var $checked = $("#newAchievements :checked");
-        var disableUnchecked = $checked.length >= 5;
-
-        // toggle the selection if there are less than 5 selected or if the current item is already selected
-        var $achievementDiv = $(this).parents(".achievement");
-        if (!disableUnchecked || $achievementDiv.hasClass("selected"))
+        // allow user to select only 5 achievements since only 5 images can be displayed at a time
+        $("#newAchievements .achievement :checkbox, #newAchievements .achievement img").click(function ()
         {
-            $achievementDiv.toggleClass("selected");
-            if (this.tagName == "IMG")
+            var $checked = $("#newAchievements :checked");
+            var disableUnchecked = $checked.length >= 5;
+
+            // toggle the selection if there are less than 5 selected or if the current item is already selected
+            var $achievementDiv = $(this).parents(".achievement");
+            if (!disableUnchecked || $achievementDiv.hasClass("selected"))
             {
-                var checkbox = $(this).prev()[0];
-                checkbox.checked = !checkbox.checked;
+                $achievementDiv.toggleClass("selected");
+                if (this.tagName == "IMG")
+                {
+                    var checkbox = $(this).prev()[0];
+                    checkbox.checked = !checkbox.checked;
+                }
             }
+
+            // disable unchecked boxes if there are 5 checked
+            $("#newAchievements .achievement :checkbox").filter(function (index)
+            {
+                return !this.checked;
+            }).attr("disabled", disableUnchecked);
+        });
+
+        $("#newAchievements ul").makeacolumnlists({ cols: 2, equalHeight: "ul" });
+
+        if (_newAchievements.length == 0)
+        {
+            $("#noUnpublishedMessage").message({ type: "info" });
+        }
+        else
+        {
+            $("#buttons").show();
         }
 
-        // disable unchecked boxes if there are 5 checked
-        $("#newAchievements .achievement :checkbox").filter(function (index)
-        {
-            return !this.checked;
-        }).attr("disabled", disableUnchecked);
-    });
+        $achievements.hideLoading("#newAchievementsLoading");
+    };
 
-    $("#newAchievements ul").makeacolumnlists({ cols: 2, equalHeight: "ul" });
-
-    if (achievements.length == 0)
-    {
-        $("#noUnpublishedMessage").message({ type: "info" });
-    }
-    else
-    {
-        $("#buttons").show();
-    }
-
-    $achievements.hideLoading("#newAchievementsLoading");
+    $achievements.loadUnpublishedAchievements("#newAchievements", ondone);
 }
 
 function displayError()

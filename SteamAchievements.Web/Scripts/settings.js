@@ -38,9 +38,9 @@ function checkProfile()
     $("#steamIdError").hide();
     $("#steamIdVerified").hide();
     
-    var ondone = function (profile)
+    var ondone = function (valid)
     {
-        if (profile == null)
+        if (!valid)
         {
             $("#steamIdError").show();
             return;
@@ -51,5 +51,5 @@ function checkProfile()
         }
     };
 
-    $achievements.getProfile(ondone, null, steamUserId);
+    $achievements.validateProfile(steamUserId, ondone);
 }

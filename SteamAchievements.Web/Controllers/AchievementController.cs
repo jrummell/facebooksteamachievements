@@ -22,7 +22,10 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
+// ReSharper disable RedundantUsingDirective
 using Facebook.Web.Mvc;
+// ReSharper restore RedundantUsingDirective
 using SteamAchievements.Services;
 using SteamAchievements.Web.Models;
 
@@ -43,23 +46,36 @@ namespace SteamAchievements.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetProfile(string steamUserId)
+        public JsonResult ValidateProfile(string steamUserId)
         {
             steamUserId = steamUserId ?? UserSettings.SteamUserId;
 
-            return Json(_achievementService.GetProfile(steamUserId));
+            return Json(_achievementService.GetProfile(steamUserId) != null);
         }
 
         [HttpPost]
-        public JsonResult GetUnpublishedAchievements(DateTime? oldestDate)
+        public PartialViewResult Profile(string steamUserId)
         {
-            return Json(_achievementService.GetUnpublishedAchievements(UserSettings.SteamUserId, oldestDate));
+            steamUserId = steamUserId ?? UserSettings.SteamUserId;
+
+            return PartialView(_achievementService.GetProfile(steamUserId));
         }
 
         [HttpPost]
-        public JsonResult GetGames()
+        public PartialViewResult UnpublishedAchievements(DateTime? oldestDate)
         {
-            return Json(_achievementService.GetGames(UserSettings.SteamUserId));
+            ICollection<Achievement> achievements = _achievementService.GetUnpublishedAchievements(UserSettings.SteamUserId, oldestDate);
+
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            ViewBag.Achievements = serializer.Serialize(achievements);
+
+            return PartialView(achievements);
+        }
+
+        [HttpPost]
+        public PartialViewResult Games()
+        {
+            return PartialView(_achievementService.GetGames(UserSettings.SteamUserId));
         }
 
         [HttpPost]

@@ -23,7 +23,9 @@ using System;
 using System.Web.Mvc;
 using AutoMapper;
 using Elmah;
+// ReSharper disable RedundantUsingDirective
 using Facebook.Web.Mvc;
+// ReSharper restore RedundantUsingDirective
 using SteamAchievements.Services;
 using SteamAchievements.Web.Models;
 

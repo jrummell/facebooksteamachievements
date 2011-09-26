@@ -214,6 +214,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Home\Deauthorize.cshtml" />
+    <Content Include="Views\Achievement\UnpublishedAchievements.cshtml" />
+    <Content Include="Views\Achievement\Games.cshtml" />
+    <Content Include="Views\Achievement\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
