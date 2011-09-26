@@ -1,4 +1,4 @@
-﻿#region License
+ #region License
 
 // Copyright 2010 John Rummell
 // 
@@ -23,6 +23,7 @@ using System;
 using System.Web.Mvc;
 using AutoMapper;
 using Elmah;
+using Facebook.Web.Mvc;
 using SteamAchievements.Services;
 using SteamAchievements.Web.Models;
 
