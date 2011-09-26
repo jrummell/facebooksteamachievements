@@ -15,6 +15,8 @@ $(document).ready(function ()
         return;
     }
 
+    validateProfile();
+
     getProfile();
 
     getGames();
@@ -22,23 +24,26 @@ $(document).ready(function ()
 
 function getProfile()
 {
-    var ondone = function (profile)
+    var ondone = function ()
     {
-        if (profile == null)
+        $achievements.updateSize();
+    };
+
+    $achievements.loadProfile("#profileDiv", ondone);
+}
+
+function validateProfile()
+{
+    var ondone = function (valid)
+    {
+        if (!valid)
         {
             $("#steamIdError").message({ type: "error", dismiss: false });
             return;
         }
-        $("#profileImage").attr("src", profile.AvatarUrl);
-        $("#headlineLabel").text(profile.Headline);
-        $("#steamUserIdHeading").text(profile.SteamUserId);
-
-        $("#heading").show();
-
-        $achievements.updateSize();
     };
 
-    $achievements.getProfile(ondone);
+    $achievements.validateProfile(null, ondone);
 }
 
 function getGames()
@@ -46,11 +51,8 @@ function getGames()
     var updatingSelector = "#updatingGames";
     $achievements.showLoading(updatingSelector);
 
-    var ondone = function (games)
+    var ondone = function ()
     {
-        $("#gamesDiv").empty().append("<ul></ul>");
-        $("#gamesTemplate").tmpl(games).appendTo("#gamesDiv ul");
-
         $("#gamesDiv ul").makeacolumnlists({ cols: 3, equalHeight: "ul" });
 
         $achievements.hideLoading(updatingSelector);
@@ -58,5 +60,5 @@ function getGames()
         $achievements.updateSize();
     };
 
-    $achievements.getGames(ondone);
+    $achievements.loadGames("#gamesDiv", ondone);
 }

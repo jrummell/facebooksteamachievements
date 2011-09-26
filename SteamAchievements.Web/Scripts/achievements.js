@@ -25,24 +25,39 @@ var $achievements =
         $("img.loading").hide();
     },
 
-    getProfile: function (callback, errorCallback, steamUserId)
+    loadProfile: function (selector, callback)
     {
-        this.callAjax("GetProfile", { steamUserId: steamUserId }, callback, errorCallback);
+        $(selector).load(this.serviceBase + "Profile", {}, callback);
     },
 
-    getGames: function (callback, errorCallback)
+    validateProfile: function (steamUserId, callback)
     {
-        this.callAjax("GetGames", {}, callback, errorCallback);
+        var data;
+        if (steamUserId != null)
+        {
+            data = { steamUserId: steamUserId };
+        }
+        else
+        {
+            data = {};
+        }
+
+        this.callAjax("ValidateProfile", data, callback);
+    },
+
+    loadGames: function (selector, callback)
+    {
+        $(selector).load(this.serviceBase + "Games", {}, callback);
     },
 
     updateAchievements: function (callback, errorCallback)
     {
-        var ondone = function ()
-        {
-            $achievements.callAjax("GetUnpublishedAchievements", {}, callback, errorCallback);
-        };
+        this.callAjax("UpdateAchievements", {}, callback, errorCallback);
+    },
 
-        this.callAjax("UpdateAchievements", {}, ondone, errorCallback);
+    loadUnpublishedAchievements: function (selector, callback)
+    {
+        $(selector).load(this.serviceBase + "UnpublishedAchievements", { }, callback);
     },
 
     hideAchievements: function (achievementIds, callback, errorCallback)

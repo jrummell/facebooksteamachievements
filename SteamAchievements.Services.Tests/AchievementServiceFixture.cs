@@ -149,7 +149,7 @@ namespace SteamAchievements.Services.Tests
             {
                 Dictionary<string, ICollection<UserAchievement>> userCommunityAchievements;
                 using (
-                    SteamCommunityManager communityManager =
+                    ISteamCommunityManager communityManager =
                         new SteamCommunityManager(new WebClientWrapper(), new SteamProfileXmlParser(),
                                                   new GameXmlParser(), new AchievementXmlParser()))
                 {
