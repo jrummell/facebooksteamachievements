@@ -27,7 +27,7 @@ var $achievements =
 
     loadProfile: function (selector, callback)
     {
-        $(selector).load(this.serviceBase + "Profile", {}, callback);
+        this.callLoad(selector, "Profile", {}, callback);
     },
 
     validateProfile: function (steamUserId, callback)
@@ -47,7 +47,7 @@ var $achievements =
 
     loadGames: function (selector, callback)
     {
-        $(selector).load(this.serviceBase + "Games", {}, callback);
+        this.callLoad(selector, "Games", {}, callback);
     },
 
     updateAchievements: function (callback, errorCallback)
@@ -57,7 +57,7 @@ var $achievements =
 
     loadUnpublishedAchievements: function (selector, callback)
     {
-        $(selector).load(this.serviceBase + "UnpublishedAchievements", { }, callback);
+        this.callLoad(selector, "UnpublishedAchievements", { }, callback);
     },
 
     hideAchievements: function (achievementIds, callback, errorCallback)
@@ -174,6 +174,19 @@ var $achievements =
         }
 
         return valid;
+    },
+
+    callLoad: function (selector, method, params, ondone)
+    {
+        if (params == null)
+        {
+            params = {};
+        }
+
+        // since this is an ajax request, we need to add the signed_request parameter explicitly
+        var signedRequest = $("#SignedRequest").val();
+        var url = this.serviceBase + method + "?signed_request=" + signedRequest;
+        $(selector).load(url, params, ondone);
     },
 
     callAjax: function (method, query, ondone, onerror)
