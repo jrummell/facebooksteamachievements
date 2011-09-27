@@ -18,7 +18,7 @@
     <div id="saveSuccess" style="display: none;">
         @Strings.SettingsSuccess</div>
 }
-@using (Html.BeginForm())
+@using (Html.BeginForm("SaveSettings", "Home"))
 {
     @Html.Hidden("signed_request", (string)ViewBag.SignedRequest)
     @Html.HiddenFor(model => model.FacebookUserId)

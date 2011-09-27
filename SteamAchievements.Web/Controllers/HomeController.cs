@@ -73,11 +73,14 @@ namespace SteamAchievements.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Settings(SettingsViewModel model)
+        public ActionResult SaveSettings(SettingsViewModel model)
         {
+            // Since facebook posts to the canvas iframe, we need a separate action to post
+            // our form.
+
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("Settings", model);
             }
 
             User user = UserService.GetUser(FacebookUserId);
@@ -109,7 +112,7 @@ namespace SteamAchievements.Web.Controllers
 
             ViewBag.Success = true;
 
-            return View(model);
+            return View("Settings", model);
         }
 
         public ActionResult Deauthorize()
