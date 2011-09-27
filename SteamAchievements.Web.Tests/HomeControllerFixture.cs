@@ -82,7 +82,7 @@ namespace SteamAchievements.Web.Tests
                         SteamUserId = "NullReference"
                     };
 
-            Assert.That(() => controller.Settings(model), Throws.InstanceOf<DuplicateSteamUserException>());
+            Assert.That(() => controller.SaveSettings(model), Throws.InstanceOf<DuplicateSteamUserException>());
 
             mockUserService.Verify();
         }
@@ -127,7 +127,7 @@ namespace SteamAchievements.Web.Tests
                         SteamUserId = originalUser.SteamUserId
                     };
 
-            ViewResult result = (ViewResult) controller.Settings(model);
+            ViewResult result = (ViewResult) controller.SaveSettings(model);
 
             Assert.That((bool) result.ViewBag.Success, Is.True);
             mockUserService.Verify();
