@@ -81,6 +81,7 @@ namespace SteamAchievements.Web.Controllers
         [HttpPost]
         public JsonResult UpdateAchievements()
         {
+            // jQuery requires a return value in order for jQuery to execute $.ajax.success.
             return Json(_achievementService.UpdateAchievements(UserSettings.SteamUserId));
         }
 

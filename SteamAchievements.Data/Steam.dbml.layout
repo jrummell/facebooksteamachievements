@@ -14,20 +14,20 @@
         <elementListCompartment Id="3c87657b-e98c-4922-9549-047bffd1ff0e" absoluteBounds="3.5150000005960464, 1.3350000008940697, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.75 : 1.85659912109375); (3.5 : 1.85659912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 1.85659912109375); (3.5 : 1.85659912109375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/SteamDataContext/Achievement/Achievement_UserAchievement" />
       <nodes>
         <classShapeMoniker Id="2dcc0f69-cc50-4fd9-ad86-525245aa5442" />
         <classShapeMoniker Id="5dac97ac-82be-431c-acff-18008bc70c67" />
       </nodes>
     </associationConnector>
-    <classShape Id="fae4067f-0f2a-47ae-a49c-6842c05c8209" absoluteBounds="0.75, 4, 2, 1.7708968098958327">
+    <classShape Id="fae4067f-0f2a-47ae-a49c-6842c05c8209" absoluteBounds="0.75, 4, 2, 1.9631982421874996">
       <DataClassMoniker Name="/SteamDataContext/User" />
       <nestedChildShapes>
-        <elementListCompartment Id="ecdc1093-44dc-4e81-9f42-7de34f89455e" absoluteBounds="0.76500000059604645, 4.46000000089407, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="ecdc1093-44dc-4e81-9f42-7de34f89455e" absoluteBounds="0.76500000059604645, 4.46000000089407, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.75 : 4.88544840494792); (4.5 : 4.88544840494792); (4.5 : 2.8381982421875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 4.98159912109375); (4.5 : 4.98159912109375); (4.5 : 2.8381982421875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/SteamDataContext/User/User_UserAchievement" />
       <nodes>
         <classShapeMoniker Id="fae4067f-0f2a-47ae-a49c-6842c05c8209" />

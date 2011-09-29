@@ -7,7 +7,7 @@
       <Column Name="GameId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="ImageUrl" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
-      <Column Member="ApiName" Type="System.String" CanBeNull="false" />
+      <Column Name="ApiName" Type="System.String" CanBeNull="false" />
       <Association Name="Achievement_UserAchievement" Member="UserAchievements" Storage="_steam_UserAchievements" ThisKey="Id" OtherKey="AchievementId" Type="UserAchievement" />
     </Type>
   </Table>
@@ -30,6 +30,7 @@
       <Column Name="AccessToken" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="AutoUpdate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="PublishDescription" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Member="Language" Type="System.String" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

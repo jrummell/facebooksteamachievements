@@ -32,7 +32,8 @@ namespace SteamAchievements.Web.Models
 
             Mapper.CreateMap<SettingsViewModel, User>()
                 .ForMember(user => user.AccessToken, options => options.Ignore())
-                .ForMember(user => user.FacebookUserId, options => options.Ignore());
+                .ForMember(user => user.FacebookUserId, options => options.Ignore())
+                .ForMember(user => user.Language, options => options.Ignore());
         }
     }
 }

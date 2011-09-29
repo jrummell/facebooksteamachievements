@@ -21,8 +21,8 @@
 
 using System;
 using System.Collections.Generic;
+using Moq;
 using NUnit.Framework;
-using NUnit.Mocks;
 
 namespace SteamAchievements.Services.Tests
 {
@@ -34,15 +34,15 @@ namespace SteamAchievements.Services.Tests
         [SetUp]
         public void SetUp()
         {
-            _achievementServiceMock = new DynamicMock(typeof (IAchievementService));
-            _userServiceMock = new DynamicMock(typeof (IUserService));
-            _loggerMock = new DynamicMock(typeof (IAutoUpdateLogger));
-            _publisherMock = new DynamicMock(typeof (IFacebookPublisher));
+            _achievementServiceMock = new Mock<IAchievementService>();
+            _userServiceMock = new Mock<IUserService>();
+            _loggerMock = new Mock<IAutoUpdateLogger>();
+            _publisherMock = new Mock<IFacebookPublisher>();
 
-            IAchievementService achievementService = (IAchievementService) _achievementServiceMock.MockInstance;
-            IUserService userService = (IUserService) _userServiceMock.MockInstance;
-            IAutoUpdateLogger logger = (IAutoUpdateLogger) _loggerMock.MockInstance;
-            IFacebookPublisher publisher = (IFacebookPublisher) _publisherMock.MockInstance;
+            IAchievementService achievementService = _achievementServiceMock.Object;
+            IUserService userService = _userServiceMock.Object;
+            IAutoUpdateLogger logger = _loggerMock.Object;
+            IFacebookPublisher publisher = _publisherMock.Object;
 
             _manager = new AutoUpdateManager(achievementService, userService, publisher, logger);
         }
@@ -50,16 +50,18 @@ namespace SteamAchievements.Services.Tests
         #endregion
 
         private AutoUpdateManager _manager;
-        private DynamicMock _achievementServiceMock;
-        private DynamicMock _loggerMock;
-        private DynamicMock _userServiceMock;
-        private DynamicMock _publisherMock;
+        private Mock<IAchievementService> _achievementServiceMock;
+        private Mock<IAutoUpdateLogger> _loggerMock;
+        private Mock<IUserService> _userServiceMock;
+        private Mock<IFacebookPublisher> _publisherMock;
 
         [Test]
         public void GetAutoUpdateUsers()
         {
             string[] users = new[] {"user1", "user2"};
-            _userServiceMock.ExpectAndReturn("GetAutoUpdateUsers", users);
+            _userServiceMock.Setup(service => service.GetAutoUpdateUsers())
+                .Returns(users)
+                .Verifiable();
 
             IEnumerable<string> userIds = _manager.GetAutoUpdateUsers();
 
@@ -73,31 +75,44 @@ namespace SteamAchievements.Services.Tests
         public void PublishUserAchievements()
         {
             User user = new User {SteamUserId = "user1", FacebookUserId = 1, AccessToken = "token", AutoUpdate = true};
-            _userServiceMock.ExpectAndReturn("GetUser", user, "user1");
-            _achievementServiceMock.ExpectAndReturn("UpdateAchievements", 1, "user1");
-            _achievementServiceMock.ExpectAndReturn("GetUnpublishedAchievements",
-                                                    new List<Achievement>
-                                                        {
-                                                            new Achievement
-                                                                {
-                                                                    Id = 1,
-                                                                    Name = "achievement 1",
-                                                                    Description = "x",
-                                                                    ImageUrl = "http://example.com/a.jpg",
-                                                                    Game =
-                                                                        new Game
-                                                                            {
-                                                                                Id = 1,
-                                                                                Name = "game 1",
-                                                                                ImageUrl = "http://example.com/g.jpg",
-                                                                                StatsUrl = "http://example.com/stats",
-                                                                                StoreUrl = "http://example.com/store"
-                                                                            }
-                                                                }
-                                                        },
-                                                    "user1", DateTime.UtcNow.AddDays(-2).Date);
-            _publisherMock.Expect("Publish");
-            _achievementServiceMock.ExpectAndReturn("PublishAchievements", true, "user1", new List<int> {1});
+
+            _userServiceMock.Setup(service => service.GetUser(user.SteamUserId))
+                .Returns(user)
+                .Verifiable();
+
+            _achievementServiceMock.Setup(service => service.UpdateAchievements(user.SteamUserId, null))
+                .Returns(1)
+                .Verifiable();
+            _achievementServiceMock.Setup(
+                service => service.GetUnpublishedAchievements(user.SteamUserId, DateTime.UtcNow.AddDays(-2).Date, null))
+                .Returns(
+                    new List<Achievement>
+                        {
+                            new Achievement
+                                {
+                                    Id = 1,
+                                    Name = "achievement 1",
+                                    Description = "x",
+                                    ImageUrl = "http://example.com/a.jpg",
+                                    Game =
+                                        new Game
+                                            {
+                                                Id = 1,
+                                                Name = "game 1",
+                                                ImageUrl = "http://example.com/g.jpg",
+                                                StatsUrl = "http://example.com/stats",
+                                                StoreUrl = "http://example.com/store"
+                                            }
+                                }
+                        })
+                .Verifiable();
+
+            _publisherMock.Setup(pub => pub.Publish(It.IsAny<User>(), It.IsAny<IDictionary<string, object>>()))
+                .Verifiable();
+
+            _achievementServiceMock.Setup(service => service.PublishAchievements(user.SteamUserId, new List<int> { 1 }))
+                .Returns(true)
+                .Verifiable();
 
             _manager.PublishUserAchievements(user.SteamUserId);
 

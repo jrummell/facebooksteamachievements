@@ -38,10 +38,11 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="oldestDate">The oldest date.</param>
+        /// <param name="language">The language.</param>
         /// <returns>
         /// The achievements that haven't been published yet.
         /// </returns>
-        ICollection<Achievement> GetUnpublishedAchievements(string steamUserId, DateTime? oldestDate);
+        ICollection<Achievement> GetUnpublishedAchievements(string steamUserId, DateTime? oldestDate, string language = null);
 
         /// <summary>
         /// Gets the games.
@@ -56,8 +57,11 @@ namespace SteamAchievements.Services
         /// Updates the achievements.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
-        /// <returns>The number of achievements that were updated.</returns>
-        int UpdateAchievements(string steamUserId);
+        /// <param name="language">The language.</param>
+        /// <returns>
+        /// The number of achievements that were updated.
+        /// </returns>
+        int UpdateAchievements(string steamUserId, string language = null);
 
         /// <summary>
         /// Publishes the given user's achievements.
@@ -65,7 +69,6 @@ namespace SteamAchievements.Services
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="achievementIds">The ids of the achievements to publish.</param>
         /// <returns>true if successful, else false.</returns>
-        /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
         bool PublishAchievements(string steamUserId, IEnumerable<int> achievementIds);
 
         /// <summary>
@@ -73,7 +76,6 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="achievementIds">The ids of the achievements to hide.</param>
-        /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
         bool HideAchievements(string steamUserId, IEnumerable<int> achievementIds);
 
         /// <summary>

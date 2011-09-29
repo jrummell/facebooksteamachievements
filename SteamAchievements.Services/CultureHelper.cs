@@ -105,7 +105,7 @@ namespace SteamAchievements.Services
                 return _cultures[name];
             }
 
-            return null;
+            return _cultures.First().Value;
         }
     }
 }
