@@ -123,7 +123,7 @@ namespace SteamAchievements.Services
             try
             {
                 // update the user's achievements
-                int updated = _achievementService.UpdateAchievements(user.SteamUserId);
+                int updated = _achievementService.UpdateAchievements(user.SteamUserId, user.Language);
 
                 if (updated == 0)
                 {
@@ -154,7 +154,7 @@ namespace SteamAchievements.Services
             // and the time it takes to run the Auto Update process
             DateTime oldestDate = DateTime.UtcNow.AddHours(-48).Date;
             IEnumerable<Achievement> achievements =
-                _achievementService.GetUnpublishedAchievements(user.SteamUserId, oldestDate);
+                _achievementService.GetUnpublishedAchievements(user.SteamUserId, oldestDate, user.Language);
 
             if (!achievements.Any())
             {

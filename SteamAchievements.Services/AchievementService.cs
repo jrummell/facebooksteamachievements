@@ -63,17 +63,24 @@ namespace SteamAchievements.Services
         /// Updates the achievements.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
-        /// <returns>true if successful, else false.</returns>
-        /// <remarks>jQuery/WCF requires a return value in order for jQuery to execute $.ajax.success.</remarks>
-        public int UpdateAchievements(string steamUserId)
+        /// <param name="language">The language.</param>
+        /// <returns>
+        /// true if successful, else false.
+        /// </returns>
+        public int UpdateAchievements(string steamUserId, string language = null)
         {
             if (steamUserId == null)
             {
                 throw new ArgumentNullException("steamUserId");
             }
 
+            if (language == null)
+            {
+                language = CultureHelper.GetLanguage();
+            }
+
             ICollection<UserAchievement> achievements =
-                _communityService.GetClosedAchievements(steamUserId, CultureHelper.GetLanguage());
+                _communityService.GetClosedAchievements(steamUserId, language);
 
             Data.User user = _achievementManager.GetUser(steamUserId);
             if (user == null)
@@ -101,17 +108,22 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="oldestDate">The oldest date.</param>
+        /// <param name="language">The language.</param>
         /// <returns>
         /// The achievements that haven't been published yet.
         /// </returns>
-        public ICollection<Achievement> GetUnpublishedAchievements(string steamUserId, DateTime? oldestDate)
+        public ICollection<Achievement> GetUnpublishedAchievements(string steamUserId, DateTime? oldestDate, string language = null)
         {
             if (steamUserId == null)
             {
                 throw new ArgumentNullException("steamUserId");
             }
 
-            string language = CultureHelper.GetLanguage();
+            if (language == null)
+            {
+                language = CultureHelper.GetLanguage();
+            }
+
             IEnumerable<Game> games = _communityService.GetGames(steamUserId, language);
 
             ICollection<Data.Achievement> dataAchievements;

@@ -65,6 +65,14 @@ namespace SteamAchievements.Services
         /// </value>
         public string SteamUserId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the language.
+        /// </summary>
+        /// <value>
+        /// The language.
+        /// </value>
+        public string Language { get; set; }
+
         #region IEquatable<User> Members
 
         public bool Equals(User other)

@@ -20,6 +20,7 @@
 #endregion
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -69,7 +70,7 @@ namespace SteamAchievements.Services
 
                     if (dictionary == null)
                     {
-                        dictionary = new Dictionary<int, Achievement>();
+                        dictionary = new ConcurrentDictionary<int, Achievement>();
                         cache.Add(key, dictionary, DateTime.Now.AddDays(1));
                     }
 
@@ -165,6 +166,7 @@ namespace SteamAchievements.Services
         /// <param name="language"></param>
         public void FillAchievements(IEnumerable<Achievement> achievements, string language)
         {
+            //TODO: only newly updated achievements will be cached at this point
             foreach (Achievement achievement in achievements)
             {
                 achievement.Language = language;

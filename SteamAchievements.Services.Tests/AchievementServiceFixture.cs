@@ -29,7 +29,6 @@ using System.Runtime.Serialization;
 using System.Xml;
 using Moq;
 using NUnit.Framework;
-using NUnit.Mocks;
 using SteamAchievements.Data;
 
 namespace SteamAchievements.Services.Tests
@@ -95,20 +94,26 @@ namespace SteamAchievements.Services.Tests
         /// <param name="steamUserId">The steam user id.</param>
         private static void UpdateAchievements(string steamUserId)
         {
-            DynamicMock repositoryMock = new DynamicMock(typeof (ISteamRepository));
-            ISteamRepository repository = (ISteamRepository) repositoryMock.MockInstance;
-            repositoryMock.ExpectAndReturn("get_Achivements", GetDataAchievements().AsQueryable());
-            repositoryMock.ExpectAndReturn("get_Users",
-                                           new List<Data.User>
-                                               {new Data.User {FacebookUserId = 0, SteamUserId = steamUserId}}.
-                                               AsQueryable());
-            repositoryMock.ExpectAndReturn("get_UserAchievements", new List<Data.UserAchievement>().AsQueryable());
+            Mock<ISteamRepository> repositoryMock = new Mock<ISteamRepository>();
+            ISteamRepository repository = repositoryMock.Object;
+            repositoryMock.SetupGet(repo => repo.Achievements)
+                .Returns(GetDataAchievements().AsQueryable())
+                .Verifiable();
+            repositoryMock.SetupGet(repo => repo.Users)
+                .Returns(
+                    new List<Data.User> {new Data.User {FacebookUserId = 0, SteamUserId = steamUserId}}.AsQueryable())
+                .Verifiable();
+            repositoryMock.Setup(repo => repo.UserAchievements)
+                .Returns(new List<Data.UserAchievement>().AsQueryable())
+                .Verifiable();
 
             AchievementManager manager = new AchievementManager(repository);
             ICollection<Data.UserAchievement> achievements = GetCommunityAchievements(steamUserId);
 
             // should not throw InvalidOperationException
-            manager.UpdateAchievements(achievements);
+            Assert.DoesNotThrow(() => manager.UpdateAchievements(achievements));
+
+            repositoryMock.Verify();
         }
 
         /// <summary>
@@ -174,7 +179,7 @@ namespace SteamAchievements.Services.Tests
                     {
                         try
                         {
-                            ICollection<UserAchievement> userAchievements = 
+                            ICollection<UserAchievement> userAchievements =
                                 communityManager.GetAchievements(user, "english");
                             userCommunityAchievements.Add(user, userAchievements);
                         }
