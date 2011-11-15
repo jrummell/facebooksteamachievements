@@ -53,6 +53,7 @@ namespace SteamAchievements.Web
             container.RegisterType<IFacebookContextSettings, FacebookContextSettings>();
 #endif
 
+            container.RegisterType<ISteamCommunityManager, SteamCommunityManager>();
             container.RegisterType<IAchievementXmlParser, AchievementXmlParser>();
             container.RegisterType<IGameXmlParser, GameXmlParser>();
             container.RegisterType<ISteamProfileXmlParser, SteamProfileXmlParser>();
@@ -60,7 +61,6 @@ namespace SteamAchievements.Web
 
             container.RegisterType<IAchievementManager, AchievementManager>();
             container.RegisterType<IAchievementService, AchievementService>();
-            container.RegisterType<ISteamCommunityManager, SteamCommunityManager>();
             container.RegisterType<IUserService, UserService>();
 
             container.RegisterControllers();

@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using Elmah;
 // ReSharper disable RedundantUsingDirective
 using Facebook.Web.Mvc;
 // ReSharper restore RedundantUsingDirective
@@ -64,7 +65,8 @@ namespace SteamAchievements.Web.Controllers
         [HttpPost]
         public PartialViewResult UnpublishedAchievements(DateTime? oldestDate)
         {
-            ICollection<Achievement> achievements = _achievementService.GetUnpublishedAchievements(UserSettings.SteamUserId, oldestDate);
+            ICollection<Achievement> achievements =
+                _achievementService.GetUnpublishedAchievements(UserSettings.SteamUserId, oldestDate);
 
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             ViewBag.Achievements = serializer.Serialize(achievements);
@@ -81,8 +83,18 @@ namespace SteamAchievements.Web.Controllers
         [HttpPost]
         public JsonResult UpdateAchievements()
         {
-            // jQuery requires a return value in order for jQuery to execute $.ajax.success.
-            return Json(_achievementService.UpdateAchievements(UserSettings.SteamUserId));
+            try
+            {
+                return Json(_achievementService.UpdateAchievements(UserSettings.SteamUserId));
+            }
+            catch (Exception exception)
+            {
+                // signaling the exception will rethrow it, so we'll simply log and continue
+                ErrorLog errorLog = ErrorLog.GetDefault(System.Web.HttpContext.Current);
+                errorLog.Log(new Error(exception));
+
+                return Json(new {Error = new {exception.Message}});
+            }
         }
 
         [HttpPost]
