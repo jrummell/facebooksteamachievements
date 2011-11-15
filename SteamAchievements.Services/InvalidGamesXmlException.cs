@@ -8,12 +8,12 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="InvalidGamesXmlException"/> class.
         /// </summary>
-        /// <param name="message">The message.</param>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="gamesUrl">The games URL.</param>
         /// <param name="innerException">The inner exception.</param>
-        public InvalidGamesXmlException(string message, XmlException innerException)
-            : base(message, innerException)
+        public InvalidGamesXmlException(string steamUserId, Uri gamesUrl, XmlException innerException)
+            : base(String.Format("Invalid games xml {0} ({1}).", steamUserId, gamesUrl), innerException)
         {
-            
         }
     }
 }

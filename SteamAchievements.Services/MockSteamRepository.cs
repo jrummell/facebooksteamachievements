@@ -41,11 +41,12 @@ namespace SteamAchievements.Services
                                         new Data.Achievement
                                             {
                                                 Id = 1,
-                                                Description = "Achievement 1 Description",
-                                                GameId = 220,
-                                                Name = "Achievement 1 Name",
+                                                ApiName = "ach_incendiary_clown_posse",
+                                                Description = "Use a Molotov to burn a Clown leading at least 10 Common Infected.",
+                                                GameId = 550,
+                                                Name = "FRIED PIPER",
                                                 ImageUrl =
-                                                    "http://media.steampowered.com/steamcommunity/public/images/apps/220/hl2_escape_apartmentraid.jpg"
+                                                    "http://media.steampowered.com/steamcommunity/public/images/apps/550/8a1dbb0d78c8e288ed5ce990a20454073d01ba9b.jpg"
                                             }
                                         }
                                 };
@@ -139,6 +140,11 @@ namespace SteamAchievements.Services
             foreach (Data.UserAchievement userAchievement in achievements)
             {
                 userAchievement.Id = _userAchievements.Keys.Max() + 1;
+                if (userAchievement.Achievement == null && _achievements.ContainsKey(userAchievement.AchievementId))
+                {
+                    userAchievement.Achievement = _achievements[userAchievement.AchievementId];
+                }
+
                 _userAchievements.Add(userAchievement.Id, userAchievement);
             }
         }

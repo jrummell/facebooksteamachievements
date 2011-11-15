@@ -64,7 +64,17 @@ function getNewAchievements()
 
     $achievements.showLoading("#newAchievementsLoading");
 
-    $achievements.updateAchievements(displayAchievements, displayError);
+    $achievements.updateAchievements(function (data)
+    {
+        if (data && data.Error)
+        {
+            displayError(data.Error);
+        }
+        else
+        {
+            displayAchievements();
+        } 
+    }, displayError);
 }
 
 // achievement array set by ajax request
@@ -115,8 +125,21 @@ function displayAchievements()
     $achievements.loadUnpublishedAchievements("#newAchievements", ondone);
 }
 
-function displayError()
+function displayError(error)
 {
     $achievements.hideLoading("#newAchievementsLoading");
-    $("#achievementsUpdateFailure").message({ type: "error", dismiss: false });
+
+    var $error = $("#achievementsUpdateFailure");
+    var $errorMessage = $(".error-message", $error);
+    $errorMessage.hide().text("");
+
+    var options = { type: "error", dismiss: false };
+    if (error)
+    {
+        var errorMessage = error.Message || error;
+
+        $errorMessage.show().text("Additional information: " + errorMessage);
+    }
+
+    $error.message(options);
 }

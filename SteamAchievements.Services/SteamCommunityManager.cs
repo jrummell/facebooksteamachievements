@@ -154,8 +154,7 @@ namespace SteamAchievements.Services
             }
             catch (XmlException ex)
             {
-                string message = String.Format("Invalid games URL for {0}.", steamUserId);
-                throw new InvalidGamesXmlException(message, ex);
+                throw new InvalidGamesXmlException(steamUserId, gamesUrl, ex);
             }
         }
 
@@ -234,12 +233,11 @@ namespace SteamAchievements.Services
                     HttpContext context = HttpContext.Current;
                     if (context != null)
                     {
-                        ErrorSignal signal = ErrorSignal.FromContext(context);
-                        if (signal != null)
+                        ErrorLog errorLog = ErrorLog.GetDefault(context);
+                        if (errorLog != null)
                         {
-                            string message = String.Format("Invalid xml for {0} stats: {1}.", game.Name, game.StatsUrl);
-                            Exception exception = new InvalidStatsXmlException(message, ex);
-                            signal.Raise(exception);
+                            Exception exception = new InvalidStatsXmlException(steamUserId, new Uri(game.StatsUrl), ex);
+                            errorLog.Log(new Error(exception));
                         }
                     }
 

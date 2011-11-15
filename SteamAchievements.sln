@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamAchievements.Web.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamAchievements.Updater", "SteamAchievements.Updater\SteamAchievements.Updater.csproj", "{ADA48981-D32A-4B82-85ED-594256931D46}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamAchievements.Updater.Tests", "SteamAchievements.Updater.Tests\SteamAchievements.Updater.Tests.csproj", "{E5BB3580-23F7-4113-882C-73D8444C10BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -136,6 +138,21 @@ Global
 		{ADA48981-D32A-4B82-85ED-594256931D46}.Staging|Mixed Platforms.Build.0 = Staging|Any CPU
 		{ADA48981-D32A-4B82-85ED-594256931D46}.Staging|x86.ActiveCfg = Release|x86
 		{ADA48981-D32A-4B82-85ED-594256931D46}.Staging|x86.Build.0 = Release|x86
+		{E5BB3580-23F7-4113-882C-73D8444C10BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5BB3580-23F7-4113-882C-73D8444C10BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5BB3580-23F7-4113-882C-73D8444C10BD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E5BB3580-23F7-4113-882C-73D8444C10BD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E5BB3580-23F7-4113-882C-73D8444C10BD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E5BB3580-23F7-4113-882C-73D8444C10BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5BB3580-23F7-4113-882C-73D8444C10BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5BB3580-23F7-4113-882C-73D8444C10BD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E5BB3580-23F7-4113-882C-73D8444C10BD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E5BB3580-23F7-4113-882C-73D8444C10BD}.Release|x86.ActiveCfg = Release|Any CPU
+		{E5BB3580-23F7-4113-882C-73D8444C10BD}.Staging|Any CPU.ActiveCfg = Release|Any CPU
+		{E5BB3580-23F7-4113-882C-73D8444C10BD}.Staging|Any CPU.Build.0 = Release|Any CPU
+		{E5BB3580-23F7-4113-882C-73D8444C10BD}.Staging|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E5BB3580-23F7-4113-882C-73D8444C10BD}.Staging|Mixed Platforms.Build.0 = Release|Any CPU
+		{E5BB3580-23F7-4113-882C-73D8444C10BD}.Staging|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

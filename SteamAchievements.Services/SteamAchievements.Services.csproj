@@ -18,6 +18,8 @@
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -91,14 +93,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoUpdateLogger.cs" />
-    <Compile Include="AutoUpdateManager.cs" />
     <Compile Include="CultureHelper.cs" />
     <Compile Include="DuplicateSteamUserException.cs" />
     <Compile Include="FacebookPublisher.cs" />
     <Compile Include="IAchievementXmlParser.cs" />
-    <Compile Include="IAutoUpdateLogger.cs" />
-    <Compile Include="IAutoUpdateManager.cs" />
     <Compile Include="IFacebookPublisher.cs" />
     <Compile Include="IGameXmlParser.cs" />
     <Compile Include="InvalidGamesXmlException.cs" />
@@ -149,4 +147,5 @@
     <VisualStudio>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
 </Project>
