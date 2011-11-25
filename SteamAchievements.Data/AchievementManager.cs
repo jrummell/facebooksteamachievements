@@ -531,7 +531,7 @@ namespace SteamAchievements.Data
             {
                 throw new ArgumentNullException("missingAchievements");
             }
-            
+
             if (missingAchievements.Count == 0)
             {
                 return;
@@ -568,7 +568,7 @@ namespace SteamAchievements.Data
             {
                 throw new ArgumentNullException("missingAchievementNames");
             }
-            
+
             if (missingAchievementNames.Count == 0)
             {
                 return;
@@ -660,13 +660,20 @@ namespace SteamAchievements.Data
             IEnumerable<string> communityAchievementIds =
                 from achievement in communityAchievements
                 from name in achievement.AchievementNames
-                select achievement.Id + name.Language;
+                select achievement.GameId + achievement.ApiName + name.Language;
 
-            List<AchievementName> dbAchievementNames =
+            var dbAchievementNames =
                 (from achievementName in _repository.AchievementNames
-                 let achievementNameId = achievementName.AchievementId + achievementName.Language
+                 let achievementNameId =
+                     achievementName.Achievement.GameId + achievementName.Achievement.ApiName + achievementName.Language
                  where communityAchievementIds.Contains(achievementNameId)
-                 select achievementName).ToList();
+                 select
+                     new
+                         {
+                             achievementName.Achievement.GameId,
+                             achievementName.Achievement.ApiName,
+                             achievementName.Language
+                         }).ToList();
 
             List<AchievementName> missingAchievementNames = new List<AchievementName>();
             if (communityAchievements.Count != dbAchievementNames.Count)
@@ -676,7 +683,8 @@ namespace SteamAchievements.Data
                     AchievementName communityName = achievementName;
                     bool exists =
                         dbAchievementNames.Where(
-                            a => a.AchievementId == communityName.AchievementId
+                            a => a.GameId == communityName.Achievement.GameId
+                                 && a.ApiName == communityName.Achievement.ApiName
                                  && a.Language == communityName.Language)
                             .Any();
 
