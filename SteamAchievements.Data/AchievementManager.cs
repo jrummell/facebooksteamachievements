@@ -177,7 +177,7 @@ namespace SteamAchievements.Data
             }
 
             ICollection<AchievementName> missingAchievementNames =
-                GetMissingAchievementNames(achievements.SelectMany(a => a.AchievementNames).ToList());
+                GetMissingAchievementNames(achievements);
             if (missingAchievementNames.Any())
             {
                 InsertMissingAchievementNames(missingAchievementNames);
@@ -624,13 +624,13 @@ namespace SteamAchievements.Data
                 foreach (Achievement achievement in communityAchievements)
                 {
                     Achievement communityAchievement = achievement;
-                    Achievement missingAchievement =
+                    bool exists =
                         dbAchievements.Where(
                             a => a.GameId == communityAchievement.GameId
                                  && a.ApiName == communityAchievement.ApiName)
-                            .FirstOrDefault();
+                            .Any();
 
-                    if (missingAchievement == null)
+                    if (!exists)
                     {
                         missingAchievements.Add(communityAchievement);
                     }
@@ -643,23 +643,24 @@ namespace SteamAchievements.Data
         /// <summary>
         /// Gets the missing database achievement names.
         /// </summary>
-        /// <param name="communityAchievementNames">The community achievement names.</param>
+        /// <param name="communityAchievements">The community achievements.</param>
         /// <returns></returns>
-        private ICollection<AchievementName> GetMissingAchievementNames(
-            ICollection<AchievementName> communityAchievementNames)
+        private ICollection<AchievementName> GetMissingAchievementNames(ICollection<Achievement> communityAchievements)
         {
-            if (communityAchievementNames == null)
+            if (communityAchievements == null)
             {
-                throw new ArgumentNullException("communityAchievementNames");
+                throw new ArgumentNullException("communityAchievements");
             }
 
-            if (communityAchievementNames.Count == 0)
+            if (communityAchievements.Count == 0)
             {
                 return new AchievementName[0];
             }
 
             IEnumerable<string> communityAchievementIds =
-                communityAchievementNames.Select(n => n.AchievementId + n.Language);
+                from achievement in communityAchievements
+                from name in achievement.AchievementNames
+                select achievement.Id + name.Language;
 
             List<AchievementName> dbAchievementNames =
                 (from achievementName in _repository.AchievementNames
@@ -668,18 +669,18 @@ namespace SteamAchievements.Data
                  select achievementName).ToList();
 
             List<AchievementName> missingAchievementNames = new List<AchievementName>();
-            if (communityAchievementNames.Count != dbAchievementNames.Count)
+            if (communityAchievements.Count != dbAchievementNames.Count)
             {
-                foreach (AchievementName achievementName in communityAchievementNames)
+                foreach (AchievementName achievementName in communityAchievements.SelectMany(a => a.AchievementNames))
                 {
                     AchievementName communityName = achievementName;
-                    AchievementName missing =
+                    bool exists =
                         dbAchievementNames.Where(
                             a => a.AchievementId == communityName.AchievementId
                                  && a.Language == communityName.Language)
-                            .FirstOrDefault();
+                            .Any();
 
-                    if (missing == null)
+                    if (!exists)
                     {
                         missingAchievementNames.Add(communityName);
                     }

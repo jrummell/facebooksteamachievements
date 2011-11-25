@@ -19,7 +19,6 @@
 
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
@@ -47,7 +46,6 @@ namespace SteamAchievements.Data
         public IQueryable<Achievement> Achievements
         {
             get { return _context.Achievements; }
-            set { throw new NotSupportedException(); }
         }
 
         /// <summary>
@@ -57,7 +55,6 @@ namespace SteamAchievements.Data
         public IQueryable<UserAchievement> UserAchievements
         {
             get { return _context.UserAchievements; }
-            set { throw new NotSupportedException(); }
         }
 
         /// <summary>
@@ -67,13 +64,17 @@ namespace SteamAchievements.Data
         public IQueryable<User> Users
         {
             get { return _context.Users; }
-            set { throw new NotSupportedException(); }
         }
 
+        /// <summary>
+        /// Gets the achievement names.
+        /// </summary>
+        /// <value>
+        /// The achievement names.
+        /// </value>
         public IQueryable<AchievementName> AchievementNames
         {
             get { return _context.AchievementNames; }
-            set { throw new NotSupportedException(); }
         }
 
         /// <summary>
