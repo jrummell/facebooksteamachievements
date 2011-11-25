@@ -1,9 +1,9 @@
 CREATE TABLE [dbo].[steam_Achievement]
 (
 [Id] [int] NOT NULL IDENTITY(1, 1),
-[ApiName] [nvarchar] (100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL CONSTRAINT [DF_steam_Achievement_ApiName] DEFAULT (N''),
+[ApiName] [varchar] (100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL CONSTRAINT [DF_steam_Achievement_ApiName] DEFAULT (N''),
 [GameId] [int] NOT NULL,
-[ImageUrl] [varchar] (500) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL
+[ImageUrl] [varchar] (200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL
 ) ON [PRIMARY]
 CREATE UNIQUE NONCLUSTERED INDEX [IX_steam_Achievement] ON [dbo].[steam_Achievement] ([GameId], [ApiName]) ON [PRIMARY]
 
