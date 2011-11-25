@@ -70,6 +70,12 @@ namespace SteamAchievements.Data
             set { throw new NotSupportedException(); }
         }
 
+        public IQueryable<AchievementName> AchievementNames
+        {
+            get { return _context.AchievementNames; }
+            set { throw new NotSupportedException(); }
+        }
+
         /// <summary>
         /// Inserts the user on submit.
         /// </summary>
@@ -121,6 +127,15 @@ namespace SteamAchievements.Data
         public void InsertAllOnSubmit(IEnumerable<UserAchievement> achievements)
         {
             _context.UserAchievements.InsertAllOnSubmit(achievements);
+        }
+
+        /// <summary>
+        /// Inserts the on submit.
+        /// </summary>
+        /// <param name="achievementName">Name of the achievement.</param>
+        public void InsertOnSubmit(AchievementName achievementName)
+        {
+            _context.AchievementNames.InsertOnSubmit(achievementName);
         }
 
         #endregion

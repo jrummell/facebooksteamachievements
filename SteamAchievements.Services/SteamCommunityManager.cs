@@ -20,11 +20,9 @@
 #endregion
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Caching;
 using System.Web;
 using System.Xml;
 using Elmah;
@@ -35,7 +33,6 @@ namespace SteamAchievements.Services
     public class SteamCommunityManager : Disposable, ISteamCommunityManager
     {
         private const string _defaultLanguage = "english";
-        private static readonly object _achievementCacheLock = new object();
         private readonly IAchievementXmlParser _achievementParser;
         private readonly IGameXmlParser _gamesParser;
         private readonly ISteamProfileXmlParser _profileParser;
@@ -55,28 +52,6 @@ namespace SteamAchievements.Services
             _achievementParser = achievementParser;
             _gamesParser = gamesParser;
             _profileParser = profileParser;
-        }
-
-        private static IDictionary<int, Achievement> AchievementCache
-        {
-            get
-            {
-                lock (_achievementCacheLock)
-                {
-                    string key = typeof (SteamCommunityManager) + ".AchievementCache";
-                    MemoryCache cache = MemoryCache.Default;
-                    IDictionary<int, Achievement> dictionary =
-                        cache.Get(key) as IDictionary<int, Achievement>;
-
-                    if (dictionary == null)
-                    {
-                        dictionary = new ConcurrentDictionary<int, Achievement>();
-                        cache.Add(key, dictionary, DateTime.Now.AddDays(1));
-                    }
-
-                    return dictionary;
-                }
-            }
         }
 
         #region ISteamCommunityManager Members
@@ -158,28 +133,6 @@ namespace SteamAchievements.Services
             }
         }
 
-        /// <summary>
-        /// Sets Name, Description, and ImageUrl from the achievement cache.
-        /// </summary>
-        /// <param name="achievements">The achievements.</param>
-        /// <param name="language"></param>
-        public void FillAchievements(IEnumerable<Achievement> achievements, string language)
-        {
-            //TODO: only newly updated achievements will be cached at this point
-            foreach (Achievement achievement in achievements)
-            {
-                achievement.Language = language;
-                int hashCode = achievement.GetHashCode();
-                if (AchievementCache.ContainsKey(hashCode))
-                {
-                    Achievement cachedAchievement = AchievementCache[hashCode];
-                    achievement.Name = cachedAchievement.Name;
-                    achievement.Description = cachedAchievement.Description;
-                    achievement.ImageUrl = cachedAchievement.ImageUrl;
-                }
-            }
-        }
-
         #endregion
 
         /// <summary>
@@ -258,19 +211,6 @@ namespace SteamAchievements.Services
                                             });
 
                 achievements.AddRange(achievementList);
-            }
-
-            lock (_achievementCacheLock)
-            {
-                // cache the achievements
-                foreach (Achievement achievement in achievements.Select(a => a.Achievement))
-                {
-                    int hashCode = achievement.GetHashCode();
-                    if (!AchievementCache.ContainsKey(hashCode))
-                    {
-                        AchievementCache.Add(hashCode, achievement);
-                    }
-                }
             }
 
             return achievements;

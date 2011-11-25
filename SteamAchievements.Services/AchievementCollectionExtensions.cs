@@ -20,7 +20,9 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
+using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
@@ -31,20 +33,24 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="achievements">The achievements.</param>
         /// <param name="games">The games.</param>
+        /// <param name="language">The language.</param>
         /// <returns></returns>
         public static List<Achievement> ToSimpleAchievementList(
-            this IEnumerable<Data.Achievement> achievements, IEnumerable<Game> games)
+            this IEnumerable<Data.Achievement> achievements, IEnumerable<Game> games, string language)
         {
             return (from game in games
                     from achievement in achievements
+                    let achievementName = achievement.AchievementNames
+                                              .Where(n => n.Language == language)
+                                              .SingleOrDefault() ?? achievement.AchievementNames.First()
                     where achievement.GameId == game.Id
                     select new Achievement
                                {
                                    Id = achievement.Id,
                                    ApiName = achievement.ApiName,
                                    ImageUrl = achievement.ImageUrl,
-                                   Name = achievement.Name,
-                                   Description = achievement.Description,
+                                   Name = achievementName.Name,
+                                   Description = achievementName.Description,
                                    Game = game
                                }).ToList();
         }
@@ -66,10 +72,19 @@ namespace SteamAchievements.Services
                                    Achievement = new Data.Achievement
                                                      {
                                                          ApiName = achievement.Achievement.ApiName,
-                                                         Name = achievement.Achievement.Name,
-                                                         Description = achievement.Achievement.Description,
                                                          ImageUrl = achievement.Achievement.ImageUrl,
-                                                         GameId = achievement.Achievement.Game.Id
+                                                         GameId = achievement.Achievement.Game.Id,
+                                                         AchievementNames =
+                                                             new EntitySet<AchievementName>
+                                                                 {
+                                                                     new AchievementName
+                                                                         {
+                                                                             AchievementId = achievement.Achievement.Id,
+                                                                             Language = achievement.Achievement.Language,
+                                                                             Name = achievement.Achievement.Name,
+                                                                             Description = achievement.Achievement.Description
+                                                                         }
+                                                                 }
                                                      }
                                }).ToList();
         }

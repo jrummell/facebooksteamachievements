@@ -19,7 +19,6 @@
 
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -27,7 +26,6 @@ using NUnit.Framework;
 namespace SteamAchievements.Services.Tests
 {
     [TestFixture]
-    //[Explicit("Requires internet connection")]
     public class SteamCommunityManagerFixture
     {
         #region Setup/Teardown
@@ -50,39 +48,9 @@ namespace SteamAchievements.Services.Tests
         private SteamCommunityManager _manager;
 
         [Test, Explicit("Depends on recent game play")]
-        public void FillAchievements()
-        {
-            // get the achievements
-            IEnumerable<Achievement> achievements =
-                _manager.GetClosedAchievements("nullreference", "french")
-                    .Select(a => a.Achievement);
-
-            // create a copy that doesn't have Name, Description and ImageUrl
-            int idCount = 0;
-            IEnumerable<Achievement> unfilledAchievements =
-                achievements.Select(a => new Achievement
-                                             {
-                                                 ApiName = a.ApiName,
-                                                 Game = a.Game,
-                                                 Id = idCount++
-                                             }).ToArray();
-
-            // fill
-            _manager.FillAchievements(unfilledAchievements, "french");
-
-            // assert they are filled
-            foreach (Achievement achievement in unfilledAchievements)
-            {
-                Assert.That(!String.IsNullOrEmpty(achievement.Name));
-                Assert.That(!String.IsNullOrEmpty(achievement.Description));
-                Assert.That(!String.IsNullOrEmpty(achievement.ImageUrl));
-            }
-        }
-
-        [Test, Explicit("Depends on recent game play")]
         public void GetAchievements()
         {
-            IEnumerable<UserAchievement> achievements = 
+            IEnumerable<UserAchievement> achievements =
                 _manager.GetClosedAchievements("nullreference", "english");
 
             Assert.That(achievements.Any());

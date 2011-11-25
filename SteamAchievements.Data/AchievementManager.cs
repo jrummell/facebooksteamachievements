@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Data.SqlTypes;
 using System.Linq;
 
@@ -144,36 +145,45 @@ namespace SteamAchievements.Data
         /// <summary>
         /// Updates the achievements.
         /// </summary>
-        /// <param name="achievements">All achievements for the given user.</param>
+        /// <param name="userAchievements">All achievements for the given user.</param>
+        /// <returns></returns>
         /// <remarks>
         /// Calls <see cref="InsertMissingAchievements"/> and <see cref="AssignAchievements"/>.
         /// </remarks>
-        public int UpdateAchievements(IEnumerable<UserAchievement> achievements)
+        public int UpdateAchievements(IEnumerable<UserAchievement> userAchievements)
         {
-            if (achievements == null)
+            if (userAchievements == null)
             {
-                throw new ArgumentNullException("achievements");
+                throw new ArgumentNullException("userAchievements");
             }
 
-            if (!achievements.Any())
+            if (!userAchievements.Any())
             {
                 return 0;
             }
 
-            long facebookUserId = achievements.First().FacebookUserId;
-            if (achievements.Any(achievement => achievement.FacebookUserId != facebookUserId))
+            long facebookUserId = userAchievements.First().FacebookUserId;
+            if (userAchievements.Any(achievement => achievement.FacebookUserId != facebookUserId))
             {
-                throw new ArgumentException("All achievements must have the same SteamUserId", "achievements");
+                throw new ArgumentException("All achievements must have the same SteamUserId", "userAchievements");
             }
 
+            List<Achievement> achievements = userAchievements.Select(a => a.Achievement).ToList();
             ICollection<Achievement> missingAchievements =
-                GetMissingAchievements(achievements.Select(a => a.Achievement).ToList());
+                GetMissingAchievements(achievements);
             if (missingAchievements.Any())
             {
                 InsertMissingAchievements(missingAchievements);
             }
 
-            return AssignAchievements(achievements);
+            ICollection<AchievementName> missingAchievementNames =
+                GetMissingAchievementNames(achievements.SelectMany(a => a.AchievementNames).ToList());
+            if (missingAchievementNames.Any())
+            {
+                InsertMissingAchievementNames(missingAchievementNames);
+            }
+
+            return AssignAchievements(userAchievements);
         }
 
         /// <summary>
@@ -515,9 +525,14 @@ namespace SteamAchievements.Data
         /// Inserts the missing achievements.
         /// </summary>
         /// <param name="missingAchievements">The missing achievements.</param>
-        public void InsertMissingAchievements(IEnumerable<Achievement> missingAchievements)
+        public void InsertMissingAchievements(ICollection<Achievement> missingAchievements)
         {
-            if (!missingAchievements.Any())
+            if (missingAchievements == null)
+            {
+                throw new ArgumentNullException("missingAchievements");
+            }
+            
+            if (missingAchievements.Count == 0)
             {
                 return;
             }
@@ -527,15 +542,53 @@ namespace SteamAchievements.Data
                 Achievement newAchievement = new Achievement
                                                  {
                                                      ApiName = achievement.ApiName,
-                                                     Name = achievement.Name,
                                                      GameId = achievement.GameId,
-                                                     Description = achievement.Description,
-                                                     ImageUrl = achievement.ImageUrl
+                                                     ImageUrl = achievement.ImageUrl,
+                                                     AchievementNames = new EntitySet<AchievementName>
+                                                                            {
+                                                                                achievement.AchievementNames.First()
+                                                                            }
                                                  };
                 _repository.InsertOnSubmit(newAchievement);
             }
 
             _repository.SubmitChanges();
+
+            return;
+        }
+
+        /// <summary>
+        /// Inserts the missing achievement names.
+        /// </summary>
+        /// <param name="missingAchievementNames">The missing achievement names.</param>
+        /// <returns></returns>
+        private void InsertMissingAchievementNames(ICollection<AchievementName> missingAchievementNames)
+        {
+            if (missingAchievementNames == null)
+            {
+                throw new ArgumentNullException("missingAchievementNames");
+            }
+            
+            if (missingAchievementNames.Count == 0)
+            {
+                return;
+            }
+
+            foreach (AchievementName achievementName in missingAchievementNames)
+            {
+                AchievementName newAchievementName = new AchievementName
+                                                         {
+                                                             AchievementId = achievementName.AchievementId,
+                                                             Language = achievementName.Language,
+                                                             Name = achievementName.Name,
+                                                             Description = achievementName.Description
+                                                         };
+                _repository.InsertOnSubmit(newAchievementName);
+            }
+
+            _repository.SubmitChanges();
+
+            return;
         }
 
         /// <summary>
@@ -543,14 +596,14 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="communityAchievements">The community achievements.</param>
         /// <returns></returns>
-        public ICollection<Achievement> GetMissingAchievements(IEnumerable<Achievement> communityAchievements)
+        public ICollection<Achievement> GetMissingAchievements(ICollection<Achievement> communityAchievements)
         {
             if (communityAchievements == null)
             {
                 throw new ArgumentNullException("communityAchievements");
             }
 
-            if (!communityAchievements.Any())
+            if (communityAchievements.Count == 0)
             {
                 return new Achievement[0];
             }
@@ -566,7 +619,7 @@ namespace SteamAchievements.Data
                  select achievement).ToList();
 
             List<Achievement> missingAchievements = new List<Achievement>();
-            if (communityAchievements.Count() != dbAchievements.Count)
+            if (communityAchievements.Count != dbAchievements.Count)
             {
                 foreach (Achievement achievement in communityAchievements)
                 {
@@ -585,6 +638,55 @@ namespace SteamAchievements.Data
             }
 
             return missingAchievements;
+        }
+
+        /// <summary>
+        /// Gets the missing database achievement names.
+        /// </summary>
+        /// <param name="communityAchievementNames">The community achievement names.</param>
+        /// <returns></returns>
+        private ICollection<AchievementName> GetMissingAchievementNames(
+            ICollection<AchievementName> communityAchievementNames)
+        {
+            if (communityAchievementNames == null)
+            {
+                throw new ArgumentNullException("communityAchievementNames");
+            }
+
+            if (communityAchievementNames.Count == 0)
+            {
+                return new AchievementName[0];
+            }
+
+            IEnumerable<string> communityAchievementIds =
+                communityAchievementNames.Select(n => n.AchievementId + n.Language);
+
+            List<AchievementName> dbAchievementNames =
+                (from achievementName in _repository.AchievementNames
+                 let achievementNameId = achievementName.AchievementId + achievementName.Language
+                 where communityAchievementIds.Contains(achievementNameId)
+                 select achievementName).ToList();
+
+            List<AchievementName> missingAchievementNames = new List<AchievementName>();
+            if (communityAchievementNames.Count != dbAchievementNames.Count)
+            {
+                foreach (AchievementName achievementName in communityAchievementNames)
+                {
+                    AchievementName communityName = achievementName;
+                    AchievementName missing =
+                        dbAchievementNames.Where(
+                            a => a.AchievementId == communityName.AchievementId
+                                 && a.Language == communityName.Language)
+                            .FirstOrDefault();
+
+                    if (missing == null)
+                    {
+                        missingAchievementNames.Add(communityName);
+                    }
+                }
+            }
+
+            return missingAchievementNames;
         }
 
         /// <summary>
