@@ -1,36 +1,46 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="steam" Class="SteamDataContext" AccessModifier="Internal" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DB_7089_steamtest" Class="SteamDataContext" AccessModifier="Internal" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=Steam;Integrated Security=True" SettingsObjectName="SteamAchievements.Data.Properties.Settings" SettingsPropertyName="steamConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.steam_Achievement" Member="Achievements">
     <Type Name="Achievement">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ApiName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="GameId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
-      <Column Name="ImageUrl" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
-      <Column Name="ApiName" Type="System.String" CanBeNull="false" />
-      <Association Name="Achievement_UserAchievement" Member="UserAchievements" Storage="_steam_UserAchievements" ThisKey="Id" OtherKey="AchievementId" Type="UserAchievement" />
+      <Column Name="ImageUrl" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="Achievement_UserAchievement" Member="UserAchievements" ThisKey="Id" OtherKey="AchievementId" Type="UserAchievement" />
+      <Association Name="Achievement_AchievementName" Member="AchievementNames" ThisKey="Id" OtherKey="AchievementId" Type="AchievementName" />
     </Type>
   </Table>
   <Table Name="dbo.steam_UserAchievement" Member="UserAchievements">
     <Type Name="UserAchievement">
-      <Column Name="Id" Type="System.Int32" DbType="int not null" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FacebookUserId" Storage="_SteamUserId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="FacebookUserId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="AchievementId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Date" Type="System.DateTime" DbType="datetime not null" CanBeNull="false" />
-      <Column Name="Published" Type="System.Boolean" DbType="bit not null" CanBeNull="false" />
-      <Column Name="Hidden" Type="System.Boolean" DbType="bit not null" CanBeNull="false" />
-      <Association Name="Achievement_UserAchievement" Member="Achievement" Storage="_steam_Achievement" ThisKey="AchievementId" OtherKey="Id" Type="Achievement" IsForeignKey="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Published" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Hidden" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Achievement_UserAchievement" Member="Achievement" ThisKey="AchievementId" OtherKey="Id" Type="Achievement" IsForeignKey="true" />
       <Association Name="User_UserAchievement" Member="User" ThisKey="FacebookUserId" OtherKey="FacebookUserId" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.steam_AchievementName" Member="AchievementNames">
+    <Type Name="AchievementName">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AchievementId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Language" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Association Name="Achievement_AchievementName" Member="Achievement" ThisKey="AchievementId" OtherKey="Id" Type="Achievement" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.steam_User" Member="Users">
     <Type Name="User">
       <Column Name="FacebookUserId" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="SteamUserId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="AccessToken" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="AccessToken" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
       <Column Name="AutoUpdate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="PublishDescription" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Member="Language" Type="System.String" CanBeNull="false" />
+      <Column Name="Language" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="User_UserAchievement" Member="UserAchievements" ThisKey="FacebookUserId" OtherKey="FacebookUserId" Type="UserAchievement" />
     </Type>
   </Table>
 </Database>

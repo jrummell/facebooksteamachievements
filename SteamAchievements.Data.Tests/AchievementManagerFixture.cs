@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Data.SqlTypes;
 using System.Linq;
 using Moq;
@@ -39,15 +40,35 @@ namespace SteamAchievements.Data.Tests
             _achievements = (new[]
                                  {
                                      new Achievement
-                                         {Id = 1, GameId = 1, Name = "Achievement 1 for Game 1", Description = "", ApiName = "1"},
+                                         {Id = 1, GameId = 1, ApiName = "1",
+                                         AchievementNames = new EntitySet<AchievementName>
+                                                                {
+                                                                    new AchievementName{Id = 1, AchievementId = 1, Name = "Achievement 1 for Game 1", Description = "" }
+                                                                }},
                                      new Achievement
-                                         {Id = 2, GameId = 1, Name = "Achievement 2 for Game 1", Description = "", ApiName = "2"},
+                                         {Id = 2, GameId = 1, ApiName = "2",
+                                         AchievementNames = new EntitySet<AchievementName>
+                                                                {
+                                                                    new AchievementName{Id = 2, AchievementId = 2, Name = "Achievement 1 for Game 1", Description = "" }
+                                                                }},
                                      new Achievement
-                                         {Id = 3, GameId = 1, Name = "Achievement 3 for Game 1", Description = "", ApiName = "3"},
+                                         {Id = 3, GameId = 1, ApiName = "3",
+                                         AchievementNames = new EntitySet<AchievementName>
+                                                                {
+                                                                    new AchievementName{Id = 3, AchievementId = 3, Name = "Achievement 2 for Game 1", Description = "" }
+                                                                }},
                                      new Achievement
-                                         {Id = 4, GameId = 2, Name = "Achievement 1 for Game 2", Description = "", ApiName = "4"},
+                                         {Id = 4, GameId = 2, ApiName = "4",
+                                         AchievementNames = new EntitySet<AchievementName>
+                                                                {
+                                                                    new AchievementName{Id = 4, AchievementId = 4, Name = "Achievement 1 for Game 2", Description = "" }
+                                                                }},
                                      new Achievement
-                                         {Id = 5, GameId = 2, Name = "Achievement 2 for Game 2", Description = "", ApiName = "5"}
+                                         {Id = 5, GameId = 2, ApiName = "5",
+                                         AchievementNames = new EntitySet<AchievementName>
+                                                                {
+                                                                    new AchievementName{Id = 5, AchievementId = 5, Name = "Achievement 2 for Game 2", Description = "" }
+                                                                }}
                                  }).AsQueryable();
 
             _users = (new[]
@@ -117,10 +138,17 @@ namespace SteamAchievements.Data.Tests
             {
                 Achievement achievement = new Achievement
                                               {
-                                                  Name = "Achievement " + i,
-                                                  Description = "Achievement " + i,
+
                                                   ImageUrl = "http://example.com/achievement" + i + ".gif",
-                                                  ApiName = i.ToString()
+                                                  ApiName = i.ToString(),
+                                                  AchievementNames = new EntitySet<AchievementName>
+                                                                         {
+                                                                             new AchievementName
+                                                                                 {
+                                                                                     Name = "Achievement " + i,
+                                                                                     Description = "Achievement " + i
+                                                                                 }
+                                                                         }
                                               };
                 gameAchievements.Add(achievement);
             }
@@ -172,14 +200,14 @@ namespace SteamAchievements.Data.Tests
         [Test]
         public void GetMissingAchievements()
         {
-            Achievement achievement1Game5 = new Achievement {GameId = 5, Name = "Achievement 1 for Game 5", ApiName = "1"};
-            Achievement achievement2Game5 = new Achievement {GameId = 5, Name = "Achievement 2 for Game 5", ApiName = "2"};
+            Achievement achievement1Game5 = new Achievement {GameId = 5, ApiName = "1"};
+            Achievement achievement2Game5 = new Achievement {GameId = 5,  ApiName = "2"};
             ICollection<Achievement> communityAchievements =
                 new[]
                     {
-                        new Achievement {GameId = 1, Name = "Achievement 1 for Game 1", ApiName = "1"},
-                        new Achievement {GameId = 1, Name = "Achievement 2 for Game 1", ApiName = "2"},
-                        new Achievement {GameId = 1, Name = "Achievement 3 for Game 1", ApiName = "3"},
+                        new Achievement {GameId = 1, ApiName = "1"},
+                        new Achievement {GameId = 1, ApiName = "2"},
+                        new Achievement {GameId = 1, ApiName = "3"},
                         achievement1Game5,
                         achievement2Game5
                     };
@@ -238,20 +266,18 @@ namespace SteamAchievements.Data.Tests
                     {
                         Id = ++maxId,
                         GameId = 5,
-                        Name = "Achievement 1 for Game 5",
-                        Description = "",
                         ImageUrl = "",
-                        ApiName = "1"
+                        ApiName = "1",
+                        AchievementNames = new EntitySet<AchievementName>{new AchievementName()}
                     };
             Achievement achievement2Game5 =
                 new Achievement
                     {
                         Id = ++maxId,
                         GameId = 5,
-                        Name = "Achievement 2 for Game 5",
-                        Description = "",
                         ImageUrl = "",
-                        ApiName = "2"
+                        ApiName = "2",
+                        AchievementNames = new EntitySet<AchievementName>{new AchievementName()}
                     };
 
             Achievement[] missingAchievements = new[] {achievement1Game5, achievement2Game5};
@@ -279,9 +305,8 @@ namespace SteamAchievements.Data.Tests
                                                   {
                                                       Id = 1,
                                                       GameId = 1,
-                                                      Name = "Achievement 1 for Game 1",
-                                                      Description = "",
-                                                      ApiName = "1"
+                                                      ApiName = "1",
+                                                      AchievementNames = new EntitySet<AchievementName>{new AchievementName()}
                                                   }
                             },
                         new UserAchievement
@@ -292,9 +317,8 @@ namespace SteamAchievements.Data.Tests
                                                   {
                                                       Id = 2,
                                                       GameId = 1,
-                                                      Name = "Achievement 2 for Game 1",
-                                                      Description = "",
-                                                      ApiName = "2"
+                                                      ApiName = "2",
+                                                      AchievementNames = new EntitySet<AchievementName>{new AchievementName()}
                                                   }
                             },
                         new UserAchievement
@@ -305,9 +329,8 @@ namespace SteamAchievements.Data.Tests
                                                   {
                                                       Id = 3,
                                                       GameId = 1,
-                                                      Name = "Achievement 3 for Game 1",
-                                                      Description = "",
-                                                      ApiName = "3"
+                                                      ApiName = "3",
+                                                      AchievementNames = new EntitySet<AchievementName>{new AchievementName()}
                                                   }
                             },
                         new UserAchievement
@@ -318,9 +341,8 @@ namespace SteamAchievements.Data.Tests
                                                   {
                                                       Id = 4,
                                                       GameId = 2,
-                                                      Name = "Achievement 1 for Game 2",
-                                                      Description = "",
-                                                      ApiName = "4"
+                                                      ApiName = "4",
+                                                      AchievementNames = new EntitySet<AchievementName>{new AchievementName()}
                                                   }
                             },
                         new UserAchievement
@@ -331,9 +353,8 @@ namespace SteamAchievements.Data.Tests
                                                   {
                                                       Id = 5,
                                                       GameId = 2,
-                                                      Name = "Achievement 2 for Game 2",
-                                                      Description = "",
-                                                      ApiName = "5"
+                                                      ApiName = "5",
+                                                      AchievementNames = new EntitySet<AchievementName>{new AchievementName()}
                                                   }
                             },
                         new UserAchievement
@@ -344,9 +365,8 @@ namespace SteamAchievements.Data.Tests
                                                   {
                                                       Id = 6,
                                                       GameId = 3,
-                                                      Name = "Achievement for Game",
-                                                      Description = "Game 3 Achievement 1",
-                                                      ApiName = "6"
+                                                      ApiName = "6",
+                                                      AchievementNames = new EntitySet<AchievementName>{new AchievementName()}
                                                   }
                             },
                         new UserAchievement
@@ -357,9 +377,8 @@ namespace SteamAchievements.Data.Tests
                                                   {
                                                       Id = 7,
                                                       GameId = 3,
-                                                      Name = "Achievement for Game",
-                                                      Description = "Game 3 Achievement 2",
-                                                      ApiName = "7"
+                                                      ApiName = "7",
+                                                      AchievementNames = new EntitySet<AchievementName>{new AchievementName()}
                                                   }
                             },
                         new UserAchievement
@@ -370,9 +389,8 @@ namespace SteamAchievements.Data.Tests
                                                   {
                                                       Id = 8,
                                                       GameId = 4,
-                                                      Name = "Achievement for Game",
-                                                      Description = "Game 4 Achievement 1",
-                                                      ApiName = "8"
+                                                      ApiName = "8",
+                                                      AchievementNames = new EntitySet<AchievementName>{new AchievementName()}
                                                   }
                             }
                     };

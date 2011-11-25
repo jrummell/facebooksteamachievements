@@ -77,10 +77,9 @@ namespace SteamAchievements.Services.Tests
                 Data.Achievement achievement = new Data.Achievement
                                                    {
                                                        Id = Convert.ToInt32(fields[0]),
-                                                       Name = fields[1],
                                                        GameId = Convert.ToInt32(fields[2]),
-                                                       Description = fields[3],
-                                                       ImageUrl = fields[4]
+                                                       ImageUrl = fields[4],
+                                                       AchievementNames = new EntitySet<AchievementName> { new AchievementName { Name = fields[1], Description = fields[3] } }
                                                    };
 
                 achievements.Add(achievement);
@@ -209,8 +208,8 @@ namespace SteamAchievements.Services.Tests
                         communityAchievements
                             .Where(a =>
                                    a.Achievement.Game.Id == dataAchievement.GameId
-                                   && a.Achievement.Name.ToUpper() == dataAchievement.Name.ToUpper()
-                                   && a.Achievement.Description.ToUpper() == dataAchievement.Description.ToUpper())
+                                   && a.Achievement.Name.ToUpper() == dataAchievement.AchievementNames.First().Name.ToUpper()
+                                   && a.Achievement.Description.ToUpper() == dataAchievement.AchievementNames.First().Description.ToUpper())
                             .FirstOrDefault();
                     if (achievement != null)
                     {
@@ -305,7 +304,17 @@ namespace SteamAchievements.Services.Tests
             communityManagerMock.Setup(rep => rep.GetGames(user.SteamUserId, "english"))
                 .Returns(games).Verifiable();
 
-            Data.Achievement[] dataAchievements = new[] {new Data.Achievement {Description = "x", GameId = 1, Id = 1,}};
+            Data.Achievement[] dataAchievements = new[]
+                                                      {
+                                                          new Data.Achievement
+                                                              {
+                                                                  AchievementNames =
+                                                                      new EntitySet<AchievementName>
+                                                                          {new AchievementName {Description = "x"}},
+                                                                  GameId = 1,
+                                                                  Id = 1
+                                                              }
+                                                      };
             achievementManagerMock.Setup(
                 rep => rep.GetUnpublishedAchievements(user.SteamUserId, DateTime.UtcNow.Date.AddDays(-2)))
                 .Returns(dataAchievements).Verifiable();

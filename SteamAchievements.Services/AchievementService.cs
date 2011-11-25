@@ -136,9 +136,7 @@ namespace SteamAchievements.Services
                 dataAchievements = _achievementManager.GetUnpublishedAchievements(steamUserId, oldestDate.Value);
             }
 
-            List<Achievement> achievements = dataAchievements.ToSimpleAchievementList(games);
-
-            _communityService.FillAchievements(achievements, language);
+            List<Achievement> achievements = dataAchievements.ToSimpleAchievementList(games, language);
 
             return achievements;
         }

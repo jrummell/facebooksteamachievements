@@ -1,5 +1,5 @@
 ﻿/// <reference path="jquery-1.4.4.js" />
-/// <reference path="jquery.message.js" />
+/// <reference path="jquery.ui.message.js" />
 /// <reference path="json2.js" />
 /// <reference path="columnizer.js" />
 

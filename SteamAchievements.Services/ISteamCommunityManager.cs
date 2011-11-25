@@ -57,11 +57,11 @@ namespace SteamAchievements.Services
         /// <returns></returns>
         SteamProfile GetProfile(string steamUserId);
 
-        /// <summary>
-        /// Sets Name, Description, and ImageUrl from the achievement cache.
-        /// </summary>
-        /// <param name="achievements">The achievements.</param>
-        /// <param name="language"></param>
-        void FillAchievements(IEnumerable<Achievement> achievements, string language);
+        ///// <summary>
+        ///// Sets Name, Description, and ImageUrl from the achievement cache.
+        ///// </summary>
+        ///// <param name="achievements">The achievements.</param>
+        ///// <param name="language"></param>
+        //void FillAchievements(IEnumerable<Achievement> achievements, string language);
     }
 }

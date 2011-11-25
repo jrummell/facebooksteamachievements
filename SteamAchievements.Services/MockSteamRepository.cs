@@ -21,19 +21,31 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
-using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
-    public class MockSteamRepository : ISteamRepository
+    public class MockSteamRepository : Data.ISteamRepository
     {
         private readonly Dictionary<int, Data.Achievement> _achievements;
         private readonly Dictionary<int, Data.UserAchievement> _userAchievements;
         private readonly Dictionary<long, Data.User> _users;
+        private readonly Dictionary<int, Data.AchievementName> _achievementNames;
 
         public MockSteamRepository()
         {
+            _achievementNames = new Dictionary<int, Data.AchievementName>
+                                    {
+                                        {1, new Data.AchievementName
+                                                                {
+                                                                    Id = 1,
+                                                                    AchievementId = 1,
+                                                                    Name = "FRIED PIPER",
+                                                                    Description =
+                                                                        "Use a Molotov to burn a Clown leading at least 10 Common Infected."
+                                                                }}
+                                    };
             _achievements = new Dictionary<int, Data.Achievement>
                                 {
                                     {
@@ -42,11 +54,21 @@ namespace SteamAchievements.Services
                                             {
                                                 Id = 1,
                                                 ApiName = "ach_incendiary_clown_posse",
-                                                Description = "Use a Molotov to burn a Clown leading at least 10 Common Infected.",
                                                 GameId = 550,
-                                                Name = "FRIED PIPER",
                                                 ImageUrl =
-                                                    "http://media.steampowered.com/steamcommunity/public/images/apps/550/8a1dbb0d78c8e288ed5ce990a20454073d01ba9b.jpg"
+                                                    "http://media.steampowered.com/steamcommunity/public/images/apps/550/8a1dbb0d78c8e288ed5ce990a20454073d01ba9b.jpg",
+                                                AchievementNames =
+                                                    new EntitySet<Data.AchievementName>
+                                                        {
+                                                            new Data.AchievementName
+                                                                {
+                                                                    Id = 1,
+                                                                    AchievementId = 1,
+                                                                    Name = "FRIED PIPER",
+                                                                    Description =
+                                                                        "Use a Molotov to burn a Clown leading at least 10 Common Infected."
+                                                                }
+                                                        }
                                             }
                                         }
                                 };
@@ -107,26 +129,20 @@ namespace SteamAchievements.Services
             set { throw new NotSupportedException(); }
         }
 
+        public IQueryable<Data.AchievementName> AchievementNames
+        {
+            get { return _achievementNames.Values.AsQueryable(); }
+            set { throw new NotSupportedException(); }
+        }
+
         public void InsertOnSubmit(Data.User user)
         {
             _users.Add(user.FacebookUserId, user);
         }
 
-        public void DeleteAllOnSubmit(IEnumerable<Data.UserAchievement> achievements)
-        {
-            foreach (Data.UserAchievement userAchievement in achievements.ToArray())
-            {
-                _userAchievements.Remove(userAchievement.Id);
-            }
-        }
-
         public void DeleteOnSubmit(Data.User user)
         {
             _users.Remove(user.FacebookUserId);
-        }
-
-        public void SubmitChanges()
-        {
         }
 
         public void InsertOnSubmit(Data.Achievement achievement)
@@ -147,6 +163,24 @@ namespace SteamAchievements.Services
 
                 _userAchievements.Add(userAchievement.Id, userAchievement);
             }
+        }
+
+        public void DeleteAllOnSubmit(IEnumerable<Data.UserAchievement> achievements)
+        {
+            foreach (Data.UserAchievement userAchievement in achievements.ToArray())
+            {
+                _userAchievements.Remove(userAchievement.Id);
+            }
+        }
+
+        public void InsertOnSubmit(Data.AchievementName achievementName)
+        {
+            achievementName.Id = _achievementNames.Keys.Max() + 1;
+            _achievementNames.Add(achievementName.Id, achievementName);
+        }
+
+        public void SubmitChanges()
+        {
         }
 
         #endregion
