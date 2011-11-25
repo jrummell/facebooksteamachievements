@@ -31,19 +31,19 @@ namespace SteamAchievements.Data
         /// Gets the achievements.
         /// </summary>
         /// <value>The achievements.</value>
-        IQueryable<Achievement> Achievements { get; set; }
+        IQueryable<Achievement> Achievements { get; }
 
         /// <summary>
         /// Gets the user achievements.
         /// </summary>
         /// <value>The user achievements.</value>
-        IQueryable<UserAchievement> UserAchievements { get; set; }
+        IQueryable<UserAchievement> UserAchievements { get; }
 
         /// <summary>
         /// Gets the users.
         /// </summary>
         /// <value>The users.</value>
-        IQueryable<User> Users { get; set; }
+        IQueryable<User> Users { get; }
 
         /// <summary>
         /// Gets the achievement names.
@@ -51,7 +51,7 @@ namespace SteamAchievements.Data
         /// <value>
         /// The achievement names.
         /// </value>
-        IQueryable<AchievementName> AchievementNames { get; set; }
+        IQueryable<AchievementName> AchievementNames { get; }
 
         /// <summary>
         /// Inserts the user on submit.

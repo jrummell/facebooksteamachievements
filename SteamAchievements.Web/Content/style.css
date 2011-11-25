@@ -96,12 +96,6 @@ h4, h5
     clear: both;
 }
 
-.message-dismiss
-{
-    font-weight: normal;
-    color: #999;
-}
-
 .menu
 {
     margin-top: 1em;
@@ -211,6 +205,7 @@ li.achievement
 ******************/
 .message-dismiss
 {
+    padding-left: 0.5em;
     font-weight: normal;
     color: #999;
 }
