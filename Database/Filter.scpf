@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <!---->
 <NamedFilter version="1" type="SQLCompareFilter">
   <!--This filter can be loaded using the SQL Compare UI or used with a SQL Compare command line session using the /filter switch-->
@@ -68,7 +68,7 @@
       </Queue>
       <Role version="1">
         <Include>True</Include>
-        <Expression>TRUE</Expression>
+        <Expression />
       </Role>
       <Route version="1">
         <Include>True</Include>
@@ -108,7 +108,7 @@
       </Table>
       <User version="1">
         <Include>True</Include>
-        <Expression>TRUE</Expression>
+        <Expression />
       </User>
       <UserDefinedType version="1">
         <Include>True</Include>
