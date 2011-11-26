@@ -22,11 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Linq;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Xml;
 using Moq;
 using NUnit.Framework;
 using SteamAchievements.Data;
@@ -36,232 +33,6 @@ namespace SteamAchievements.Services.Tests
     [TestFixture]
     public class AchievementServiceFixture
     {
-        /// <summary>
-        /// Gets the community achievements.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <returns></returns>
-        private static ICollection<Data.UserAchievement> GetCommunityAchievements(string steamUserId)
-        {
-            List<UserAchievement> achievements;
-            using (FileStream fs = new FileStream("Serialized" + steamUserId + "Achievements.xml", FileMode.Open))
-            {
-                using (XmlDictionaryReader reader =
-                    XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas()))
-                {
-                    DataContractSerializer serializer =
-                        new DataContractSerializer(typeof (UserAchievement),
-                                                   new[] {typeof (List<UserAchievement>)});
-
-                    achievements = (List<UserAchievement>) serializer.ReadObject(reader, true);
-                }
-            }
-
-            return achievements.ToDataAchievements(0);
-        }
-
-        /// <summary>
-        /// Gets the data achievements.
-        /// </summary>
-        /// <returns></returns>
-        private static IEnumerable<Data.Achievement> GetDataAchievements()
-        {
-            string text = File.ReadAllText("achievements.csv");
-
-            List<Data.Achievement> achievements = new List<Data.Achievement>();
-            foreach (string line in text.Split(new[] {Environment.NewLine}, StringSplitOptions.None))
-            {
-                // Id	Name	GameId	Description	ImageUrl
-                string[] fields = line.Split('\t');
-
-                Data.Achievement achievement = new Data.Achievement
-                                                   {
-                                                       Id = Convert.ToInt32(fields[0]),
-                                                       GameId = Convert.ToInt32(fields[2]),
-                                                       ImageUrl = fields[4],
-                                                       AchievementNames = new EntitySet<AchievementName> { new AchievementName { Name = fields[1], Description = fields[3] } }
-                                                   };
-
-                achievements.Add(achievement);
-            }
-            return achievements;
-        }
-
-        /// <summary>
-        /// Updates the achievements.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        private static void UpdateAchievements(string steamUserId)
-        {
-            Mock<ISteamRepository> repositoryMock = new Mock<ISteamRepository>();
-            ISteamRepository repository = repositoryMock.Object;
-            repositoryMock.SetupGet(repo => repo.Achievements)
-                .Returns(GetDataAchievements().AsQueryable())
-                .Verifiable();
-            repositoryMock.SetupGet(repo => repo.Users)
-                .Returns(
-                    new List<Data.User> {new Data.User {FacebookUserId = 0, SteamUserId = steamUserId}}.AsQueryable())
-                .Verifiable();
-            repositoryMock.Setup(repo => repo.UserAchievements)
-                .Returns(new List<Data.UserAchievement>().AsQueryable())
-                .Verifiable();
-
-            AchievementManager manager = new AchievementManager(repository);
-            ICollection<Data.UserAchievement> achievements = GetCommunityAchievements(steamUserId);
-
-            // should not throw InvalidOperationException
-            Assert.DoesNotThrow(() => manager.UpdateAchievements(achievements));
-
-            repositoryMock.Verify();
-        }
-
-        /// <summary>
-        /// Serializes the achievements.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        private static void SerializeAchievements(string steamUserId)
-        {
-            SteamCommunityManager manager = new SteamCommunityManager(new WebClientWrapper(),
-                                                                      new SteamProfileXmlParser(), new GameXmlParser(),
-                                                                      new AchievementXmlParser());
-            UserAchievement[] achievements = manager.GetClosedAchievements(steamUserId, "english").ToArray();
-
-            Serialize("Serialized" + steamUserId + "Achievements.xml", achievements);
-        }
-
-        private static void Serialize<T>(string fileName, T[] achievements)
-        {
-            FileInfo dll = new FileInfo("SteamAchievements.Services.Tests");
-            DirectoryInfo bin = new DirectoryInfo(dll.Directory.FullName);
-            string projectPath = bin.Parent.Parent.FullName;
-            string serializedFilePath = Path.Combine(projectPath, fileName);
-
-            DataContractSerializer serializer =
-                new DataContractSerializer(typeof (T), new[] {typeof (T[])});
-            using (FileStream writer = new FileStream(serializedFilePath, FileMode.Create))
-            {
-                serializer.WriteObject(writer, achievements);
-            }
-        }
-
-        [Test, Ignore("Migration")]
-        public void ApiNameMigration()
-        {
-            UserAchievement[] communityAchievements;
-            Data.Achievement[] dataAchievements;
-            using (SteamRepository repository = new SteamRepository())
-            {
-                Dictionary<string, ICollection<UserAchievement>> userCommunityAchievements;
-                using (
-                    ISteamCommunityManager communityManager =
-                        new SteamCommunityManager(new WebClientWrapper(), new SteamProfileXmlParser(),
-                                                  new GameXmlParser(), new AchievementXmlParser()))
-                {
-                    string[] invalidUserProfiles =
-                        new[] {"0", "/zero_x9", "-vaka-", "inv4d3r", "barakitten", "76561198032315004", "120gb"};
-                    var gameUsersQuery =
-                        from userAchievement in repository.UserAchievements
-                        where userAchievement.Achievement.ApiName.Length == 0
-                              && !invalidUserProfiles.Contains(userAchievement.User.SteamUserId)
-                        group userAchievement by userAchievement.Achievement.GameId
-                        into g
-                        select new {GameId = g.Key, SteamUserId = g.Min(ua => ua.User.SteamUserId)};
-
-                    Dictionary<int, string> gameUsers = gameUsersQuery.OrderBy(s => s.GameId)
-                        .ToDictionary(s => s.GameId, s => s.SteamUserId);
-
-                    Debug.WriteLine(String.Join(", ", gameUsers.Keys));
-
-                    userCommunityAchievements = new Dictionary<string, ICollection<UserAchievement>>();
-
-                    foreach (string user in gameUsers.Values.Distinct().OrderBy(v => v))
-                    {
-                        try
-                        {
-                            ICollection<UserAchievement> userAchievements =
-                                communityManager.GetAchievements(user, "english");
-                            userCommunityAchievements.Add(user, userAchievements);
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.WriteLine("GetAchievements failed for user " + user + ".");
-                            Debug.WriteLine(ex);
-                            if (ex.InnerException != null)
-                            {
-                                Debug.WriteLine(ex.InnerException);
-                            }
-                        }
-                    }
-                }
-
-                communityAchievements =
-                    userCommunityAchievements.Values.SelectMany(v => v.Select(ua => ua)).OrderBy(
-                        ua => ua.Achievement.Game.Id)
-                        .OrderBy(ua => ua.Achievement.ApiName).Distinct().ToArray();
-
-                Serialize("CommunityAchievements.xml", communityAchievements);
-
-                dataAchievements = repository.Achievements.ToArray();
-                foreach (Data.Achievement dataAchievement in dataAchievements)
-                {
-                    UserAchievement achievement =
-                        communityAchievements
-                            .Where(a =>
-                                   a.Achievement.Game.Id == dataAchievement.GameId
-                                   && a.Achievement.Name.ToUpper() == dataAchievement.AchievementNames.First().Name.ToUpper()
-                                   && a.Achievement.Description.ToUpper() == dataAchievement.AchievementNames.First().Description.ToUpper())
-                            .FirstOrDefault();
-                    if (achievement != null)
-                    {
-                        dataAchievement.ApiName = achievement.Achievement.ApiName;
-                        //Debug.WriteLine("Id: {0}, GameId: {1}, Name: {2}, ApiName: {3}",
-                        //                dataAchievement.Id, dataAchievement.GameId,
-                        //                dataAchievement.Name, dataAchievement.ApiName);
-                    }
-                }
-
-                Serialize("UpdatedApiNameAchievements.xml", dataAchievements.ToArray());
-
-                ChangeSet changeSet = repository.Context.GetChangeSet();
-                Debug.WriteLine(changeSet);
-                repository.SubmitChanges();
-            }
-            //Assert.That(changeSet.Updates, Is.Not.Empty);
-
-            Debug.WriteLine("Total Data Achievements: " + dataAchievements.Length);
-            Debug.WriteLine("Total Community Achievements: " + communityAchievements.Length);
-        }
-
-        /// <summary>
-        /// http://code.google.com/p/facebooksteamachievements/issues/detail?id=37
-        /// </summary>
-        [Test, Explicit]
-        public void Issue37()
-        {
-            UpdateAchievements("Unimatrixero");
-        }
-
-        /// <summary>
-        /// http://code.google.com/p/facebooksteamachievements/issues/detail?id=51
-        /// </summary>
-        [Test, Explicit]
-        public void Issue51()
-        {
-            UpdateAchievements("richardmstallman");
-        }
-
-        [Test, Explicit]
-        public void SerializeAchievementsForIssue37()
-        {
-            SerializeAchievements("Unimatrixero");
-        }
-
-        [Test, Explicit]
-        public void SerializeAchievementsForIssue51()
-        {
-            SerializeAchievements("richardmstallman");
-        }
-
         [Test]
         public void UpdateNewUserAchievements()
         {
@@ -310,7 +81,14 @@ namespace SteamAchievements.Services.Tests
                                                               {
                                                                   AchievementNames =
                                                                       new EntitySet<AchievementName>
-                                                                          {new AchievementName {Description = "x"}},
+                                                                          {
+                                                                              new AchievementName
+                                                                                  {
+                                                                                      Name = "x",
+                                                                                      Description = "y",
+                                                                                      Language = "english"
+                                                                                  }
+                                                                          },
                                                                   GameId = 1,
                                                                   Id = 1
                                                               }
