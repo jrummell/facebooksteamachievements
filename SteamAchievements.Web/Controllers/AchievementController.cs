@@ -24,17 +24,17 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Elmah;
-// ReSharper disable RedundantUsingDirective
-using Facebook.Web.Mvc;
-// ReSharper restore RedundantUsingDirective
 using SteamAchievements.Services;
 using SteamAchievements.Web.Models;
+// ReSharper disable RedundantUsingDirective
+// ReSharper restore RedundantUsingDirective
 
 namespace SteamAchievements.Web.Controllers
 {
 #if !DEBUG
     [CanvasAuthorize(Permissions = "publish_stream,offline_access")]
 #endif
+
     public class AchievementController : FacebookController
     {
         private readonly IAchievementService _achievementService;
@@ -93,11 +93,7 @@ namespace SteamAchievements.Web.Controllers
                 ErrorLog errorLog = ErrorLog.GetDefault(System.Web.HttpContext.Current);
                 errorLog.Log(new Error(exception));
 
-                string message = exception.Message;
-#if DEBUG
-                message += ("<br/>" + exception.StackTrace);
-#endif
-                return Json(new {Error = new {Message = message}});
+                return Json(new {Error = new {exception.Message, exception.StackTrace}});
             }
         }
 
