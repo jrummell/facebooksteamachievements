@@ -15,6 +15,10 @@
     <div class="fbbody">
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+        <script type="text/javascript" src='@Url.Content("~/Scripts/json2.js")'></script>
+        <script type="text/javascript" src='@Url.Content("~/Scripts/jquery.ui.message.min.js")'></script>
+        <script type="text/javascript" src='@Url.Content("~/Scripts/columnizer.js")'></script>
+        <script type="text/javascript" src='@Url.Content("~/Scripts/achievements.js")'></script>
         <div id="fb-root">
         </div>
         @Html.Partial("_FacebookInitPartial")
@@ -35,10 +39,6 @@
                 Version @Html.Version().</p>
         </div>
     </div>
-    <script type="text/javascript" src='@Url.Content("~/Scripts/json2.js")'></script>
-    <script type="text/javascript" src='@Url.Content("~/Scripts/jquery.ui.message.min.js")'></script>
-    <script type="text/javascript" src='@Url.Content("~/Scripts/columnizer.js")'></script>
-    <script type="text/javascript" src='@Url.Content("~/Scripts/achievements.js")'></script>
     <script type="text/javascript">
         $(document).ready(function ()
         {
