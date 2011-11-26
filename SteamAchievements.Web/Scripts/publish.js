@@ -141,8 +141,7 @@ function displayError(error)
         $errorMessage.show().text("Additional information: " + errorMessage);
         if (error.StackTrace)
         {
-            $error.after("<pre class='error-stacktrace'></pre>");
-            $error.next().text(error.StrackTrace);
+            $error.after("<pre class='error-stacktrace hidden'>" + error.StackTrace + "</pre>");
         }
     }
 

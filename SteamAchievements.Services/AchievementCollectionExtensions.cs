@@ -42,8 +42,9 @@ namespace SteamAchievements.Services
                     from achievement in achievements
                     let achievementName = achievement.AchievementNames
                                               .Where(n => n.Language == language)
-                                              .SingleOrDefault() ?? achievement.AchievementNames.First()
+                                              .SingleOrDefault() ?? achievement.AchievementNames.FirstOrDefault()
                     where achievement.GameId == game.Id
+                          && achievementName != null
                     select new Achievement
                                {
                                    Id = achievement.Id,

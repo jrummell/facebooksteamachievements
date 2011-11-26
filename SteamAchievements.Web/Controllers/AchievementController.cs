@@ -94,7 +94,7 @@ namespace SteamAchievements.Web.Controllers
                 ErrorLog errorLog = ErrorLog.GetDefault(System.Web.HttpContext.Current);
                 errorLog.Log(new Error(exception));
 
-                return Json(new {Error = new {exception.Message, exception.StackTrace}});
+                return Json(new {Error = new {exception.Message, StackTrace = exception.ToString()}});
             }
         }
 
