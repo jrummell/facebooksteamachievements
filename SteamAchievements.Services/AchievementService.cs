@@ -136,6 +136,34 @@ namespace SteamAchievements.Services
                 dataAchievements = _achievementManager.GetUnpublishedAchievements(steamUserId, oldestDate.Value);
             }
 
+            IEnumerable<Data.Achievement> missingNames = 
+                dataAchievements.Where(a => !a.AchievementNames.Where(n => n.Language == language).Any());
+
+            if (missingNames.Any())
+            {
+                IEnumerable<Achievement> communityAchievements = 
+                    _communityService.GetAchievements(steamUserId, language)
+                    .Select(ua => ua.Achievement);
+
+                foreach (Data.Achievement achievement in missingNames)
+                {
+                    Achievement missing =
+                        communityAchievements
+                            .Where(a => a.Game.Id == achievement.GameId && a.ApiName == achievement.ApiName)
+                            .SingleOrDefault();
+
+                    if (missing != null)
+                    {
+                        achievement.AchievementNames.Add(new AchievementName
+                                                             {
+                                                                 Language = language,
+                                                                 Name = missing.Name,
+                                                                 Description = missing.Description
+                                                             });
+                    }
+                }
+            }
+
             List<Achievement> achievements = dataAchievements.ToSimpleAchievementList(games, language);
 
             return achievements;

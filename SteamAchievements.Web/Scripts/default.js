@@ -48,7 +48,7 @@ function validateProfile()
 
 function getGames()
 {
-    var updatingSelector = "#updatingGames";
+    var updatingSelector = "#loadingGames";
     $achievements.showLoading(updatingSelector);
 
     var ondone = function ()

@@ -696,8 +696,13 @@ namespace SteamAchievements.Data
 
                     if (key != null && !key.Languages.Contains(communityName.Language))
                     {
-                        communityName.AchievementId = key.Id;
-                        missingAchievementNames.Add(communityName);
+                        missingAchievementNames.Add(new AchievementName
+                                                        {
+                                                            AchievementId = key.Id,
+                                                            Language = communityName.Language,
+                                                            Name = communityName.Name,
+                                                            Description = communityName.Description
+                                                        });
                     }
                 }
             }
