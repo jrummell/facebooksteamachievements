@@ -27,6 +27,7 @@ using Elmah;
 using SteamAchievements.Services;
 using SteamAchievements.Web.Models;
 // ReSharper disable RedundantUsingDirective
+using Facebook.Web.Mvc;
 // ReSharper restore RedundantUsingDirective
 
 namespace SteamAchievements.Web.Controllers
