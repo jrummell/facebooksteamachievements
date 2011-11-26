@@ -95,7 +95,7 @@ namespace SteamAchievements.Web.Controllers
 
                 string message = exception.Message;
 #if DEBUG
-                message = "<br/>" + exception.StackTrace;
+                message += ("<br/>" + exception.StackTrace);
 #endif
                 return Json(new {Error = new {Message = message}});
             }
