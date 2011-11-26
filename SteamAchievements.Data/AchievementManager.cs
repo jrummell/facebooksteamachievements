@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.Linq;
 using System.Data.SqlTypes;
 using System.Linq;
 
@@ -177,7 +176,7 @@ namespace SteamAchievements.Data
             }
 
             ICollection<AchievementName> missingAchievementNames =
-                GetMissingAchievementNames(achievements);
+                GetMissingAchievementNames(userAchievements.Select(a => a.Achievement).ToList());
             if (missingAchievementNames.Any())
             {
                 InsertMissingAchievementNames(missingAchievementNames);
@@ -543,18 +542,20 @@ namespace SteamAchievements.Data
                                                  {
                                                      ApiName = achievement.ApiName,
                                                      GameId = achievement.GameId,
-                                                     ImageUrl = achievement.ImageUrl,
-                                                     AchievementNames = new EntitySet<AchievementName>
-                                                                            {
-                                                                                achievement.AchievementNames.First()
-                                                                            }
+                                                     ImageUrl = achievement.ImageUrl
                                                  };
+                AchievementName name = achievement.AchievementNames.First();
+                AchievementName newAchievementName = new AchievementName
+                                                         {
+                                                             Language = name.Language,
+                                                             Name = name.Name,
+                                                             Description = name.Description
+                                                         };
+                newAchievement.AchievementNames.Add(newAchievementName);
                 _repository.InsertOnSubmit(newAchievement);
             }
 
             _repository.SubmitChanges();
-
-            return;
         }
 
         /// <summary>
@@ -587,8 +588,6 @@ namespace SteamAchievements.Data
             }
 
             _repository.SubmitChanges();
-
-            return;
         }
 
         /// <summary>
@@ -657,39 +656,47 @@ namespace SteamAchievements.Data
                 return new AchievementName[0];
             }
 
-            IEnumerable<string> communityAchievementIds =
+            var communityAchievementKeys =
                 from achievement in communityAchievements
                 from name in achievement.AchievementNames
-                select achievement.GameId + achievement.ApiName + name.Language;
+                select new
+                           {
+                               achievement.GameId,
+                               achievement.ApiName,
+                               name.Language
+                           };
+
+            IEnumerable<int> gameIds = communityAchievementKeys.Select(key => key.GameId).Distinct();
+            IEnumerable<string> apiNames = communityAchievementKeys.Select(key => key.ApiName).Distinct();
 
             var dbAchievementNames =
-                (from achievementName in _repository.AchievementNames
-                 let achievementNameId =
-                     achievementName.Achievement.GameId + achievementName.Achievement.ApiName + achievementName.Language
-                 where communityAchievementIds.Contains(achievementNameId)
+                (from achievement in _repository.Achievements
+                 where gameIds.Contains(achievement.GameId)
+                       && apiNames.Contains(achievement.ApiName)
                  select
                      new
                          {
-                             achievementName.Achievement.GameId,
-                             achievementName.Achievement.ApiName,
-                             achievementName.Language
+                             achievement.Id,
+                             achievement.GameId,
+                             achievement.ApiName,
+                             Languages = achievement.AchievementNames.Select(name => name.Language)
                          }).ToList();
 
             List<AchievementName> missingAchievementNames = new List<AchievementName>();
-            if (communityAchievements.Count != dbAchievementNames.Count)
+            //if (communityAchievements.Count != dbAchievementNames.Count)
             {
                 foreach (AchievementName achievementName in communityAchievements.SelectMany(a => a.AchievementNames))
                 {
                     AchievementName communityName = achievementName;
-                    bool exists =
+                    var key =
                         dbAchievementNames.Where(
                             a => a.GameId == communityName.Achievement.GameId
-                                 && a.ApiName == communityName.Achievement.ApiName
-                                 && a.Language == communityName.Language)
-                            .Any();
+                                 && a.ApiName == communityName.Achievement.ApiName)
+                            .SingleOrDefault();
 
-                    if (!exists)
+                    if (key != null && !key.Languages.Contains(communityName.Language))
                     {
+                        communityName.AchievementId = key.Id;
                         missingAchievementNames.Add(communityName);
                     }
                 }
