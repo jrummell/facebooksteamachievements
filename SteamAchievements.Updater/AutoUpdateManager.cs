@@ -137,11 +137,8 @@ namespace SteamAchievements.Updater
             }
             catch (InvalidGamesXmlException exception)
             {
-                _log.Log("Invalid games URL for {0}. Disabling auto update.", user.SteamUserId);
+                _log.Log("Invalid games URL for {0}.", user.SteamUserId);
                 _log.Log(exception);
-
-                user.AutoUpdate = false;
-                _userService.UpdateUser(user);
 
                 throw;
             }
