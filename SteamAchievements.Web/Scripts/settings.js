@@ -37,7 +37,7 @@ function checkProfile()
     
     $("#steamIdError").hide();
     $("#steamIdVerified").hide();
-    
+
     var ondone = function (valid)
     {
         if (!valid)
@@ -47,6 +47,7 @@ function checkProfile()
         }
         else
         {
+            $("#steamIdVerified .profile-url").attr("href", "http://steamcommunity.com/id/" + steamUserId);
             $("#steamIdVerified").show();
         }
     };
