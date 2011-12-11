@@ -30,7 +30,7 @@ namespace SteamAchievements.Updater.Tests
     {
         private const string _logPath = "testlog";
 
-        [Test]
+        [Test, Explicit]
         public void Delete()
         {
             AutoUpdateLogger log = new AutoUpdateLogger(_logPath);

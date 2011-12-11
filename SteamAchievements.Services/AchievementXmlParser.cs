@@ -104,10 +104,7 @@ namespace SteamAchievements.Services
                                {
                                    SteamUserId = customUrlElement.Value,
                                    Closed = achievement.closed,
-                                   Date =
-                                       achievement.date == null
-                                           ? DateTime.MinValue
-                                           : GetDate(Convert.ToInt32(achievement.date)),
+                                   Date = GetDate(achievement.date),
                                    Achievement =
                                        new Achievement
                                            {
@@ -125,9 +122,17 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="unixTimestamp">The unix timestamp.</param>
         /// <returns></returns>
-        private static DateTime GetDate(long unixTimestamp)
+        private static DateTime GetDate(string unixTimestamp)
         {
-            return new DateTime(1970, 1, 1).AddSeconds(unixTimestamp);
+            try
+            {
+                long value = Convert.ToInt64(unixTimestamp);
+                return new DateTime(1970, 1, 1).AddSeconds(value);
+            }
+            catch (Exception)
+            {
+                return DateTime.MinValue;
+            }
         }
     }
 }
