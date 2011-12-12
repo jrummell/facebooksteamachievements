@@ -2,9 +2,9 @@
 <ul>
     @foreach (var game in Model)
     {
-        <li class="game"><a target="_blank" href="@game.StoreUrl">
-            <img src="@game.ImageUrl" alt="@game.Name" title="@game.Name" /></a><br />
-            <a target="_blank" href="@(game.StatsUrl)?tab=achievements">@Strings.GamesViewAchievements</a>
-        </li>
+        <li class="game"><a target="_blank" href="@(game.StatsUrl)?tab=achievements">
+            <img src="@game.ImageUrl" alt="@game.Name" title="@game.Name" />
+            <h3 class="name">@game.Name</h3>
+        </a></li>
     }
 </ul>

@@ -41,8 +41,12 @@ namespace SteamAchievements.Web.Helpers
 
         public static MvcHtmlString Help(this UrlHelper url, string anchor = null)
         {
-            return MvcHtmlString.Create(String.Format("{0}#{1}",
-                                                      _settings.HelpUrl, anchor ?? String.Empty));
+            if (anchor == null)
+            {
+                return MvcHtmlString.Create(_settings.HelpUrl.ToString());
+            }
+
+            return MvcHtmlString.Create(String.Format("{0}#{1}", _settings.HelpUrl, anchor));
         }
 
         public static string GetCanvasUrl(string canvasAction)

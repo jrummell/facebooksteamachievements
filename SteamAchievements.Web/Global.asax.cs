@@ -19,11 +19,17 @@
 
 #endregion
 
+using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Elmah.Contrib.Mvc;
+using Facebook.Web.Mvc;
 using SteamAchievements.Web.Controllers;
+using SteamAchievements.Web.Helpers;
+using SteamAchievements.Web.Models;
+using SteamAchievements.Web.Properties;
 
 namespace SteamAchievements.Web
 {
@@ -36,6 +42,25 @@ namespace SteamAchievements.Web
         {
             filters.Add(new RequestCultureAttribute());
             filters.Add(new ElmahHandleErrorAttribute());
+
+            FacebookMode webMode = Settings.Default.Mode;
+            IEnumerable<Func<ControllerContext, ActionDescriptor, object>> conditions =
+                new Func<ControllerContext, ActionDescriptor, object>[]
+                    {
+                        (context, action) =>
+                        webMode == FacebookMode.Mobile
+                        && !(context.Controller.GetType() == typeof (HomeController)
+                             && action.ActionName == "LogOn")
+                            ? new FacebookAuthorizeAttribute {LoginUrl = "Home/LogOn"}
+                            : null,
+                        (context, action) =>
+                        webMode == FacebookMode.Canvas
+                            ? new CanvasAuthorizeAttribute {Permissions = "publish_stream,offline_access"}
+                            : null
+                    };
+
+            ConditionalFilterProvider provider = new ConditionalFilterProvider(conditions);
+            FilterProviders.Providers.Add(provider);
         }
 
         private static void RegisterRoutes(RouteCollection routes)

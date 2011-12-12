@@ -5,7 +5,7 @@
     <link href="@Url.Content("~/Content/favicon.ico")" rel="icon" type="image/x-icon" />
     <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/redmond/jquery-ui.css"
         rel="Stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/style.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/canvas/site.css")" rel="stylesheet" type="text/css" />
     @RenderSection("head", false)
 </head>
 <body>
@@ -21,10 +21,10 @@
         <script type="text/javascript" src='@Url.Content("~/Scripts/achievements.js")'></script>
         <div id="fb-root">
         </div>
-        @Html.Partial("_FacebookInitPartial")
+        @Html.Partial("_FacebookCanvasInitPartial")
         <div>
             <a href="@Url.CanvasAction("")" target="_top">
-                <img src="@Url.Content("~/Content/images/banner-light.png")" alt="Steam Achievements" />
+                <img src="@Url.Content("~/Content/themes/canvas/banner-light.png")" alt="Steam Achievements" />
             </a>
         </div>
         <div class="menu">
@@ -43,6 +43,8 @@
         $(document).ready(function ()
         {
             $("a.help, button.help, input.help").button({ icons: { primary: "ui-icon-help"} });
+            $("a.check").button({ icons: { primary: "ui-icon-check"} });
+            $("a.delete").button({ icons: { primary: "ui-icon-trash" } });
             $("a.button").button();
 
             $("form .field-validation-error").message({ type: "error", dismiss: false });

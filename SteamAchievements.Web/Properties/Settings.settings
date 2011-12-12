@@ -28,5 +28,8 @@
                     &lt;/script&gt;
                 </Value>
     </Setting>
+    <Setting Name="Mode" Type="SteamAchievements.Web.Models.FacebookMode" Scope="Application">
+      <Value Profile="(Default)">None</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

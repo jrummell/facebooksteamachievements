@@ -44,6 +44,26 @@
     <ErrorReport>prompt</ErrorReport>
     <Optimize>false</Optimize>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MobileStaging|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MobileRelease|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoMapper, Version=1.1.0.188, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.1.1.0.118\lib\AutoMapper.dll</HintPath>
@@ -54,17 +74,17 @@
     <Reference Include="Elmah.Contrib.Mvc">
       <HintPath>..\packages\Elmah.Contrib.Mvc.1.0\lib\net40\Elmah.Contrib.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Facebook, Version=5.2.1.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+    <Reference Include="Facebook, Version=5.3.2.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Facebook.5.2.1.0\lib\net40-client\Facebook.dll</HintPath>
+      <HintPath>..\packages\Facebook.5.3.2.0\lib\net40-client\Facebook.dll</HintPath>
     </Reference>
-    <Reference Include="Facebook.Web, Version=5.2.1.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+    <Reference Include="Facebook.Web, Version=5.3.2.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FacebookWeb.5.2.1.0\lib\net40\Facebook.Web.dll</HintPath>
+      <HintPath>..\packages\FacebookWeb.5.3.2.0\lib\net40\Facebook.Web.dll</HintPath>
     </Reference>
-    <Reference Include="Facebook.Web.Mvc, Version=5.2.1.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+    <Reference Include="Facebook.Web.Mvc, Version=5.3.2.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FacebookWebMvc.5.2.1.0\lib\net40\Facebook.Web.Mvc.dll</HintPath>
+      <HintPath>..\packages\FacebookWebMvc.5.3.2.0\lib\net40\Facebook.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
@@ -124,6 +144,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AchievementController.cs" />
     <Compile Include="Controllers\RequestCultureAttribute.cs" />
+    <Compile Include="Helpers\ConditionalFilterProvider.cs" />
     <Compile Include="Models\FacebookContextSettings.cs" />
     <Compile Include="Controllers\FacebookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -137,6 +158,7 @@
     <Compile Include="Helpers\UrlHelperExtensions.cs" />
     <Compile Include="Models\ModelMapCreator.cs" />
     <Compile Include="Models\SettingsViewModel.cs" />
+    <Compile Include="Models\FacebookMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -164,38 +186,29 @@
     <Content Include="Content\images\achievements.png" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\appcustomurl.png" />
-    <Content Include="Content\images\banner-light.png" />
+    <Content Include="Content\themes\mobile\banner-light-mobile.png" />
+    <Content Include="Content\themes\canvas\banner-light.png" />
     <Content Include="Content\images\profilecustomurl.png" />
     <Content Include="Content\images\steamsettings.png" />
     <None Include="Content\Policy\policy.htm" />
     <None Include="Content\Policy\policy.xml" />
     <None Include="Content\Policy\policy.txt" />
     <None Include="Content\Policy\p3p.xml" />
-    <Content Include="Content\style.css" />
+    <Content Include="Content\themes\mobile\site.css" />
+    <Content Include="Content\themes\canvas\site.css" />
     <Content Include="Global.asax" />
-    <Content Include="Content\themes\base\jquery-ui.css" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Scripts\achievements.js" />
     <Content Include="Scripts\columnizer.js" />
     <Content Include="Scripts\default.js" />
+    <Content Include="fbchannel.ashx" />
     <None Include="Scripts\jquery-1.4.4-vsdoc.js" />
     <None Include="Scripts\jquery-1.4.4.js" />
     <None Include="Scripts\jquery-1.4.4.min.js" />
     <None Include="Scripts\jquery.ui.core.js" />
     <None Include="Scripts\jquery.ui.core.min.js" />
     <None Include="Scripts\jquery.ui.message.js" />
+    <None Include="Scripts\jquery.mobile.message.js" />
+    <Content Include="Scripts\jquery.mobile.message.min.js" />
     <Content Include="Scripts\jquery.ui.message.min.js" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\publish.js" />
@@ -220,6 +233,20 @@
     <Content Include="Views\Achievement\UnpublishedAchievements.cshtml" />
     <Content Include="Views\Achievement\Games.cshtml" />
     <Content Include="Views\Achievement\Profile.cshtml" />
+    <Content Include="Views\Shared\_FacebookInitPartial.cshtml" />
+    <Content Include="Views\Shared\_MobileLayout.cshtml" />
+    <Content Include="Views\Shared\_MobileMenuPartial.cshtml" />
+    <Content Include="Views\Home\LogOn.cshtml" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.MobileStaging.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Shared\_IconPartial.cshtml" />
+    <Content Include="Web.MobileRelease.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -231,10 +258,9 @@
     <Content Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_FacebookInitPartial.cshtml" />
+    <Content Include="Views\Shared\_FacebookCanvasInitPartial.cshtml" />
     <Content Include="Views\Home\Publish.cshtml" />
     <Content Include="Views\Home\Settings.cshtml" />
   </ItemGroup>

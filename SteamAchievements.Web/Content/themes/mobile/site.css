@@ -1,0 +1,115 @@
+﻿/****************** 
+    General styles 
+******************/
+body
+{
+    background-color: #000;
+}
+
+fieldset legend
+{
+    padding-bottom: 1em;
+    font-weight: bold;
+}
+
+.header .banner, .footer
+{
+    text-align: center;
+}
+
+.hidden
+{
+    display: none;
+}
+
+.left
+{
+    float: left;
+}
+
+.right
+{
+    float: right;
+}
+
+.clear
+{
+    clear: both;
+}
+
+img.loading
+{
+    display: none;
+}
+
+/****************** 
+    Games styles 
+******************/
+#profileDiv #steamUserIdHeading
+{
+    font-size: 150%;
+}
+
+#profileDiv #profileImage
+{
+    width: 69px;
+    height: 69px;
+    padding: 0 5px 5px 0;
+}
+
+.games .ui-li-thumb, .games .ui-listview .ui-li-icon
+{
+    max-width: 184px;
+    max-height: 69px;
+}
+
+.games .ui-li-has-thumb .ui-btn-inner a.ui-link-inherit, .games .ui-li-static.ui-li-has-thumb
+{
+    min-height: 48px;
+    padding-left: 195px;
+}
+
+.games .game .name
+{
+    display: none;
+}
+
+/****************** 
+    Publish styles 
+******************/
+.unpublished .ui-li-thumb, .unpublished .ui-listview .ui-li-icon
+{
+    max-width: 64px;
+    max-height: 64px;
+}
+
+.unpublished .ui-li-has-thumb .ui-btn-inner a.ui-link-inherit, .unpublished .ui-li-static.ui-li-has-thumb
+{
+    min-height: 45px;
+    padding-left: 80px;
+}
+
+.achievement .text .name
+{
+    margin: 0.2em 0;
+}
+
+.achievement .text .name:after
+{
+    content: ":";
+}
+
+.achievement .text .description
+{
+    font-weight: normal;
+}
+
+/****************** 
+    Settings styles 
+******************/
+.settings .icon-container
+{
+    padding-left: 0.25em;
+    padding-top: 1.4em;
+    vertical-align: text-bottom;
+}

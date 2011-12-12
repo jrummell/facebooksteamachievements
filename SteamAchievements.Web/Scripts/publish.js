@@ -44,6 +44,12 @@ $(document).ready(function ()
 
     $("#hideSelectedButton").click(function ()
     {
+        var confirmed = confirm("Are you sure you want to hide the selected achievements?");
+        if (!confirmed)
+        {
+            return false;
+        }
+
         var achievementsToHide = new Array();
         $("#newAchievements input:checked").each(function ()
         {
@@ -96,19 +102,33 @@ function displayAchievements()
                 $achievementDiv.toggleClass("selected");
                 if (this.tagName == "IMG")
                 {
-                    var checkbox = $(this).prev()[0];
+                    var checkbox = $(this).parent(".achievement").find(":checkbox");
                     checkbox.checked = !checkbox.checked;
+
+                    if ($achievements.mobile)
+                    {
+                        checkbox.checkboxradio("refresh");
+                    }
                 }
             }
 
             // disable unchecked boxes if there are 5 checked
-            $("#newAchievements .achievement :checkbox").filter(function (index)
+            $("#newAchievements .achievement :checkbox").filter(function ()
             {
                 return !this.checked;
             }).attr("disabled", disableUnchecked);
         });
 
-        $("#newAchievements ul").makeacolumnlists({ cols: 2, equalHeight: "ul" });
+        if ($achievements.mobile)
+        {
+            $("#newAchievements .achievement :checkbox").checkboxradio();
+            $("#newAchievements ul").attr("data-inset", "true").listview();
+        }
+        else if ($.fn.makeacolumnlists)
+        {
+            $("#newAchievements .achievement :checkbox").hide();
+            $("#newAchievements ul").makeacolumnlists({ cols: 2, equalHeight: "ul" });
+        }
 
         if (_newAchievements.length == 0)
         {
