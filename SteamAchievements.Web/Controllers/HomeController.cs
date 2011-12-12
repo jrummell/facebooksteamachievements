@@ -1,4 +1,4 @@
- #region License
+#region License
 
 // Copyright 2010 John Rummell
 // 
@@ -23,18 +23,12 @@ using System;
 using System.Web.Mvc;
 using AutoMapper;
 using Elmah;
-// ReSharper disable RedundantUsingDirective
-using Facebook.Web.Mvc;
-// ReSharper restore RedundantUsingDirective
+using Facebook.Web;
 using SteamAchievements.Services;
 using SteamAchievements.Web.Models;
 
 namespace SteamAchievements.Web.Controllers
 {
-#if !DEBUG
-    [CanvasAuthorize(Permissions = "publish_stream,offline_access")]
-#endif
-
     public class HomeController : FacebookController
     {
         private readonly IAchievementService _achievementService;
@@ -44,6 +38,16 @@ namespace SteamAchievements.Web.Controllers
             : base(userService, facebookSettings)
         {
             _achievementService = achievementService;
+        }
+
+        public ActionResult LogOn()
+        {
+            if (FacebookWebContext.Current.IsAuthenticated())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
         }
 
         public ActionResult Index()

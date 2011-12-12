@@ -1,0 +1,9 @@
+﻿<ul>
+    <li>
+        @Html.ActionLink(Strings.MenuHome, "Index", "Home", null, new Dictionary<string, object>{{"data-role", "button"}})</li>
+    <li>
+        @Html.ActionLink(Strings.MenuPublish, "Publish", "Home", null, new Dictionary<string, object> { { "data-role", "button" } })</li>
+    <li>
+        @Html.ActionLink(Strings.MenuSettings, "Settings", "Home", null, new Dictionary<string, object> { { "data-role", "button" } })</li>
+    <li><a data-role="button" href="@Url.Help()" target="_blank">@Strings.MenuHelp</a> </li>
+</ul>

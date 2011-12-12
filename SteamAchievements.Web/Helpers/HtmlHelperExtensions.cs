@@ -21,8 +21,10 @@
 
 using System;
 using System.Reflection;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using SteamAchievements.Web.Models;
 using SteamAchievements.Web.Properties;
 
 namespace SteamAchievements.Web.Helpers
@@ -45,6 +47,13 @@ namespace SteamAchievements.Web.Helpers
             if (htmlAttributes != null)
             {
                 a.MergeAttributes(new RouteValueDictionary(htmlAttributes), false);
+            }
+
+            if (html.IsMobileDevice())
+            {
+                a.MergeAttribute("data-role", "button");
+                a.MergeAttribute("data-inline", "true");
+                a.MergeAttribute("data-icon", "info");
             }
 
             return MvcHtmlString.Create(a.ToString());
@@ -89,6 +98,12 @@ namespace SteamAchievements.Web.Helpers
         public static MvcHtmlString Version(this HtmlHelper html)
         {
             return MvcHtmlString.Create(Assembly.GetExecutingAssembly().GetName().Version.ToString());
+        }
+
+        public static bool IsMobileDevice(this HtmlHelper html)
+        {
+            HttpRequestBase request = html.ViewContext.RequestContext.HttpContext.Request;
+            return Settings.Default.Mode == FacebookMode.Mobile || request["device"] == "mobile";
         }
     }
 

@@ -2,15 +2,6 @@
 @{
     ViewBag.Title = Strings.TitleSettings;
 }
-@section head
-{
-    <style type="text/css">
-        fieldset.settings
-        {
-            padding: 1em;
-        }
-    </style>
-}
 <h1>
     Settings</h1>
 @if (ViewBag.Success == true)
@@ -26,15 +17,17 @@
     <fieldset class="settings">
         <legend>@Strings.SettingsCustomUrl</legend>
         <div>
-            <div class="left">
-                http://steamcommunity.com/id/
-                @Html.TextBoxFor(model => model.SteamUserId, new { maxlength = 50 })
-            </div>
-            <div id="steamIdVerified" class="ui-corner-all left hidden">
-                <a class="profile-url" href="#" target="_blank"><span class="ui-icon ui-icon-check"></span></a>
-            </div>
-            <div id="steamIdError" class="ui-corner-all ui-state-error-text left hidden">
-                <span class="ui-icon ui-icon-alert"></span>
+            <div>
+                <div class="left">
+                    @Html.LabelFor(model => model.SteamUserId, "http://steamcommunity.com/id/")
+                    @Html.TextBoxFor(model => model.SteamUserId, new { maxlength = 50 })
+                </div>
+                <div id="steamIdVerified" class="left hidden">
+                    @Html.Partial("_IconPartial", "check")
+                </div>
+                <div id="steamIdError" class="ui-state-error-text left hidden">
+                    @Html.Partial("_IconPartial", "alert")
+                </div>
             </div>
             <br class="clear" />
         </div>
@@ -52,7 +45,7 @@
         </div>
     </fieldset>
     <p>
-        <button type="submit" id="saveButton" class="save">
+        <button type="submit" id="saveButton" class="save" data-icon="check">
             Save</button>
         <img id="saveImage" class="loading" src="@Url.Content("~/Content/images/ajax-loader.gif")" alt="Saving..."
                  style="display: none" />

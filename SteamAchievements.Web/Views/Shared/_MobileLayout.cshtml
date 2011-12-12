@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Steam Achievements Mobile - @ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="@Url.Content("~/Content/favicon.ico")" rel="icon" type="image/x-icon" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/themes/mobile/site.css")"/>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+    <script type="text/javascript">
+        $(document).bind("mobileinit", function ()
+        {
+            //apply overrides here
+            $.mobile.ajaxEnabled = false;
+        });
+    </script>
+    <script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+    <script type="text/javascript" src='@Url.Content("~/Scripts/jquery.mobile.message.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Scripts/achievements.js")'></script>
+    @RenderSection("head", false)
+</head>
+<body>
+    <div data-role="page">
+        <div id="topAdWrapper">
+            @Html.Ad(AdLocation.Top)
+        </div>
+        <div data-role="header">
+            <div class="banner">
+                <a href="@Url.Action("Index", "Home")">
+                    <img src="@Url.Content("~/Content/themes/mobile/banner-light-mobile.png")" alt="Steam Achievements" />
+                </a>
+            </div>
+            <div class="menu" data-role="navbar">
+                @Html.Partial("_MobileMenuPartial")
+            </div>
+        </div>
+        <div data-role="content">
+            @RenderBody()
+            @Html.Partial("_FacebookInitPartial")
+        </div>
+        <div class="footer ui-bar" data-role="footer">
+            Version @Html.Version().
+            <button class="about">About</button>
+            <div class="disclaimer hidden">
+                @Html.Disclaimer()
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function ()
+            {
+                $("form .field-validation-error").message({ type: "error", dismiss: false });
+
+                $(".footer .about").click(function ()
+                {
+                    $(".footer .disclaimer").toggle();
+                });
+            });
+        </script>
+        <div id="bottomAdWrapper">
+            @Html.Ad(AdLocation.Bottom)
+        </div>
+        @Html.Analytics()
+    </div>
+</body>
+</html>

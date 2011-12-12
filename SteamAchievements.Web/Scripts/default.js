@@ -53,7 +53,14 @@ function getGames()
 
     var ondone = function ()
     {
-        $("#gamesDiv ul").makeacolumnlists({ cols: 3, equalHeight: "ul" });
+        if ($achievements.mobile) 
+        {
+            $("#gamesDiv ul").attr("data-inset", "true").listview();
+        }
+        else if ($.fn.makeacolumnlists)
+        {
+            $("#gamesDiv ul").makeacolumnlists({ cols: 3, equalHeight: "ul" });
+        }
 
         $achievements.hideLoading(updatingSelector);
 

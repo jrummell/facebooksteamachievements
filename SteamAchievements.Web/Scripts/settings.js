@@ -21,14 +21,18 @@ $(document).ready(function ()
     $("#saveSuccess").message({ type: "info" });
 
     // show loading on click
-    $("#saveButton").button({ icons: { primary: "ui-icon-disk"} })
-        .click(function ()
-        {
-            $("#saveImage").show();
-            $("#saveSuccess").hide();
+    var $saveButton = $("#saveButton");
+    if (!$achievements.mobile)
+    {
+        $saveButton.button({ icons: { primary: "ui-icon-disk"} });
+    }
+    $saveButton.click(function()
+    {
+        $("#saveImage").show();
+        $("#saveSuccess").hide();
 
-            return true;
-        });
+        return true;
+    });
 });
 
 function checkProfile()
@@ -40,6 +44,8 @@ function checkProfile()
 
     var ondone = function (valid)
     {
+        $(".settings .profile-url").attr("href", "http://steamcommunity.com/id/" + steamUserId);        
+        
         if (!valid)
         {
             $("#steamIdError").show();
@@ -47,7 +53,6 @@ function checkProfile()
         }
         else
         {
-            $("#steamIdVerified .profile-url").attr("href", "http://steamcommunity.com/id/" + steamUserId);
             $("#steamIdVerified").show();
         }
     };

@@ -5,6 +5,8 @@
 
 var $achievements =
 {
+    mobile: false,
+
     steamUserId: null,
 
     serviceBase: "Achievement/",
@@ -17,12 +19,13 @@ var $achievements =
 
     init: function (userId, logSelector, enableLog, publishDescription)
     {
+        this.mobile = typeof ($.mobile) != "undefined";
         this.steamUserId = userId;
         this.logSelector = logSelector;
         this.enableLog = enableLog;
         this.publishDescription = publishDescription;
 
-        $("img.loading").hide();
+        this.hideLoading("img.loading");
     },
 
     loadProfile: function (selector, callback)
@@ -57,7 +60,7 @@ var $achievements =
 
     loadUnpublishedAchievements: function (selector, callback)
     {
-        this.callLoad(selector, "UnpublishedAchievements", { }, callback);
+        this.callLoad(selector, "UnpublishedAchievements", {}, callback);
     },
 
     hideAchievements: function (achievementIds, callback, errorCallback)
@@ -249,17 +252,36 @@ var $achievements =
 
     showLoading: function (selector)
     {
-        $(selector).show("normal", this.updateSize);
+        if (this.mobile)
+        {
+            $.mobile.showPageLoadingMsg();
+        }
+        else
+        {
+            $(selector).show("normal", this.updateSize);
+        }
     },
 
     hideLoading: function (selector)
     {
-        $(selector).fadeOut("slow", this.updateSize);
+        if (this.mobile)
+        {
+            $.mobile.hidePageLoadingMsg();
+        }
+        else
+        {
+            $(selector).fadeOut("slow", this.updateSize);
+        }
     },
 
     updateSize: function ()
     {
-        if (FB)
+        if (this.mobile)
+        {
+            return;
+        }
+        
+        if (typeof (FB) != "undefined")
         {
             // update the size of the iframe to match the content
             FB.Canvas.setSize();

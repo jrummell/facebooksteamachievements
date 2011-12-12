@@ -26,16 +26,9 @@ using System.Web.Script.Serialization;
 using Elmah;
 using SteamAchievements.Services;
 using SteamAchievements.Web.Models;
-// ReSharper disable RedundantUsingDirective
-using Facebook.Web.Mvc;
-// ReSharper restore RedundantUsingDirective
 
 namespace SteamAchievements.Web.Controllers
 {
-#if !DEBUG
-    [CanvasAuthorize(Permissions = "publish_stream,offline_access")]
-#endif
-
     public class AchievementController : FacebookController
     {
         private readonly IAchievementService _achievementService;

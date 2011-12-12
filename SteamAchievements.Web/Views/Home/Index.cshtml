@@ -2,21 +2,6 @@
 @{
     ViewBag.Title = Strings.TitleHome;
 }
-@section head
-{
-    <style type="text/css">
-        #steamUserIdHeading
-        {
-            font-size: 200%;
-        }
-        #profileImage
-        {
-            width: 69px;
-            height: 69px;
-            padding: 0 5px 5px 0;
-        }
-    </style>
-}
 @Html.Hidden("steamUserIdHidden", Model.SteamUserId)
 <div id="steamIdError" style="display: none;">
     You haven't set your Steam Community Profile URL. Please set it on the

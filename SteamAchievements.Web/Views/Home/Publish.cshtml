@@ -23,10 +23,10 @@
     <legend>Unpublished Achievements</legend>
     <p>
         @Strings.PublishInstructions</p>
-    <p id="buttons" class="hidden">
-        <a id="publishSelectedButton" class="button" href="#">@Strings.ButtonPublish</a> <a id="hideSelectedButton"
-            class="button" href="#">Hide</a>
-    </p>
+    <div id="buttons" class="hidden">
+        <a id="publishSelectedButton" class="button check" data-role="button" data-icon="check" data-inline="true" href="#">@Strings.ButtonPublish</a>
+        <a id="hideSelectedButton" class="button delete" data-role="button" data-icon="delete" data-inline="true" href="#">Hide</a>
+    </div>
     <div id="noUnpublishedMessage" style="display: none;">
         You have no unpublished achievements.</div>
     <img id="newAchievementsLoading" class="loading" src="@Url.Content("~/Content/images/ajax-loader.gif")" alt="Getting unpublished achievements..." />
