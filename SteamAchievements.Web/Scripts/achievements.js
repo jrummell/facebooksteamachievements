@@ -119,12 +119,12 @@ var $achievements =
             $achievements.log(description);
         });
 
+        var name = this.steamUserId + " unlocked " + achievements.length + " achievement" + (achievements.length > 1 ? "s" : "");
         var publishParams = {
             method: "feed",
             link: "http://steamcommunity.com/id/" + this.steamUserId,
             picture: image,
-            name: this.steamUserId + " earned new achievements",
-            caption: "Unlocked " + (achievements.length == 1 ? "achievement" : "achievements"),
+            name: name,
             description: description
         };
 
