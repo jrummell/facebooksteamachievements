@@ -73,18 +73,18 @@ var $achievements =
     {
         // display publish dialog
 
-        var images = new Array();
+        var image = null;
         var description = new String();
         var gameId = new String();
 
         $.each(achievements, function (i)
         {
-            var achievement = achievements[i];
-            images.push({
-                type: 'image',
-                src: achievement.ImageUrl,
-                href: achievement.Game.StatsUrl
-            });
+            var achievement = this;// achievements[i];
+
+            if (image == null)
+            {
+                image = achievement.ImageUrl;
+            }
 
             if (gameId != achievement.Game.Id)
             {
@@ -120,13 +120,12 @@ var $achievements =
         });
 
         var publishParams = {
-            method: 'stream.publish',
-            attachment: {
-                name: this.steamUserId + " earned new achievements",
-                description: description,
-                href: "http://steamcommunity.com/id/" + this.steamUserId,
-                media: images
-            }
+            method: "feed",
+            link: "http://steamcommunity.com/id/" + this.steamUserId,
+            picture: image,
+            name: this.steamUserId + " earned new achievements",
+            caption: "Unlocked " + (achievements.length == 1 ? "achievement" : "achievements"),
+            description: description
         };
 
         // create and anchor in the middle of the page and focus on it so that the dialog will be visible to the user.
@@ -280,7 +279,7 @@ var $achievements =
         {
             return;
         }
-        
+
         if (typeof (FB) != "undefined")
         {
             // update the size of the iframe to match the content
