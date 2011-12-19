@@ -102,7 +102,7 @@ function displayAchievements()
                 $achievementDiv.toggleClass("selected");
                 if (this.tagName == "IMG")
                 {
-                    var checkbox = $(this).parent(".achievement").find(":checkbox");
+                    var checkbox = $achievementDiv.find(":checkbox").get(0);
                     checkbox.checked = !checkbox.checked;
 
                     if ($achievements.mobile)
