@@ -74,25 +74,6 @@ namespace SteamAchievements.Web.Models
                     yield return new ValidationResult(Strings.SettingsInvalidCustomUrl, new[] {steamUserIdMemberName});
                 }
             }
-
-            // Validate that the steam id is unique.
-            using (IUserService userService = resolver.GetService<IUserService>())
-            {
-                User user = userService.GetUser(FacebookUserId);
-
-                if (user != null)
-                {
-                    User userBySteamId = userService.GetUser(SteamUserId);
-                    if (userBySteamId != null)
-                    {
-                        if (user.FacebookUserId != userBySteamId.FacebookUserId)
-                        {
-                            yield return
-                                new ValidationResult(Strings.SettingsDuplicateCustomUrl, new[] {steamUserIdMemberName});
-                        }
-                    }
-                }
-            }
         }
 
         #endregion

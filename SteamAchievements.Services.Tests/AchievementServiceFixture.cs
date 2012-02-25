@@ -66,7 +66,7 @@ namespace SteamAchievements.Services.Tests
             communityManagerMock.Setup(rep => rep.GetClosedAchievements(user.SteamUserId, "english"))
                 .Returns(new List<UserAchievement>()).Verifiable();
 
-            achievementManagerMock.Setup(rep => rep.GetUser(user.SteamUserId))
+            achievementManagerMock.Setup(rep => rep.GetUser(user.FacebookUserId))
                 .Returns(dataUser).Verifiable();
             achievementManagerMock.Setup(rep => rep.UpdateAchievements(It.IsAny<IEnumerable<Data.UserAchievement>>()))
                 .Returns(5).Verifiable();
@@ -94,11 +94,11 @@ namespace SteamAchievements.Services.Tests
                                                               }
                                                       };
             achievementManagerMock.Setup(
-                rep => rep.GetUnpublishedAchievements(user.SteamUserId, DateTime.UtcNow.Date.AddDays(-2)))
+                rep => rep.GetUnpublishedAchievements(user.FacebookUserId, DateTime.UtcNow.Date.AddDays(-2)))
                 .Returns(dataAchievements).Verifiable();
             achievementManagerMock.Setup(
                 rep =>
-                rep.UpdateHidden(user.SteamUserId, It.IsAny<IEnumerable<int>>()))
+                rep.UpdateHidden(user.FacebookUserId, It.IsAny<IEnumerable<int>>()))
                 .Verifiable();
 
             // execute

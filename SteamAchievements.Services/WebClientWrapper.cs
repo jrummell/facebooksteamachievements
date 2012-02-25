@@ -21,10 +21,11 @@
 
 using System;
 using System.Net;
+using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
-    public class WebClientWrapper : IWebClientWrapper
+    public class WebClientWrapper : Disposable, IWebClientWrapper
     {
         private readonly WebClient _webClient = new WebClient();
 
@@ -43,20 +44,11 @@ namespace SteamAchievements.Services
             }
         }
 
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
-            Dispose(true);
-        }
-
         #endregion
 
-        protected virtual void Dispose(bool disposing)
+        protected override void DisposeManaged()
         {
-            if (disposing)
-            {
-                _webClient.Dispose();
-            }
+            _webClient.Dispose();
         }
     }
 }

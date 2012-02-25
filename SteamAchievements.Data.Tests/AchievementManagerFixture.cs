@@ -295,10 +295,9 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.SetupGet(rep => rep.UserAchievements).Returns(_userAchievements);
             _repositoryMock.SetupGet(rep => rep.Users).Returns(_users);
 
-            ICollection<Achievement> achievements = _manager.GetUnpublishedAchievements("user1");
+            ICollection<Achievement> achievements = _manager.GetUnpublishedAchievements(1);
 
             _repositoryMock.VerifyGet(rep => rep.UserAchievements);
-            _repositoryMock.VerifyGet(rep => rep.Users);
 
             Assert.That(achievements.Count, Is.EqualTo(1));
             Assert.That(achievements.Count(a => a.Id == 3), Is.EqualTo(1));
@@ -520,19 +519,15 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.SetupGet(rep => rep.UserAchievements).Returns(_userAchievements);
             _repositoryMock.SetupGet(rep => rep.Achievements).Returns(_achievements);
 
-            const string steamUserId = "user1";
-            ICollection<Achievement> achievements = _manager.GetUnpublishedAchievements(steamUserId);
-            _manager.UpdateHidden(steamUserId, achievements.Select(acheivement => acheivement.Id));
+            const int userId = 1;
+            ICollection<Achievement> achievements = _manager.GetUnpublishedAchievements(userId);
+            _manager.UpdateHidden(userId, achievements.Select(acheivement => acheivement.Id));
 
             IEnumerable<int> achievementIds = from achievement in achievements
                                               select achievement.Id;
-            long facebookUserId =
-                _repositoryMock.Object.Users.Where(user => user.SteamUserId == steamUserId).Select(
-                    user => user.FacebookUserId).
-                    Single();
             IQueryable<UserAchievement> userAchievements =
                 from achievement in _repositoryMock.Object.UserAchievements
-                where achievement.FacebookUserId == facebookUserId && achievementIds.Contains(achievement.AchievementId)
+                where achievement.FacebookUserId == userId && achievementIds.Contains(achievement.AchievementId)
                 select achievement;
 
             Assert.That(userAchievements.Any(achievement => !achievement.Hidden), Is.False);
@@ -545,19 +540,16 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.SetupGet(rep => rep.UserAchievements).Returns(_userAchievements);
             _repositoryMock.SetupGet(rep => rep.Achievements).Returns(_achievements);
 
-            const string steamUserId = "user1";
-            ICollection<Achievement> achievements = _manager.GetUnpublishedAchievements(steamUserId);
-            _manager.UpdatePublished(steamUserId, achievements.Select(acheivement => acheivement.Id));
+            const int userId = 1;
+            ICollection<Achievement> achievements = _manager.GetUnpublishedAchievements(userId);
+            _manager.UpdatePublished(userId, achievements.Select(acheivement => acheivement.Id));
 
             IEnumerable<int> achievementIds = from achievement in achievements
                                               select achievement.Id;
-            long facebookUserId =
-                _repositoryMock.Object.Users.Where(user => user.SteamUserId == steamUserId).Select(
-                    user => user.FacebookUserId).
-                    Single();
+
             IQueryable<UserAchievement> userAchievements =
                 from achievement in _repositoryMock.Object.UserAchievements
-                where achievement.FacebookUserId == facebookUserId && achievementIds.Contains(achievement.AchievementId)
+                where achievement.FacebookUserId == userId && achievementIds.Contains(achievement.AchievementId)
                 select achievement;
 
             Assert.That(userAchievements.Any(achievement => !achievement.Published), Is.False);

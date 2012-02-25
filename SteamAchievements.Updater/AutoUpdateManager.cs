@@ -80,13 +80,12 @@ namespace SteamAchievements.Updater
         /// <summary>
         /// Gets the auto update steam user ids.
         /// </summary>
-        public IEnumerable<string> GetAutoUpdateUsers()
+        public ICollection<User> GetAutoUpdateUsers()
         {
             // get users configured for auto update
-            IEnumerable<string> steamUserIds = _userService.GetAutoUpdateUsers();
-            string[] users = steamUserIds.ToArray();
+            ICollection<User> users = _userService.GetAutoUpdateUsers();
 
-            _log.Log("Users: {0}", String.Join(", ", users));
+            _log.Log("Users: {0}", String.Join(", ", users.Select(user => user.SteamUserId)));
 
             return users;
         }
@@ -102,17 +101,9 @@ namespace SteamAchievements.Updater
         /// <summary>
         /// Publishes the user's achievements.
         /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        public void PublishUserAchievements(string steamUserId)
+        /// <param name="user">The user.</param>
+        public void PublishUserAchievements(User user)
         {
-            User user = _userService.GetUser(steamUserId);
-
-            if (user == null)
-            {
-                _log.Log(steamUserId + " does not exist");
-                return;
-            }
-
             _log.Log(String.Format("User {0} ({1})", user.SteamUserId, user.FacebookUserId));
 
             if (String.IsNullOrEmpty(user.AccessToken))
@@ -126,7 +117,7 @@ namespace SteamAchievements.Updater
             try
             {
                 // update the user's achievements
-                int updated = _achievementService.UpdateAchievements(user.SteamUserId, user.Language);
+                int updated = _achievementService.UpdateAchievements(user.FacebookUserId, user.Language);
 
                 if (updated == 0)
                 {
@@ -154,7 +145,7 @@ namespace SteamAchievements.Updater
             // and the time it takes to run the Auto Update process
             DateTime oldestDate = DateTime.UtcNow.AddHours(-48).Date;
             IEnumerable<Achievement> achievements =
-                _achievementService.GetUnpublishedAchievements(user.SteamUserId, oldestDate, user.Language);
+                _achievementService.GetUnpublishedAchievements(user.FacebookUserId, oldestDate, user.Language);
 
             if (!achievements.Any())
             {
@@ -210,11 +201,9 @@ namespace SteamAchievements.Updater
             }
 
             // update the published flag
-            _achievementService.PublishAchievements(user.SteamUserId, publishedAchievements);
+            _achievementService.PublishAchievements(user.FacebookUserId, publishedAchievements);
 
             _log.Log("Published {0} achievements.", publishedAchievements.Count);
-
-            return;
         }
 
         #endregion
