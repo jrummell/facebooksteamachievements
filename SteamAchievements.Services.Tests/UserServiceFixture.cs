@@ -117,6 +117,7 @@ namespace SteamAchievements.Services.Tests
         {
             User user = new User {AccessToken = "x", AutoUpdate = true, FacebookUserId = 1234, SteamUserId = "user1"};
             _managerMock.Setup(manager => manager.IsDuplicate(user.SteamUserId, user.FacebookUserId))
+                .Returns(true)
                 .Verifiable();
 
             Assert.That(() => _service.UpdateUser(user), Throws.TypeOf(typeof (DuplicateSteamUserException)));
