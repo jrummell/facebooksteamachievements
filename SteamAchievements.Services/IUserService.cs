@@ -21,45 +21,32 @@
 
 using System;
 using System.Collections.Generic;
-using System.ServiceModel;
 
 namespace SteamAchievements.Services
 {
-    [ServiceContract(Namespace = "www.jrummell.com/SteamAchievements")]
     public interface IUserService : IDisposable
     {
         /// <summary>
         /// Gets the auto update users.
         /// </summary>
-        [OperationContract]
-        ICollection<string> GetAutoUpdateUsers();
+        ICollection<User> GetAutoUpdateUsers();
 
         /// <summary>
         /// Gets the user.
         /// </summary>
         /// <param name="facebookUserId">The facebook user id.</param>
-        [OperationContract]
         User GetUser(long facebookUserId);
-
-        /// <summary>
-        /// Gets the user.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        [OperationContract]
-        User GetUser(string steamUserId);
 
         /// <summary>
         /// Updates the user.
         /// </summary>
         /// <param name="user">The user.</param>
-        [OperationContract]
         void UpdateUser(User user);
 
         /// <summary>
         /// Deauthorizes the user.
         /// </summary>
         /// <param name="facebookUserId">The facebook user id.</param>
-        [OperationContract]
         void DeauthorizeUser(long facebookUserId);
     }
 }

@@ -34,25 +34,19 @@ namespace SteamAchievements.Data
         User GetUser(long facebookUserId);
 
         /// <summary>
-        /// Gets the user.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <returns></returns>
-        User GetUser(string steamUserId);
-
-        /// <summary>
         /// Gets the unpublished achievements.
         /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        ICollection<Achievement> GetUnpublishedAchievements(string steamUserId);
+        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <returns></returns>
+        ICollection<Achievement> GetUnpublishedAchievements(long facebookUserId);
 
         /// <summary>
         /// Gets the unpublished achievements by oldest date.
         /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="facebookUserId">The facebook user id.</param>
         /// <param name="oldestDate">The oldest date.</param>
         /// <returns></returns>
-        ICollection<Achievement> GetUnpublishedAchievements(string steamUserId, DateTime oldestDate);
+        ICollection<Achievement> GetUnpublishedAchievements(long facebookUserId, DateTime oldestDate);
 
         /// <summary>
         /// Gets the auto update users.
@@ -69,16 +63,16 @@ namespace SteamAchievements.Data
         /// <summary>
         /// Updates the published flag on the given achievements.
         /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="facebookUserId">The facebook user id.</param>
         /// <param name="achievementIds">The achievement ids.</param>
-        void UpdatePublished(string steamUserId, IEnumerable<int> achievementIds);
+        void UpdatePublished(long facebookUserId, IEnumerable<int> achievementIds);
 
         /// <summary>
         /// Updates the hidden flag on the given achievements.
         /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="facebookUserId">The facebook user id.</param>
         /// <param name="achievementIds">The achievement ids.</param>
-        void UpdateHidden(string steamUserId, IEnumerable<int> achievementIds);
+        void UpdateHidden(long facebookUserId, IEnumerable<int> achievementIds);
 
         /// <summary>
         /// Updates the user.

@@ -70,10 +70,10 @@ namespace SteamAchievements.Services.Tests
             _managerMock.ExpectAndReturn("GetAutoUpdateUsers",
                                          new List<Data.User> {new Data.User {SteamUserId = steamUserId}});
 
-            IEnumerable<string> users = _service.GetAutoUpdateUsers();
+            ICollection<User> users = _service.GetAutoUpdateUsers();
 
             Assert.That(users.Count(), Is.EqualTo(1));
-            Assert.That(users.First(), Is.EqualTo(steamUserId));
+            Assert.That(users.First().SteamUserId, Is.EqualTo(steamUserId));
             _managerMock.Verify();
         }
 
@@ -87,19 +87,6 @@ namespace SteamAchievements.Services.Tests
 
             Assert.That(user, Is.Not.Null);
             Assert.That(user.FacebookUserId, Is.EqualTo(facebookUserId));
-            _managerMock.Verify();
-        }
-
-        [Test]
-        public void GetUserBySteamId()
-        {
-            const string steamUserId = "user1";
-            _managerMock.ExpectAndReturn("GetUser", new Data.User {SteamUserId = steamUserId}, steamUserId);
-
-            User user = _service.GetUser(steamUserId);
-
-            Assert.That(user, Is.Not.Null);
-            Assert.That(user.SteamUserId, Is.EqualTo(steamUserId));
             _managerMock.Verify();
         }
 

@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using SteamAchievements.Data;
+using User = SteamAchievements.Services.User;
 
 namespace SteamAchievements.Updater
 {
@@ -52,9 +53,9 @@ namespace SteamAchievements.Updater
         /// </summary>
         public void Publish()
         {
-            IEnumerable<string> users = _autoUpdateManager.GetAutoUpdateUsers();
+            ICollection<User> users = _autoUpdateManager.GetAutoUpdateUsers();
 
-            foreach (string user in users)
+            foreach (User user in users)
             {
                 try
                 {
@@ -70,7 +71,6 @@ namespace SteamAchievements.Updater
                 {
                     // log any other errors and continue to the next user
                     _autoUpdateManager.Logger.Log(ex);
-                    continue;
                 }
             }
 

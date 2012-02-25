@@ -26,7 +26,7 @@ using System.Linq;
 
 namespace SteamAchievements.Data
 {
-    public class AchievementManager : IAchievementManager
+    public class AchievementManager : Disposable, IAchievementManager
     {
         private readonly ISteamRepository _repository;
 
@@ -64,25 +64,6 @@ namespace SteamAchievements.Data
         }
 
         /// <summary>
-        /// Gets the user.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <returns></returns>
-        public User GetUser(string steamUserId)
-        {
-            if (steamUserId == null)
-            {
-                throw new ArgumentNullException("steamUserId");
-            }
-
-            IQueryable<User> query = from user in _repository.Users
-                                     where user.SteamUserId == steamUserId
-                                     select user;
-
-            return query.SingleOrDefault();
-        }
-
-        /// <summary>
         /// Gets the auto update users.
         /// </summary>
         /// <returns></returns>
@@ -97,16 +78,10 @@ namespace SteamAchievements.Data
         /// <summary>
         /// Gets the unpublished achievements.
         /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        public ICollection<Achievement> GetUnpublishedAchievements(string steamUserId)
+        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <returns></returns>
+        public ICollection<Achievement> GetUnpublishedAchievements(long facebookUserId)
         {
-            if (steamUserId == null)
-            {
-                throw new ArgumentNullException("steamUserId");
-            }
-
-            long facebookUserId = GetFacebookUserId(steamUserId);
-
             return (from achievement in _repository.UserAchievements
                     where achievement.FacebookUserId == facebookUserId
                           && !achievement.Published
@@ -118,19 +93,12 @@ namespace SteamAchievements.Data
         /// <summary>
         /// Gets the unpublished achievements by date.
         /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="facebookUserId">The facebook user id.</param>
         /// <param name="oldestDate">The oldest date.</param>
         /// <returns></returns>
-        public ICollection<Achievement> GetUnpublishedAchievements(string steamUserId, DateTime oldestDate)
+        public ICollection<Achievement> GetUnpublishedAchievements(long facebookUserId, DateTime oldestDate)
         {
-            if (steamUserId == null)
-            {
-                throw new ArgumentNullException("steamUserId");
-            }
-
             oldestDate = ValidateDate(oldestDate);
-
-            long facebookUserId = GetFacebookUserId(steamUserId);
 
             return (from achievement in _repository.UserAchievements
                     where achievement.FacebookUserId == facebookUserId
@@ -274,15 +242,10 @@ namespace SteamAchievements.Data
         /// <summary>
         /// Updates the published flag of the given achievements.
         /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="facebookUserId">The facebook user id.</param>
         /// <param name="achievementIds">The achievement ids.</param>
-        public void UpdatePublished(string steamUserId, IEnumerable<int> achievementIds)
+        public void UpdatePublished(long facebookUserId, IEnumerable<int> achievementIds)
         {
-            if (steamUserId == null)
-            {
-                throw new ArgumentNullException("steamUserId");
-            }
-
             if (achievementIds == null)
             {
                 throw new ArgumentNullException("achievementIds");
@@ -292,8 +255,6 @@ namespace SteamAchievements.Data
             {
                 return;
             }
-
-            long facebookUserId = GetFacebookUserId(steamUserId);
 
             IQueryable<UserAchievement> achievementsToUpdate =
                 from achievement in _repository.UserAchievements
@@ -311,15 +272,10 @@ namespace SteamAchievements.Data
         /// <summary>
         /// Updates the hidden flag on the given achievements.
         /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
+        /// <param name="facebookUserId">The facebook user id.</param>
         /// <param name="achievementIds">The achievement ids.</param>
-        public void UpdateHidden(string steamUserId, IEnumerable<int> achievementIds)
+        public void UpdateHidden(long facebookUserId, IEnumerable<int> achievementIds)
         {
-            if (steamUserId == null)
-            {
-                throw new ArgumentNullException("steamUserId");
-            }
-
             if (achievementIds == null)
             {
                 throw new ArgumentNullException("achievementIds");
@@ -329,8 +285,6 @@ namespace SteamAchievements.Data
             {
                 return;
             }
-
-            long facebookUserId = GetFacebookUserId(steamUserId);
 
             //Note: achievementIds.Contains() will only translate to SQL if achievementIds is IEnumerable<int> (not ICollection<int>).
             IQueryable<UserAchievement> achievementsToUpdate =
@@ -346,16 +300,12 @@ namespace SteamAchievements.Data
             _repository.SubmitChanges();
         }
 
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
-            Dispose(true);
-        }
-
         #endregion
+
+        protected override void DisposeManaged()
+        {
+            _repository.Dispose();
+        }
 
         /// <summary>
         /// Existses the specified facebook user id.
@@ -734,38 +684,6 @@ namespace SteamAchievements.Data
             }
 
             _repository.SubmitChanges();
-        }
-
-        /// <summary>
-        /// Gets the facebook user id.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <returns></returns>
-        private long GetFacebookUserId(string steamUserId)
-        {
-            if (steamUserId == null)
-            {
-                throw new NullReferenceException("steamUserId");
-            }
-
-            return (from user in _repository.Users
-                    where user.SteamUserId == steamUserId
-                    select user.FacebookUserId).SingleOrDefault();
-        }
-
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            lock (this)
-            {
-                if (disposing)
-                {
-                    _repository.Dispose();
-                }
-            }
         }
     }
 }

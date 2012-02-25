@@ -59,15 +59,15 @@ namespace SteamAchievements.Updater.Tests
         [Test]
         public void GetAutoUpdateUsers()
         {
-            string[] users = new[] {"user1", "user2"};
+            User[] expectedUsers = new[] {new User {SteamUserId = "user1"}, new User {SteamUserId = "user2"}};
             _userServiceMock.Setup(service => service.GetAutoUpdateUsers())
-                .Returns(users)
+                .Returns(expectedUsers)
                 .Verifiable();
 
-            IEnumerable<string> userIds = _manager.GetAutoUpdateUsers();
+            ICollection<User> users = _manager.GetAutoUpdateUsers();
 
-            Assert.That(userIds, Is.Not.Null.Or.Empty);
-            Assert.That(String.Join(", ", userIds), Is.EquivalentTo("user1, user2"));
+            Assert.That(users, Is.Not.Null.Or.Empty);
+            Assert.That(users.Count, Is.EqualTo(2));
 
             _userServiceMock.Verify();
         }
@@ -77,15 +77,11 @@ namespace SteamAchievements.Updater.Tests
         {
             User user = new User {SteamUserId = "user1", FacebookUserId = 1, AccessToken = "token", AutoUpdate = true};
 
-            _userServiceMock.Setup(service => service.GetUser(user.SteamUserId))
-                .Returns(user)
-                .Verifiable();
-
-            _achievementServiceMock.Setup(service => service.UpdateAchievements(user.SteamUserId, null))
+            _achievementServiceMock.Setup(service => service.UpdateAchievements(user.FacebookUserId, null))
                 .Returns(1)
                 .Verifiable();
             _achievementServiceMock.Setup(
-                service => service.GetUnpublishedAchievements(user.SteamUserId, DateTime.UtcNow.AddDays(-2).Date, null))
+                service => service.GetUnpublishedAchievements(user.FacebookUserId, DateTime.UtcNow.AddDays(-2).Date, null))
                 .Returns(
                     new List<Achievement>
                         {
@@ -111,15 +107,14 @@ namespace SteamAchievements.Updater.Tests
             _publisherMock.Setup(pub => pub.Publish(It.IsAny<User>(), It.IsAny<IDictionary<string, object>>()))
                 .Verifiable();
 
-            _achievementServiceMock.Setup(service => service.PublishAchievements(user.SteamUserId, new List<int> {1}))
+            _achievementServiceMock.Setup(service => service.PublishAchievements(user.FacebookUserId, new List<int> {1}))
                 .Returns(true)
                 .Verifiable();
 
-            _manager.PublishUserAchievements(user.SteamUserId);
+            _manager.PublishUserAchievements(user);
 
             _achievementServiceMock.Verify();
             _publisherMock.Verify();
-            _userServiceMock.Verify();
         }
     }
 }

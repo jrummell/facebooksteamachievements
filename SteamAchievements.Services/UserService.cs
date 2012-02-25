@@ -23,11 +23,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SteamAchievements.Data;
+using Disosable = SteamAchievements.Data.Disposable;
 
 namespace SteamAchievements.Services
 {
-    [ServiceErrorBehaviour(typeof (HttpErrorHandler))]
-    public class UserService : IUserService
+    public class UserService : Disosable, IUserService
     {
         private readonly IAchievementManager _manager;
 
@@ -55,18 +55,6 @@ namespace SteamAchievements.Services
         public User GetUser(long facebookUserId)
         {
             Data.User user = _manager.GetUser(facebookUserId);
-
-            return Map(user);
-        }
-
-        /// <summary>
-        /// Gets the user.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <returns></returns>
-        public User GetUser(string steamUserId)
-        {
-            Data.User user = _manager.GetUser(steamUserId);
 
             return Map(user);
         }
@@ -104,21 +92,17 @@ namespace SteamAchievements.Services
         /// Gets the auto update users.
         /// </summary>
         /// <returns></returns>
-        public ICollection<string> GetAutoUpdateUsers()
+        public ICollection<User> GetAutoUpdateUsers()
         {
-            return _manager.GetAutoUpdateUsers().Select(user => user.SteamUserId).ToArray();
-        }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
-            Dispose(true);
+            return _manager.GetAutoUpdateUsers().Select(Map).ToArray();
         }
 
         #endregion
+
+        protected override void DisposeManaged()
+        {
+            _manager.Dispose();
+        }
 
         /// <summary>
         /// Maps the specified user.
@@ -162,21 +146,6 @@ namespace SteamAchievements.Services
                            SteamUserId = user.SteamUserId,
                            PublishDescription = user.PublishDescription
                        };
-        }
-
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            lock (this)
-            {
-                if (disposing)
-                {
-                    _manager.Dispose();
-                }
-            }
         }
     }
 }
