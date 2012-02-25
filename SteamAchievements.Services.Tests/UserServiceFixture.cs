@@ -23,7 +23,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Moq;
 using NUnit.Framework;
-using NUnit.Mocks;
 using SteamAchievements.Data;
 
 namespace SteamAchievements.Services.Tests
@@ -36,9 +35,8 @@ namespace SteamAchievements.Services.Tests
         [SetUp]
         public void SetUp()
         {
-            _managerMock = new DynamicMock(typeof (IAchievementManager));
-            IAchievementManager manager = (IAchievementManager) _managerMock.MockInstance;
-            _service = new UserService(manager);
+            _managerMock = new Mock<IAchievementManager>();
+            _service = new UserService(_managerMock.Object);
         }
 
         [TearDown]
@@ -50,13 +48,14 @@ namespace SteamAchievements.Services.Tests
         #endregion
 
         private IUserService _service;
-        private DynamicMock _managerMock;
+        private Mock<IAchievementManager> _managerMock;
 
         [Test]
         public void DeauthorizeUser()
         {
             const int facebookUserId = 1234;
-            _managerMock.Expect("DeauthorizeUser", facebookUserId);
+            _managerMock.Setup(manager => manager.DeauthorizeUser(facebookUserId))
+                .Verifiable();
 
             _service.DeauthorizeUser(facebookUserId);
 
@@ -67,8 +66,9 @@ namespace SteamAchievements.Services.Tests
         public void GetAutoUpdateUsers()
         {
             const string steamUserId = "user1";
-            _managerMock.ExpectAndReturn("GetAutoUpdateUsers",
-                                         new List<Data.User> {new Data.User {SteamUserId = steamUserId}});
+            _managerMock.Setup(manager => manager.GetAutoUpdateUsers())
+                .Returns(new List<Data.User> {new Data.User {SteamUserId = steamUserId}})
+                .Verifiable();
 
             ICollection<User> users = _service.GetAutoUpdateUsers();
 
@@ -81,7 +81,9 @@ namespace SteamAchievements.Services.Tests
         public void GetUserByFacebookId()
         {
             const int facebookUserId = 1234;
-            _managerMock.ExpectAndReturn("GetUser", new Data.User {FacebookUserId = facebookUserId}, facebookUserId);
+            _managerMock.Setup(manager => manager.GetUser(facebookUserId))
+                .Returns(new Data.User {FacebookUserId = facebookUserId})
+                .Verifiable();
 
             User user = _service.GetUser(facebookUserId);
 
@@ -114,12 +116,13 @@ namespace SteamAchievements.Services.Tests
         public void UpdateUser_Duplicate()
         {
             User user = new User {AccessToken = "x", AutoUpdate = true, FacebookUserId = 1234, SteamUserId = "user1"};
-            _managerMock.ExpectAndReturn("IsDuplicate", true, user.SteamUserId, user.FacebookUserId);
-            _managerMock.ExpectNoCall("UpdateUser");
+            _managerMock.Setup(manager => manager.IsDuplicate(user.SteamUserId, user.FacebookUserId))
+                .Verifiable();
 
             Assert.That(() => _service.UpdateUser(user), Throws.TypeOf(typeof (DuplicateSteamUserException)));
 
             _managerMock.Verify();
+            _managerMock.Verify(manager => manager.UpdateUser(It.IsAny<Data.User>()), Times.Never());
         }
     }
 }
