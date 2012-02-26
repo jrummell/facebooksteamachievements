@@ -24,7 +24,7 @@ using System.Linq;
 using NUnit.Framework;
 using SteamAchievements.Services.Models;
 
-namespace SteamAchievements.Services.Tests
+namespace SteamAchievements.Services.Tests.Integration
 {
     [TestFixture]
     public class SteamCommunityManagerFixture
