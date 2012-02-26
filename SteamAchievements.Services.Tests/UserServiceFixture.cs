@@ -24,6 +24,7 @@ using System.Linq;
 using Moq;
 using NUnit.Framework;
 using SteamAchievements.Data;
+using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Services.Tests
 {
@@ -70,7 +71,7 @@ namespace SteamAchievements.Services.Tests
                 .Returns(new List<Data.User> {new Data.User {SteamUserId = steamUserId}})
                 .Verifiable();
 
-            ICollection<User> users = _service.GetAutoUpdateUsers();
+            ICollection<Models.User> users = _service.GetAutoUpdateUsers();
 
             Assert.That(users.Count(), Is.EqualTo(1));
             Assert.That(users.First().SteamUserId, Is.EqualTo(steamUserId));
@@ -85,7 +86,7 @@ namespace SteamAchievements.Services.Tests
                 .Returns(new Data.User {FacebookUserId = facebookUserId})
                 .Verifiable();
 
-            User user = _service.GetUser(facebookUserId);
+            Models.User user = _service.GetUser(facebookUserId);
 
             Assert.That(user, Is.Not.Null);
             Assert.That(user.FacebookUserId, Is.EqualTo(facebookUserId));
@@ -95,7 +96,7 @@ namespace SteamAchievements.Services.Tests
         [Test]
         public void UpdateUser()
         {
-            User user = new User {AccessToken = "x", AutoUpdate = true, FacebookUserId = 1234, SteamUserId = "user1"};
+            Models.User user = new Models.User {AccessToken = "x", AutoUpdate = true, FacebookUserId = 1234, SteamUserId = "user1"};
 
             Mock<IAchievementManager> managerMock = new Mock<IAchievementManager>();
             managerMock.Setup(rep => rep.IsDuplicate(user.SteamUserId, user.FacebookUserId))
@@ -115,7 +116,7 @@ namespace SteamAchievements.Services.Tests
         [Test]
         public void UpdateUser_Duplicate()
         {
-            User user = new User {AccessToken = "x", AutoUpdate = true, FacebookUserId = 1234, SteamUserId = "user1"};
+            Models.User user = new Models.User {AccessToken = "x", AutoUpdate = true, FacebookUserId = 1234, SteamUserId = "user1"};
             _managerMock.Setup(manager => manager.IsDuplicate(user.SteamUserId, user.FacebookUserId))
                 .Returns(true)
                 .Verifiable();

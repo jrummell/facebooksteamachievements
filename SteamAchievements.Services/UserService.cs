@@ -22,12 +22,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using AutoMapper;
 using SteamAchievements.Data;
-using Disosable = SteamAchievements.Data.Disposable;
 
 namespace SteamAchievements.Services
 {
-    public class UserService : Disosable, IUserService
+    public class UserService : Disposable, IUserService
     {
         private readonly IAchievementManager _manager;
 
@@ -52,7 +53,7 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="facebookUserId">The facebook user id.</param>
         /// <returns></returns>
-        public User GetUser(long facebookUserId)
+        public Models.User GetUser(long facebookUserId)
         {
             Data.User user = _manager.GetUser(facebookUserId);
 
@@ -63,7 +64,7 @@ namespace SteamAchievements.Services
         /// Updates the user.
         /// </summary>
         /// <param name="user">The user.</param>
-        public void UpdateUser(User user)
+        public void UpdateUser(Models.User user)
         {
             if (user == null)
             {
@@ -92,7 +93,7 @@ namespace SteamAchievements.Services
         /// Gets the auto update users.
         /// </summary>
         /// <returns></returns>
-        public ICollection<User> GetAutoUpdateUsers()
+        public ICollection<Models.User> GetAutoUpdateUsers()
         {
             return _manager.GetAutoUpdateUsers().Select(Map).ToArray();
         }
@@ -109,21 +110,14 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        private static User Map(Data.User user)
+        private static Models.User Map(Data.User user)
         {
             if (user == null)
             {
                 return null;
             }
 
-            return new User
-                       {
-                           AccessToken = user.AccessToken,
-                           AutoUpdate = user.AutoUpdate,
-                           FacebookUserId = user.FacebookUserId,
-                           SteamUserId = user.SteamUserId,
-                           PublishDescription = user.PublishDescription
-                       };
+            return Mapper.Map<Models.User>(user);
         }
 
         /// <summary>
@@ -131,21 +125,16 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        private static Data.User Map(User user)
+        private static Data.User Map(Models.User user)
         {
             if (user == null)
             {
                 return null;
             }
 
-            return new Data.User
-                       {
-                           AccessToken = user.AccessToken ?? String.Empty,
-                           AutoUpdate = user.AutoUpdate,
-                           FacebookUserId = user.FacebookUserId,
-                           SteamUserId = user.SteamUserId,
-                           PublishDescription = user.PublishDescription
-                       };
+            return Mapper.Map<Data.User>(user);
         }
     }
+    
+
 }

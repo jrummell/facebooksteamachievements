@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 using SteamAchievements.Services;
+using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Updater.Tests
 {

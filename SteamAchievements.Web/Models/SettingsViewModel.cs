@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using SteamAchievements.Services;
+using SteamAchievements.Services.Models;
 using SteamAchievements.Web.Resources;
 
 namespace SteamAchievements.Web.Models

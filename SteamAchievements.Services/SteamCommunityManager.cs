@@ -26,7 +26,8 @@ using System.Linq;
 using System.Web;
 using System.Xml;
 using Elmah;
-using SteamAchievements.Data;
+using SteamAchievements.Services.Models;
+using Disposable = SteamAchievements.Data.Disposable;
 
 namespace SteamAchievements.Services
 {

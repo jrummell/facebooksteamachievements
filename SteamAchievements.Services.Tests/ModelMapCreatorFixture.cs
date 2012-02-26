@@ -21,27 +21,27 @@
 
 using System;
 using System.Collections.Generic;
-using SteamAchievements.Services;
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Text;
+using System.Xml;
+using NUnit.Framework;
+using AutoMapper;
 using SteamAchievements.Services.Models;
 
-namespace SteamAchievements.Updater
+namespace SteamAchievements.Services.Tests
 {
-    public interface IAutoUpdateManager : IDisposable
-    {
-        /// <summary>
-        /// Gets the logger.
-        /// </summary>
-        IAutoUpdateLogger Logger { get; }
-
-        /// <summary>
-        /// Gets the auto update steam user ids.
-        /// </summary>
-        ICollection<User> GetAutoUpdateUsers();
-
-        /// <summary>
-        /// Publishes the user's achievements.
-        /// </summary>
-        /// <param name="user">The user.</param>
-        void PublishUserAchievements(User user);
-    }
+		[TestFixture]
+	public class ModelMapCreatorFixture
+	{
+	    [Test]
+	    public void AssertConfigurationIsValid()
+	    {
+	        ModelMapCreator mapCreator = new ModelMapCreator();
+	        mapCreator.CreateMappings();
+	
+	        Mapper.AssertConfigurationIsValid();
+	    }
+	}
 }

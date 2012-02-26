@@ -25,6 +25,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Elmah;
 using SteamAchievements.Services;
+using SteamAchievements.Services.Models;
 using SteamAchievements.Web.Models;
 
 namespace SteamAchievements.Web.Controllers
@@ -57,10 +58,10 @@ namespace SteamAchievements.Web.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult UnpublishedAchievements(DateTime? oldestDate)
+        public PartialViewResult UnpublishedAchievements()
         {
             ICollection<Achievement> achievements =
-                _achievementService.GetUnpublishedAchievements(UserSettings.FacebookUserId, oldestDate);
+                _achievementService.GetUnpublishedAchievements(FacebookUserId, null);
 
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             ViewBag.Achievements = serializer.Serialize(achievements);
@@ -71,7 +72,7 @@ namespace SteamAchievements.Web.Controllers
         [HttpPost]
         public PartialViewResult Games()
         {
-            return PartialView(_achievementService.GetGames(UserSettings.FacebookUserId));
+            return PartialView(_achievementService.GetGames(FacebookUserId));
         }
 
         [HttpPost]
@@ -79,7 +80,7 @@ namespace SteamAchievements.Web.Controllers
         {
             try
             {
-                return Json(_achievementService.UpdateAchievements(UserSettings.FacebookUserId));
+                return Json(_achievementService.UpdateAchievements(FacebookUserId));
             }
             catch (Exception exception)
             {
@@ -94,13 +95,13 @@ namespace SteamAchievements.Web.Controllers
         [HttpPost]
         public JsonResult PublishAchievements(IEnumerable<int> achievementIds)
         {
-            return Json(_achievementService.PublishAchievements(UserSettings.FacebookUserId, achievementIds));
+            return Json(_achievementService.PublishAchievements(FacebookUserId, achievementIds));
         }
 
         [HttpPost]
         public JsonResult HideAchievements(IEnumerable<int> achievementIds)
         {
-            return Json(_achievementService.HideAchievements(UserSettings.FacebookUserId, achievementIds));
+            return Json(_achievementService.HideAchievements(FacebookUserId, achievementIds));
         }
 
         protected override void Dispose(bool disposing)

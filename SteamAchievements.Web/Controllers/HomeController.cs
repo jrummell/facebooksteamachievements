@@ -25,6 +25,7 @@ using AutoMapper;
 using Elmah;
 using Facebook.Web;
 using SteamAchievements.Services;
+using SteamAchievements.Services.Models;
 using SteamAchievements.Web.Models;
 
 namespace SteamAchievements.Web.Controllers
@@ -126,7 +127,7 @@ namespace SteamAchievements.Web.Controllers
                 return View();
             }
 
-            UserService.DeauthorizeUser(UserSettings.FacebookUserId);
+            UserService.DeauthorizeUser(FacebookUserId);
 
             UserSettings = null;
 

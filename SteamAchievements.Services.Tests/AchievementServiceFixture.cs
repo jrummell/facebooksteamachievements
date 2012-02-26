@@ -27,12 +27,20 @@ using System.Linq;
 using Moq;
 using NUnit.Framework;
 using SteamAchievements.Data;
+using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Services.Tests
 {
     [TestFixture]
     public class AchievementServiceFixture
     {
+    	[TestFixtureSetUp]
+    	public void TestFixtureSetUp()
+    	{
+    		ModelMapCreator mapCreator = new ModelMapCreator();
+    		mapCreator.CreateMappings();
+    	}
+    	
         [Test]
         public void UpdateNewUserAchievements()
         {
@@ -40,13 +48,13 @@ namespace SteamAchievements.Services.Tests
             Mock<ISteamCommunityManager> communityManagerMock = new Mock<ISteamCommunityManager>();
 
             // expect
-            User user = new User {FacebookUserId = 1234, SteamUserId = "user1"};
+            Models.User user = new Models.User {FacebookUserId = 1234, SteamUserId = "user1"};
             Data.User dataUser = new Data.User {FacebookUserId = 1234, SteamUserId = "user1"};
             achievementManagerMock.Setup(rep => rep.GetUser(user.FacebookUserId))
                 .Returns(dataUser).Verifiable();
 
             AchievementXmlParser achievementXmlParser = new AchievementXmlParser();
-            List<UserAchievement> userAchievements =
+            List<Models.UserAchievement> userAchievements =
                 achievementXmlParser.ParseClosed(File.ReadAllText("cssAchievements.xml")).ToList();
             userAchievements.ForEach(
                 userAchievement =>
@@ -64,7 +72,7 @@ namespace SteamAchievements.Services.Tests
                     });
 
             communityManagerMock.Setup(rep => rep.GetClosedAchievements(user.SteamUserId, "english"))
-                .Returns(new List<UserAchievement>()).Verifiable();
+                .Returns(new List<Models.UserAchievement>()).Verifiable();
 
             achievementManagerMock.Setup(rep => rep.GetUser(user.FacebookUserId))
                 .Returns(dataUser).Verifiable();

@@ -20,6 +20,7 @@
 #endregion
 
 using System.Collections.Generic;
+using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Services
 {

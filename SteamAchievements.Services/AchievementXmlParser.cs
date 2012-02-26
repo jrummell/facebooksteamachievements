@@ -25,6 +25,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
+using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Services
 {

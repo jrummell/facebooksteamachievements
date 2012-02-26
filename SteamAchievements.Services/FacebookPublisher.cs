@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using Facebook;
+using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Services
 {
