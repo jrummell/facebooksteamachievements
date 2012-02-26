@@ -143,7 +143,7 @@ namespace SteamAchievements.Updater
             // get unpublished achievements earned in the last 24-48 hours to make up for time zone differences 
             // and the time it takes to run the Auto Update process
             DateTime oldestDate = DateTime.UtcNow.AddHours(-48).Date;
-            IEnumerable<Achievement> achievements =
+            ICollection<Achievement> achievements =
                 _achievementService.GetUnpublishedAchievements(user.FacebookUserId, oldestDate, user.Language);
 
             if (!achievements.Any())
@@ -154,20 +154,23 @@ namespace SteamAchievements.Updater
             }
 
             // only publish the top 5
-            achievements = achievements.Take(5);
+            achievements = achievements.Take(5).ToList();
 
             // since the api only supports one attachment, use the first achievement's image
             // and build the description from all achievements
             Achievement firstAchievement = achievements.First();
             Uri statsUrl = SteamCommunityManager.GetProfileUrl(user.SteamUserId, false);
-            string message = String.Format("{0} earned new achievements", user.SteamUserId);
+            string message = String.Format("{0} unlocked {1} achievement{2}!",
+                                           user.SteamUserId,
+                                           achievements.Count,
+                                           achievements.Count > 1 ? "s" : String.Empty);
 
             IDictionary<string, object> parameters =
                 new Dictionary<string, object>
                     {
                         {"link", statsUrl.ToString()},
                         {"message", message},
-                        {"name", firstAchievement.Name},
+                        {"name", user.SteamUserId},
                         {"picture", firstAchievement.ImageUrl},
                         {"description", BuildDescription(achievements, user.PublishDescription)}
                     };
