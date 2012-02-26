@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.Practices.Unity;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
+using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Updater
 {
@@ -14,6 +15,9 @@ namespace SteamAchievements.Updater
         private static void Main(string[] args)
         {
             _container = BuildContainer();
+
+            ModelMapCreator mapCreator = new ModelMapCreator();
+            mapCreator.CreateMappings();
 
             Publisher publisher = _container.Resolve<Publisher>();
 
@@ -54,15 +58,10 @@ namespace SteamAchievements.Updater
             container.RegisterType<IAchievementXmlParser, AchievementXmlParser>();
 
             container.RegisterType<IAchievementService, AchievementService>();
-            container.RegisterType<IAchievementManager, AchievementManager>();
-
-#if DEBUG
-            container.RegisterType<ISteamRepository, MockSteamRepository>();
-#else
-            container.RegisterType<ISteamRepository, SteamRepository>();
-#endif
-
             container.RegisterType<IUserService, UserService>();
+
+            container.RegisterType<IAchievementManager, AchievementManager>();
+            container.RegisterType<ISteamRepository, SteamRepository>();
 
             container.RegisterType<IAutoUpdateLogger, AutoUpdateLogger>(new InjectionConstructor(_logDirectory.FullName));
             container.RegisterType<IAutoUpdateManager, AutoUpdateManager>();

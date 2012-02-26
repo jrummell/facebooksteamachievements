@@ -632,27 +632,24 @@ namespace SteamAchievements.Data
                          }).ToList();
 
             List<AchievementName> missingAchievementNames = new List<AchievementName>();
-            //if (communityAchievements.Count != dbAchievementNames.Count)
+            foreach (AchievementName achievementName in communityAchievements.SelectMany(a => a.AchievementNames))
             {
-                foreach (AchievementName achievementName in communityAchievements.SelectMany(a => a.AchievementNames))
-                {
-                    AchievementName communityName = achievementName;
-                    var key =
-                        dbAchievementNames.Where(
-                            a => a.GameId == communityName.Achievement.GameId
-                                 && a.ApiName == communityName.Achievement.ApiName)
-                            .SingleOrDefault();
+                AchievementName communityName = achievementName;
+                var key =
+                    dbAchievementNames.Where(
+                        a => a.GameId == communityName.Achievement.GameId
+                             && a.ApiName == communityName.Achievement.ApiName)
+                        .SingleOrDefault();
 
-                    if (key != null && !key.Languages.Contains(communityName.Language))
-                    {
-                        missingAchievementNames.Add(new AchievementName
-                                                        {
-                                                            AchievementId = key.Id,
-                                                            Language = communityName.Language,
-                                                            Name = communityName.Name,
-                                                            Description = communityName.Description
-                                                        });
-                    }
+                if (key != null && !key.Languages.Contains(communityName.Language))
+                {
+                    missingAchievementNames.Add(new AchievementName
+                                                    {
+                                                        AchievementId = key.Id,
+                                                        Language = communityName.Language,
+                                                        Name = communityName.Name,
+                                                        Description = communityName.Description
+                                                    });
                 }
             }
 
