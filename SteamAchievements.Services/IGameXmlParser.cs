@@ -19,6 +19,8 @@
 
 #endregion
 
+using SteamAchievements.Services.Models;
+
 namespace SteamAchievements.Services
 {
     public interface IGameXmlParser : IXmlParser<Game>

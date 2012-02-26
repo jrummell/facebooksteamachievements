@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 
 // Copyright 2010 John Rummell
 // 
@@ -21,56 +21,43 @@
 
 using System;
 
-namespace SteamAchievements.Services
+namespace SteamAchievements.Services.Models
 {
-    public class Achievement : IEquatable<Achievement>
+    public class UserAchievement : IEquatable<UserAchievement>
     {
         /// <summary>
-        /// Gets or sets the id.
-        /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the API name.
+        /// Gets or sets the achievement.
         /// </summary>
         /// <value>
-        /// The API name.
+        /// The achievement.
         /// </value>
-        public string ApiName { get; set; }
+        public Achievement Achievement { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the facebook user ID.
+        /// </summary>
+        /// <value>The facebook user ID</value>
+        public long FacebookUserId { get; set; }
 
         /// <summary>
-        /// Gets or sets the image URL.
+        /// Gets or sets the steam user ID.
         /// </summary>
-        /// <value>The image URL.</value>
-        public string ImageUrl { get; set; }
+        /// <value>The steam user ID</value>
+        public string SteamUserId { get; set; }
 
         /// <summary>
-        /// Gets or sets the name.
+        /// Gets or sets a value indicating whether this <see cref="UserAchievement"/> is closed.
         /// </summary>
-        /// <value>The name.</value>
-        public string Name { get; set; }
+        /// <value><c>true</c> if closed; otherwise, <c>false</c>.</value>
+        public bool Closed { get; set; }
 
         /// <summary>
-        /// Gets or sets the description.
+        /// Gets or sets the unlocked date.
         /// </summary>
-        /// <value>The description.</value>
-        public string Description { get; set; }
+        /// <value>The date the achievement was unlocked.</value>
+        public DateTime Date { get; set; }
 
-        /// <summary>
-        /// Gets or sets the language.
-        /// </summary>
-        /// <value>
-        /// The language.
-        /// </value>
-        public string Language { get; set; }
-
-        /// <summary>
-        /// Gets or sets the game.
-        /// </summary>
-        /// <value>The game.</value>
-        public Game Game { get; set; }
-
-        #region IEquatable<Achievement> Members
+        #region IEquatable<UserAchievement> Members
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
@@ -79,7 +66,7 @@ namespace SteamAchievements.Services
         /// <returns>
         /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
         /// </returns>
-        public bool Equals(Achievement other)
+        public bool Equals(UserAchievement other)
         {
             if (ReferenceEquals(null, other))
             {
@@ -89,9 +76,10 @@ namespace SteamAchievements.Services
             {
                 return true;
             }
-            return other.Id == Id && Equals(other.ApiName, ApiName)
-                   && Equals(other.Game, Game)
-                   && Equals(other.Language, Language);
+            return Equals(other.SteamUserId, SteamUserId)
+                   && other.Closed.Equals(Closed)
+                   && other.Date.Equals(Date)
+                   && Equals(other.Achievement, Achievement);
         }
 
         #endregion
@@ -113,11 +101,11 @@ namespace SteamAchievements.Services
             {
                 return true;
             }
-            if (obj.GetType() != typeof (Achievement))
+            if (obj.GetType() != typeof (UserAchievement))
             {
                 return false;
             }
-            return Equals((Achievement) obj);
+            return Equals((UserAchievement) obj);
         }
 
         /// <summary>
@@ -130,10 +118,10 @@ namespace SteamAchievements.Services
         {
             unchecked
             {
-                int result = 0;
-                result = (result*397) ^ (ApiName != null ? ApiName.GetHashCode() : 0);
-                result = (result*397) ^ (Game != null ? Game.GetHashCode() : 0);
-                result = (result*397) ^ (Language != null ? Language.GetHashCode() : 0);
+                int result = (SteamUserId != null ? SteamUserId.GetHashCode() : 0);
+                result = (result*397) ^ Closed.GetHashCode();
+                result = (result*397) ^ (Achievement != null ? Achievement.GetHashCode() : 0);
+                result = (result*397) ^ Date.GetHashCode();
                 return result;
             }
         }

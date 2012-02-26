@@ -24,6 +24,7 @@ using System.Web.SessionState;
 using Moq;
 using NUnit.Framework;
 using SteamAchievements.Services;
+using SteamAchievements.Services.Models;
 using SteamAchievements.Web.Controllers;
 using SteamAchievements.Web.Models;
 
@@ -32,12 +33,19 @@ namespace SteamAchievements.Web.Tests
     [TestFixture]
     public class HomeControllerFixture
     {
+    	[TestFixtureSetUp]
+    	public void TestFixtureSetUp()
+    	{
+    		ModelMapCreator mapCreator = new ModelMapCreator();
+            mapCreator.CreateMappings();
+            
+    		ViewModelMapCreator vmMapCreator = new ViewModelMapCreator();
+    		vmMapCreator.CreateMappings();
+    	}
+    	
         [Test]
         public void SettingsDuplicate()
         {
-            ModelMapCreator mapCreator = new ModelMapCreator();
-            mapCreator.CreateMap();
-
             MockFacebookContextSettings facebookContextSettings =
                 new MockFacebookContextSettings("AppId", 1234, "AccessToken123", "http://apps.facebook.com/canvasPage",
                                                 "SignedRequest");
@@ -90,9 +98,6 @@ namespace SteamAchievements.Web.Tests
         [Test]
         public void SettingsSuccess()
         {
-            ModelMapCreator mapCreator = new ModelMapCreator();
-            mapCreator.CreateMap();
-
             Mock<IAchievementService> mockAchievementService = new Mock<IAchievementService>();
 
             MockFacebookContextSettings facebookContextSettings =

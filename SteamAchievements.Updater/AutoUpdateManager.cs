@@ -25,10 +25,9 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using Facebook;
-using SteamAchievements.Data;
+using Disposable = SteamAchievements.Data.Disposable;
 using SteamAchievements.Services;
-using Achievement = SteamAchievements.Services.Achievement;
-using User = SteamAchievements.Services.User;
+using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Updater
 {

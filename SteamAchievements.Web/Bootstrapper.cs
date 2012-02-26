@@ -21,10 +21,11 @@
 
 using System.Web.Mvc;
 using Microsoft.Practices.Unity;
+using Unity.Mvc3;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
+using SteamAchievements.Services.Models;
 using SteamAchievements.Web.Models;
-using Unity.Mvc3;
 
 namespace SteamAchievements.Web
 {
@@ -37,7 +38,10 @@ namespace SteamAchievements.Web
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
 
             ModelMapCreator mapCreator = new ModelMapCreator();
-            mapCreator.CreateMap();
+            mapCreator.CreateMappings();
+            
+            ViewModelMapCreator viewModelMapCreator = new ViewModelMapCreator();
+            viewModelMapCreator.CreateMappings();
         }
 
         private static IUnityContainer BuildUnityContainer()

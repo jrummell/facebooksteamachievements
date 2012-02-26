@@ -22,11 +22,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using AutoMapper;
 using SteamAchievements.Data;
+using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Services
 {
-    public class AchievementService : IAchievementService
+    public class AchievementService : Disposable, IAchievementService
     {
         private readonly IAchievementManager _achievementManager;
         private readonly ISteamCommunityManager _communityService;
@@ -75,10 +78,15 @@ namespace SteamAchievements.Services
 
             string steamUserId = GetSteamUserId(facebookUserId);
 
-            ICollection<UserAchievement> achievements =
+            ICollection<Models.UserAchievement> achievements =
                 _communityService.GetClosedAchievements(steamUserId, language);
+            
+            foreach (var achievement in achievements) 
+            {
+            	achievement.FacebookUserId = facebookUserId;
+            }
 
-            int updated = _achievementManager.UpdateAchievements(achievements.ToDataAchievements(facebookUserId));
+            int updated = _achievementManager.UpdateAchievements(Mapper.Map<ICollection<Data.UserAchievement>>(achievements));
 
             return updated;
         }
@@ -92,7 +100,7 @@ namespace SteamAchievements.Services
         /// <returns>
         /// The achievements that haven't been published yet.
         /// </returns>
-        public ICollection<Achievement> GetUnpublishedAchievements(long facebookUserId, DateTime? oldestDate,
+        public ICollection<Models.Achievement> GetUnpublishedAchievements(long facebookUserId, DateTime? oldestDate,
                                                                    string language = null)
         {
             if (language == null)
@@ -119,13 +127,13 @@ namespace SteamAchievements.Services
 
             if (missingNames.Any())
             {
-                IEnumerable<Achievement> communityAchievements =
+                IEnumerable<Models.Achievement> communityAchievements =
                     _communityService.GetAchievements(steamUserId, language)
                         .Select(ua => ua.Achievement);
 
                 foreach (Data.Achievement achievement in missingNames)
                 {
-                    Achievement missing =
+                    Models.Achievement missing =
                         communityAchievements
                             .Where(a => a.Game.Id == achievement.GameId && a.ApiName == achievement.ApiName)
                             .SingleOrDefault();
@@ -142,25 +150,25 @@ namespace SteamAchievements.Services
                 }
             }
 
-            List<Achievement> achievements = dataAchievements.ToSimpleAchievementList(games, language);
+            ICollection<Models.Achievement> achievements = Mapper.Map<ICollection<Models.Achievement>>(dataAchievements);
+            // set game
+            foreach (var dataAchievement in dataAchievements) 
+            {
+            	var achievement = achievements.Where(a => a.Id == dataAchievement.Id).SingleOrDefault();
+            	if (achievement != null)
+            	{
+            		achievement.Game = games.Where(g => g.Id == dataAchievement.GameId).SingleOrDefault();
+            	}
+            }
 
             return achievements;
-        }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
-            Dispose(true);
         }
 
         /// <summary>
         /// Updates the new user's achievements and hides any that are more than 2 days old.
         /// </summary>
         /// <param name="user">The user.</param>
-        public void UpdateNewUserAchievements(User user)
+        public void UpdateNewUserAchievements(Models.User user)
         {
             bool exists = _achievementManager.GetUser(user.FacebookUserId) != null;
 
@@ -173,7 +181,7 @@ namespace SteamAchievements.Services
             if (updatedCount > 0)
             {
                 // hide achievements more than two days old
-                ICollection<Achievement> achievements =
+                ICollection<Models.Achievement> achievements =
                     GetUnpublishedAchievements(user.FacebookUserId, DateTime.UtcNow.Date.AddDays(-2));
                 IEnumerable<int> achievementIds = achievements.Select(achievement => achievement.Id);
                 HideAchievements(user.FacebookUserId, achievementIds);
@@ -240,20 +248,10 @@ namespace SteamAchievements.Services
             throw new ArgumentException("User does not exist.", "facebookUserId");
         }
 
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        private void Dispose(bool disposing)
+        protected override void DisposeManaged()
         {
-            lock (this)
-            {
-                if (disposing)
-                {
-                    _achievementManager.Dispose();
-                    _communityService.Dispose();
-                }
-            }
+            _achievementManager.Dispose();
+            _communityService.Dispose();
         }
     }
 }

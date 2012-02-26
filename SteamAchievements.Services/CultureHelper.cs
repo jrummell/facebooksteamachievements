@@ -97,6 +97,10 @@ namespace SteamAchievements.Services
             return _cultures.Keys.First();
         }
 
+        /// <summary>
+        /// Get's the Steam Language for the current culture.
+        /// </summary>
+        /// <returns></returns>
         public static string GetLanguage()
         {
             string name = GetValidCulture(Thread.CurrentThread.CurrentCulture.Name);

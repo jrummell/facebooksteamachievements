@@ -22,6 +22,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Services.Tests
 {

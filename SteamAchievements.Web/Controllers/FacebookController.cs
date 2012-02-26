@@ -22,7 +22,9 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
+
 using SteamAchievements.Services;
+using SteamAchievements.Services.Models;
 using SteamAchievements.Web.Models;
 
 namespace SteamAchievements.Web.Controllers

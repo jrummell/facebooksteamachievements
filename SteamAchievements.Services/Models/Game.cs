@@ -21,7 +21,7 @@
 
 using System;
 
-namespace SteamAchievements.Services
+namespace SteamAchievements.Services.Models
 {
     public class Game : IEquatable<Game>
     {

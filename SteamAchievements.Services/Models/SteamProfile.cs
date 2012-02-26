@@ -19,7 +19,7 @@
 
 #endregion
 
-namespace SteamAchievements.Services
+namespace SteamAchievements.Services.Models
 {
     public class SteamProfile
     {

@@ -31,8 +31,8 @@ namespace SteamAchievements.Web.Tests
         [Test]
         public void AssertConfigurationIsValid()
         {
-            ModelMapCreator mapCreator = new ModelMapCreator();
-            mapCreator.CreateMap();
+            ViewModelMapCreator mapCreator = new ViewModelMapCreator();
+            mapCreator.CreateMappings();
 
             Mapper.AssertConfigurationIsValid();
         }

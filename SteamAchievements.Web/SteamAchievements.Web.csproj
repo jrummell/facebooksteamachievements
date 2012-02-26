@@ -158,7 +158,7 @@
     </Compile>
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\UrlHelperExtensions.cs" />
-    <Compile Include="Models\ModelMapCreator.cs" />
+    <Compile Include="Models\ViewModelMapCreator.cs" />
     <Compile Include="Models\SettingsViewModel.cs" />
     <Compile Include="Models\FacebookMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -249,7 +249,6 @@
     <Content Include="Web.MobileRelease.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Shared\FacebookInit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

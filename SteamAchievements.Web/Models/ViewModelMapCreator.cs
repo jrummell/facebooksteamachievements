@@ -21,12 +21,13 @@
 
 using AutoMapper;
 using SteamAchievements.Services;
+using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Web.Models
 {
-    public class ModelMapCreator
+    public class ViewModelMapCreator
     {
-        public void CreateMap()
+        public void CreateMappings()
         {
             Mapper.CreateMap<User, SettingsViewModel>();
 

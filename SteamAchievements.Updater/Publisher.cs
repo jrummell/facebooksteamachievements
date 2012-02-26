@@ -22,8 +22,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using SteamAchievements.Data;
-using User = SteamAchievements.Services.User;
+
+using SteamAchievements.Services.Models;
+using Disposable = SteamAchievements.Data.Disposable;
 
 namespace SteamAchievements.Updater
 {

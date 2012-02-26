@@ -27,6 +27,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
 using NUnit.Framework;
+using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Services.Tests
 {
