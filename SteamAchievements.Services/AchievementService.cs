@@ -22,7 +22,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using AutoMapper;
 using SteamAchievements.Data;
 using SteamAchievements.Services.Models;
@@ -78,15 +77,15 @@ namespace SteamAchievements.Services
 
             string steamUserId = GetSteamUserId(facebookUserId);
 
-            ICollection<Models.UserAchievement> achievements =
-                _communityService.GetClosedAchievements(steamUserId, language);
+            var userAchievements = _communityService.GetClosedAchievements(steamUserId, language);
             
-            foreach (var achievement in achievements) 
+            foreach (var achievement in userAchievements) 
             {
             	achievement.FacebookUserId = facebookUserId;
             }
 
-            int updated = _achievementManager.UpdateAchievements(Mapper.Map<ICollection<Data.UserAchievement>>(achievements));
+            var dataUserAchievements = Mapper.Map<ICollection<Data.UserAchievement>>(userAchievements);
+            int updated = _achievementManager.UpdateAchievements(dataUserAchievements);
 
             return updated;
         }

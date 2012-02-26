@@ -26,7 +26,7 @@ using SteamAchievements.Web.Models;
 namespace SteamAchievements.Web.Tests
 {
     [TestFixture]
-    public class ModelMapCreatorFixture
+    public class ViewModelMapCreatorFixture
     {
         [Test]
         public void AssertConfigurationIsValid()

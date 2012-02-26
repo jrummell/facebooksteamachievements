@@ -36,7 +36,8 @@ namespace SteamAchievements.Web.Tests
 
             DependencyResolver.SetResolver(mockDependencyResolver.Object);
 
-            IEnumerable<ValidationResult> validationResults = model.Validate(new ValidationContext(model, null, null)).ToArray();
+            IEnumerable<ValidationResult> validationResults =
+                model.Validate(new ValidationContext(model, null, null)).ToArray();
 
             Assert.That(validationResults.Where(result => result.ErrorMessage == Strings.SettingsInvalidCustomUrl).Any());
 

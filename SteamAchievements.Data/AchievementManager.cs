@@ -136,8 +136,7 @@ namespace SteamAchievements.Data
             }
 
             List<Achievement> achievements = userAchievements.Select(a => a.Achievement).ToList();
-            ICollection<Achievement> missingAchievements =
-                GetMissingAchievements(achievements);
+            ICollection<Achievement> missingAchievements = GetMissingAchievements(achievements);
             if (missingAchievements.Any())
             {
                 InsertMissingAchievements(missingAchievements);

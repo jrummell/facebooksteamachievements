@@ -20,7 +20,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
 using AutoMapper;
@@ -28,56 +27,59 @@ using SteamAchievements.Data;
 
 namespace SteamAchievements.Services.Models
 {
-	public class ModelMapCreator
-	{
-		public void CreateMappings()
-		{
-			// User
-			Mapper.CreateMap<Data.User, Models.User>();
-			
-			Mapper.CreateMap<Models.User, Data.User>()
-				.ForMember(entity => entity.UserAchievements, options => options.Ignore())
-				.ForMember(entity => entity.AccessToken, 
-				           options => options.MapFrom(model => model.AccessToken ?? String.Empty));
-			
-			// UserAchievement
-			Mapper.CreateMap<Models.UserAchievement, Data.Achievement>()
-				.ForMember(entity => entity.Id, options => options.MapFrom(model => model.Achievement.Id))
-				.ForMember(entity => entity.UserAchievements, options => options.Ignore())
-				.ForMember(entity => entity.ApiName, options => options.MapFrom(model => model.Achievement.ApiName))
-				.ForMember(entity => entity.GameId, options => options.MapFrom(model => model.Achievement.Game.Id))
-				.ForMember(entity => entity.ImageUrl, options => options.MapFrom(model => model.Achievement.ImageUrl))
-				.ForMember(entity => entity.AchievementNames,
-				           options => options.MapFrom(model => 
-				                                      new EntitySet<Data.AchievementName>
-				                                      {
-				                                      	new AchievementName
-				                                      	{
-				                                      		AchievementId = model.Achievement.Id,
-				                                      		Language = model.Achievement.Language,
-				                                      		Name = model.Achievement.Name,
-				                                      		Description = model.Achievement.Description
-				                                      	}
-				                                      }));
-			
-			// Achievement
-			string language = CultureHelper.GetLanguage();
-			Mapper.CreateMap<Data.Achievement, Models.Achievement>()
-				.ForMember(model => model.Name, options => options.Ignore())
-				.ForMember(model => model.Description, options => options.Ignore())
-				.ForMember(model => model.Game, options => options.Ignore())
-				.ForMember(model => model.Language, options => options.MapFrom(entity => language))
-				.AfterMap((entity, model) => 
-				          {
-				          	AchievementName name = entity.AchievementNames
-				          		.Where(n => n.Language == language)
-                                .SingleOrDefault() ?? entity.AchievementNames.FirstOrDefault();
-				          	if (name != null)
-				          	{
-				          		model.Name = name.Name;
-				          		model.Description = name.Description;
-				          	}
-				          });
-		}
-	}
+    public class ModelMapCreator
+    {
+        public void CreateMappings()
+        {
+            // User
+            Mapper.CreateMap<Data.User, User>();
+
+            Mapper.CreateMap<User, Data.User>()
+                .ForMember(entity => entity.UserAchievements, options => options.Ignore())
+                .ForMember(entity => entity.AccessToken,
+                           options => options.MapFrom(model => model.AccessToken ?? String.Empty));
+
+            // UserAchievement
+            Mapper.CreateMap<UserAchievement, Data.UserAchievement>()
+                .ForMember(entity => entity.User, options => options.Ignore())
+                .ForMember(entity => entity.Id, options => options.Ignore())
+                .ForMember(entity => entity.Hidden, options => options.Ignore())
+                .ForMember(entity => entity.Published, options => options.Ignore());
+
+            // Achievement
+            Mapper.CreateMap<Achievement, Data.Achievement>()
+                .ForMember(entity => entity.UserAchievements, options => options.Ignore())
+                .ForMember(entity => entity.AchievementNames,
+                           options => options.MapFrom(model =>
+                                                      new EntitySet<AchievementName>
+                                                          {
+                                                              new AchievementName
+                                                                  {
+                                                                      AchievementId = model.Id,
+                                                                      Language = model.Language,
+                                                                      Name = model.Name,
+                                                                      Description = model.Description
+                                                                  }
+                                                          }));
+
+            string language = CultureHelper.GetLanguage();
+            Mapper.CreateMap<Data.Achievement, Achievement>()
+                .ForMember(model => model.Name, options => options.Ignore())
+                .ForMember(model => model.Description, options => options.Ignore())
+                .ForMember(model => model.Game, options => options.Ignore())
+                .ForMember(model => model.Language, options => options.MapFrom(entity => language))
+                .AfterMap((entity, model) =>
+                              {
+                                  AchievementName name = entity.AchievementNames
+                                                             .Where(n => n.Language == language)
+                                                             .SingleOrDefault() ??
+                                                         entity.AchievementNames.FirstOrDefault();
+                                  if (name != null)
+                                  {
+                                      model.Name = name.Name;
+                                      model.Description = name.Description;
+                                  }
+                              });
+        }
+    }
 }
