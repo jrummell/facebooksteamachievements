@@ -124,8 +124,8 @@ var $achievements =
             method: "feed",
             link: "http://steamcommunity.com/id/" + this.steamUserId,
             picture: image,
-            message: message,
-            name: this.steamUserId,
+            message: message, // message seems to be broken
+            name: message,
             description: description
         };
 
