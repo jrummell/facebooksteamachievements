@@ -85,15 +85,5 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="facebookUserId">The facebook user id.</param>
         void DeauthorizeUser(long facebookUserId);
-
-        /// <summary>
-        /// Determines whether the specified user is a duplicate.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <param name="facebookUserId">The facebook user id.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified user is a duplicate; otherwise, <c>false</c>.
-        /// </returns>
-        bool IsDuplicate(string steamUserId, long facebookUserId);
     }
 }
