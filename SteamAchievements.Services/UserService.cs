@@ -71,12 +71,6 @@ namespace SteamAchievements.Services
                 throw new ArgumentNullException("user");
             }
 
-            bool duplicate = _manager.IsDuplicate(user.SteamUserId, user.FacebookUserId);
-            if (duplicate)
-            {
-                throw new DuplicateSteamUserException();
-            }
-
             _manager.UpdateUser(Map(user));
         }
 

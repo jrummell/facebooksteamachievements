@@ -224,21 +224,6 @@ namespace SteamAchievements.Data
         }
 
         /// <summary>
-        /// Determines whether the specified user is a duplicate.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <param name="facebookUserId">The facebook user id.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified user is a duplicate; otherwise, <c>false</c>.
-        /// </returns>
-        public bool IsDuplicate(string steamUserId, long facebookUserId)
-        {
-            bool exists = Exists(facebookUserId);
-
-            return IsDuplicate(steamUserId, facebookUserId, exists);
-        }
-
-        /// <summary>
         /// Updates the published flag of the given achievements.
         /// </summary>
         /// <param name="facebookUserId">The facebook user id.</param>
@@ -314,32 +299,6 @@ namespace SteamAchievements.Data
         private bool Exists(long facebookUserId)
         {
             return _repository.Users.Where(u => u.FacebookUserId == facebookUserId).Any();
-        }
-
-        /// <summary>
-        /// Determines whether the specified steam user id is duplicate.
-        /// </summary>
-        /// <param name="steamUserId">The steam user id.</param>
-        /// <param name="facebookUserId">The facebook user id.</param>
-        /// <param name="exists">if set to <c>true</c> [exists].</param>
-        /// <returns>
-        ///   <c>true</c> if the specified steam user id is duplicate; otherwise, <c>false</c>.
-        /// </returns>
-        private bool IsDuplicate(string steamUserId, long facebookUserId, bool exists)
-        {
-            bool duplicate;
-            if (exists)
-            {
-                duplicate =
-                    _repository.Users.Where(
-                        u => u.SteamUserId == steamUserId && u.FacebookUserId != facebookUserId).Any();
-            }
-            else
-            {
-                duplicate = _repository.Users.Where(u => u.SteamUserId == steamUserId).Any();
-            }
-
-            return duplicate;
         }
 
         /// <summary>

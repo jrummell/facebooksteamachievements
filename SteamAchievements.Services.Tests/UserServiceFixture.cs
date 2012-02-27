@@ -99,8 +99,6 @@ namespace SteamAchievements.Services.Tests
             Models.User user = new Models.User {AccessToken = "x", AutoUpdate = true, FacebookUserId = 1234, SteamUserId = "user1"};
 
             Mock<IAchievementManager> managerMock = new Mock<IAchievementManager>();
-            managerMock.Setup(rep => rep.IsDuplicate(user.SteamUserId, user.FacebookUserId))
-                .Returns(false).Verifiable();
             managerMock.Setup(
                 rep =>
                 rep.UpdateUser(
@@ -111,20 +109,6 @@ namespace SteamAchievements.Services.Tests
             service.UpdateUser(user);
 
             managerMock.Verify();
-        }
-
-        [Test]
-        public void UpdateUser_Duplicate()
-        {
-            Models.User user = new Models.User {AccessToken = "x", AutoUpdate = true, FacebookUserId = 1234, SteamUserId = "user1"};
-            _managerMock.Setup(manager => manager.IsDuplicate(user.SteamUserId, user.FacebookUserId))
-                .Returns(true)
-                .Verifiable();
-
-            Assert.That(() => _service.UpdateUser(user), Throws.TypeOf(typeof (DuplicateSteamUserException)));
-
-            _managerMock.Verify();
-            _managerMock.Verify(manager => manager.UpdateUser(It.IsAny<Data.User>()), Times.Never());
         }
     }
 }
