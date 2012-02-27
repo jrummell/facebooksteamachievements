@@ -28,7 +28,7 @@ $(document).ready(function ()
     }
     $saveButton.click(function()
     {
-        $("#saveImage").show();
+        $achievements.showLoading("#saveImage");
         $("#saveSuccess").hide();
 
         return true;
