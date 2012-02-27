@@ -151,7 +151,7 @@ namespace SteamAchievements.Services
         {
             foreach (Data.UserAchievement userAchievement in achievements)
             {
-                userAchievement.Id = _userAchievements.Keys.Max() + 1;
+            	userAchievement.Id = _userAchievements.Any() ? (_userAchievements.Keys.Max() + 1) : 1;
                 if (userAchievement.Achievement == null && _achievements.ContainsKey(userAchievement.AchievementId))
                 {
                     userAchievement.Achievement = _achievements[userAchievement.AchievementId];

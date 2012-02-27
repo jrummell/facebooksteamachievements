@@ -194,6 +194,19 @@ namespace SteamAchievements.Data
 
             // update
             User existingUser = _repository.Users.Where(u => u.FacebookUserId == user.FacebookUserId).Single();
+            
+            // if the user changed steam IDs, remove their achievements
+            if (existingUser.SteamUserId != user.SteamUserId)
+            {
+            	var existingAchievements = _repository.UserAchievements
+            		.Where(ua => ua.FacebookUserId == user.FacebookUserId)
+            		.ToArray();
+            	if (existingAchievements.Length > 0)
+            	{
+            		_repository.DeleteAllOnSubmit(existingAchievements);
+            	}
+            }
+            
             existingUser.AccessToken = user.AccessToken;
             existingUser.AutoUpdate = user.AutoUpdate;
             existingUser.SteamUserId = user.SteamUserId;

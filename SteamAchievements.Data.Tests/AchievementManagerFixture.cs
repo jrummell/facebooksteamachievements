@@ -561,17 +561,39 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.SetupGet(rep => rep.Users).Returns(_users);
             _repositoryMock.Setup(rep => rep.SubmitChanges());
 
-            const string steamUserId = "userxxx";
+            const string steamUserId = "user1";
             const int facebookUserId = 1;
 
-            User user = new User {SteamUserId = steamUserId, FacebookUserId = facebookUserId};
+            User user = new User {SteamUserId = steamUserId, FacebookUserId = facebookUserId, AccessToken = "asdf"};
             _manager.UpdateUser(user);
 
             _repositoryMock.VerifyGet(rep => rep.Users, Times.Exactly(2));
             _repositoryMock.Verify(rep => rep.SubmitChanges());
             _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<User>()), Times.Never());
         }
+        
+        [Test]
+        public void UpdateUserWithNewSteamUserId()
+        {
+        	_repositoryMock.SetupGet(rep => rep.Users)
+        		.Returns(new[]{new User {SteamUserId = "user1", FacebookUserId = 1}}.AsQueryable())
+        		.Verifiable();
+        	_repositoryMock.SetupGet(rep => rep.UserAchievements)
+        		.Returns(new[]{new UserAchievement {FacebookUserId = 1}}.AsQueryable())
+        		.Verifiable();
+            _repositoryMock.Setup(rep => rep.DeleteAllOnSubmit(It.IsAny<IEnumerable<UserAchievement>>()))
+            	.Verifiable();
+            _repositoryMock.Setup(rep => rep.SubmitChanges())
+            	.Verifiable();
 
+            User user = new User {SteamUserId = "userxxx", FacebookUserId = 1};
+            _manager.UpdateUser(user);
+
+            _repositoryMock.Verify();
+            _repositoryMock.VerifyGet(rep => rep.Users, Times.Exactly(2));
+            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<User>()), Times.Never());
+        }
+        
         [Test]
         public void ValidateDate()
         {
