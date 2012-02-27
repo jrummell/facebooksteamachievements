@@ -97,7 +97,7 @@ namespace SteamAchievements.Web.Helpers
 
         public static MvcHtmlString Version(this HtmlHelper html)
         {
-            return MvcHtmlString.Create(Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            return MvcHtmlString.Create(Assembly.GetExecutingAssembly().GetName().Version.ToString(3));
         }
 
         public static bool IsMobileDevice(this HtmlHelper html)
