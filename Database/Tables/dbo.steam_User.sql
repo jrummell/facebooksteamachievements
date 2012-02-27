@@ -10,5 +10,3 @@ CREATE TABLE [dbo].[steam_User]
 GO
 ALTER TABLE [dbo].[steam_User] ADD CONSTRAINT [PK_steam_User] PRIMARY KEY CLUSTERED  ([FacebookUserId]) ON [PRIMARY]
 GO
-CREATE UNIQUE NONCLUSTERED INDEX [IX_steam_User] ON [dbo].[steam_User] ([SteamUserId]) ON [PRIMARY]
-GO
