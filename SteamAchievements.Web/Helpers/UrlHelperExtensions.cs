@@ -22,16 +22,12 @@
 using System;
 using System.Text;
 using System.Web.Mvc;
-using SteamAchievements.Web.Models;
 using SteamAchievements.Web.Properties;
 
 namespace SteamAchievements.Web.Helpers
 {
     public static class UrlHelperExtensions
     {
-        private static readonly IFacebookContextSettings _facebookSettings =
-            DependencyResolver.Current.GetService<IFacebookContextSettings>();
-
         private static readonly Settings _settings = Settings.Default;
 
         public static MvcHtmlString CanvasAction(this UrlHelper url, string canvasAction)
@@ -51,13 +47,14 @@ namespace SteamAchievements.Web.Helpers
 
         public static string GetCanvasUrl(string canvasAction)
         {
-            StringBuilder canvasLink = new StringBuilder(_facebookSettings.CanvasPage);
-            if (!_facebookSettings.CanvasPage.EndsWith("/"))
+            string canvasUrl = _settings.FacebookCanvasUrl.ToString();
+            StringBuilder canvasLink = new StringBuilder(canvasUrl);
+            if (!canvasUrl.EndsWith("/"))
             {
                 canvasLink.Append("/");
             }
 
-            if (canvasAction != null)
+            if (!String.IsNullOrEmpty(canvasAction))
             {
                 canvasLink.Append(canvasAction);
             }

@@ -75,6 +75,11 @@ namespace SteamAchievements.Web.Helpers
             return MvcHtmlString.Create(a.ToString());
         }
 
+        public static MvcHtmlString FacebookAppId(this HtmlHelper html)
+        {
+            return MvcHtmlString.Create(_settings.FacebookAppId);
+        }
+
         public static MvcHtmlString Ad(this HtmlHelper html, AdLocation location)
         {
             return MvcHtmlString.Create(location == AdLocation.Top ? _settings.TopAdMarkup : _settings.BottomAdMarkup);
