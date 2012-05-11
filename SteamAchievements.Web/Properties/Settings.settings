@@ -31,5 +31,11 @@
     <Setting Name="Mode" Type="SteamAchievements.Web.Models.FacebookMode" Scope="Application">
       <Value Profile="(Default)">None</Value>
     </Setting>
+    <Setting Name="FacebookCanvasUrl" Type="System.Uri" Scope="Application">
+      <Value Profile="(Default)">http://apps.facebook.com/your_canvas_url/</Value>
+    </Setting>
+    <Setting Name="FacebookAppId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">your_app_id</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -1,10 +1,42 @@
 ﻿<div id="fb-root"></div>
 @* <div class="fb-login-button" data-show-faces="true" data-width="200" data-max-rows="1" perms="user_about_me"></div> *@
 <script type="text/javascript">
-    window.fbAsyncInit = function () {
-        FB.init({ appId: '@Facebook.FacebookApplication.Current.AppId', channelURL: '@Request.Url.Scheme://@Request.Url.Authority@Url.Content("~/fbchannel.ashx")', cookie: true, xfbml: true, oauth: true });
-        FB.Event.subscribe('auth.login', function (response) { window.location.reload(); });
-        FB.Event.subscribe('auth.logout', function (response) { window.location.reload(); });
+    window.fbAsyncInit = function ()
+    {
+        FB.init({ appId: '@Html.FacebookAppId()',
+            cookie: true,
+            xfbml: true,
+            oauth: true
+        });
+
+        FB.Event.subscribe('auth.authResponseChange', function (response)
+        {
+            if (response.status === 'connected')
+            {
+                // the user is logged in and has authenticated your
+                // app, and response.authResponse supplies
+                // the user's ID, a valid access token, a signed
+                // request, and the time the access token 
+                // and signed request each expire
+                var uid = response.authResponse.userID;
+                var accessToken = response.authResponse.accessToken;
+
+                // update access token and reload
+                $.post('@Url.Action("LogOn", "Home")', { userId: uid, accessToken: accessToken },
+                function (result)
+                {
+                    window.location = result.redirectUrl;
+                });
+
+            } else if (response.status === 'not_authorized')
+            {
+                // the user is logged in to Facebook, 
+                // but has not authenticated your app
+            } else
+            {
+                // the user isn't logged in to Facebook.
+            }
+        });
     };
 
     (function(d){
@@ -14,4 +46,3 @@
         d.getElementsByTagName('head')[0].appendChild(js);
     }(document));
 </script>
-@Html.Hidden("SignedRequest", (string)ViewBag.SignedRequest)

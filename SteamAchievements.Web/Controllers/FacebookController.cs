@@ -20,19 +20,14 @@
 #endregion
 
 using System.Web.Mvc;
-using System.Web.Routing;
-using System.Web.Security;
-
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
-using SteamAchievements.Web.Models;
 
 namespace SteamAchievements.Web.Controllers
 {
     public abstract class FacebookController : Controller
     {
         private const string _userSettingsKey = "UserSettings";
-        private readonly IFacebookContextSettings _facebookSettings;
         private readonly IUserService _userService;
 
         /// <summary>
@@ -40,18 +35,9 @@ namespace SteamAchievements.Web.Controllers
         /// </summary>
         /// <param name="userService">The user service.</param>
         /// <param name="facebookSettings">The facebook settings.</param>
-        protected FacebookController(IUserService userService, IFacebookContextSettings facebookSettings)
+        protected FacebookController(IUserService userService)
         {
             _userService = userService;
-            _facebookSettings = facebookSettings;
-        }
-
-        /// <summary>
-        /// Gets the facebook user id.
-        /// </summary>
-        protected long FacebookUserId
-        {
-            get { return _facebookSettings.UserId; }
         }
 
         /// <summary>
@@ -69,54 +55,6 @@ namespace SteamAchievements.Web.Controllers
         protected IUserService UserService
         {
             get { return _userService; }
-        }
-
-        /// <summary>
-        /// Initializes data that might not be available when the constructor is called.
-        /// </summary>
-        /// <param name="requestContext">The HTTP context and route data.</param>
-        protected override void Initialize(RequestContext requestContext)
-        {
-            base.Initialize(requestContext);
-
-            // these values are used in the FacebookInitPartial view
-            ViewBag.FacebookClientId = _facebookSettings.AppId;
-            ViewBag.SignedRequest = _facebookSettings.SignedRequest;
-
-            if (UserSettings != null)
-            {
-                return;
-            }
-
-            if (_facebookSettings.UserId == 0)
-            {
-                return;
-            }
-
-            UserSettings = UserService.GetUser(_facebookSettings.UserId);
-
-            if (UserSettings != null)
-            {
-                // update the user's access token if it changed
-                if (UserSettings.AccessToken != _facebookSettings.AccessToken)
-                {
-                    UserSettings.AccessToken = _facebookSettings.AccessToken;
-
-                    UserService.UpdateUser(UserSettings);
-                }
-
-                // make sure the user is signed in so that User.Identity.Name is thier FacebookUserId
-                string userName = _facebookSettings.UserId.ToString();
-                if (!User.Identity.IsAuthenticated)
-                {
-                    FormsAuthentication.SetAuthCookie(userName, false);
-                }
-                else if (User.Identity.Name != userName)
-                {
-                    FormsAuthentication.SignOut();
-                    FormsAuthentication.SetAuthCookie(userName, false);
-                }
-            }
         }
 
         /// <summary>

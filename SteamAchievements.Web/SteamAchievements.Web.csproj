@@ -76,17 +76,8 @@
     <Reference Include="Elmah.Contrib.Mvc">
       <HintPath>..\packages\Elmah.Contrib.Mvc.1.0\lib\net40\Elmah.Contrib.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Facebook, Version=5.4.1.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Facebook.5.4.1.0\lib\net40-client\Facebook.dll</HintPath>
-    </Reference>
-    <Reference Include="Facebook.Web, Version=5.4.1.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FacebookWeb.5.4.1.0\lib\net40\Facebook.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="Facebook.Web.Mvc, Version=5.4.1.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FacebookWebMvc.5.4.1.0\lib\net40\Facebook.Web.Mvc.dll</HintPath>
+    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+      <HintPath>..\packages\Facebook.6.0.16\lib\net40-client\Facebook.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
@@ -147,12 +138,9 @@
     <Compile Include="Controllers\AchievementController.cs" />
     <Compile Include="Controllers\RequestCultureAttribute.cs" />
     <Compile Include="Helpers\ConditionalFilterProvider.cs" />
-    <Compile Include="Models\FacebookContextSettings.cs" />
     <Compile Include="Controllers\FacebookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Models\IFacebookContextSettings.cs" />
     <Compile Include="Models\InvalidSignedRequestException.cs" />
-    <Compile Include="Models\MockFacebookContextSettings.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -162,7 +150,7 @@
     <Compile Include="Models\SettingsViewModel.cs" />
     <Compile Include="Models\FacebookMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
+    <Compile Include="Properties\Settings1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -182,6 +170,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\favicon.ico" />
@@ -202,7 +191,6 @@
     <Content Include="Scripts\achievements.js" />
     <Content Include="Scripts\columnizer.js" />
     <Content Include="Scripts\default.js" />
-    <Content Include="fbchannel.ashx" />
     <None Include="Scripts\jquery-1.4.4-vsdoc.js" />
     <None Include="Scripts\jquery-1.4.4.js" />
     <None Include="Scripts\jquery-1.4.4.min.js" />
@@ -260,6 +248,7 @@
     <Content Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings1.Designer.cs</LastGenOutput>
     </None>
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_FacebookCanvasInitPartial.cshtml" />
