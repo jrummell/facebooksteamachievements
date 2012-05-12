@@ -1,4 +1,5 @@
-﻿<div id="fb-root"></div>
+﻿<div id="fb-root">
+</div>
 @* <div class="fb-login-button" data-show-faces="true" data-width="200" data-max-rows="1" perms="user_about_me"></div> *@
 <script type="text/javascript">
     window.fbAsyncInit = function ()
@@ -25,7 +26,15 @@
                 $.post('@Url.Action("LogOn", "Home")', { userId: uid, accessToken: accessToken },
                 function (result)
                 {
-                    window.location = result.redirectUrl;
+                    if (result.isValid)
+                    {
+                        $("#logOnError").hide();
+                        window.location = result.redirectUrl;
+                    }
+                    else
+                    {
+                        $("#logOnError").text(result.message).message({ type: "error" });
+                    }
                 });
 
             } else if (response.status === 'not_authorized')
@@ -39,10 +48,13 @@
         });
     };
 
-    (function(d){
-        var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+    (function (d)
+    {
+        var js, id = 'facebook-jssdk'; if (d.getElementById(id)) { return; }
         js = d.createElement('script'); js.id = id; js.async = true;
         js.src = "//connect.facebook.net/en_US/all.js";
         d.getElementsByTagName('head')[0].appendChild(js);
-    }(document));
+    } (document));
 </script>
+<div id="logOnError">
+</div>

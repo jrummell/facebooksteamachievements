@@ -21,69 +21,24 @@
 
 using System;
 using System.Web.Mvc;
-using System.Web.Security;
 using AutoMapper;
 using Elmah;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
 using SteamAchievements.Web.Models;
-using Facebook;
 
 namespace SteamAchievements.Web.Controllers
 {
     public class HomeController : FacebookController
     {
         private readonly IAchievementService _achievementService;
+        private readonly IFacebookClientService _facebookClient;
 
-        public HomeController(IAchievementService achievementService, IUserService userService)
+        public HomeController(IAchievementService achievementService, IUserService userService, IFacebookClientService facebookClient)
             : base(userService)
         {
             _achievementService = achievementService;
-        }
-
-        public ActionResult LogOn()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult LogOn(long id, string accessToken)
-        {
-            //TODO: LogOnViewModel
-
-            FacebookClient client = new FacebookClient(accessToken);
-            dynamic fbuser = client.Get(id.ToString(), new { fields = "name,id" });
-
-            if (fbuser == null)
-            {
-                //TODO: fail validation
-            }
-
-            User user = UserService.GetUser(id) ?? new User();
-            user.AccessToken = accessToken;
-
-            UserService.UpdateUser(user);
-            UserSettings = user;
-
-            string userName = id.ToString();
-            if (!User.Identity.IsAuthenticated)
-            {
-                FormsAuthentication.SetAuthCookie(userName, false);
-            }
-            else if (User.Identity.Name != userName)
-            {
-                FormsAuthentication.SignOut();
-                FormsAuthentication.SetAuthCookie(userName, false);
-            }
-
-            if (Request.IsAjaxRequest())
-            {
-                return Json(new { redirectUrl = Url.Action("Index", "Home") });
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            _facebookClient = facebookClient;
         }
 
         public ActionResult Index()
@@ -93,15 +48,28 @@ namespace SteamAchievements.Web.Controllers
             return View(model);
         }
 
-        public ActionResult Publish()
+        public ActionResult Publish(string signed_request)
         {
 #if DEBUG
             ViewBag.EnableLog = true;
 #else
             ViewBag.EnableLog = false;
 #endif
+
             User user = UserSettings ?? new User();
+
+            if (!String.IsNullOrEmpty(signed_request))
+            {
+                dynamic signedRequest = _facebookClient.ParseSignedRequest(signed_request);
+
+                user.FacebookUserId = signedRequest.user_id;
+                user.AccessToken = signedRequest.oauth_token;
+
+                UserSettings = user;
+            }
+
             SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(user);
+
             return View(model);
         }
 

@@ -65,7 +65,7 @@ namespace SteamAchievements.Updater
 
             container.RegisterType<IAutoUpdateLogger, AutoUpdateLogger>(new InjectionConstructor(_logDirectory.FullName));
             container.RegisterType<IAutoUpdateManager, AutoUpdateManager>();
-            container.RegisterType<IFacebookPublisher, FacebookPublisher>();
+            container.RegisterType<IFacebookClientService, FacebookClientService>();
 
             container.RegisterType<Publisher>();
 

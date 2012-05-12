@@ -35,7 +35,7 @@ namespace SteamAchievements.Updater
     {
         private readonly IAchievementService _achievementService;
         private readonly IAutoUpdateLogger _log;
-        private readonly IFacebookPublisher _publisher;
+        private readonly IFacebookClientService _publisher;
         private readonly IUserService _userService;
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace SteamAchievements.Updater
         /// <param name="publisher">The publisher.</param>
         /// <param name="log">The log.</param>
         public AutoUpdateManager(IAchievementService achievementService, IUserService userService,
-                                 IFacebookPublisher publisher, IAutoUpdateLogger log)
+                                 IFacebookClientService publisher, IAutoUpdateLogger log)
         {
             if (achievementService == null)
             {

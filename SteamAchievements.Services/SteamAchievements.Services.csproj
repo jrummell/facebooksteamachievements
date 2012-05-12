@@ -115,9 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CultureHelper.cs" />
-    <Compile Include="FacebookPublisher.cs" />
+    <Compile Include="FacebookClientService.cs" />
     <Compile Include="IAchievementXmlParser.cs" />
-    <Compile Include="IFacebookPublisher.cs" />
+    <Compile Include="IFacebookClientService.cs" />
     <Compile Include="IGameXmlParser.cs" />
     <Compile Include="InvalidGamesXmlException.cs" />
     <Compile Include="InvalidStatsXmlException.cs" />
