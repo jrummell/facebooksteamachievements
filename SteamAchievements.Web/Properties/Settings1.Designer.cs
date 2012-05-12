@@ -105,5 +105,14 @@ namespace SteamAchievements.Web.Properties {
                 return ((string)(this["FacebookAppId"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("your_app_secret")]
+        public string FacebookAppSecret {
+            get {
+                return ((string)(this["FacebookAppSecret"]));
+            }
+        }
     }
 }
