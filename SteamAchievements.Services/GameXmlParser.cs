@@ -55,6 +55,7 @@ namespace SteamAchievements.Services
                                logo = logo.Value,
                                statsLink = statsLink.Value,
                                storeLink = storeLink.Value,
+                               //TODO: this should be limited for auto update to only games played within the last 48 hours
                                playedRecently = hoursLast2Weeks != null
                            };
 
