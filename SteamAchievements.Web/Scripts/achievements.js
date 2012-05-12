@@ -48,6 +48,12 @@ var $achievements =
         this.callAjax("ValidateProfile", data, callback);
     },
 
+    updateAccessToken: function (facebookUserId, accessToken, callback)
+    {
+        var data = { facebookUserId: facebookUserId, accessToken: accessToken };
+        this.callAjax("UpdateAccessToken", data, callback);
+    },
+
     loadGames: function (selector, callback)
     {
         this.callLoad(selector, "Games", {}, callback);
@@ -79,7 +85,7 @@ var $achievements =
 
         $.each(achievements, function (i)
         {
-            var achievement = this;// achievements[i];
+            var achievement = this; // achievements[i];
 
             if (image == null)
             {
@@ -188,7 +194,7 @@ var $achievements =
 
         // since this is an ajax request, we need to add the signed_request parameter explicitly
         var signedRequest = $("#SignedRequest").val();
-        var url = this.serviceBase + method + "?signed_request=" + signedRequest;
+        var url = this.serviceBase + method;
         $(selector).load(url, params, ondone);
     },
 
@@ -207,11 +213,8 @@ var $achievements =
             query = {};
         }
 
-        // since this is an ajax request, we need to add the signed_request parameter explicitly
-        var signedRequest = $("#SignedRequest").val();
-
         $.ajax({
-            url: this.serviceBase + method + "?signed_request=" + signedRequest,
+            url: this.serviceBase + method,
             data: JSON.stringify(query),
             type: "POST",
             processData: true,

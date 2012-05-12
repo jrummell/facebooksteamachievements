@@ -135,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AchievementController.cs" />
     <Compile Include="Controllers\RequestCultureAttribute.cs" />
     <Compile Include="Helpers\ConditionalFilterProvider.cs" />
@@ -146,6 +147,7 @@
     </Compile>
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\UrlHelperExtensions.cs" />
+    <Compile Include="Models\LogOnViewModel.cs" />
     <Compile Include="Models\ViewModelMapCreator.cs" />
     <Compile Include="Models\SettingsViewModel.cs" />
     <Compile Include="Models\FacebookMode.cs" />

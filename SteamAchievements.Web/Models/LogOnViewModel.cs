@@ -19,21 +19,18 @@
 
 #endregion
 
-using System.Collections.Generic;
-using SteamAchievements.Services.Models;
+using System.ComponentModel.DataAnnotations;
 
-namespace SteamAchievements.Services
+namespace SteamAchievements.Web.Models
 {
-    /// <summary>
-    /// Description of IFacebookPublisher.
-    /// </summary>
-    public interface IFacebookPublisher
+    public class LogOnViewModel
     {
-        /// <summary>
-        /// Publishes a post to the user's profile.
-        /// </summary>
-        /// <param name="user">The user.</param>
-        /// <param name="parameters">The post parameters.</param>
-        void Publish(User user, IDictionary<string, object> parameters);
+        [Required]
+        public long FacebookUserId { get; set; }
+
+        [Required]
+        public string AccessToken { get; set; }
+
+        public string SignedRequest { get; set; }
     }
 }

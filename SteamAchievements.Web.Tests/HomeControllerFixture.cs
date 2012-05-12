@@ -47,26 +47,24 @@ namespace SteamAchievements.Web.Tests
         public void SettingsSuccess()
         {
             Mock<IAchievementService> mockAchievementService = new Mock<IAchievementService>();
-
-            MockFacebookContextSettings facebookContextSettings =
-                new MockFacebookContextSettings("AppId", 1234567890, "AccessToken123",
-                                                "http://apps.facebook.com/canvasPage", "SignedRequest");
-
+            
             Mock<IUserService> mockUserService = new Mock<IUserService>();
             User originalUser = new User
                                     {
                                         AutoUpdate = true,
-                                        FacebookUserId = facebookContextSettings.UserId,
+                                        FacebookUserId = 12345,
                                         PublishDescription = true,
                                         SteamUserId = "NullReference"
                                     };
-            mockUserService.Setup(service => service.GetUser(facebookContextSettings.UserId))
+            mockUserService.Setup(service => service.GetUser(originalUser.FacebookUserId))
                 .Returns(() => originalUser).Verifiable();
+
+            Mock<IFacebookClientService> mockFacebookClient = new Mock<IFacebookClientService>();
 
             SessionStateItemCollection sessionItems = new SessionStateItemCollection();
             HomeController controller = new HomeController(mockAchievementService.Object,
                                                            mockUserService.Object,
-                                                           facebookContextSettings);
+                                                           mockFacebookClient.Object);
             FakeControllerContext context = new FakeControllerContext(controller, sessionItems);
             controller.ControllerContext = context;
 

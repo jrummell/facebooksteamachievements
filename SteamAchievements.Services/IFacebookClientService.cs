@@ -19,32 +19,32 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
-using Facebook;
 using SteamAchievements.Services.Models;
+using System.Collections.Generic;
 
 namespace SteamAchievements.Services
 {
-    /// <summary>
-    /// Description of FacebookPublisher.
-    /// </summary>
-    public class FacebookPublisher : IFacebookPublisher
+    public interface IFacebookClientService
     {
-        #region IFacebookPublisher Members
+        /// <summary>
+        /// Get's the facebook user id.
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <returns></returns>
+        long GetUserId(string accessToken);
 
         /// <summary>
         /// Publishes a post to the user's profile.
         /// </summary>
         /// <param name="user">The user.</param>
         /// <param name="parameters">The post parameters.</param>
-        public void Publish(User user, IDictionary<string, object> parameters)
-        {
-            FacebookClient app = new FacebookClient(user.AccessToken);
-            string userFeedPath = String.Format("/{0}/feed/", user.FacebookUserId);
-            app.Post(userFeedPath, parameters);
-        }
+        void Publish(User user, IDictionary<string, object> parameters);
 
-        #endregion
+        /// <summary>
+        /// Parses the signed request.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        object ParseSignedRequest(string signedRequest);
     }
 }

@@ -39,12 +39,12 @@ namespace SteamAchievements.Updater.Tests
             _achievementServiceMock = new Mock<IAchievementService>();
             _userServiceMock = new Mock<IUserService>();
             _loggerMock = new Mock<IAutoUpdateLogger>();
-            _publisherMock = new Mock<IFacebookPublisher>();
+            _publisherMock = new Mock<IFacebookClientService>();
 
             IAchievementService achievementService = _achievementServiceMock.Object;
             IUserService userService = _userServiceMock.Object;
             IAutoUpdateLogger logger = _loggerMock.Object;
-            IFacebookPublisher publisher = _publisherMock.Object;
+            IFacebookClientService publisher = _publisherMock.Object;
 
             _manager = new AutoUpdateManager(achievementService, userService, publisher, logger);
         }
@@ -55,7 +55,7 @@ namespace SteamAchievements.Updater.Tests
         private Mock<IAchievementService> _achievementServiceMock;
         private Mock<IAutoUpdateLogger> _loggerMock;
         private Mock<IUserService> _userServiceMock;
-        private Mock<IFacebookPublisher> _publisherMock;
+        private Mock<IFacebookClientService> _publisherMock;
 
         [Test]
         public void GetAutoUpdateUsers()

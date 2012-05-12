@@ -51,10 +51,10 @@ namespace SteamAchievements.Web
 #if DEBUG
             LifetimeManager lifetimeManager = new ContainerControlledLifetimeManager();
             container.RegisterType<ISteamRepository, MockSteamRepository>(lifetimeManager);
-            //TODO: mock FacebookClient container.RegisterType<IFacebookContextSettings, MockFacebookContextSettings>();
+            container.RegisterType<IFacebookClientService, MockFacebookClientService>();
 #else
             container.RegisterType<ISteamRepository, SteamRepository>();
-            //TODO: mock FacebookClient container.RegisterType<IFacebookContextSettings, FacebookContextSettings>();
+            container.RegisterType<IFacebookClientService, FacebookClientService>();
 #endif
 
             container.RegisterType<ISteamCommunityManager, SteamCommunityManager>();
