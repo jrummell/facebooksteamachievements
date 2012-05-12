@@ -35,5 +35,8 @@
     <Setting Name="FacebookAppId" Type="System.String" Scope="Application">
       <Value Profile="(Default)">your_app_id</Value>
     </Setting>
+    <Setting Name="FacebookAppSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">your_app_secret</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

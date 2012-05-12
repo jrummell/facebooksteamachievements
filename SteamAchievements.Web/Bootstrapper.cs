@@ -21,6 +21,7 @@
 
 using System.Web.Mvc;
 using Microsoft.Practices.Unity;
+using SteamAchievements.Web.Properties;
 using Unity.Mvc3;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
@@ -54,7 +55,9 @@ namespace SteamAchievements.Web
             container.RegisterType<IFacebookClientService, MockFacebookClientService>();
 #else
             container.RegisterType<ISteamRepository, SteamRepository>();
-            container.RegisterType<IFacebookClientService, FacebookClientService>();
+            Settings settings = Settings.Default;
+            container.RegisterType<IFacebookClientService, FacebookClientService>(
+                new InjectionConstructor(settings.FacebookAppId, settings.FacebookAppSecret));
 #endif
 
             container.RegisterType<ISteamCommunityManager, SteamCommunityManager>();
