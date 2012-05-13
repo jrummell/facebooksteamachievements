@@ -141,6 +141,7 @@
     <Compile Include="Helpers\ConditionalFilterProvider.cs" />
     <Compile Include="Controllers\FacebookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Models\IndexViewModel.cs" />
     <Compile Include="Models\InvalidSignedRequestException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

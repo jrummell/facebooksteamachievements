@@ -41,14 +41,34 @@ namespace SteamAchievements.Web.Controllers
             _facebookClient = facebookClient;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string signed_request)
         {
-            User user = UserSettings ?? new User();
-            SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(user);
+            if (UserSettings == null)
+            {
+                UserSettings = new User();
+            }
+
+            if (!String.IsNullOrEmpty(signed_request))
+            {
+                SignedRequest signedRequest = _facebookClient.ParseSignedRequest(signed_request);
+
+                UserSettings.FacebookUserId = signedRequest.UserId;
+                UserSettings.AccessToken = signedRequest.AccessToken;
+
+                UserService.UpdateUser(UserSettings);
+            }
+
+            IndexViewModel model = Mapper.Map<User, IndexViewModel>(UserSettings);
+
+            if (UserSettings.FacebookUserId == 0)
+            {
+                model.LogOnRedirectUrl = _facebookClient.GetLogOnUrl();
+            }
+
             return View(model);
         }
 
-        public ActionResult Publish(string signed_request)
+        public ActionResult Publish()
         {
 #if DEBUG
             ViewBag.EnableLog = true;
@@ -57,16 +77,6 @@ namespace SteamAchievements.Web.Controllers
 #endif
 
             User user = UserSettings ?? new User();
-
-            if (!String.IsNullOrEmpty(signed_request))
-            {
-                dynamic signedRequest = _facebookClient.ParseSignedRequest(signed_request);
-
-                user.FacebookUserId = signedRequest.user_id;
-                user.AccessToken = signedRequest.oauth_token;
-
-                UserSettings = user;
-            }
 
             SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(user);
 

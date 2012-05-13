@@ -3,14 +3,19 @@
 /// <reference path="achievements.js" />
 /// <reference path="columnizer.js" />
 
-$(document).ready(function ()
-{
+$(document).ready(function () {
     var steamUserId = $("#steamUserIdHidden").val();
     var logSelector = "#log";
     $achievements.init(steamUserId, logSelector, false);
 
+    var logOnRedirectUrl = $("#LogOnRedirectUrl").val();
+    if (logOnRedirectUrl.length > 1) 
+    {
+        top.location.href = logOnRedirectUrl;
+    }
+
     var valid = $achievements.validateSteamUserId("#steamIdError");
-    if (!valid)
+    if (!valid) 
     {
         return;
     }

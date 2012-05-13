@@ -1,4 +1,4 @@
-﻿@model SettingsViewModel
+﻿@model IndexViewModel
 @{
     ViewBag.Title = Strings.TitleHome;
 }
@@ -26,4 +26,5 @@
 <div id="log" style="display: none;">
     <span id="errorLiteral"></span>
 </div>
+@Html.HiddenFor(model => model.LogOnRedirectUrl)
 <script type="text/javascript" src="@Url.Content("~/Scripts/default.js")"></script>
