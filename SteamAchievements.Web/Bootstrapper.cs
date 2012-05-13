@@ -57,7 +57,7 @@ namespace SteamAchievements.Web
             container.RegisterType<ISteamRepository, SteamRepository>();
             Settings settings = Settings.Default;
             container.RegisterType<IFacebookClientService, FacebookClientService>(
-                new InjectionConstructor(settings.FacebookAppId, settings.FacebookAppSecret));
+                new InjectionConstructor(settings.FacebookAppId, settings.FacebookAppSecret, settings.FacebookCanvasUrl));
 #endif
 
             container.RegisterType<ISteamCommunityManager, SteamCommunityManager>();

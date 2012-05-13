@@ -125,6 +125,7 @@
     <Compile Include="ISteamProfileXmlParser.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="IWebClientWrapper.cs" />
+    <Compile Include="MockFacebookClientService.cs" />
     <Compile Include="MockSteamRepository.cs" />
     <Compile Include="Models\Achievement.cs" />
     <Compile Include="Models\Game.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Models\SteamProfile.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserAchievement.cs" />
+    <Compile Include="Models\SignedRequest.cs" />
     <Compile Include="SteamProfileXmlParser.cs" />
     <Compile Include="AchievementService.cs" />
     <Compile Include="AchievementXmlParser.cs" />

@@ -30,6 +30,7 @@ namespace SteamAchievements.Web.Models
         public void CreateMappings()
         {
             Mapper.CreateMap<User, SettingsViewModel>();
+            Mapper.CreateMap<User, IndexViewModel>();
 
             Mapper.CreateMap<SettingsViewModel, User>()
                 .ForMember(user => user.AccessToken, options => options.Ignore())

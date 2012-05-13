@@ -19,6 +19,7 @@
 
 #endregion
 
+using System;
 using SteamAchievements.Services.Models;
 using System.Collections.Generic;
 
@@ -30,7 +31,6 @@ namespace SteamAchievements.Services
         /// Get's the facebook user id.
         /// </summary>
         /// <param name="accessToken"></param>
-        /// <returns></returns>
         long GetUserId(string accessToken);
 
         /// <summary>
@@ -43,8 +43,12 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Parses the signed request.
         /// </summary>
-        /// <param name="p"></param>
-        /// <returns></returns>
-        object ParseSignedRequest(string signedRequest);
+        /// <param name="signedRequest">The signed request.</param>
+        SignedRequest ParseSignedRequest(string signedRequest);
+
+        /// <summary>
+        /// Gets the log on URL.
+        /// </summary>
+        Uri GetLogOnUrl();
     }
 }
