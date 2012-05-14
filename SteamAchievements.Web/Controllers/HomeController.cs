@@ -1,21 +1,21 @@
 #region License
 
-// Copyright 2010 John Rummell
-// 
-// This file is part of SteamAchievements.
-// 
-//     SteamAchievements is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     SteamAchievements is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-// 
-//     You should have received a copy of the GNU General Public License
-//     along with SteamAchievements.  If not, see <http://www.gnu.org/licenses/>.
+//  Copyright 2012 John Rummell
+//  
+//  This file is part of SteamAchievements.
+//  
+//      SteamAchievements is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      SteamAchievements is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//  
+//      You should have received a copy of the GNU General Public License
+//      along with SteamAchievements.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -34,33 +34,42 @@ namespace SteamAchievements.Web.Controllers
         private readonly IAchievementService _achievementService;
         private readonly IFacebookClientService _facebookClient;
 
-        public HomeController(IAchievementService achievementService, IUserService userService, IFacebookClientService facebookClient)
+        public HomeController(IAchievementService achievementService, IUserService userService,
+                              IFacebookClientService facebookClient)
             : base(userService)
         {
             _achievementService = achievementService;
             _facebookClient = facebookClient;
         }
 
+// ReSharper disable InconsistentNaming
         public ActionResult Index(string signed_request)
+// ReSharper restore InconsistentNaming
         {
-            if (UserSettings == null)
-            {
-                UserSettings = new User();
-            }
-
-            if (!String.IsNullOrEmpty(signed_request))
+            if (UserSettings == null && !String.IsNullOrEmpty(signed_request))
             {
                 SignedRequest signedRequest = _facebookClient.ParseSignedRequest(signed_request);
 
-                UserSettings.FacebookUserId = signedRequest.UserId;
+                UserSettings = UserService.GetUser(signedRequest.UserId);
+
+                if (UserSettings == null)
+                {
+                    UserSettings = new User {FacebookUserId = signedRequest.UserId};
+                }
+
                 UserSettings.AccessToken = signedRequest.AccessToken;
 
                 UserService.UpdateUser(UserSettings);
             }
 
+            if (UserSettings == null)
+            {
+                UserSettings = new User();
+            }
+
             IndexViewModel model = Mapper.Map<User, IndexViewModel>(UserSettings);
 
-            if (UserSettings.FacebookUserId == 0)
+            if (model.FacebookUserId == 0)
             {
                 model.LogOnRedirectUrl = _facebookClient.GetLogOnUrl();
             }
@@ -106,7 +115,7 @@ namespace SteamAchievements.Web.Controllers
             if (user == null)
             {
                 newUser = true;
-                user = new User { FacebookUserId = UserSettings.FacebookUserId, AccessToken = String.Empty };
+                user = new User {FacebookUserId = UserSettings.FacebookUserId, AccessToken = String.Empty};
             }
 
             Mapper.Map(model, user);

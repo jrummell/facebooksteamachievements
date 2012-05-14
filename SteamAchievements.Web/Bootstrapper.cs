@@ -21,12 +21,12 @@
 
 using System.Web.Mvc;
 using Microsoft.Practices.Unity;
-using SteamAchievements.Web.Properties;
 using Unity.Mvc3;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
 using SteamAchievements.Web.Models;
+using SteamAchievements.Web.Properties;
 
 namespace SteamAchievements.Web
 {
@@ -49,12 +49,12 @@ namespace SteamAchievements.Web
         {
             UnityContainer container = new UnityContainer();
 
+            LifetimeManager lifetimeManager = new HierarchicalLifetimeManager();
 #if DEBUG
-            LifetimeManager lifetimeManager = new ContainerControlledLifetimeManager();
             container.RegisterType<ISteamRepository, MockSteamRepository>(lifetimeManager);
             container.RegisterType<IFacebookClientService, MockFacebookClientService>();
 #else
-            container.RegisterType<ISteamRepository, SteamRepository>();
+            container.RegisterType<ISteamRepository, SteamRepository>(lifetimeManager);
             Settings settings = Settings.Default;
             container.RegisterType<IFacebookClientService, FacebookClientService>(
                 new InjectionConstructor(settings.FacebookAppId, settings.FacebookAppSecret, settings.FacebookCanvasUrl));
