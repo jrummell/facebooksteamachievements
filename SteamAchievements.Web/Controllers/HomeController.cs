@@ -59,7 +59,10 @@ namespace SteamAchievements.Web.Controllers
 
                 UserSettings.AccessToken = signedRequest.AccessToken;
 
-                UserService.UpdateUser(UserSettings);
+                if (UserSettings.FacebookUserId > 0)
+                {
+                    UserService.UpdateUser(UserSettings);
+                }
             }
 
             if (UserSettings == null)
