@@ -28,12 +28,12 @@ namespace SteamAchievements.Services
 {
     public class MockSteamRepository : Data.ISteamRepository
     {
-        private readonly Dictionary<int, Data.Achievement> _achievements;
-        private readonly Dictionary<int, Data.UserAchievement> _userAchievements;
-        private readonly Dictionary<long, Data.User> _users;
-        private readonly Dictionary<int, Data.AchievementName> _achievementNames;
+        private static readonly Dictionary<int, Data.Achievement> _achievements;
+        private static readonly Dictionary<int, Data.UserAchievement> _userAchievements;
+        private static readonly Dictionary<long, Data.User> _users;
+        private static readonly Dictionary<int, Data.AchievementName> _achievementNames;
 
-        public MockSteamRepository()
+        static MockSteamRepository()
         {
             _achievementNames = new Dictionary<int, Data.AchievementName>
                                     {

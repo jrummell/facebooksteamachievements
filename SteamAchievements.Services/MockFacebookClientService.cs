@@ -45,7 +45,7 @@ namespace SteamAchievements.Services
 
         public Uri GetLogOnUrl()
         {
-            return new Uri("/", UriKind.Relative);
+            return null;
         }
 
         #endregion
