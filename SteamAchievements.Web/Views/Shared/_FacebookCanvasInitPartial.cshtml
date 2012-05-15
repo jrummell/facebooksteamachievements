@@ -1,6 +1,7 @@
 ﻿<div id="fb-root"></div>
+<div id="fb-login" class="hidden">Authorize</div>
 <script type="text/javascript">
-    window.fbAsyncInit = function() {
+    window.fbAsyncInit = function () {
         FB.init({
             appId: "@Html.FacebookAppId()",
             cookie: true,
@@ -17,14 +18,14 @@
                 // and signed request each expire
                 var uid = response.authResponse.userID;
                 var accessToken = response.authResponse.accessToken;
-            } 
+            }
             /*else if (response.status === 'not_authorized') {
-                // the user is logged in to Facebook, 
-                // but has not authenticated your app
-            }*/ 
+            // the user is logged in to Facebook, 
+            // but has not authenticated your app
+            }*/
             else {
                 // the user isn't logged in to Facebook.
-                FB.login();
+                $("#fb-login").button().click(function() { FB.login(); }).show();
             }
         });
     };
