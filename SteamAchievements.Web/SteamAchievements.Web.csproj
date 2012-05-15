@@ -254,7 +254,6 @@
       <LastGenOutput>Settings1.Designer.cs</LastGenOutput>
     </None>
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_FacebookCanvasInitPartial.cshtml" />
     <Content Include="Views\Home\Publish.cshtml" />
     <Content Include="Views\Home\Settings.cshtml" />
   </ItemGroup>
