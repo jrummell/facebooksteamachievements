@@ -72,10 +72,10 @@ namespace SteamAchievements.Web.Controllers
 
             IndexViewModel model = Mapper.Map<User, IndexViewModel>(UserSettings);
 
-            //if (model.FacebookUserId == 0)
-            //{
-            //    model.LogOnRedirectUrl = _facebookClient.GetLogOnUrl();
-            //}
+            if (model.FacebookUserId == 0)
+            {
+                model.LogOnRedirectUrl = _facebookClient.GetLogOnUrl();
+            }
 
             return View(model);
         }

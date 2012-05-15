@@ -19,7 +19,6 @@
         <script type="text/javascript" src='@Url.Content("~/Scripts/jquery.ui.message.min.js")'></script>
         <script type="text/javascript" src='@Url.Content("~/Scripts/columnizer.js")'></script>
         <script type="text/javascript" src='@Url.Content("~/Scripts/achievements.js")'></script>
-        @Html.Partial("_FacebookCanvasInitPartial")
         <div>
             <a href="@Url.CanvasAction("")" target="_top">
                 <img src="@Url.Content("~/Content/themes/canvas/banner-light.png")" alt="Steam Achievements" />
@@ -29,6 +28,7 @@
             @Html.Partial("_MenuPartial")
         </div>
         <div id="body">
+            @*Html.Partial("_FacebookCanvasInitPartial")*@
             @RenderBody()
         </div>
         <div class="footer">
