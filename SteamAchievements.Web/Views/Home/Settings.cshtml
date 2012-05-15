@@ -11,7 +11,6 @@
 }
 @using (Html.BeginForm("SaveSettings", "Home"))
 {
-    @Html.Hidden("signed_request", (string)ViewBag.SignedRequest)
     @Html.HiddenFor(model => model.FacebookUserId)
     @Html.ValidationMessageFor(model => model.SteamUserId)
     <fieldset class="settings">

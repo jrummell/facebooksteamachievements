@@ -49,12 +49,11 @@ namespace SteamAchievements.Web
         {
             UnityContainer container = new UnityContainer();
 
-            LifetimeManager lifetimeManager = new HierarchicalLifetimeManager();
 #if DEBUG
-            container.RegisterType<ISteamRepository, MockSteamRepository>(lifetimeManager);
+            container.RegisterType<ISteamRepository, MockSteamRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<IFacebookClientService, MockFacebookClientService>();
 #else
-            container.RegisterType<ISteamRepository, SteamRepository>(lifetimeManager);
+            container.RegisterType<ISteamRepository, SteamRepository>(new HierarchicalLifetimeManager());
             Settings settings = Settings.Default;
             container.RegisterType<IFacebookClientService, FacebookClientService>(
                 new InjectionConstructor(settings.FacebookAppId, settings.FacebookAppSecret, settings.FacebookCanvasUrl));
@@ -64,7 +63,7 @@ namespace SteamAchievements.Web
             container.RegisterType<IAchievementXmlParser, AchievementXmlParser>();
             container.RegisterType<IGameXmlParser, GameXmlParser>();
             container.RegisterType<ISteamProfileXmlParser, SteamProfileXmlParser>();
-            container.RegisterType<IWebClientWrapper, WebClientWrapper>();
+            container.RegisterType<IWebClientWrapper, WebClientWrapper>(new HierarchicalLifetimeManager());
 
             container.RegisterType<IAchievementManager, AchievementManager>();
             container.RegisterType<IAchievementService, AchievementService>();
