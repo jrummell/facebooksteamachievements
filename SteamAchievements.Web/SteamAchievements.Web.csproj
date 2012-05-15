@@ -240,6 +240,7 @@
     <Content Include="Web.MobileRelease.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="Views\Shared\_FacebookCanvasInitPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
