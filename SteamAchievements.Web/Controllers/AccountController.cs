@@ -1,21 +1,21 @@
 ﻿#region License
 
-// Copyright 2010 John Rummell
-// 
-// This file is part of SteamAchievements.
-// 
-//     SteamAchievements is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     SteamAchievements is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-// 
-//     You should have received a copy of the GNU General Public License
-//     along with SteamAchievements.  If not, see <http://www.gnu.org/licenses/>.
+//  Copyright 2012 John Rummell
+//  
+//  This file is part of SteamAchievements.
+//  
+//      SteamAchievements is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      SteamAchievements is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//  
+//      You should have received a copy of the GNU General Public License
+//      along with SteamAchievements.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -25,13 +25,12 @@ using System.Web.Security;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
 using SteamAchievements.Web.Models;
-using System;
 
 namespace SteamAchievements.Web.Controllers
 {
     public class AccountController : FacebookController
     {
-        private IFacebookClientService _facebookClient;
+        private readonly IFacebookClientService _facebookClient;
 
         public AccountController(IUserService userService, IFacebookClientService facebookClient)
             : base(userService)
@@ -41,6 +40,7 @@ namespace SteamAchievements.Web.Controllers
 
         public ActionResult LogOn()
         {
+            //TODO: LogOn view
             return View();
         }
 
@@ -101,11 +101,11 @@ namespace SteamAchievements.Web.Controllers
             if (Request.IsAjaxRequest())
             {
                 return Json(new
-                            {
-                                redirectUrl,
-                                isValid = ModelState.IsValid,
-                                message = message.ToString()
-                            });
+                                {
+                                    redirectUrl,
+                                    isValid = ModelState.IsValid,
+                                    message = message.ToString()
+                                });
             }
             else
             {
@@ -119,6 +119,5 @@ namespace SteamAchievements.Web.Controllers
                 }
             }
         }
-
     }
 }

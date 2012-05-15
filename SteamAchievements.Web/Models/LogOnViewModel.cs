@@ -30,7 +30,5 @@ namespace SteamAchievements.Web.Models
 
         [Required]
         public string AccessToken { get; set; }
-
-        public string SignedRequest { get; set; }
     }
 }
