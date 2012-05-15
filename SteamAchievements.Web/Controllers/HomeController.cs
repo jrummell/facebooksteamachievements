@@ -46,7 +46,7 @@ namespace SteamAchievements.Web.Controllers
         public ActionResult Index(string signed_request)
 // ReSharper restore InconsistentNaming
         {
-            if (UserSettings == null && !String.IsNullOrEmpty(signed_request))
+            if (!String.IsNullOrEmpty(signed_request))
             {
                 SignedRequest signedRequest = _facebookClient.ParseSignedRequest(signed_request);
 
@@ -58,11 +58,6 @@ namespace SteamAchievements.Web.Controllers
                 }
 
                 UserSettings.AccessToken = signedRequest.AccessToken;
-
-                if (UserSettings.FacebookUserId > 0)
-                {
-                    UserService.UpdateUser(UserSettings);
-                }
             }
 
             if (UserSettings == null)
