@@ -30,11 +30,12 @@ var $achievements =
 
     loadProfile: function (selector, callback)
     {
-        this.callLoad(selector, "Profile", {}, callback);
+        this.callLoad(selector, "Profile", { steamUserId: this.steamUserId }, callback);
     },
 
     validateProfile: function (steamUserId, callback)
     {
+        steamUserId = steamUserId || this.steamUserId;
         var data;
         if (steamUserId != null)
         {
@@ -56,7 +57,7 @@ var $achievements =
 
     loadGames: function (selector, callback)
     {
-        this.callLoad(selector, "Games", {}, callback);
+        this.callLoad(selector, "Games", {steamUserId: this.steamUserId}, callback);
     },
 
     updateAchievements: function (callback, errorCallback)
