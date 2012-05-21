@@ -21,6 +21,7 @@
 
 using System.Web.Mvc;
 using Microsoft.Practices.Unity;
+using SteamAchievements.Web.Controllers;
 using Unity.Mvc3;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
@@ -68,6 +69,8 @@ namespace SteamAchievements.Web
             container.RegisterType<IAchievementManager, AchievementManager>();
             container.RegisterType<IAchievementService, AchievementService>();
             container.RegisterType<IUserService, UserService>();
+
+            container.RegisterType<CanvasSignedRequestAttribute>();
 
             container.RegisterControllers();
 

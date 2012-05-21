@@ -137,6 +137,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AchievementController.cs" />
+    <Compile Include="Controllers\CanvasSignedRequestAttribute.cs" />
     <Compile Include="Controllers\RequestCultureAttribute.cs" />
     <Compile Include="Helpers\ConditionalFilterProvider.cs" />
     <Compile Include="Controllers\FacebookController.cs" />

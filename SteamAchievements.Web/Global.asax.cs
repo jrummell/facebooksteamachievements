@@ -24,6 +24,8 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Elmah.Contrib.Mvc;
 using SteamAchievements.Web.Controllers;
+using SteamAchievements.Web.Models;
+using SteamAchievements.Web.Properties;
 
 namespace SteamAchievements.Web
 {
@@ -36,6 +38,13 @@ namespace SteamAchievements.Web
         {
             filters.Add(new RequestCultureAttribute());
             filters.Add(new ElmahHandleErrorAttribute());
+
+            if (Settings.Default.Mode == FacebookMode.Canvas)
+            {
+                CanvasSignedRequestAttribute signedRequestAttribute = 
+                    DependencyResolver.Current.GetService<CanvasSignedRequestAttribute>();
+                filters.Add(signedRequestAttribute);
+            }
         }
 
         private static void RegisterRoutes(RouteCollection routes)
@@ -57,12 +66,12 @@ namespace SteamAchievements.Web
 
         protected void Application_Start()
         {
+            Bootstrapper.Initialize();
+
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-
-            Bootstrapper.Initialize();
         }
     }
 }
