@@ -11,7 +11,7 @@ $(document).ready(function () {
     var logSelector = "#log";
     var publishDescription = $("#PublishDescription").val() == "True";
     var signedRequest = $("#SignedRequest").val();
-    var achievementService = new AchievementService(steamUserId, signedRequest, logSelector, publishDescription);
+    var achievementService = new AchievementService(steamUserId, signedRequest, logSelector, publishDescription, FB);
 
     var valid = achievementService.validateSteamUserId("#steamIdError");
     if (!valid) {
