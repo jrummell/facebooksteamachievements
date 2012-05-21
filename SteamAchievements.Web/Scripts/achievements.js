@@ -173,7 +173,8 @@ function AchievementService(steamUserId, signedRequest, logSelector, publishDesc
         else {
             $(selector || "img.loading").fadeOut("slow", self.updateSize);
         }
-    },
+    };
+
     self.updateSize = function() {
         if (self.mobile) {
             return;
