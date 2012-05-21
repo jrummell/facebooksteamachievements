@@ -42,24 +42,8 @@ namespace SteamAchievements.Web.Controllers
             _facebookClient = facebookClient;
         }
 
-// ReSharper disable InconsistentNaming
-        public ActionResult Index(string signed_request)
-// ReSharper restore InconsistentNaming
+        public ActionResult Index()
         {
-            if (!String.IsNullOrEmpty(signed_request))
-            {
-                SignedRequest signedRequest = _facebookClient.ParseSignedRequest(signed_request);
-
-                UserSettings = UserService.GetUser(signedRequest.UserId);
-
-                if (UserSettings == null)
-                {
-                    UserSettings = new User {FacebookUserId = signedRequest.UserId};
-                }
-
-                UserSettings.AccessToken = signedRequest.AccessToken;
-            }
-
             if (UserSettings == null)
             {
                 UserSettings = new User();

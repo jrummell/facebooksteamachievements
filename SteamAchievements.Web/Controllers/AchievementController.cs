@@ -31,6 +31,8 @@ namespace SteamAchievements.Web.Controllers
 {
     public class AchievementController : FacebookController
     {
+        //TODO: UserSettings is null in IE
+
         private readonly IAchievementService _achievementService;
 
         public AchievementController(IAchievementService achievementService, IUserService userService)
