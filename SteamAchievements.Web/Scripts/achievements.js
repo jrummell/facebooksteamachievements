@@ -3,11 +3,10 @@
 /// <reference path="json2.js" />
 /// <reference path="columnizer.js" />
 
-function AchievementService(steamUserId, signedRequest, logSelector, publishDescription, FB) {
+function AchievementService(steamUserId, signedRequest, logSelector, publishDescription) {
     var self = this;
 
     // fields
-    self.FB = FB;
     self.mobile = typeof($.mobile) != "undefined";
     self.steamUserId = steamUserId;
     self.signedRequest = signedRequest;
@@ -130,7 +129,7 @@ function AchievementService(steamUserId, signedRequest, logSelector, publishDesc
 
         $middleAnchor.focus();
 
-        self.FB.ui(publishParams, function(response) {
+        FB.ui(publishParams, function(response) {
             if (response && response.post_id) {
                 // on successful publish, update published field on each published achievement.
 
@@ -181,9 +180,9 @@ function AchievementService(steamUserId, signedRequest, logSelector, publishDesc
             return;
         }
 
-        if (self.FB) {
+        if (typeof(FB) != "undefined") {
             // update the size of the iframe to match the content
-            self.FB.Canvas.setSize();
+            FB.Canvas.setSize();
         }
     };
 
