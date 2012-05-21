@@ -3,102 +3,83 @@
 /// <reference path="json2.js" />
 /// <reference path="columnizer.js" />
 
-var $achievements =
-{
-    mobile: false,
+function AchievementService(steamUserId, signedRequest, logSelector, publishDescription) {
+    var self = this;
 
-    steamUserId: null,
+    // fields
+    self.mobile = typeof($.mobile) != "undefined";
+    self.steamUserId = steamUserId;
+    self.signedRequest = signedRequest;
+    self.serviceBase = "Achievement/";
 
-    serviceBase: "Achievement/",
+    if (logSelector) {
+        self.enableLog = true;
+    }
+    else {
+        self.enableLog = false;
+    }
 
-    enableLog: false,
+    self.logSelector = logSelector;
+    self.publishDescription = publishDescription;
 
-    logSelector: null,
+    // methods
+    self.loadProfile = function(selector, callback) {
+        load(selector, "Profile", { steamUserId: self.steamUserId }, callback);
+    };
 
-    publishDescription: true,
-
-    init: function (userId, logSelector, enableLog, publishDescription)
-    {
-        this.mobile = typeof ($.mobile) != "undefined";
-        this.steamUserId = userId;
-        this.logSelector = logSelector;
-        this.enableLog = enableLog;
-        this.publishDescription = publishDescription;
-
-        this.hideLoading("img.loading");
-    },
-
-    loadProfile: function (selector, callback)
-    {
-        this.callLoad(selector, "Profile", { steamUserId: this.steamUserId }, callback);
-    },
-
-    validateProfile: function (steamUserId, callback)
-    {
-        steamUserId = steamUserId || this.steamUserId;
+    self.validateProfile = function(steamUserIdToValidate, callback) {
+        steamUserIdToValidate = steamUserIdToValidate || self.steamUserId;
         var data;
-        if (steamUserId != null)
-        {
-            data = { steamUserId: steamUserId };
+        if (steamUserIdToValidate) {
+            data = { steamUserId: steamUserIdToValidate };
         }
-        else
-        {
-            data = {};
+        else {
+            data = { };
         }
 
-        this.callAjax("ValidateProfile", data, callback);
-    },
+        post("ValidateProfile", data, callback);
+    };
 
-    updateAccessToken: function (facebookUserId, accessToken, callback)
-    {
+    self.updateAccessToken = function(facebookUserId, accessToken, callback) {
         var data = { facebookUserId: facebookUserId, accessToken: accessToken };
-        this.callAjax("UpdateAccessToken", data, callback);
-    },
+        post("UpdateAccessToken", data, callback);
+    };
 
-    loadGames: function (selector, callback)
-    {
-        this.callLoad(selector, "Games", {steamUserId: this.steamUserId}, callback);
-    },
+    self.loadGames = function(selector, callback) {
+        load(selector, "Games", { steamUserId: self.steamUserId }, callback);
+    };
 
-    updateAchievements: function (callback, errorCallback)
-    {
-        this.callAjax("UpdateAchievements", {}, callback, errorCallback);
-    },
+    self.updateAchievements = function(callback, errorCallback) {
+        post("UpdateAchievements", { }, callback, errorCallback);
+    };
 
-    loadUnpublishedAchievements: function (selector, callback)
-    {
-        this.callLoad(selector, "UnpublishedAchievements", {}, callback);
-    },
+    self.loadUnpublishedAchievements = function(selector, callback) {
+        load(selector, "UnpublishedAchievements", { }, callback);
+    };
 
-    hideAchievements: function (achievementIds, callback, errorCallback)
-    {
+    self.hideAchievements = function(achievementIds, callback, errorCallback) {
         var parameters = { achievementIds: achievementIds };
-        this.callAjax("HideAchievements", parameters, callback, errorCallback);
-    },
+        post("HideAchievements", parameters, callback, errorCallback);
+    };
 
-    publishAchievements: function (achievements, callback, errorCallback)
-    {
+    self.publishAchievements = function(achievements, callback, errorCallback) {
         // display publish dialog
 
         var image = null;
         var description = new String();
         var gameId = new String();
 
-        $.each(achievements, function (i)
-        {
+        $.each(achievements, function(i) {
             var achievement = this; // achievements[i];
 
-            if (image == null)
-            {
+            if (image == null) {
                 image = achievement.ImageUrl;
             }
 
-            if (gameId != achievement.Game.Id)
-            {
+            if (gameId != achievement.Game.Id) {
                 gameId = achievement.Game.Id;
 
-                if (i > 0 && description.length > 2)
-                {
+                if (i > 0 && description.length > 2) {
                     // replace last comma with period
                     description = description.substring(0, description.length - 2);
                     description += ". ";
@@ -109,27 +90,24 @@ var $achievements =
 
             description += achievement.Name;
 
-            if ($achievements.publishDescription)
-            {
+            if (self.publishDescription) {
                 description += " (" + achievement.Description + ")";
             }
 
-            if (i < achievements.length - 1)
-            {
+            if (i < achievements.length - 1) {
                 description += ", ";
             }
-            else
-            {
+            else {
                 description += ".";
             }
 
-            $achievements.log(description);
+            self.log(description);
         });
 
-        var message = this.steamUserId + " unlocked " + achievements.length + " achievement" + (achievements.length > 1 ? "s" : "") + "!";
+        var message = self.steamUserId + " unlocked " + achievements.length + " achievement" + (achievements.length > 1 ? "s" : "") + "!";
         var publishParams = {
             method: "feed",
-            link: "http://steamcommunity.com/id/" + this.steamUserId,
+            link: "http://steamcommunity.com/id/" + self.steamUserId,
             picture: image,
             message: message, // message seems to be broken
             name: message,
@@ -138,8 +116,7 @@ var $achievements =
 
         // create and anchor in the middle of the page and focus on it so that the dialog will be visible to the user.
         var $middleAnchor = $("#middleAnchor");
-        if ($middleAnchor.length == 0)
-        {
+        if ($middleAnchor.length == 0) {
             // add an anchor in the middle of the page
             var middleX = $(document).width() / 2;
             var middleY = $(document).height() / 2;
@@ -152,152 +129,131 @@ var $achievements =
 
         $middleAnchor.focus();
 
-        FB.ui(publishParams, function (response)
-        {
-            if (response && response.post_id)
-            {
+        FB.ui(publishParams, function(response) {
+            if (response && response.post_id) {
                 // on successful publish, update published field on each published achievement.
 
                 var achievementIds = new Array();
-                for (var i = 0; i < achievements.length; i++)
-                {
+                for (var i = 0; i < achievements.length; i++) {
                     achievementIds.push(achievements[i].Id);
                 }
 
                 var data = { achievementIds: achievementIds };
-                $achievements.callAjax("PublishAchievements", data, callback, errorCallback);
+                post("PublishAchievements", data, callback, errorCallback);
             }
         });
-    },
+    };
 
-    validateSteamUserId: function (errorMessageSelector)
-    {
+    self.validateSteamUserId = function(errorMessageSelector) {
         var valid = true;
-        if (this.steamUserId == null || this.steamUserId == "")
-        {
+        if (self.steamUserId == null || self.steamUserId == "") {
             valid = false;
         }
 
-        if (!valid)
-        {
+        if (!valid) {
             $(errorMessageSelector).message({ type: "error", dismiss: false });
         }
 
         return valid;
-    },
+    };
 
-    callLoad: function (selector, method, params, ondone)
-    {
-        if (params == null)
-        {
-            params = {};
+    self.showLoading = function(selector) {
+        if (self.mobile) {
+            $.mobile.showPageLoadingMsg();
+        }
+        else {
+            $(selector).show("normal", self.updateSize);
+        }
+    };
+
+    self.hideLoading = function(selector) {
+        if (self.mobile) {
+            $.mobile.hidePageLoadingMsg();
+        }
+        else {
+            $(selector || "img.loading").fadeOut("slow", self.updateSize);
+        }
+    },
+    self.updateSize = function() {
+        if (self.mobile) {
+            return;
         }
 
-        // since this is an ajax request, we need to add the signed_request parameter explicitly
-        var signedRequest = $("#SignedRequest").val();
-        var url = this.serviceBase + method;
-        $(selector).load(url, params, ondone);
-    },
+        if (typeof(FB) != "undefined") {
+            // update the size of the iframe to match the content
+            FB.Canvas.setSize();
+        }
+    };
 
-    callAjax: function (method, query, ondone, onerror)
-    {
-        if (onerror == null)
-        {
-            onerror = function (m)
-            {
-                $achievements.log(m.Message);
+    self.log = function(message) {
+        if (self.enableLog && self.logSelector != null) {
+            $(self.logSelector).append(message);
+            self.updateSize();
+        }
+    };
+
+    // private methods
+
+    function load(selector, method, params, ondone) {
+        if (params == null) {
+            params = { };
+        }
+        setSignedRequest(params);
+
+        var url = self.serviceBase + method;
+        $(selector).load(url, params, ondone);
+    }
+
+    function post(method, params, ondone, onerror) {
+        if (onerror == null) {
+            onerror = function(m) {
+                self.log(m.Message);
             };
         }
 
-        if (query == null)
-        {
-            query = {};
+        if (params == null) {
+            params = { };
         }
+        setSignedRequest(params);
 
         $.ajax({
-            url: this.serviceBase + method,
-            data: JSON.stringify(query),
+            url: self.serviceBase + method,
+            data: JSON.stringify(params),
             type: "POST",
             processData: true,
             contentType: "application/json",
             timeout: 120000, // 2 minutes
             dataType: "json",
             success: ondone,
-            error: function (xhr)
-            {
-                if (!onerror)
-                {
+            error: function(xhr) {
+                if (!onerror) {
                     return;
                 }
 
-                if (xhr.responseText)
-                {
-                    try
-                    {
+                if (xhr.responseText) {
+                    try {
                         var err = JSON.parse(xhr.responseText);
-                        if (err)
-                        {
+                        if (err) {
                             onerror(err);
                         }
-                        else
-                        {
+                        else {
                             onerror({ Message: "Unknown server error." });
                         }
                     }
-                    catch (e)
-                    {
+                    catch(e) {
                         onerror({ Message: "Unknown server error." });
                     }
                 }
                 return;
             }
         });
-    },
-
-    showLoading: function (selector)
-    {
-        if (this.mobile)
-        {
-            $.mobile.showPageLoadingMsg();
-        }
-        else
-        {
-            $(selector).show("normal", this.updateSize);
-        }
-    },
-
-    hideLoading: function (selector)
-    {
-        if (this.mobile)
-        {
-            $.mobile.hidePageLoadingMsg();
-        }
-        else
-        {
-            $(selector).fadeOut("slow", this.updateSize);
-        }
-    },
-
-    updateSize: function ()
-    {
-        if (this.mobile)
-        {
-            return;
-        }
-
-        if (typeof (FB) != "undefined")
-        {
-            // update the size of the iframe to match the content
-            FB.Canvas.setSize();
-        }
-    },
-
-    log: function (message)
-    {
-        if (this.enableLog && this.logSelector != null)
-        {
-            $(this.logSelector).append(message);
-            this.updateSize();
-        }
     }
+
+    function setSignedRequest(params) {
+        // since this is an ajax request, we need to add the signed_request parameter explicitly
+        params.signed_request = self.signedRequest;
+    }
+
+    // init
+    self.hideLoading("img.loading");
 }

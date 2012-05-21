@@ -1,33 +1,33 @@
 #region License
 
-// Copyright 2010 John Rummell
-// 
-// This file is part of SteamAchievements.
-// 
-//     SteamAchievements is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     SteamAchievements is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-// 
-//     You should have received a copy of the GNU General Public License
-//     along with SteamAchievements.  If not, see <http://www.gnu.org/licenses/>.
+//  Copyright 2012 John Rummell
+//  
+//  This file is part of SteamAchievements.
+//  
+//      SteamAchievements is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      SteamAchievements is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//  
+//      You should have received a copy of the GNU General Public License
+//      along with SteamAchievements.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
 using System.Web.Mvc;
 using Microsoft.Practices.Unity;
-using SteamAchievements.Web.Controllers;
-using Unity.Mvc3;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
+using SteamAchievements.Web.Controllers;
 using SteamAchievements.Web.Models;
 using SteamAchievements.Web.Properties;
+using Unity.Mvc3;
 
 namespace SteamAchievements.Web
 {
@@ -41,24 +41,28 @@ namespace SteamAchievements.Web
 
             ModelMapCreator mapCreator = new ModelMapCreator();
             mapCreator.CreateMappings();
-            
+
             ViewModelMapCreator viewModelMapCreator = new ViewModelMapCreator();
             viewModelMapCreator.CreateMappings();
         }
 
         private static IUnityContainer BuildUnityContainer()
         {
+            Settings settings = Settings.Default;
             UnityContainer container = new UnityContainer();
 
-#if DEBUG
-            container.RegisterType<ISteamRepository, MockSteamRepository>(new HierarchicalLifetimeManager());
-            container.RegisterType<IFacebookClientService, MockFacebookClientService>();
-#else
-            container.RegisterType<ISteamRepository, SteamRepository>(new HierarchicalLifetimeManager());
-            Settings settings = Settings.Default;
-            container.RegisterType<IFacebookClientService, FacebookClientService>(
-                new InjectionConstructor(settings.FacebookAppId, settings.FacebookAppSecret, settings.FacebookCanvasUrl));
-#endif
+            if (settings.Mode == FacebookMode.None)
+            {
+                container.RegisterType<ISteamRepository, MockSteamRepository>(new HierarchicalLifetimeManager());
+                container.RegisterType<IFacebookClientService, MockFacebookClientService>();
+            }
+            else
+            {
+                container.RegisterType<ISteamRepository, SteamRepository>(new HierarchicalLifetimeManager());
+                container.RegisterType<IFacebookClientService, FacebookClientService>(
+                    new InjectionConstructor(settings.FacebookAppId, settings.FacebookAppSecret,
+                                             settings.FacebookCanvasUrl));
+            }
 
             container.RegisterType<ISteamCommunityManager, SteamCommunityManager>();
             container.RegisterType<IAchievementXmlParser, AchievementXmlParser>();

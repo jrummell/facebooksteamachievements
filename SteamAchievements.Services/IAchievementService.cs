@@ -55,6 +55,15 @@ namespace SteamAchievements.Services
         ICollection<Game> GetGames(long facebookUserId);
 
         /// <summary>
+        /// Gets the games.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns>
+        ///   <see cref="Game"/>s for the givem steam user id.
+        /// </returns>
+        ICollection<Game> GetGames(string steamUserId);
+
+        /// <summary>
         /// Updates the achievements.
         /// </summary>
         /// <param name="facebookUserId">The facebook user id.</param>

@@ -43,6 +43,10 @@ namespace SteamAchievements.Web.Models
 
         public long FacebookUserId { get; set; }
 
+        public string SignedRequest { get; set; }
+
+        public bool EnableLog { get; set; }
+
         #region IValidatableObject Members
 
         /// <summary>

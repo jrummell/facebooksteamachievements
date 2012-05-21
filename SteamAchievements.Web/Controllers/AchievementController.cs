@@ -46,6 +46,11 @@ namespace SteamAchievements.Web.Controllers
         {
             steamUserId = steamUserId ?? UserSettings.SteamUserId;
 
+            if (String.IsNullOrEmpty(steamUserId))
+            {
+                return Json(false);
+            }
+
             return Json(_achievementService.GetProfile(steamUserId) != null);
         }
 
@@ -70,9 +75,11 @@ namespace SteamAchievements.Web.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult Games()
+        public PartialViewResult Games(string steamUserId)
         {
-            return PartialView(_achievementService.GetGames(UserSettings.FacebookUserId));
+            steamUserId = steamUserId ?? UserSettings.SteamUserId;
+
+            return PartialView(_achievementService.GetGames(steamUserId));
         }
 
         [HttpPost]

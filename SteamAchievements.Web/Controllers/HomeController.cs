@@ -51,7 +51,7 @@ namespace SteamAchievements.Web.Controllers
 
             IndexViewModel model = Mapper.Map<User, IndexViewModel>(UserSettings);
 
-            if (model.FacebookUserId == 0)
+            if (Properties.Settings.Default.Mode != FacebookMode.None && model.FacebookUserId == 0)
             {
                 model.LogOnRedirectUrl = _facebookClient.GetLogOnUrl();
             }
@@ -61,15 +61,15 @@ namespace SteamAchievements.Web.Controllers
 
         public ActionResult Publish()
         {
-#if DEBUG
-            ViewBag.EnableLog = true;
-#else
-            ViewBag.EnableLog = false;
-#endif
-
             User user = UserSettings ?? new User();
 
             SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(user);
+
+#if DEBUG
+            model.EnableLog = true;
+#else
+            model.EnableLog = false;
+#endif
 
             return View(model);
         }

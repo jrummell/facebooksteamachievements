@@ -4,9 +4,9 @@
 }
 <h1>
     Publish</h1>
-@Html.Hidden("steamUserIdHidden", Model.SteamUserId)
-@Html.Hidden("publishDescriptionHidden", Model.PublishDescription)
-@Html.Hidden("enableLogHidden", (bool)ViewBag.EnableLog)
+@Html.HiddenFor(model => model.SteamUserId)
+@Html.HiddenFor(model => model.SignedRequest)
+@Html.HiddenFor(model => model.PublishDescription)
 <div id="steamIdError" style="display: none;">
     You haven't set your Steam Community Profile URL. Please set it on the
     @Html.CanvasLink("settings", "Settings")
@@ -33,6 +33,9 @@
     <div id="newAchievements" class="unpublished">
     </div>
 </fieldset>
-<div id="log">
-</div>
+@if (Model.EnableLog)
+{
+    <div id="log">
+    </div>
+}
 <script type="text/javascript" src="@Url.Content("~/Scripts/publish.js")"></script>

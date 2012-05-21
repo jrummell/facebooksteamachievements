@@ -2,7 +2,8 @@
 @{
     ViewBag.Title = Strings.TitleHome;
 }
-@Html.Hidden("steamUserIdHidden", Model.SteamUserId)
+@Html.HiddenFor(model => model.SteamUserId)
+@Html.HiddenFor(model => model.SignedRequest)
 <div id="steamIdError" style="display: none;">
     You haven't set your Steam Community Profile URL. Please set it on the
     @Html.CanvasLink("settings", "Settings")
@@ -11,7 +12,7 @@
 </div>
 <div id="profileDiv">
 </div>
-<fieldset>
+<fieldset id="gamesContainer" class="hidden">
     <legend>Games</legend>
     <div>
         <p>
@@ -23,8 +24,11 @@
     <div id="gamesDiv" class="games">
     </div>
 </fieldset>
-<div id="log" style="display: none;">
-    <span id="errorLiteral"></span>
-</div>
+@if (Model.EnableLog)
+{
+    <div id="log" style="display: none;">
+        <span id="errorLiteral"></span>
+    </div>
+}
 @Html.HiddenFor(model => model.LogOnRedirectUrl)
 <script type="text/javascript" src="@Url.Content("~/Scripts/default.js")"></script>
