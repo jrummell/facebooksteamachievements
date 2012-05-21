@@ -33,7 +33,7 @@ namespace SteamAchievements.Web.Models
 
             Mapper.CreateMap<User, IndexViewModel>()
                 .ForMember(vm => vm.LogOnRedirectUrl, options => options.Ignore())
-                .ForMember(vm => vm.EnableLog, options => options.Ignore()); ;
+                .ForMember(vm => vm.EnableLog, options => options.Ignore());
 
             Mapper.CreateMap<SettingsViewModel, User>()
                 .ForMember(user => user.AccessToken, options => options.Ignore())
