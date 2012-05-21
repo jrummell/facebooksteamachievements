@@ -12,6 +12,7 @@
 @using (Html.BeginForm("SaveSettings", "Home"))
 {
     @Html.HiddenFor(model => model.FacebookUserId)
+    @Html.HiddenFor(model => model.SignedRequest)
     @Html.ValidationMessageFor(model => model.SteamUserId)
     <fieldset class="settings">
         <legend>@Strings.SettingsCustomUrl</legend>

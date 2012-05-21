@@ -73,6 +73,14 @@ namespace SteamAchievements.Services.Models
         /// </value>
         public string Language { get; set; }
 
+        /// <summary>
+        /// Gets or sets the signed request.
+        /// </summary>
+        /// <value>
+        /// The signed request.
+        /// </value>
+        public string SignedRequest { get; set; }
+
         #region IEquatable<User> Members
 
         public bool Equals(User other)

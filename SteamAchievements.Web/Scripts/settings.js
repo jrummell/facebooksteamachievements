@@ -2,15 +2,13 @@
 /// <reference path="jquery.ui.message.js" />
 /// <reference path="achievements.js" />
 
-$(document).ready(function ()
-{
-    var logSelector = "#log";
+$(document).ready(function () {
     var $steamUserId = $("#SteamUserId");
-    $achievements.init($steamUserId.val(), logSelector, false);
+    var signedRequest = $("#SignedRequest").val();
+    var achievementService = new AchievementService($steamUserId.val(), signedRequest, null, false);
 
     // check the user's profile when they change it
-    $steamUserId.change(function ()
-    {
+    $steamUserId.change(function () {
         checkProfile();
     });
 
@@ -22,40 +20,34 @@ $(document).ready(function ()
 
     // show loading on click
     var $saveButton = $("#saveButton");
-    if (!$achievements.mobile)
-    {
+    if (!achievementService.mobile) {
         $saveButton.button({ icons: { primary: "ui-icon-disk"} });
     }
-    $saveButton.click(function()
-    {
-        $achievements.showLoading("#saveImage");
+    $saveButton.click(function () {
+        achievementService.showLoading("#saveImage");
         $("#saveSuccess").hide();
 
         return true;
     });
+
+    function checkProfile() {
+        var steamUserId = $steamUserId.val();
+
+        $("#steamIdError").hide();
+        $("#steamIdVerified").hide();
+
+        var ondone = function (valid) {
+            $(".settings .profile-url").attr("href", "http://steamcommunity.com/id/" + steamUserId);
+
+            if (!valid) {
+                $("#steamIdError").show();
+                return;
+            }
+            else {
+                $("#steamIdVerified").show();
+            }
+        };
+
+        achievementService.validateProfile(steamUserId, ondone);
+    }
 });
-
-function checkProfile()
-{
-    var steamUserId = $("#SteamUserId").val();
-    
-    $("#steamIdError").hide();
-    $("#steamIdVerified").hide();
-
-    var ondone = function (valid)
-    {
-        $(".settings .profile-url").attr("href", "http://steamcommunity.com/id/" + steamUserId);        
-        
-        if (!valid)
-        {
-            $("#steamIdError").show();
-            return;
-        }
-        else
-        {
-            $("#steamIdVerified").show();
-        }
-    };
-
-    $achievements.validateProfile(steamUserId, ondone);
-}

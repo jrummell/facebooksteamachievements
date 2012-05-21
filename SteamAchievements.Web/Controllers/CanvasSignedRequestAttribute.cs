@@ -37,6 +37,7 @@ namespace SteamAchievements.Web.Controllers
                 }
 
                 user.AccessToken = signedRequest.AccessToken;
+                user.SignedRequest = signedRequestValue;
 
                 session[_userSettingsKey] = user;
             }

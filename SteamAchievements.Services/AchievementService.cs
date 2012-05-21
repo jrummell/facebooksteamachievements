@@ -61,6 +61,18 @@ namespace SteamAchievements.Services
         }
 
         /// <summary>
+        /// Gets the games.
+        /// </summary>
+        /// <param name="steamUserId">The steam user id.</param>
+        /// <returns>
+        ///   <see cref="Game"/>s for the givem steam user id.
+        /// </returns>
+        public ICollection<Game> GetGames(string steamUserId)
+        {
+            return _communityService.GetGames(steamUserId, CultureHelper.GetLanguage()).ToList();
+        }
+
+        /// <summary>
         /// Updates the achievements.
         /// </summary>
         /// <param name="facebookUserId">The facebook user id.</param>
