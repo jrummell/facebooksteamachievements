@@ -28,9 +28,12 @@ namespace SteamAchievements.Web.Models
     {
         public void CreateMappings()
         {
-            Mapper.CreateMap<User, SettingsViewModel>();
+            Mapper.CreateMap<User, SettingsViewModel>()
+                .ForMember(vm => vm.EnableLog, options => options.Ignore());
+
             Mapper.CreateMap<User, IndexViewModel>()
-                .ForMember(vm => vm.LogOnRedirectUrl, options => options.Ignore());
+                .ForMember(vm => vm.LogOnRedirectUrl, options => options.Ignore())
+                .ForMember(vm => vm.EnableLog, options => options.Ignore()); ;
 
             Mapper.CreateMap<SettingsViewModel, User>()
                 .ForMember(user => user.AccessToken, options => options.Ignore())
