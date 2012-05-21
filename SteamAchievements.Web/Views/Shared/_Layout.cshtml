@@ -9,6 +9,7 @@
     @RenderSection("head", false)
 </head>
 <body>
+    @Html.Partial("_FacebookCanvasInitPartial")
     <div id="topAdWrapper">
         @Html.Ad(AdLocation.Top)
     </div>
@@ -29,7 +30,6 @@
         </div>
         <div id="body">
             @RenderBody()
-            @Html.Partial("_FacebookCanvasInitPartial")
         </div>
         <div class="footer">
             @Html.Disclaimer()
