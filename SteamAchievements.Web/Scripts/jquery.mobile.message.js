@@ -1,8 +1,8 @@
 /*
     Message plugin for jQuery Mobile
-    Copyright (c) 2011 John Rummell (jrummell.com)
+    Copyright (c) 2012 John Rummell (jrummell.com)
     Licensed under the GPL license (http://www.gnu.org/licenses/gpl.html)
-    Version: 1.5.3
+    Version: 1.7.1
 */
 
 //
@@ -49,23 +49,28 @@
                     messageHtml += "<p><span class='message-text'>" + messageText + "</span>";
                     if (options.dismiss)
                     {
-                        messageHtml += "<span class='message-dismiss'>Click to dismiss.</span>";
+                        messageHtml += "<a class='message-dismiss' href='#'>Dismiss</a>";
                     }
                     messageHtml += "</p></div>";
-
-                    if (options.dismiss)
-                    {
-                        // hide messages on click
-                        $this.click(function ()
-                        {
-                            jQuery(this).hide('normal');
-                        });
-                    }
 
                     // set html and show the message
                     $this.html(messageHtml);
                     $this.find(".message-container").collapsible();
-                    $this.show();
+
+                    if (options.dismiss)
+                    {
+                        // hide messages on click
+                        jQuery(".message-dismiss", $this).click(function ()
+                        {
+                            $this.hide('normal');
+                            return false;
+                        });
+                    }
+                    
+                    if (options.autoShow)
+                    {
+                        $this.show();
+                    }
 
                     // save options
                     $this.data("message", options);
@@ -127,6 +132,7 @@
         message: "", // leave blank to use element html
         type: "info", // info or error
         theme: null, // info or error theme
-        dismiss: true // append 'Click to dismiss' to message and hide on click
+        dismiss: true, // append 'Click to dismiss' to message and hide on click
+        autoShow: true // show on initialize
     };
 })(jQuery);
