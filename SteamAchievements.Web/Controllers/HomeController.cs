@@ -42,6 +42,21 @@ namespace SteamAchievements.Web.Controllers
             _facebookClient = facebookClient;
         }
 
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            base.OnActionExecuted(filterContext);
+
+            ViewResultBase result = filterContext.Result as ViewResultBase;
+            if (result != null)
+            {
+                SettingsViewModel model = result.Model as SettingsViewModel;
+                if (model != null)
+                {
+                    model.EnableLog = Properties.Settings.Default.EnableClientLogging;
+                }
+            }
+        }
+
         public ActionResult Index()
         {
             if (UserSettings == null)
@@ -64,12 +79,6 @@ namespace SteamAchievements.Web.Controllers
             User user = UserSettings ?? new User();
 
             SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(user);
-
-#if DEBUG
-            model.EnableLog = true;
-#else
-            model.EnableLog = false;
-#endif
 
             return View(model);
         }

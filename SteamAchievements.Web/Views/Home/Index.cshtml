@@ -24,11 +24,6 @@
     <div id="gamesDiv" class="games">
     </div>
 </fieldset>
-@if (Model.EnableLog)
-{
-    <div id="log" style="display: none;">
-        <span id="errorLiteral"></span>
-    </div>
-}
+@Html.HiddenFor(model => model.EnableLog)
 @Html.HiddenFor(model => model.LogOnRedirectUrl)
 <script type="text/javascript" src="@Url.Content("~/Scripts/default.js")"></script>

@@ -8,10 +8,10 @@ var _newAchievements = new Array();
 
 $(document).ready(function () {
     var steamUserId = $("#SteamUserId").val();
-    var logSelector = "#log";
     var publishDescription = $("#PublishDescription").val() == "True";
     var signedRequest = $("#SignedRequest").val();
-    var achievementService = new AchievementService(steamUserId, signedRequest, logSelector, publishDescription);
+    var enableLog = $("#EnableLog").val() == "True";
+    var achievementService = new AchievementService(steamUserId, signedRequest, enableLog, publishDescription);
 
     var valid = achievementService.validateSteamUserId("#steamIdError");
     if (!valid) {

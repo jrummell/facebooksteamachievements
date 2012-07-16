@@ -3,7 +3,14 @@
 /// <reference path="json2.js" />
 /// <reference path="columnizer.js" />
 
-function AchievementService(steamUserId, signedRequest, logSelector, publishDescription) {
+if (!window.console) {
+    window.console = {};
+    if (!window.console.log) {
+        window.console.log = function () { };
+    }
+}
+
+function AchievementService(steamUserId, signedRequest, enableLog, publishDescription) {
     var self = this;
 
     // fields
@@ -11,15 +18,7 @@ function AchievementService(steamUserId, signedRequest, logSelector, publishDesc
     self.steamUserId = steamUserId;
     self.signedRequest = signedRequest;
     self.serviceBase = "Achievement/";
-
-    if (logSelector) {
-        self.enableLog = true;
-    }
-    else {
-        self.enableLog = false;
-    }
-
-    self.logSelector = logSelector;
+    self.enableLog = enableLog === true;
     self.publishDescription = publishDescription;
 
     // methods
@@ -40,9 +39,8 @@ function AchievementService(steamUserId, signedRequest, logSelector, publishDesc
         post("ValidateProfile", data, callback);
     };
 
-    self.updateAccessToken = function(facebookUserId, accessToken, callback) {
-        var data = { facebookUserId: facebookUserId, accessToken: accessToken };
-        post("UpdateAccessToken", data, callback);
+    self.updateAccessToken = function(callback) {
+        post("UpdateAccessToken", {}, callback);
     };
 
     self.loadGames = function(selector, callback) {
@@ -187,9 +185,8 @@ function AchievementService(steamUserId, signedRequest, logSelector, publishDesc
     };
 
     self.log = function(message) {
-        if (self.enableLog && self.logSelector != null) {
-            $(self.logSelector).append(message);
-            self.updateSize();
+        if (self.enableLog) {
+            console.log(message);
         }
     };
 

@@ -48,6 +48,11 @@ namespace SteamAchievements.Services
             return null;
         }
 
+        public string UpdateAccessToken(string accessToken)
+        {
+            return null;
+        }
+
         #endregion
     }
 }

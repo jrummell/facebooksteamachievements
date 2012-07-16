@@ -5,9 +5,9 @@
 
 $(document).ready(function() {
     var steamUserId = $("#SteamUserId").val();
-    var logSelector = "#log";
     var signedRequest = $("#SignedRequest").val();
-    var achievementService = new AchievementService(steamUserId, signedRequest, logSelector, false);
+    var enableLog = $("#EnableLog").val() == "True";
+    var achievementService = new AchievementService(steamUserId, signedRequest, enableLog, false);
 
     var logOnRedirectUrl = $("#LogOnRedirectUrl").val();
     if (logOnRedirectUrl.length > 1) {
@@ -31,6 +31,8 @@ $(document).ready(function() {
 
             getProfile();
             getGames();
+            
+            achievementService.updateAccessToken();
         };
 
         achievementService.validateProfile(null, ondone);
