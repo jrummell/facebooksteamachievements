@@ -185,6 +185,13 @@
     <Content Include="Content\themes\canvas\banner-light.png" />
     <Content Include="Content\images\profilecustomurl.png" />
     <Content Include="Content\images\steamsettings.png" />
+    <None Include="_bin_deployableAssemblies\Microsoft.Web.Infrastructure.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.WebPages.Razor.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.WebPages.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.WebPages.Deployment.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.Razor.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.Helpers.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
     <None Include="Content\Policy\policy.htm" />
     <None Include="Content\Policy\policy.xml" />
     <None Include="Content\Policy\policy.txt" />
