@@ -33,9 +33,5 @@
     <div id="newAchievements" class="unpublished">
     </div>
 </fieldset>
-@if (Model.EnableLog)
-{
-    <div id="log">
-    </div>
-}
+@Html.HiddenFor(model => model.EnableLog)
 <script type="text/javascript" src="@Url.Content("~/Scripts/publish.js")"></script>

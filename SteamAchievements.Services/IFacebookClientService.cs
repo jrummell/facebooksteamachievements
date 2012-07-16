@@ -50,5 +50,11 @@ namespace SteamAchievements.Services
         /// Gets the log on URL.
         /// </summary>
         Uri GetLogOnUrl();
+
+        /// <summary>
+        /// Updates the access token.
+        /// </summary>
+        /// <param name="accessToken">The access token.</param>
+        string UpdateAccessToken(string accessToken);
     }
 }

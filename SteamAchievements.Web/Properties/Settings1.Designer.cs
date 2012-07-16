@@ -114,5 +114,14 @@ namespace SteamAchievements.Web.Properties {
                 return ((string)(this["FacebookAppSecret"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableClientLogging {
+            get {
+                return ((bool)(this["EnableClientLogging"]));
+            }
+        }
     }
 }

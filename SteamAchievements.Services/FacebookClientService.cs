@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using Facebook;
 using SteamAchievements.Services.Models;
 
@@ -101,14 +100,36 @@ namespace SteamAchievements.Services
         /// <returns> </returns>
         public Uri GetLogOnUrl()
         {
-            dynamic parameters = new ExpandoObject();
-            parameters.client_id = _appId;
-            parameters.redirect_uri = _canvasUrl.ToString();
-            parameters.response_type = "token";
-            parameters.scope = "publish_stream,offline_access";
+            dynamic parameters = new
+                                     {
+                                         client_id = _appId,
+                                         redirect_uri = _canvasUrl.ToString(),
+                                         response_type = "token",
+                                         scope = "publish_stream,offline_access"
+                                     };
 
             FacebookClient client = new FacebookClient();
             return client.GetLoginUrl(parameters);
+        }
+
+        public string UpdateAccessToken(string accessToken)
+        {
+            dynamic parameters = new
+                                     {
+                                         client_id = _appId,
+                                         client_secret = _appSecret,
+                                         grant_type = "fb_exchange_token"
+                                     };
+
+            FacebookClient client = new FacebookClient(accessToken);
+            dynamic response = client.Post("/oauth/access_token", parameters);
+
+            if (response.access_token != null)
+            {
+                return response.access_token;
+            }
+
+            return null;
         }
 
         #endregion

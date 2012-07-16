@@ -5,7 +5,8 @@
 $(document).ready(function () {
     var $steamUserId = $("#SteamUserId");
     var signedRequest = $("#SignedRequest").val();
-    var achievementService = new AchievementService($steamUserId.val(), signedRequest, null, false);
+    var enableLog = $("#EnableLog").val() == "True";
+    var achievementService = new AchievementService($steamUserId.val(), signedRequest, enableLog, false);
 
     // check the user's profile when they change it
     $steamUserId.change(function () {
