@@ -114,11 +114,14 @@ namespace SteamAchievements.Services
 
         public string UpdateAccessToken(string accessToken)
         {
+            //See http://stackoverflow.com/questions/8982025/how-to-extend-access-token-validity-since-offline-access-deprecation
+
             dynamic parameters = new
                                      {
                                          client_id = _appId,
                                          client_secret = _appSecret,
-                                         grant_type = "fb_exchange_token"
+                                         grant_type = "fb_exchange_token",
+                                         fb_exchange_token = accessToken
                                      };
 
             FacebookClient client = new FacebookClient(accessToken);
