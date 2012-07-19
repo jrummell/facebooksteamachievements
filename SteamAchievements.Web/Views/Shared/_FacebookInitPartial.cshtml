@@ -11,6 +11,11 @@
             status: true
         });
 
+        if ($("#LogOnView").length == 0)
+        {
+            return;
+        }
+
         // listen for and handle auth.authResponseChange events
         FB.Event.subscribe('auth.authResponseChange', function (response)
         {
@@ -59,9 +64,4 @@
         js.src = "//connect.facebook.net/en_US/all.js";
         ref.parentNode.insertBefore(js, ref);
     } (document));
-    </script>
-
-    <div id="fblogin" class="fb-login-button">Login with Facebook</div>
-
-<div id="logOnError">
-</div>
+</script>
