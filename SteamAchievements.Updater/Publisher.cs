@@ -66,10 +66,11 @@ namespace SteamAchievements.Updater
                 {
                     _autoUpdateManager.Logger.Log(ex);
 
-                    if (++sqlErrorCount > 10)
+                    const int maxSqlErrors = 10;
+                    if (++sqlErrorCount > maxSqlErrors)
                     {
                         // a sql exception happens more than 10 times, give up
-                        _autoUpdateManager.Logger.Log("Exceeding maximum sql error count (" + sqlErrorCount + ")");
+                        _autoUpdateManager.Logger.Log("Exceeded maximum sql error count (" + maxSqlErrors + ")");
                         return;
                     }
                 }
