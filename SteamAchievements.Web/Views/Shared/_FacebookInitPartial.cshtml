@@ -1,15 +1,17 @@
 ﻿<div id="fb-root">
 </div>
-@* <div class="fb-login-button" data-show-faces="true" data-width="200" data-max-rows="1" perms="user_about_me"></div> *@
 <script type="text/javascript">
     window.fbAsyncInit = function ()
     {
-        FB.init({ appId: '@Html.FacebookAppId()',
+        FB.init({
+            appId: '@Html.FacebookAppId()',
             cookie: true,
             xfbml: true,
-            oauth: true
+            oauth: true,
+            status: true
         });
 
+        // listen for and handle auth.authResponseChange events
         FB.Event.subscribe('auth.authResponseChange', function (response)
         {
             if (response.status === 'connected')
@@ -48,13 +50,18 @@
         });
     };
 
+    // Load the SDK Asynchronously
     (function (d)
     {
-        var js, id = 'facebook-jssdk'; if (d.getElementById(id)) { return; }
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) { return; }
         js = d.createElement('script'); js.id = id; js.async = true;
         js.src = "//connect.facebook.net/en_US/all.js";
-        d.getElementsByTagName('head')[0].appendChild(js);
+        ref.parentNode.insertBefore(js, ref);
     } (document));
-</script>
+    </script>
+
+    <div id="fblogin" class="fb-login-button">Login with Facebook</div>
+
 <div id="logOnError">
 </div>
