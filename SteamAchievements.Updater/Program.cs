@@ -1,35 +1,26 @@
 ﻿using System;
 using System.IO;
-using Microsoft.Practices.Unity;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
+using SteamAchievements.Updater.Properties;
 
 namespace SteamAchievements.Updater
 {
     internal class Program
     {
-        private static IUnityContainer _container;
         private static readonly DirectoryInfo _logDirectory = new DirectoryInfo("logs");
 
         private static void Main(string[] args)
         {
-            _container = BuildContainer();
-
             ModelMapCreator mapCreator = new ModelMapCreator();
             mapCreator.CreateMappings();
 
-            Publisher publisher = _container.Resolve<Publisher>();
-
-            PrepareLog(publisher);
-
-            try
+            using (Publisher publisher = CreatePublisher())
             {
+                PrepareLog(publisher);
+
                 publisher.Publish();
-            }
-            finally
-            {
-                publisher.Dispose();
             }
         }
 
@@ -47,29 +38,16 @@ namespace SteamAchievements.Updater
             autoUpdateLogger.Attach(Console.Out);
         }
 
-        private static IUnityContainer BuildContainer()
+        private static Publisher CreatePublisher()
         {
-            UnityContainer container = new UnityContainer();
-
-            container.RegisterType<ISteamCommunityManager, SteamCommunityManager>();
-            container.RegisterType<IWebClientWrapper, WebClientWrapper>();
-            container.RegisterType<ISteamProfileXmlParser, SteamProfileXmlParser>();
-            container.RegisterType<IGameXmlParser, GameXmlParser>();
-            container.RegisterType<IAchievementXmlParser, AchievementXmlParser>();
-
-            container.RegisterType<IAchievementService, AchievementService>();
-            container.RegisterType<IUserService, UserService>();
-
-            container.RegisterType<IAchievementManager, AchievementManager>();
-            container.RegisterType<ISteamRepository, SteamRepository>();
-
-            container.RegisterType<IAutoUpdateLogger, AutoUpdateLogger>(new InjectionConstructor(_logDirectory.FullName));
-            container.RegisterType<IAutoUpdateManager, AutoUpdateManager>();
-            container.RegisterType<IFacebookClientService, FacebookClientService>();
-
-            container.RegisterType<Publisher>();
-
-            return container;
+            var settings = Settings.Default;
+            var logger = new AutoUpdateLogger(_logDirectory.FullName);
+            var achievementManager = new AchievementManager(new SteamRepository());
+            var communityManager = new SteamCommunityManager(new WebClientWrapper(), new SteamProfileXmlParser(), new GameXmlParser(), new AchievementXmlParser());
+            var achievementService = new AchievementService(achievementManager, communityManager);
+            var facebookClient = new FacebookClientService(settings.FacebookAppId, settings.FacebookAppSecret, settings.FacebookCanvasUrl);
+            var autoUpdateManager = new AutoUpdateManager(achievementService, new UserService(achievementManager), facebookClient, logger);
+            return new Publisher(autoUpdateManager);
         }
     }
 }

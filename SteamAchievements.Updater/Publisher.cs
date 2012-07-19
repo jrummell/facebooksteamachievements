@@ -55,7 +55,7 @@ namespace SteamAchievements.Updater
         public void Publish()
         {
             ICollection<User> users = _autoUpdateManager.GetAutoUpdateUsers();
-
+            int sqlErrorCount = 0;
             foreach (User user in users)
             {
                 try
@@ -64,9 +64,14 @@ namespace SteamAchievements.Updater
                 }
                 catch (SqlException ex)
                 {
-                    // a sql exception usually insn't recoverable, so return
                     _autoUpdateManager.Logger.Log(ex);
-                    return;
+
+                    if (++sqlErrorCount > 10)
+                    {
+                        // a sql exception happens more than 10 times, give up
+                        _autoUpdateManager.Logger.Log("Exceeding maximum sql error count (" + sqlErrorCount + ")");
+                        return;
+                    }
                 }
                 catch (Exception ex)
                 {

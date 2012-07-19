@@ -66,7 +66,7 @@ namespace SteamAchievements.Web.Controllers
 
             IndexViewModel model = Mapper.Map<User, IndexViewModel>(UserSettings);
 
-            if (Properties.Settings.Default.Mode != FacebookMode.None && model.FacebookUserId == 0)
+            if (Properties.Settings.Default.Mode == FacebookMode.Canvas && model.FacebookUserId == 0)
             {
                 model.LogOnRedirectUrl = _facebookClient.GetLogOnUrl();
             }

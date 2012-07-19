@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SteamAchievements.Updater.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="FacebookCanvasUrl" Type="System.Uri" Scope="Application">
+      <Value Profile="(Default)">http://apps.facebook.com/your_canvas_url/</Value>
+    </Setting>
+    <Setting Name="FacebookAppId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">your_app_id</Value>
+    </Setting>
+    <Setting Name="FacebookAppSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">your_app_secret</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
