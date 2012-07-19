@@ -62,7 +62,7 @@ namespace SteamAchievements.Services
                 return 0;
             }
 
-            return user.id;
+            return Convert.ToInt64(user.id);
         }
 
         /// <summary>
