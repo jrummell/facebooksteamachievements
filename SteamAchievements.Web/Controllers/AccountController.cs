@@ -66,6 +66,11 @@ namespace SteamAchievements.Web.Controllers
                 ModelState.AddModelError("FacebookUserId", "Invalid FacebookUserId.");
             }
 
+            if (!ModelState.IsValid)
+            {
+                return LogOnResult(model);
+            }
+
             User user = UserService.GetUser(model.FacebookUserId) ?? new User();
             user.AccessToken = model.AccessToken;
 
