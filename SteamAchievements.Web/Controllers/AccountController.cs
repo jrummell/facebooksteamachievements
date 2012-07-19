@@ -40,7 +40,6 @@ namespace SteamAchievements.Web.Controllers
 
         public ActionResult LogOn()
         {
-            //TODO: LogOn view
             return View();
         }
 

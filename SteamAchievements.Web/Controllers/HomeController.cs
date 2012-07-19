@@ -71,6 +71,11 @@ namespace SteamAchievements.Web.Controllers
                 model.LogOnRedirectUrl = _facebookClient.GetLogOnUrl();
             }
 
+            if (Properties.Settings.Default.Mode == FacebookMode.Mobile && model.FacebookUserId == 0)
+            {
+                return RedirectToAction("LogOn", "Account");
+            }
+
             return View(model);
         }
 

@@ -172,7 +172,8 @@ namespace SteamAchievements.Services
             	}
             }
 
-            return achievements.Where(a => a.Game != null).OrderBy(a => a.Game.Name).ToList();
+            return achievements.Where(a => a.Game != null)
+                .OrderBy(a => a.Game.Name).ThenBy(a => a.Name).ToList();
         }
 
         /// <summary>
