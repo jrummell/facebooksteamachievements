@@ -25,7 +25,7 @@
                 var accessToken = response.authResponse.accessToken;
 
                 // update access token and reload
-                $.post('@Url.Action("LogOn", "Account")', { userId: uid, accessToken: accessToken },
+                $.post('@Url.Action("LogOn", "Account")', { facebookUserId: uid, accessToken: accessToken },
                 function (result)
                 {
                     if (result.isValid)
