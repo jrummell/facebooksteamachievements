@@ -13,8 +13,9 @@
         <li class="achievement">
             <img class="left" src="@achievement.ImageUrl" alt="@achievement.Name" />
             <div class="text">
-                <input type="checkbox" value="@achievement.Id" id="@achievement.ApiName" />
-                <label for="@achievement.ApiName">
+                @{var checkboxId = "a" + achievement.Id;}
+                <input type="checkbox" value="@achievement.Id" id="@checkboxId" />
+                <label for="@checkboxId">
                     <span class="name">@achievement.Name</span> 
                     <span class="description">@achievement.Description</span></label>
             </div>
