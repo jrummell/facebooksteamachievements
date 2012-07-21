@@ -25,10 +25,8 @@ namespace SteamAchievements.Data
     {
         partial void OnCreated()
         {
-#if DEBUG
             // write log to Debug output
             Log = new DebugTextWriter();
-#endif
         }
     }
 }

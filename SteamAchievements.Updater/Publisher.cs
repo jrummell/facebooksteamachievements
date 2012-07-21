@@ -22,9 +22,10 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-
+using System.Linq;
 using SteamAchievements.Services.Models;
 using Disposable = SteamAchievements.Data.Disposable;
+using System.Transactions;
 
 namespace SteamAchievements.Updater
 {
@@ -54,30 +55,34 @@ namespace SteamAchievements.Updater
         /// </summary>
         public void Publish()
         {
-            ICollection<User> users = _autoUpdateManager.GetAutoUpdateUsers();
+            IEnumerable<User> users = _autoUpdateManager.GetAutoUpdateUsers();
             int sqlErrorCount = 0;
             foreach (User user in users)
             {
-                try
+                using (TransactionScope scope = new TransactionScope())
                 {
-                    _autoUpdateManager.PublishUserAchievements(user);
-                }
-                catch (SqlException ex)
-                {
-                    _autoUpdateManager.Logger.Log(ex);
-
-                    const int maxSqlErrors = 10;
-                    if (++sqlErrorCount > maxSqlErrors)
+                    try
                     {
-                        // a sql exception happens more than 10 times, give up
-                        _autoUpdateManager.Logger.Log("Exceeded maximum sql error count (" + maxSqlErrors + ")");
-                        return;
+                        _autoUpdateManager.PublishUserAchievements(user);
+                        scope.Complete();
                     }
-                }
-                catch (Exception ex)
-                {
-                    // log any other errors and continue to the next user
-                    _autoUpdateManager.Logger.Log(ex);
+                    catch (SqlException ex)
+                    {
+                        _autoUpdateManager.Logger.Log(ex);
+
+                        const int maxSqlErrors = 100;
+                        if (++sqlErrorCount > maxSqlErrors)
+                        {
+                            // a sql exception happens more than 10 times, give up
+                            _autoUpdateManager.Logger.Log("Exceeded maximum sql error count (" + maxSqlErrors + ")");
+                            return;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // log any other errors and continue to the next user
+                        _autoUpdateManager.Logger.Log(ex);
+                    }
                 }
             }
 
