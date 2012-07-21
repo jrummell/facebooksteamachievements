@@ -528,15 +528,15 @@ namespace SteamAchievements.Data
                 return new Achievement[0];
             }
 
-            IEnumerable<string> communityAchievementIds =
-                from achievement in communityAchievements
-                select achievement.GameId + achievement.ApiName;
+            var communityGameIds = communityAchievements.Select(a => a.GameId).Distinct();
+            var communityApiNames = communityAchievements.Select(a => a.ApiName.Trim()).Distinct();
 
-            List<Achievement> dbAchievements =
+            var dbAchievements =
                 (from achievement in _repository.Achievements
-                 let achievementId = achievement.GameId + achievement.ApiName
-                 where communityAchievementIds.Contains(achievementId)
-                 select achievement).ToList();
+                 where communityGameIds.Contains(achievement.GameId)
+                    && communityApiNames.Contains(achievement.ApiName.Trim())
+                 select new { achievement.GameId, ApiName = achievement.ApiName.Trim() })
+                 .ToList();
 
             List<Achievement> missingAchievements = new List<Achievement>();
             if (communityAchievements.Count != dbAchievements.Count)
@@ -547,7 +547,7 @@ namespace SteamAchievements.Data
                     bool exists =
                         dbAchievements.Where(
                             a => a.GameId == communityAchievement.GameId
-                                 && a.ApiName == communityAchievement.ApiName)
+                                 && String.Compare(a.ApiName.Trim(), communityAchievement.ApiName.Trim(), ignoreCase: true) == 0)
                             .Any();
 
                     if (!exists)

@@ -84,7 +84,7 @@ namespace SteamAchievements.Services
                 where apiname != null && iconClosed != null && description != null && name != null && closed != null
                 select new
                            {
-                               apiname = apiname.Value,
+                               apiname = apiname.Value.Trim(),
                                closed = closed.Value == "1",
                                // name is in all caps - fix it
                                name = _textInfo.ToTitleCase(name.Value.ToLower()),
