@@ -3,14 +3,19 @@
 /// <reference path="json2.js" />
 /// <reference path="columnizer.js" />
 
-if (!window.console) {
-    window.console = {};
-    if (!window.console.log) {
-        window.console.log = function () { };
+if (!window.console)
+{
+    window.console = { };
+    if (!window.console.log)
+    {
+        window.console.log = function()
+        {
+        };
     }
 }
 
-function AchievementService(steamUserId, signedRequest, enableLog, publishDescription) {
+function AchievementService(steamUserId, signedRequest, enableLog, publishDescription)
+{
     var self = this;
 
     // fields
@@ -22,45 +27,88 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
     self.publishDescription = publishDescription;
 
     // methods
-    self.loadProfile = function(selector, callback) {
+    self.loadProfile = function(selector, callback)
+    {
         load(selector, "Profile", { steamUserId: self.steamUserId }, callback);
     };
 
-    self.validateProfile = function(steamUserIdToValidate, callback) {
+    self.validateProfile = function(steamUserIdToValidate, callback)
+    {
         steamUserIdToValidate = steamUserIdToValidate || self.steamUserId;
         var data;
-        if (steamUserIdToValidate) {
+        if (steamUserIdToValidate)
+        {
             data = { steamUserId: steamUserIdToValidate };
         }
-        else {
+        else
+        {
             data = { };
         }
 
         post("ValidateProfile", data, callback);
     };
 
-    self.updateAccessToken = function(callback) {
-        post("UpdateAccessToken", {}, callback);
+    self.updateAccessToken = function(callback)
+    {
+        post("UpdateAccessToken", { }, callback);
     };
 
-    self.loadGames = function(selector, callback) {
+    self.getHashAccessToken = function()
+    {
+        // http://stackoverflow.com/questions/5646851/split-and-parse-window-location-hash
+        var urlhash = location.hash.substr(1);
+        var accessToken =
+            urlhash.substr(urlhash.indexOf('access_token='))
+                .split('&')[0]
+                .split('=')[1];
+        if (accessToken)
+        {
+            return accessToken;
+        }
+
+        return null;
+    };
+
+    self.updateAccessTokenFromHash = function (callback)
+    {
+        // http://stackoverflow.com/questions/5646851/split-and-parse-window-location-hash
+        var urlhash = location.hash.substr(1);
+        var accessToken =
+            urlhash.substr(urlhash.indexOf('access_token='))
+                .split('&')[0]
+                .split('=')[1];
+        if (accessToken)
+        {
+            post("SetAccessToken", { accessToken: accessToken }, callback);
+            return true;
+        }
+
+        return false;
+    };
+
+    self.loadGames = function(selector, callback)
+    {
         load(selector, "Games", { steamUserId: self.steamUserId }, callback);
     };
 
-    self.updateAchievements = function(callback, errorCallback) {
+    self.updateAchievements = function(callback, errorCallback)
+    {
         post("UpdateAchievements", { }, callback, errorCallback);
     };
 
-    self.loadUnpublishedAchievements = function(selector, callback) {
+    self.loadUnpublishedAchievements = function(selector, callback)
+    {
         load(selector, "UnpublishedAchievements", { }, callback);
     };
 
-    self.hideAchievements = function(achievementIds, callback, errorCallback) {
+    self.hideAchievements = function(achievementIds, callback, errorCallback)
+    {
         var parameters = { achievementIds: achievementIds };
         post("HideAchievements", parameters, callback, errorCallback);
     };
 
-    self.publishAchievements = function(achievements, callback, errorCallback) {
+    self.publishAchievements = function(achievements, callback, errorCallback)
+    {
         // display publish dialog
 
         var image = null;
@@ -70,14 +118,17 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
         $.each(achievements, function(i) {
             var achievement = this; // achievements[i];
 
-            if (image == null) {
+            if (image == null)
+            {
                 image = achievement.ImageUrl;
             }
 
-            if (gameId != achievement.Game.Id) {
+            if (gameId != achievement.Game.Id)
+            {
                 gameId = achievement.Game.Id;
 
-                if (i > 0 && description.length > 2) {
+                if (i > 0 && description.length > 2)
+                {
                     // replace last comma with period
                     description = description.substring(0, description.length - 2);
                     description += ". ";
@@ -88,14 +139,17 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
 
             description += achievement.Name;
 
-            if (self.publishDescription) {
+            if (self.publishDescription)
+            {
                 description += " (" + achievement.Description + ")";
             }
 
-            if (i < achievements.length - 1) {
+            if (i < achievements.length - 1)
+            {
                 description += ", ";
             }
-            else {
+            else
+            {
                 description += ".";
             }
 
@@ -114,7 +168,8 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
 
         // create and anchor in the middle of the page and focus on it so that the dialog will be visible to the user.
         var $middleAnchor = $("#middleAnchor");
-        if ($middleAnchor.length == 0) {
+        if ($middleAnchor.length == 0)
+        {
             // add an anchor in the middle of the page
             var middleX = $(document).width() / 2;
             var middleY = $(document).height() / 2;
@@ -128,11 +183,13 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
         $middleAnchor.focus();
 
         FB.ui(publishParams, function(response) {
-            if (response && response.post_id) {
+            if (response && response.post_id)
+            {
                 // on successful publish, update published field on each published achievement.
 
                 var achievementIds = new Array();
-                for (var i = 0; i < achievements.length; i++) {
+                for (var i = 0; i < achievements.length; i++)
+                {
                     achievementIds.push(achievements[i].Id);
                 }
 
@@ -142,58 +199,75 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
         });
     };
 
-    self.validateSteamUserId = function(errorMessageSelector) {
+    self.validateSteamUserId = function(errorMessageSelector)
+    {
         var valid = true;
-        if (self.steamUserId == null || self.steamUserId == "") {
+        if (self.steamUserId == null || self.steamUserId == "")
+        {
             valid = false;
         }
 
-        if (!valid) {
+        if (!valid)
+        {
             $(errorMessageSelector).message({ type: "error", dismiss: false });
         }
 
         return valid;
     };
 
-    self.showLoading = function(selector) {
-        if (self.mobile) {
+    self.showLoading = function(selector)
+    {
+        if (self.mobile)
+        {
             $.mobile.showPageLoadingMsg();
         }
-        else {
+        else
+        {
             $(selector).show("normal", self.updateSize);
         }
     };
 
-    self.hideLoading = function(selector) {
-        if (self.mobile) {
+    self.hideLoading = function(selector)
+    {
+        if (self.mobile)
+        {
             $.mobile.hidePageLoadingMsg();
         }
-        else {
+        else
+        {
             $(selector || "img.loading").fadeOut("slow", self.updateSize);
         }
     };
 
-    self.updateSize = function() {
-        if (self.mobile) {
+    self.updateSize = function()
+    {
+        if (self.mobile)
+        {
             return;
         }
 
-        if (typeof(FB) != "undefined") {
+        if (typeof(FB) != "undefined")
+        {
+            //TODO: the canvas resize api has changed
             // update the size of the iframe to match the content
             FB.Canvas.setSize();
         }
     };
 
-    self.log = function(message) {
-        if (self.enableLog) {
+    self.log = function(message)
+    {
+        if (self.enableLog)
+        {
             console.log(message);
         }
     };
 
     // private methods
 
-    function load(selector, method, params, ondone) {
-        if (params == null) {
+    function load(selector, method, params, ondone)
+    {
+        if (params == null)
+        {
             params = { };
         }
         setSignedRequest(params);
@@ -202,14 +276,18 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
         $(selector).load(url, params, ondone);
     }
 
-    function post(method, params, ondone, onerror) {
-        if (onerror == null) {
-            onerror = function(m) {
+    function post(method, params, ondone, onerror)
+    {
+        if (onerror == null)
+        {
+            onerror = function(m)
+            {
                 self.log(m.Message);
             };
         }
 
-        if (params == null) {
+        if (params == null)
+        {
             params = { };
         }
         setSignedRequest(params);
@@ -223,22 +301,29 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
             timeout: 120000, // 2 minutes
             dataType: "json",
             success: ondone,
-            error: function(xhr) {
-                if (!onerror) {
+            error: function(xhr)
+            {
+                if (!onerror)
+                {
                     return;
                 }
 
-                if (xhr.responseText) {
-                    try {
+                if (xhr.responseText)
+                {
+                    try
+                    {
                         var err = JSON.parse(xhr.responseText);
-                        if (err) {
+                        if (err)
+                        {
                             onerror(err);
                         }
-                        else {
+                        else
+                        {
                             onerror({ Message: "Unknown server error." });
                         }
                     }
-                    catch(e) {
+                    catch(e)
+                    {
                         onerror({ Message: "Unknown server error." });
                     }
                 }
@@ -247,7 +332,8 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
         });
     }
 
-    function setSignedRequest(params) {
+    function setSignedRequest(params)
+    {
         // since this is an ajax request, we need to add the signed_request parameter explicitly
         params.signed_request = self.signedRequest;
     }
