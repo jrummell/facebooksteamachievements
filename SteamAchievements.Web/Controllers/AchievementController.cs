@@ -31,13 +31,14 @@ namespace SteamAchievements.Web.Controllers
 {
     public class AchievementController : FacebookController
     {
-        //TODO: UserSettings is null in IE
+        //TODO: UserSettings is null in IE?
 
         private readonly IAchievementService _achievementService;
-        private readonly IUserService _userService;
         private readonly IFacebookClientService _facebookService;
+        private readonly IUserService _userService;
 
-        public AchievementController(IAchievementService achievementService, IUserService userService, IFacebookClientService facebookService)
+        public AchievementController(IAchievementService achievementService, IUserService userService,
+                                     IFacebookClientService facebookService)
             : base(userService)
         {
             _achievementService = achievementService;
@@ -122,6 +123,21 @@ namespace SteamAchievements.Web.Controllers
             if (!String.IsNullOrEmpty(accessToken))
             {
                 UserSettings.AccessToken = accessToken;
+                _userService.UpdateUser(UserSettings);
+
+                return Json(true);
+            }
+
+            return Json(false);
+        }
+
+        [HttpPost]
+        public JsonResult SetAccessToken(string accessToken)
+        {
+            if (!String.IsNullOrEmpty(accessToken))
+            {
+                UserSettings.AccessToken = accessToken;
+                UserSettings.FacebookUserId = _facebookService.GetUserId(accessToken);
                 _userService.UpdateUser(UserSettings);
 
                 return Json(true);
