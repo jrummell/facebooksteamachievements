@@ -2,56 +2,44 @@
 <html>
 <head>
     <title>Steam Achievements - @ViewBag.Title</title>
-    <link href="@Url.Content("~/Content/favicon.ico")" rel="icon" type="image/x-icon" />
+    <link href="~/Content/favicon.ico" rel="icon" type="image/x-icon" />
     <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/redmond/jquery-ui.css"
-        rel="Stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/themes/canvas/site.css")" rel="stylesheet" type="text/css" />
+          rel="Stylesheet" type="text/css" />
+    @Styles.Render(BundlePaths.CanvasTheme)
     @RenderSection("head", false)
 </head>
-<body>
-    @Html.Partial("_FacebookCanvasInitPartial")
-    <div id="topAdWrapper">
-        @Html.Ad(AdLocation.Top)
-    </div>
-    <div class="fbbody">
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-        <script type="text/javascript" src='@Url.Content("~/Scripts/json2.js")'></script>
-        <script type="text/javascript" src='@Url.Content("~/Scripts/jquery.ui.message.min.js")'></script>
-        <script type="text/javascript" src='@Url.Content("~/Scripts/columnizer.js")'></script>
-        <script type="text/javascript" src='@Url.Content("~/Scripts/achievements.js")'></script>
-        <div>
-            <a href="@Url.CanvasAction("")" target="_top">
-                <img src="@Url.Content("~/Content/themes/canvas/banner-light.png")" alt="Steam Achievements" />
-            </a>
+    <body>
+        @Html.Hidden("FacebookAppId", Html.FacebookAppId())
+        <div id="fb-root"></div>
+        <div id="topAdWrapper">
+            @Html.Ad(AdLocation.Top)
         </div>
-        <div class="menu">
-            @Html.Partial("_MenuPartial")
+        <div class="fbbody">
+            <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+            <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+            <div>
+                <a href="@Url.CanvasAction("")" target="_top">
+                    <img src="~/Content/themes/canvas/banner-light.png" alt="Steam Achievements" />
+                </a>
+            </div>
+            <div class="menu">
+                @Html.Partial("_MenuPartial")
+            </div>
+            <div id="body">
+                @RenderBody()
+            </div>
+            <div class="footer">
+                @Html.Disclaimer()
+                <p>
+                    Version @Html.Version().</p>
+            </div>
         </div>
-        <div id="body">
-            @RenderBody()
+        <div id="bottomAdWrapper">
+            @Html.Ad(AdLocation.Bottom)
         </div>
-        <div class="footer">
-            @Html.Disclaimer()
-            <p>
-                Version @Html.Version().</p>
-        </div>
-    </div>
-    <script type="text/javascript">
-        $(document).ready(function ()
-        {
-            $("a.help, button.help, input.help").button({ icons: { primary: "ui-icon-help"} });
-            $("a.check").button({ icons: { primary: "ui-icon-check"} });
-            $("a.delete").button({ icons: { primary: "ui-icon-trash" } });
-            $("a.button").button();
-
-            $("form .field-validation-error").message({ type: "error", dismiss: false });
-        });
-    </script>
-    <div id="bottomAdWrapper">
-        @Html.Ad(AdLocation.Bottom)
-    </div>
-    @Html.UserVoice()
-    @Html.Analytics()
-</body>
+        @Scripts.Render(BundlePaths.CanvasScripts)
+        @RenderSection("scripts", required: false)
+        @Html.UserVoice()
+        @Html.Analytics()
+    </body>
 </html>

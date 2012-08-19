@@ -32,8 +32,9 @@ namespace SteamAchievements.Web.Controllers
     {
         private readonly IFacebookClientService _facebookClient;
 
-        public AccountController(IUserService userService, IFacebookClientService facebookClient)
-            : base(userService)
+        public AccountController(IUserService userService, IFacebookClientService facebookClient,
+                                 IErrorLogger errorLogger)
+            : base(userService, errorLogger)
         {
             _facebookClient = facebookClient;
         }
@@ -105,11 +106,11 @@ namespace SteamAchievements.Web.Controllers
             if (Request.IsAjaxRequest())
             {
                 return Json(new
-                                {
-                                    redirectUrl,
-                                    isValid = ModelState.IsValid,
-                                    message = message.ToString()
-                                });
+                    {
+                        redirectUrl,
+                        isValid = ModelState.IsValid,
+                        message = message.ToString()
+                    });
             }
             else
             {

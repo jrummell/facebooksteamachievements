@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
-using Elmah;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
 
@@ -31,15 +30,13 @@ namespace SteamAchievements.Web.Controllers
 {
     public class AchievementController : FacebookController
     {
-        //TODO: UserSettings is null in IE?
-
         private readonly IAchievementService _achievementService;
         private readonly IFacebookClientService _facebookService;
         private readonly IUserService _userService;
 
         public AchievementController(IAchievementService achievementService, IUserService userService,
-                                     IFacebookClientService facebookService)
-            : base(userService)
+                                     IFacebookClientService facebookService, IErrorLogger errorLogger)
+            : base(userService, errorLogger)
         {
             _achievementService = achievementService;
             _userService = userService;
@@ -49,7 +46,10 @@ namespace SteamAchievements.Web.Controllers
         [HttpPost]
         public JsonResult ValidateProfile(string steamUserId)
         {
-            steamUserId = steamUserId ?? UserSettings.SteamUserId;
+            if (steamUserId == null && UserSettings != null)
+            {
+                steamUserId = UserSettings.SteamUserId;
+            }
 
             if (String.IsNullOrEmpty(steamUserId))
             {
@@ -60,7 +60,7 @@ namespace SteamAchievements.Web.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult Profile(string steamUserId)
+        public new PartialViewResult Profile(string steamUserId)
         {
             steamUserId = steamUserId ?? UserSettings.SteamUserId;
 
@@ -97,8 +97,7 @@ namespace SteamAchievements.Web.Controllers
             catch (Exception exception)
             {
                 // signaling the exception will rethrow it, so we'll simply log and continue
-                ErrorLog errorLog = ErrorLog.GetDefault(System.Web.HttpContext.Current);
-                errorLog.Log(new Error(exception));
+                ErrorLogger.Log(exception);
 
                 return Json(new {Error = new {exception.Message, StackTrace = exception.ToString()}});
             }

@@ -3,10 +3,10 @@
 <head>
     <title>Steam Achievements Mobile - @ViewBag.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="@Url.Content("~/Content/favicon.ico")" rel="icon" type="image/x-icon" />
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
-    <link rel="stylesheet" href="@Url.Content("~/Content/themes/mobile/site.css")"/>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <link href="~/Content/favicon.ico" rel="icon" type="image/x-icon" />
+    <link rel="stylesheet" href="//code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
+    @Styles.Render(BundlePaths.MobileTheme)
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).bind("mobileinit", function ()
         {
@@ -14,9 +14,9 @@
             $.mobile.ajaxEnabled = false;
         });
     </script>
-    <script type="text/javascript" src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
-    <script type="text/javascript" src='@Url.Content("~/Scripts/jquery.mobile.message.min.js")'></script>
-    <script type="text/javascript" src='@Url.Content("~/Scripts/achievements.js")'></script>
+    <script type="text/javascript" src="//code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
+    @Scripts.Render(BundlePaths.MobileScripts)
+
     @RenderSection("head", false)
 </head>
 <body>
@@ -27,7 +27,7 @@
         <div data-role="header">
             <div class="banner">
                 <a href="@Url.Action("Index", "Home")">
-                    <img src="@Url.Content("~/Content/themes/mobile/banner-light-mobile.png")" alt="Steam Achievements" />
+                    <img src="~/Content/themes/mobile/banner-light-mobile.png" alt="Steam Achievements" />
                 </a>
             </div>
             <div class="menu" data-role="navbar">
@@ -35,7 +35,9 @@
             </div>
         </div>
         <div data-role="content">
-            @Html.Partial("_FacebookInitPartial")
+            @Html.Hidden("FacebookAppId", Html.FacebookAppId())
+            @Html.Hidden("LogOnUrl", Url.Action("LogOn", "Account"))
+            <div id="fb-root"></div>
             @RenderBody()
         </div>
         <div class="footer ui-bar" data-role="footer">
@@ -45,17 +47,7 @@
                 @Html.Disclaimer()
             </div>
         </div>
-        <script type="text/javascript">
-            $(document).ready(function ()
-            {
-                $("form .field-validation-error").message({ type: "error", dismiss: false });
-
-                $(".footer .about").click(function ()
-                {
-                    $(".footer .disclaimer").toggle();
-                });
-            });
-        </script>
+        @RenderSection("scripts", required: false)
         <div id="bottomAdWrapper">
             @Html.Ad(AdLocation.Bottom)
         </div>
