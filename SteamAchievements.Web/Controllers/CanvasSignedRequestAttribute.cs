@@ -24,6 +24,7 @@ using System.Web;
 using System.Web.Mvc;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
+using SteamAchievements.Web.Models;
 
 namespace SteamAchievements.Web.Controllers
 {
@@ -48,18 +49,21 @@ namespace SteamAchievements.Web.Controllers
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             HttpContextBase context = filterContext.HttpContext;
-            string signedRequestValue = context.Request["signed_request"];
             HttpSessionStateBase session = context.Session;
 
-            if (String.IsNullOrEmpty(signedRequestValue))
+            if (session != null && session[_userSettingsKey] == null)
             {
-                _errorLogger.Log(new InvalidOperationException("Missing signed_request."));
+                string signedRequestValue = context.Request["signed_request"];
+                try
+                {
+                    ValidateSignedRequest(signedRequestValue);
+                }
+                catch (Exception ex)
+                {
+                    _errorLogger.Log(ex);
+                    return;
+                }
 
-                return;
-            }
-
-            if (session[_userSettingsKey] == null)
-            {
                 SignedRequest signedRequest = _facebookClient.ParseSignedRequest(signedRequestValue);
 
                 User user = _userService.GetUser(signedRequest.UserId);
@@ -72,6 +76,15 @@ namespace SteamAchievements.Web.Controllers
                 user.SignedRequest = signedRequestValue;
 
                 session[_userSettingsKey] = user;
+            }
+        }
+
+        private void ValidateSignedRequest(string signedRequest)
+        {
+            if (String.IsNullOrEmpty(signedRequest))
+            {
+                string message = String.Format("Invalid signed request : \"{0}\"", signedRequest);
+                throw new InvalidSignedRequestException(message);
             }
         }
     }
