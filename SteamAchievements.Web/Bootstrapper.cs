@@ -69,14 +69,13 @@ namespace SteamAchievements.Web
             container.RegisterType<IGameXmlParser, GameXmlParser>();
             container.RegisterType<ISteamProfileXmlParser, SteamProfileXmlParser>();
             container.RegisterType<IWebClientWrapper, WebClientWrapper>(new HierarchicalLifetimeManager());
+            container.RegisterType<IErrorLogger, ElmahErrorLogger>();
 
             container.RegisterType<IAchievementManager, AchievementManager>();
             container.RegisterType<IAchievementService, AchievementService>();
             container.RegisterType<IUserService, UserService>();
 
             container.RegisterType<CanvasSignedRequestAttribute>();
-
-            container.RegisterControllers();
 
             return container;
         }

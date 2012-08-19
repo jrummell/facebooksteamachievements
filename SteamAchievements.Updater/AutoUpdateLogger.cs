@@ -1,21 +1,21 @@
 ﻿#region License
 
-// Copyright 2010 John Rummell
-// 
-// This file is part of SteamAchievements.
-// 
-//     SteamAchievements is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     SteamAchievements is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-// 
-//     You should have received a copy of the GNU General Public License
-//     along with SteamAchievements.  If not, see <http://www.gnu.org/licenses/>.
+//  Copyright 2011 John Rummell
+//  
+//  This file is part of SteamAchievements.
+//  
+//      SteamAchievements is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      SteamAchievements is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//  
+//      You should have received a copy of the GNU General Public License
+//      along with SteamAchievements.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -34,9 +34,9 @@ namespace SteamAchievements.Updater
         private string _logFilePath;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AutoUpdateLogger"/> class.
+        ///   Initializes a new instance of the <see cref="AutoUpdateLogger" /> class.
         /// </summary>
-        /// <param name="logPath">The log path.</param>
+        /// <param name="logPath"> The log path. </param>
         public AutoUpdateLogger(string logPath)
         {
             _logPath = logPath;
@@ -47,11 +47,23 @@ namespace SteamAchievements.Updater
         #region IAutoUpdateLogger Members
 
         /// <summary>
-        /// Logs the specified message.
+        ///   Logs the specified format.
         /// </summary>
-        /// <param name="message">The message.</param>
-        public void Log(string message)
+        /// <param name="format"> The format. </param>
+        /// <param name="args"> The args. </param>
+        public void Log(string format, params object[] args)
         {
+            string message;
+
+            if (args == null || args.Length == 0)
+            {
+                message = format;
+            }
+            else
+            {
+                message = String.Format(format, args);
+            }
+
             string formattedMessage = String.Format("{0} {1}", DateTime.UtcNow, message);
 
             foreach (TextWriter writer in _textWriters)
@@ -61,19 +73,9 @@ namespace SteamAchievements.Updater
         }
 
         /// <summary>
-        /// Logs the specified format.
+        ///   Logs the exception.
         /// </summary>
-        /// <param name="format">The format.</param>
-        /// <param name="args">The args.</param>
-        public void Log(string format, params object[] args)
-        {
-            Log(String.Format(format, args));
-        }
-
-        /// <summary>
-        /// Logs the exception.
-        /// </summary>
-        /// <param name="exception">The exception.</param>
+        /// <param name="exception"> The exception. </param>
         public void Log(Exception exception)
         {
             Log("Exception: " + exception.GetType());
@@ -89,7 +91,7 @@ namespace SteamAchievements.Updater
         }
 
         /// <summary>
-        /// Flushes the log.
+        ///   Flushes the log.
         /// </summary>
         public void Flush()
         {
@@ -103,9 +105,9 @@ namespace SteamAchievements.Updater
         }
 
         /// <summary>
-        /// Deletes all log files older than the given date.
+        ///   Deletes all log files older than the given date.
         /// </summary>
-        /// <param name="date">The oldest date to keep.</param>
+        /// <param name="date"> The oldest date to keep. </param>
         public void Delete(DateTime date)
         {
             lock (_logLock)
@@ -128,9 +130,9 @@ namespace SteamAchievements.Updater
         }
 
         /// <summary>
-        /// Attaches the specified writer.
+        ///   Attaches the specified writer.
         /// </summary>
-        /// <param name="writer">The writer.</param>
+        /// <param name="writer"> The writer. </param>
         public void Attach(TextWriter writer)
         {
             _textWriters.Add(writer);
@@ -139,7 +141,7 @@ namespace SteamAchievements.Updater
         #endregion
 
         /// <summary>
-        /// Inits the default writer.
+        ///   Inits the default writer.
         /// </summary>
         private void InitDefaultWriter()
         {
@@ -158,7 +160,7 @@ namespace SteamAchievements.Updater
         }
 
         /// <summary>
-        /// Disposes the managed resources.
+        ///   Disposes the managed resources.
         /// </summary>
         protected override void DisposeManaged()
         {

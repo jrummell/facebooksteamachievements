@@ -2,7 +2,7 @@
     Message plugin for jQuery UI
     Copyright (c) 2012 John Rummell (jrummell.com)
     Licensed under the GPL license (http://www.gnu.org/licenses/gpl.html)
-    Version: 1.7.1
+    Version: 1.7.2
 */
 
 //
@@ -31,7 +31,6 @@
                     if (messageText == null || messageText == "")
                     {
                         messageText = $this.html();
-                        options.message = messageText;
                     }
 
                     // info or error?

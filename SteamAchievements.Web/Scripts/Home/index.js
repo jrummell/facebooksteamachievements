@@ -1,7 +1,4 @@
-﻿/// <reference path="jquery-1.4.4-vsdoc.js" />
-/// <reference path="jquery.ui.message.js" />
-/// <reference path="achievements.js" />
-/// <reference path="columnizer.js" />
+﻿/// <reference path="~/Scripts/Shared/achievements.js" />
 
 $(document).ready(function() {
     var steamUserId = $("#SteamUserId").val();
@@ -11,16 +8,9 @@ $(document).ready(function() {
 
     var achievementService = new AchievementService(steamUserId, signedRequest, enableLog, false);
 
-    if (logOnRedirectUrl.length > 1)
+    if (logOnRedirectUrl.length > 1 && signedRequest == "")
     {
-        var hasAccessToken = achievementService.updateAccessTokenFromHash(function() {
-            window.reload();
-        });
-
-        if (!hasAccessToken)
-        {
-            top.location.href = logOnRedirectUrl;
-        }
+        top.location.href = logOnRedirectUrl;
     }
 
     var valid = achievementService.validateSteamUserId("#steamIdError");

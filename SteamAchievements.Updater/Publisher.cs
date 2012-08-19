@@ -1,31 +1,30 @@
 ﻿#region License
 
-// Copyright 2010 John Rummell
-// 
-// This file is part of SteamAchievements.
-// 
-//     SteamAchievements is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     SteamAchievements is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-// 
-//     You should have received a copy of the GNU General Public License
-//     along with SteamAchievements.  If not, see <http://www.gnu.org/licenses/>.
+//  Copyright 2012 John Rummell
+//  
+//  This file is part of SteamAchievements.
+//  
+//      SteamAchievements is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      SteamAchievements is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//  
+//      You should have received a copy of the GNU General Public License
+//      along with SteamAchievements.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using SteamAchievements.Services.Models;
-using Disposable = SteamAchievements.Data.Disposable;
 using System.Transactions;
+using SteamAchievements.Data;
+using User = SteamAchievements.Services.Models.User;
 
 namespace SteamAchievements.Updater
 {
@@ -34,16 +33,16 @@ namespace SteamAchievements.Updater
         private readonly IAutoUpdateManager _autoUpdateManager;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Publisher"/> class.
+        ///   Initializes a new instance of the <see cref="Publisher" /> class.
         /// </summary>
-        /// <param name="autoUpdateManager">The auto update manager.</param>
+        /// <param name="autoUpdateManager"> The auto update manager. </param>
         public Publisher(IAutoUpdateManager autoUpdateManager)
         {
             _autoUpdateManager = autoUpdateManager;
         }
 
         /// <summary>
-        /// Gets the logger.
+        ///   Gets the logger.
         /// </summary>
         public IAutoUpdateLogger Logger
         {
@@ -51,7 +50,7 @@ namespace SteamAchievements.Updater
         }
 
         /// <summary>
-        /// Publishes this instance.
+        ///   Publishes this instance.
         /// </summary>
         public void Publish()
         {
@@ -70,7 +69,7 @@ namespace SteamAchievements.Updater
                     {
                         _autoUpdateManager.Logger.Log(ex);
 
-                        const int maxSqlErrors = 100;
+                        const int maxSqlErrors = 10;
                         if (++sqlErrorCount > maxSqlErrors)
                         {
                             // a sql exception happens more than 10 times, give up
@@ -90,7 +89,7 @@ namespace SteamAchievements.Updater
         }
 
         /// <summary>
-        /// Disposes the managed resources.
+        ///   Disposes the managed resources.
         /// </summary>
         protected override void DisposeManaged()
         {

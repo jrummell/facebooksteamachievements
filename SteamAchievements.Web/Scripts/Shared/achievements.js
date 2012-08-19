@@ -53,39 +53,6 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
         post("UpdateAccessToken", { }, callback);
     };
 
-    self.getHashAccessToken = function()
-    {
-        // http://stackoverflow.com/questions/5646851/split-and-parse-window-location-hash
-        var urlhash = location.hash.substr(1);
-        var accessToken =
-            urlhash.substr(urlhash.indexOf('access_token='))
-                .split('&')[0]
-                .split('=')[1];
-        if (accessToken)
-        {
-            return accessToken;
-        }
-
-        return null;
-    };
-
-    self.updateAccessTokenFromHash = function (callback)
-    {
-        // http://stackoverflow.com/questions/5646851/split-and-parse-window-location-hash
-        var urlhash = location.hash.substr(1);
-        var accessToken =
-            urlhash.substr(urlhash.indexOf('access_token='))
-                .split('&')[0]
-                .split('=')[1];
-        if (accessToken)
-        {
-            post("SetAccessToken", { accessToken: accessToken }, callback);
-            return true;
-        }
-
-        return false;
-    };
-
     self.loadGames = function(selector, callback)
     {
         load(selector, "Games", { steamUserId: self.steamUserId }, callback);

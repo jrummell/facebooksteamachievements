@@ -22,7 +22,6 @@
 using System;
 using System.Web.Mvc;
 using AutoMapper;
-using Elmah;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
 using SteamAchievements.Web.Models;
@@ -35,8 +34,8 @@ namespace SteamAchievements.Web.Controllers
         private readonly IFacebookClientService _facebookClient;
 
         public HomeController(IAchievementService achievementService, IUserService userService,
-                              IFacebookClientService facebookClient)
-            : base(userService)
+                              IFacebookClientService facebookClient, IErrorLogger errorLogger)
+            : base(userService, errorLogger)
         {
             _achievementService = achievementService;
             _facebookClient = facebookClient;
@@ -129,7 +128,7 @@ namespace SteamAchievements.Web.Controllers
                 catch (Exception ex)
                 {
                     // log and swallow exceptions so that the settings can be saved
-                    ErrorSignal.FromCurrentContext().Raise(ex);
+                    ErrorLogger.Log(ex);
                 }
             }
 

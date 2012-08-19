@@ -28,15 +28,18 @@ namespace SteamAchievements.Web.Controllers
     public abstract class FacebookController : Controller
     {
         private const string _userSettingsKey = "UserSettings";
+        private readonly IErrorLogger _errorLogger;
         private readonly IUserService _userService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FacebookController"/> class.
+        ///   Initializes a new instance of the <see cref="FacebookController" /> class.
         /// </summary>
-        /// <param name="userService">The user service.</param>
-        protected FacebookController(IUserService userService)
+        /// <param name="userService"> The user service. </param>
+        /// <param name="errorLogger"> </param>
+        protected FacebookController(IUserService userService, IErrorLogger errorLogger)
         {
             _userService = userService;
+            _errorLogger = errorLogger;
         }
 
         /// <summary>
@@ -54,6 +57,14 @@ namespace SteamAchievements.Web.Controllers
         protected IUserService UserService
         {
             get { return _userService; }
+        }
+
+        /// <summary>
+        ///   Gets the error logger.
+        /// </summary>
+        protected IErrorLogger ErrorLogger
+        {
+            get { return _errorLogger; }
         }
     }
 }

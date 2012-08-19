@@ -1,4 +1,25 @@
-﻿using System;
+﻿#region License
+
+//  Copyright 2012 John Rummell
+//  
+//  This file is part of SteamAchievements.
+//  
+//      SteamAchievements is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      SteamAchievements is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//  
+//      You should have received a copy of the GNU General Public License
+//      along with SteamAchievements.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
+
+using System;
 using System.IO;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
@@ -25,9 +46,9 @@ namespace SteamAchievements.Updater
         }
 
         /// <summary>
-        /// Prepares the log.
+        ///   Prepares the log.
         /// </summary>
-        /// <param name="publisher">The publisher.</param>
+        /// <param name="publisher"> The publisher. </param>
         private static void PrepareLog(Publisher publisher)
         {
             IAutoUpdateLogger autoUpdateLogger = publisher.Logger;
@@ -43,10 +64,13 @@ namespace SteamAchievements.Updater
             var settings = Settings.Default;
             var logger = new AutoUpdateLogger(_logDirectory.FullName);
             var achievementManager = new AchievementManager(new SteamRepository());
-            var communityManager = new SteamCommunityManager(new WebClientWrapper(), new SteamProfileXmlParser(), new GameXmlParser(), new AchievementXmlParser());
+            var communityManager = new SteamCommunityManager(new WebClientWrapper(), new SteamProfileXmlParser(),
+                                                             new GameXmlParser(), new AchievementXmlParser(), logger);
             var achievementService = new AchievementService(achievementManager, communityManager);
-            var facebookClient = new FacebookClientService(settings.FacebookAppId, settings.FacebookAppSecret, settings.FacebookCanvasUrl);
-            var autoUpdateManager = new AutoUpdateManager(achievementService, new UserService(achievementManager), facebookClient, logger);
+            var facebookClient = new FacebookClientService(settings.FacebookAppId, settings.FacebookAppSecret,
+                                                           settings.FacebookCanvasUrl);
+            var autoUpdateManager = new AutoUpdateManager(achievementService, new UserService(achievementManager),
+                                                          facebookClient, logger);
             return new Publisher(autoUpdateManager);
         }
     }
