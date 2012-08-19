@@ -3,6 +3,7 @@ window.fbAsyncInit = function ()
 {
     FB.init({
         appId: $("#FacebookAppId").val(),
+        channelUrl: $("#ChannelUrl").val(),
         cookie: true,
         status: true,
         xfbml: false

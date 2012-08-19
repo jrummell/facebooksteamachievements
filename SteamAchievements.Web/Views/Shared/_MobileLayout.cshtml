@@ -36,6 +36,7 @@
         </div>
         <div data-role="content">
             @Html.Hidden("FacebookAppId", Html.FacebookAppId())
+            @Html.Hidden("ChannelUrl", Html.ChannelUrl())
             @Html.Hidden("LogOnUrl", Url.Action("LogOn", "Account"))
             <div id="fb-root"></div>
             @RenderBody()

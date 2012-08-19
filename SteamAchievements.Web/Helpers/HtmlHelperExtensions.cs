@@ -80,6 +80,12 @@ namespace SteamAchievements.Web.Helpers
             return MvcHtmlString.Create(_settings.FacebookAppId);
         }
 
+        public static MvcHtmlString ChannelUrl(this HtmlHelper html)
+        {
+            string channelPath = VirtualPathUtility.ToAbsolute("~/fbchannel.ashx");
+            return MvcHtmlString.Create("//" + html.ViewContext.HttpContext.Request.Url.Host + channelPath);
+        }
+
         public static MvcHtmlString Ad(this HtmlHelper html, AdLocation location)
         {
             return MvcHtmlString.Create(location == AdLocation.Top ? _settings.TopAdMarkup : _settings.BottomAdMarkup);
