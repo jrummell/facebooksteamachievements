@@ -2,4 +2,4 @@
 /// <reference path="~/Scripts/jquery-ui-1.8.22.js" />
 /// <reference path="~/Scripts/jquery.validate.js" />
 /// <reference path="~/Scripts/jquery.validate.unobtrusive.js" />
-/// <reference path="~/Scripts/Shared/achievements.js" />
+/// <reference path="~/Scripts/Shared/AchievementService.js" />

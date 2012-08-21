@@ -1,8 +1,4 @@
-﻿/// <reference path="jquery-1.4.4-vsdoc.js" />
-/// <reference path="jquery.ui.message.js" />
-/// <reference path="achievements.js" />
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
     var $steamUserId = $("#SteamUserId");
     var signedRequest = $("#SignedRequest").val();
     var enableLog = $("#EnableLog").val() == "True";

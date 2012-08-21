@@ -30,6 +30,7 @@ namespace SteamAchievements.Web.Controllers
 {
     public class HomeController : FacebookController
     {
+        private static readonly FacebookMode _facebookMode = Properties.Settings.Default.Mode;
         private readonly IAchievementService _achievementService;
         private readonly IFacebookClientService _facebookClient;
 
@@ -65,12 +66,11 @@ namespace SteamAchievements.Web.Controllers
 
             IndexViewModel model = Mapper.Map<User, IndexViewModel>(UserSettings);
 
-            if (Properties.Settings.Default.Mode == FacebookMode.Canvas && model.FacebookUserId == 0)
+            if (_facebookMode == FacebookMode.Canvas && model.FacebookUserId == 0)
             {
                 model.LogOnRedirectUrl = _facebookClient.GetLogOnUrl();
             }
-
-            if (Properties.Settings.Default.Mode == FacebookMode.Mobile && model.FacebookUserId == 0)
+            else if (_facebookMode == FacebookMode.Mobile && model.FacebookUserId == 0)
             {
                 return RedirectToAction("LogOn", "Account");
             }
@@ -83,6 +83,12 @@ namespace SteamAchievements.Web.Controllers
             User user = UserSettings ?? new User();
 
             SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(user);
+
+            if (_facebookMode == FacebookMode.None)
+            {
+                model.FacebookUserId = 1234;
+                model.SteamUserId = "NullReference";
+            }
 
             return View(model);
         }
