@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 
 //  Copyright 2012 John Rummell
 //  
@@ -19,29 +19,20 @@
 
 #endregion
 
+using System.Web;
 using System.Web.Mvc;
-using Elmah.Contrib.Mvc;
-using SteamAchievements.Web.Controllers;
-using SteamAchievements.Web.Models;
-using SteamAchievements.Web.Properties;
+using SteamAchievements.Services.Models;
 
-namespace SteamAchievements.Web.App_Start
+namespace SteamAchievements.Web.Controllers
 {
-    public class FilterConfig
+    public abstract class SignedRequestAttribute : ActionFilterAttribute
     {
-        private static readonly FacebookMode _facebookMode = Settings.Default.Mode;
-
-        public static void RegisterGlobalFilters(GlobalFilterCollection filters, IDependencyResolver dependencyResolver)
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            filters.Add(new RequestCultureAttribute());
-            filters.Add(new ElmahHandleErrorAttribute());
-
-            if (_facebookMode == FacebookMode.Canvas || _facebookMode == FacebookMode.None)
-            {
-                SignedRequestAttribute signedRequestAttribute =
-                    dependencyResolver.GetService<SignedRequestAttribute>();
-                filters.Add(signedRequestAttribute);
-            }
+            HttpContextBase context = filterContext.HttpContext;
+            context.Session["UserSettings"] = GetUser(context);
         }
+
+        protected abstract User GetUser(HttpContextBase context);
     }
 }

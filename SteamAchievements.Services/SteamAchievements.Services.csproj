@@ -109,8 +109,10 @@
     <Compile Include="ISteamProfileXmlParser.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="IWebClientWrapper.cs" />
+    <Compile Include="MockAchievementService.cs" />
     <Compile Include="MockFacebookClientService.cs" />
     <Compile Include="MockSteamRepository.cs" />
+    <Compile Include="MockUserService.cs" />
     <Compile Include="Models\Achievement.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\ModelMapCreator.cs" />

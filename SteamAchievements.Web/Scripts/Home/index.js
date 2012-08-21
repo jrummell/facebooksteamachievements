@@ -1,6 +1,5 @@
-﻿/// <reference path="~/Scripts/Shared/achievements.js" />
-
-$(document).ready(function() {
+﻿$(document).ready(function ()
+{
     var steamUserId = $("#SteamUserId").val();
     var signedRequest = $("#SignedRequest").val();
     var enableLog = $("#EnableLog").val() == "True";
@@ -24,7 +23,7 @@ $(document).ready(function() {
     function validateProfile()
     {
         /// <summary>validates profile and then loads profile and games</summary>
-        var ondone = function(valid)
+        var ondone = function (valid)
         {
             if (!valid)
             {
@@ -43,7 +42,7 @@ $(document).ready(function() {
 
     function getProfile()
     {
-        var ondone = function()
+        var ondone = function ()
         {
             achievementService.updateSize();
         };
@@ -57,15 +56,11 @@ $(document).ready(function() {
         var updatingSelector = "#loadingGames";
         achievementService.showLoading(updatingSelector);
 
-        var ondone = function()
+        var ondone = function ()
         {
             if (achievementService.mobile)
             {
                 $("#gamesDiv ul").attr("data-inset", "true").listview();
-            }
-            else if ($.fn.makeacolumnlists)
-            {
-                $("#gamesDiv ul").makeacolumnlists({ cols: 3, equalHeight: "ul" });
             }
 
             achievementService.hideLoading(updatingSelector);

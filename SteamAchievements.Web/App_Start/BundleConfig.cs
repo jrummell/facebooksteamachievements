@@ -36,7 +36,7 @@ namespace SteamAchievements.Web.App_Start
                                   "~/Scripts/json2.js",
                                   "~/Scripts/columnizer.js",
                                   "~/Scripts/jquery.ui.message.js",
-                                  "~/Scripts/Shared/achievements.js",
+                                  "~/Scripts/Shared/AchievementService.js",
                                   "~/Scripts/Shared/canvas.js");
             bundles.Add(canvasScripts);
 
@@ -46,7 +46,7 @@ namespace SteamAchievements.Web.App_Start
             mobileScripts.Include("~/Scripts/modernizr-*",
                                   "~/Scripts/json2.js",
                                   "~/Scripts/jquery.mobile.message.min.js",
-                                  "~/Scripts/shared/achievements.js",
+                                  "~/Scripts/shared/AchievementService.js",
                                   "~/Scripts/Shared/mobile.js");
             bundles.Add(mobileScripts);
 

@@ -31,7 +31,7 @@ namespace SteamAchievements.Web.Controllers
     /// <summary>
     ///   Parses the signed_request parameter and sets the user session value.
     /// </summary>
-    public class CanvasSignedRequestAttribute : ActionFilterAttribute
+    public class CanvasSignedRequestAttribute : SignedRequestAttribute
     {
         private const string _userSettingsKey = "UserSettings";
         private readonly IErrorLogger _errorLogger;
@@ -53,30 +53,37 @@ namespace SteamAchievements.Web.Controllers
 
             if (session != null && session[_userSettingsKey] == null)
             {
-                string signedRequestValue = context.Request["signed_request"];
-                try
-                {
-                    ValidateSignedRequest(signedRequestValue);
-                }
-                catch (Exception ex)
-                {
-                    _errorLogger.Log(ex);
-                    return;
-                }
-
-                SignedRequest signedRequest = _facebookClient.ParseSignedRequest(signedRequestValue);
-
-                User user = _userService.GetUser(signedRequest.UserId);
-                if (user == null)
-                {
-                    user = new User {FacebookUserId = signedRequest.UserId};
-                }
-
-                user.AccessToken = signedRequest.AccessToken;
-                user.SignedRequest = signedRequestValue;
+                User user = GetUser(context);
 
                 session[_userSettingsKey] = user;
             }
+        }
+
+        protected override User GetUser(HttpContextBase context)
+        {
+            string signedRequestValue = context.Request["signed_request"];
+            try
+            {
+                ValidateSignedRequest(signedRequestValue);
+            }
+            catch (Exception ex)
+            {
+                _errorLogger.Log(ex);
+                return null;
+            }
+
+            SignedRequest signedRequest = _facebookClient.ParseSignedRequest(signedRequestValue);
+
+            User user = _userService.GetUser(signedRequest.UserId);
+            if (user == null)
+            {
+                user = new User {FacebookUserId = signedRequest.UserId};
+            }
+
+            user.AccessToken = signedRequest.AccessToken;
+            user.SignedRequest = signedRequestValue;
+
+            return user;
         }
 
         private void ValidateSignedRequest(string signedRequest)

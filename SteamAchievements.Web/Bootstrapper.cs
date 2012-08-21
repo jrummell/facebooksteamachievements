@@ -55,6 +55,9 @@ namespace SteamAchievements.Web
             {
                 container.RegisterType<ISteamRepository, MockSteamRepository>(new HierarchicalLifetimeManager());
                 container.RegisterType<IFacebookClientService, MockFacebookClientService>();
+                container.RegisterType<IUserService, MockUserService>();
+                container.RegisterType<SignedRequestAttribute, MockSignedRequestAttribute>();
+                container.RegisterType<IAchievementService, MockAchievementService>();
             }
             else
             {
@@ -62,6 +65,9 @@ namespace SteamAchievements.Web
                 container.RegisterType<IFacebookClientService, FacebookClientService>(
                     new InjectionConstructor(settings.FacebookAppId, settings.FacebookAppSecret,
                                              settings.FacebookCanvasUrl));
+                container.RegisterType<IUserService, UserService>();
+                container.RegisterType<SignedRequestAttribute, CanvasSignedRequestAttribute>();
+                container.RegisterType<IAchievementService, AchievementService>();
             }
 
             container.RegisterType<ISteamCommunityManager, SteamCommunityManager>();
@@ -72,10 +78,6 @@ namespace SteamAchievements.Web
             container.RegisterType<IErrorLogger, ElmahErrorLogger>();
 
             container.RegisterType<IAchievementManager, AchievementManager>();
-            container.RegisterType<IAchievementService, AchievementService>();
-            container.RegisterType<IUserService, UserService>();
-
-            container.RegisterType<CanvasSignedRequestAttribute>();
 
             return container;
         }

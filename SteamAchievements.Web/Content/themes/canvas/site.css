@@ -131,14 +131,17 @@ div.form label
 {
     padding-left: 1em;
 }
-.game
+#gamesDiv ul li.game
 {
+    float: left;
+    text-align: center;
     padding: 5px;
     margin: 0px;
     list-style-type: none;
+    width: 215px;
+    height: 115px;
 }
-
-.game img
+#gamesDiv ul li.game img
 {
     display: inline-block;
     width: 184px;
@@ -156,18 +159,27 @@ div.form label
 }
 #newAchievements ul li
 {
+    display: block;
     list-style-type: none;
 }
-.unpublished .game h3
+.unpublished li.game 
+{
+    height: 2em;
+    width: 695px;
+    clear: both;
+}
+.unpublished li.game h3
 {
     font-size: 150%;
 }
-.unpublished .achievement
+.unpublished li.achievement
 {
+    float: left;
     height: 74px;
     padding: 0px;
     margin: 5px;
     border: 1px solid #fff;
+    width: 320px;
 }
 .unpublished .selected
 {
@@ -176,8 +188,7 @@ div.form label
 }
 .unpublished .achievement input
 {
-    margin-top: 25px;
-    margin-bottom: 25px;
+    display: none;
 }
 .unpublished .achievement img
 {

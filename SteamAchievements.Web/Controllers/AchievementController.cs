@@ -60,7 +60,7 @@ namespace SteamAchievements.Web.Controllers
         }
 
         [HttpPost]
-        public new PartialViewResult Profile(string steamUserId)
+        public PartialViewResult Profile(string steamUserId)
         {
             steamUserId = steamUserId ?? UserSettings.SteamUserId;
 

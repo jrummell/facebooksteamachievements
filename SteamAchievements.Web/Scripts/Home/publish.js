@@ -1,9 +1,4 @@
-﻿/// <reference path="jquery-1.4.4-vsdoc.js" />
-/// <reference path="jquery.ui.message.js" />
-/// <reference path="achievements.js" />
-/// <reference path="columnizer.js" />
-
-// achievement array set by the Unpublished Achievements view (loaded via ajax)
+﻿// achievement array set by the Unpublished Achievements view (loaded via ajax)
 var _newAchievements = new Array();
 
 $(document).ready(function () {
@@ -100,10 +95,6 @@ $(document).ready(function () {
             if (achievementService.mobile) {
                 $("#newAchievements .achievement :checkbox").checkboxradio();
                 $("#newAchievements ul").attr("data-inset", "true").listview();
-            }
-            else if ($.fn.makeacolumnlists) {
-                $("#newAchievements .achievement :checkbox").hide();
-                $("#newAchievements ul").makeacolumnlists({ cols: 2, equalHeight: "ul" });
             }
 
             if (_newAchievements.length == 0) {
