@@ -4,7 +4,7 @@
     <title>Steam Achievements Mobile - @ViewBag.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="~/Content/favicon.ico" rel="icon" type="image/x-icon" />
-    <link rel="stylesheet" href="//code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
+    <link rel="stylesheet" href="//ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
     @Styles.Render(BundlePaths.MobileTheme)
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
     <script type="text/javascript">
@@ -14,7 +14,7 @@
             $.mobile.ajaxEnabled = false;
         });
     </script>
-    <script type="text/javascript" src="//code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
+    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
     @Scripts.Render(BundlePaths.MobileScripts)
 
     @RenderSection("head", false)
