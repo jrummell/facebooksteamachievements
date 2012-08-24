@@ -6,7 +6,7 @@
     <link href="~/Content/favicon.ico" rel="icon" type="image/x-icon" />
     <link rel="stylesheet" href="//ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
     @Styles.Render(BundlePaths.MobileTheme)
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.min.js "></script>
     <script type="text/javascript">
         $(document).bind("mobileinit", function ()
         {
@@ -15,6 +15,15 @@
         });
     </script>
     <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
+    <script type="text/javascript">
+        if (!window.jQuery)
+        {
+            // fallback on local jquery if CDN fails
+            document.write('<link rel="stylesheet" href="@Url.Content("~/Content/jquery.mobile-1.1.1.min.css")" />');
+            document.write('<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.8.0.min.js")"><\/script>');
+            document.write('<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.mobile-1.1.1.min.js")"><\/script>');
+        }
+    </script>
     @Scripts.Render(BundlePaths.MobileScripts)
 
     @RenderSection("head", false)
