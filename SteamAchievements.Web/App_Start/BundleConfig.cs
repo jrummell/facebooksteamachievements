@@ -45,7 +45,7 @@ namespace SteamAchievements.Web.App_Start
             mobileScripts.Orderer = new ExplicitBundleOrderer();
             mobileScripts.Include("~/Scripts/modernizr-*",
                                   "~/Scripts/json2.js",
-                                  "~/Scripts/jquery.mobile.message.min.js",
+                                  "~/Scripts/jquery.mobile.message.js",
                                   "~/Scripts/shared/AchievementService.js",
                                   "~/Scripts/Shared/mobile.js");
             bundles.Add(mobileScripts);
