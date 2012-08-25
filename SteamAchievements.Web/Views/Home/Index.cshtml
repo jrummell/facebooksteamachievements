@@ -6,7 +6,7 @@
 @Html.HiddenFor(model => model.SignedRequest)
 <div id="steamIdError" style="display: none;">
     You haven't set your Steam Community Profile URL. Please set it on the
-    @Html.CanvasLink("settings", "Settings")
+    @Html.ActionLink("settings", "Settings", "Home")
     page.
     @Html.HelpLink(Strings.ButtonHelp, "Configure_your_Steam_Community_Profile")
 </div>

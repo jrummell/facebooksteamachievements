@@ -19,9 +19,11 @@
 
 #endregion
 
+using System;
 using System.Web.Mvc;
 using Elmah.Contrib.Mvc;
 using SteamAchievements.Web.Controllers;
+using SteamAchievements.Web.Helpers;
 using SteamAchievements.Web.Models;
 using SteamAchievements.Web.Properties;
 
@@ -36,12 +38,21 @@ namespace SteamAchievements.Web.App_Start
             filters.Add(new RequestCultureAttribute());
             filters.Add(new ElmahHandleErrorAttribute());
 
-            if (_facebookMode == FacebookMode.Canvas || _facebookMode == FacebookMode.None)
-            {
-                SignedRequestAttribute signedRequestAttribute =
-                    dependencyResolver.GetService<SignedRequestAttribute>();
-                filters.Add(signedRequestAttribute);
-            }
+            IFilterProvider provider = new ConditionalFilterProvider(
+                new Func<ControllerContext, ActionDescriptor, object>[]
+                    {
+                        (controller, action) =>
+                        (_facebookMode != FacebookMode.None &&
+                         controller.Controller.GetType() != typeof (AccountController))
+                            ? new AuthorizeAttribute()
+                            : null,
+                        (controller, action) =>
+                        (_facebookMode == FacebookMode.Canvas || _facebookMode == FacebookMode.None)
+                            ? dependencyResolver.GetService<SignedRequestAttribute>()
+                            : null
+                    });
+
+            FilterProviders.Providers.Add(provider);
         }
     }
 }

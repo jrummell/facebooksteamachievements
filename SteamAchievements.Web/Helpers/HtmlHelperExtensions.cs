@@ -1,21 +1,21 @@
 ﻿#region License
 
-// Copyright 2010 John Rummell
-// 
-// This file is part of SteamAchievements.
-// 
-//     SteamAchievements is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     SteamAchievements is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-// 
-//     You should have received a copy of the GNU General Public License
-//     along with SteamAchievements.  If not, see <http://www.gnu.org/licenses/>.
+//  Copyright 2012 John Rummell
+//  
+//  This file is part of SteamAchievements.
+//  
+//      SteamAchievements is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      SteamAchievements is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//  
+//      You should have received a copy of the GNU General Public License
+//      along with SteamAchievements.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -59,22 +59,6 @@ namespace SteamAchievements.Web.Helpers
             return MvcHtmlString.Create(a.ToString());
         }
 
-        public static MvcHtmlString CanvasLink(this HtmlHelper html, string linkText, string canvasAction = null,
-                                               object htmlAttributes = null)
-        {
-            TagBuilder a = new TagBuilder("a");
-            a.MergeAttribute("href", UrlHelperExtensions.GetCanvasUrl(canvasAction));
-            a.MergeAttribute("target", "_top");
-            a.SetInnerText(linkText);
-
-            if (htmlAttributes != null)
-            {
-                a.MergeAttributes(new RouteValueDictionary(htmlAttributes), false);
-            }
-
-            return MvcHtmlString.Create(a.ToString());
-        }
-
         public static MvcHtmlString FacebookAppId(this HtmlHelper html)
         {
             return MvcHtmlString.Create(_settings.FacebookAppId);
@@ -83,7 +67,17 @@ namespace SteamAchievements.Web.Helpers
         public static MvcHtmlString ChannelUrl(this HtmlHelper html)
         {
             string channelPath = VirtualPathUtility.ToAbsolute("~/fbchannel.ashx");
-            return MvcHtmlString.Create("//" + html.ViewContext.HttpContext.Request.Url.Host + channelPath);
+            string url;
+            if (_settings.Mode == FacebookMode.Canvas)
+            {
+                url = "//" + html.ViewContext.HttpContext.Request.Url.Host + channelPath;
+            }
+            else
+            {
+                url = channelPath;
+            }
+
+            return MvcHtmlString.Create(url);
         }
 
         public static MvcHtmlString Ad(this HtmlHelper html, AdLocation location)

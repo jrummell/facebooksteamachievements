@@ -3,15 +3,13 @@
 <head>
     <title>Steam Achievements - @ViewBag.Title</title>
     <link href="~/Content/favicon.ico" rel="icon" type="image/x-icon" />
-    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/redmond/jquery-ui.css"
+    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.22/themes/redmond/jquery-ui.css"
           rel="Stylesheet" type="text/css" />
     @Styles.Render(BundlePaths.CanvasTheme)
     @RenderSection("head", false)
 </head>
     <body>
-        @Html.Hidden("FacebookAppId", Html.FacebookAppId())
-        @Html.Hidden("ChannelUrl", Html.ChannelUrl())
-        <div id="fb-root"></div>
+        @Html.Partial("_FacebookPartial")
         <div id="topAdWrapper">
             @Html.Ad(AdLocation.Top)
         </div>
@@ -28,7 +26,7 @@
                 }
             </script>
             <div>
-                <a href="@Url.CanvasAction("")" target="_top">
+                <a href="@Url.Action("Index", "Home")" target="_top">
                     <img src="~/Content/themes/canvas/banner-light.png" alt="Steam Achievements" />
                 </a>
             </div>
