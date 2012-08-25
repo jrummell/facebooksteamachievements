@@ -34,7 +34,6 @@ namespace SteamAchievements.Web.App_Start
             canvasScripts.Orderer = new ExplicitBundleOrderer();
             canvasScripts.Include("~/Scripts/modernizr-*",
                                   "~/Scripts/json2.js",
-                                  "~/Scripts/columnizer.js",
                                   "~/Scripts/jquery.ui.message.js",
                                   "~/Scripts/Shared/AchievementService.js",
                                   "~/Scripts/Shared/facebook.js",
