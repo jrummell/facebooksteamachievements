@@ -3,14 +3,8 @@
     var steamUserId = $("#SteamUserId").val();
     var signedRequest = $("#SignedRequest").val();
     var enableLog = $("#EnableLog").val() == "True";
-    var logOnRedirectUrl = $("#LogOnRedirectUrl").val();
 
     var achievementService = new AchievementService(steamUserId, signedRequest, enableLog, false);
-
-    if (logOnRedirectUrl.length > 1 && signedRequest == "")
-    {
-        top.location.href = logOnRedirectUrl;
-    }
 
     var valid = achievementService.validateSteamUserId("#steamIdError");
     if (!valid)

@@ -276,6 +276,7 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery.ui.message.js" />
     <Content Include="Scripts\jquery.ui.message.min.js" />
+    <Content Include="Scripts\Shared\facebook.js" />
     <Content Include="Scripts\Shared\mobile.js" />
     <Content Include="Scripts\Shared\canvas.js" />
     <Content Include="Scripts\Shared\AchievementService.js" />
@@ -314,6 +315,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="fbchannel.ashx" />
+    <Content Include="Views\Shared\_FacebookPartial.cshtml" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.xml" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.Razor.xml" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.Razor.dll" />

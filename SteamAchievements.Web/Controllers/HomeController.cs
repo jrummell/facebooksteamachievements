@@ -32,14 +32,11 @@ namespace SteamAchievements.Web.Controllers
     {
         private static readonly FacebookMode _facebookMode = Properties.Settings.Default.Mode;
         private readonly IAchievementService _achievementService;
-        private readonly IFacebookClientService _facebookClient;
 
-        public HomeController(IAchievementService achievementService, IUserService userService,
-                              IFacebookClientService facebookClient, IErrorLogger errorLogger)
+        public HomeController(IAchievementService achievementService, IUserService userService, IErrorLogger errorLogger)
             : base(userService, errorLogger)
         {
             _achievementService = achievementService;
-            _facebookClient = facebookClient;
         }
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
@@ -66,11 +63,9 @@ namespace SteamAchievements.Web.Controllers
 
             IndexViewModel model = Mapper.Map<User, IndexViewModel>(UserSettings);
 
-            if (_facebookMode == FacebookMode.Canvas && model.FacebookUserId == 0)
-            {
-                model.LogOnRedirectUrl = _facebookClient.GetLogOnUrl();
-            }
-            else if (_facebookMode == FacebookMode.Mobile && model.FacebookUserId == 0)
+            // this technically shouldn't be necessary, but sometimes we don't get the signed_request parameter 
+            // in CanvasSignedRequestAttribute and we don't have a valid facebook user
+            if (_facebookMode != FacebookMode.None && model.FacebookUserId == 0)
             {
                 return RedirectToAction("LogOn", "Account");
             }
