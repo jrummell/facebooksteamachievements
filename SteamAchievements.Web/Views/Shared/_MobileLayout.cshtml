@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    string bodyId = ViewContext.RouteData.Values["controller"] + "-" + ViewContext.RouteData.Values["action"];
+}
+<!DOCTYPE html>
 <html>
 <head>
     <title>Steam Achievements Mobile - @ViewBag.Title</title>
@@ -29,7 +32,7 @@
     @RenderSection("head", false)
 </head>
 <body>
-    <div data-role="page">
+    <div id="@bodyId" data-role="page">
         <div id="topAdWrapper">
             @Html.Ad(AdLocation.Top)
         </div>
