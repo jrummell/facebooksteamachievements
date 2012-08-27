@@ -23,16 +23,13 @@ using System;
 using System.Web.Mvc;
 using Elmah.Contrib.Mvc;
 using SteamAchievements.Web.Controllers;
+using SteamAchievements.Web.Filters;
 using SteamAchievements.Web.Helpers;
-using SteamAchievements.Web.Models;
-using SteamAchievements.Web.Properties;
 
 namespace SteamAchievements.Web.App_Start
 {
     public class FilterConfig
     {
-        private static readonly FacebookMode _facebookMode = Settings.Default.Mode;
-
         public static void RegisterGlobalFilters(GlobalFilterCollection filters, IDependencyResolver dependencyResolver)
         {
             filters.Add(new RequestCultureAttribute());
@@ -42,13 +39,8 @@ namespace SteamAchievements.Web.App_Start
                 new Func<ControllerContext, ActionDescriptor, object>[]
                     {
                         (controller, action) =>
-                        (_facebookMode != FacebookMode.None &&
-                         controller.Controller.GetType() != typeof (AccountController))
-                            ? new AuthorizeAttribute()
-                            : null,
-                        (controller, action) =>
-                        (_facebookMode == FacebookMode.Canvas || _facebookMode == FacebookMode.None)
-                            ? dependencyResolver.GetService<SignedRequestAttribute>()
+                        controller.Controller.GetType() != typeof (AccountController)
+                            ? dependencyResolver.GetService<AuthorizeAttribute>()
                             : null
                     });
 

@@ -26,40 +26,49 @@ using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
 using SteamAchievements.Web.Models;
 
-namespace SteamAchievements.Web.Controllers
+namespace SteamAchievements.Web.Filters
 {
-    /// <summary>
-    ///   Parses the signed_request parameter and sets the user session value.
-    /// </summary>
-    public class CanvasSignedRequestAttribute : SignedRequestAttribute
+    public class CanvasAuthorizeAttribute : AuthorizeAttribute
     {
-        private const string _userSettingsKey = "UserSettings";
-        private readonly IErrorLogger _errorLogger;
+        public const string UserSettingsKey = "UserSettings";
+
         private readonly IFacebookClientService _facebookClient;
+        private readonly IFormsAuthenticationService _formsAuthenticationService;
         private readonly IUserService _userService;
 
-        public CanvasSignedRequestAttribute(IFacebookClientService facebookClient, IUserService userService,
-                                            IErrorLogger errorLogger)
+        public CanvasAuthorizeAttribute(IFacebookClientService facebookClient, IUserService userService,
+                                        IFormsAuthenticationService formsAuthenticationService)
         {
             _facebookClient = facebookClient;
             _userService = userService;
-            _errorLogger = errorLogger;
+            _formsAuthenticationService = formsAuthenticationService;
         }
 
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            HttpContextBase context = filterContext.HttpContext;
-            HttpSessionStateBase session = context.Session;
-
-            if (session != null && session[_userSettingsKey] == null)
+            if (httpContext.Session != null)
             {
-                User user = GetUser(context);
+                User user = (User) httpContext.Session[UserSettingsKey];
+                if (user == null)
+                {
+                    user = GetUser(httpContext);
 
-                session[_userSettingsKey] = user;
+                    httpContext.Session[UserSettingsKey] = user;
+                }
+
+                if (user != null && user.FacebookUserId > 0)
+                {
+                    // sign the user in
+                    _formsAuthenticationService.SignIn(user.FacebookUserId.ToString());
+
+                    return true;
+                }
             }
+
+            return base.AuthorizeCore(httpContext);
         }
 
-        protected override User GetUser(HttpContextBase context)
+        private User GetUser(HttpContextBase context)
         {
             string signedRequestValue = context.Request["signed_request"];
             try
@@ -68,18 +77,21 @@ namespace SteamAchievements.Web.Controllers
             }
             catch (Exception ex)
             {
-                _errorLogger.Log(ex);
+                //_errorLogger.Log(ex);
                 return null;
             }
 
+            // parse the signed request
             SignedRequest signedRequest = _facebookClient.ParseSignedRequest(signedRequestValue);
 
+            // get the user
             User user = _userService.GetUser(signedRequest.UserId);
             if (user == null)
             {
                 user = new User {FacebookUserId = signedRequest.UserId};
             }
 
+            // update access token and signed request
             user.AccessToken = signedRequest.AccessToken;
             user.SignedRequest = signedRequestValue;
 

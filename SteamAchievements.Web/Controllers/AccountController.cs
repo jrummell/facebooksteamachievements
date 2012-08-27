@@ -21,7 +21,6 @@
 
 using System.Text;
 using System.Web.Mvc;
-using System.Web.Security;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
 using SteamAchievements.Web.Models;
@@ -30,13 +29,15 @@ namespace SteamAchievements.Web.Controllers
 {
     public class AccountController : FacebookController
     {
+        private readonly IFormsAuthenticationService _authenticationService;
         private readonly IFacebookClientService _facebookClient;
 
         public AccountController(IUserService userService, IFacebookClientService facebookClient,
-                                 IErrorLogger errorLogger)
+                                 IFormsAuthenticationService authenticationService, IErrorLogger errorLogger)
             : base(userService, errorLogger)
         {
             _facebookClient = facebookClient;
+            _authenticationService = authenticationService;
         }
 
         public ActionResult LogOn()
@@ -77,15 +78,7 @@ namespace SteamAchievements.Web.Controllers
             UserService.UpdateUser(user);
             UserSettings = user;
 
-            if (!User.Identity.IsAuthenticated)
-            {
-                FormsAuthentication.SetAuthCookie(userName, false);
-            }
-            else if (User.Identity.Name != userName)
-            {
-                FormsAuthentication.SignOut();
-                FormsAuthentication.SetAuthCookie(userName, false);
-            }
+            _authenticationService.SignIn(userName);
 
             return LogOnResult(model);
         }

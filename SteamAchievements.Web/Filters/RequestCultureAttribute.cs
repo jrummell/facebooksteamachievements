@@ -25,7 +25,7 @@ using System.Web;
 using System.Web.Mvc;
 using SteamAchievements.Services;
 
-namespace SteamAchievements.Web.Controllers
+namespace SteamAchievements.Web.Filters
 {
     /// <summary>
     /// Sets the current culture based on the request. Based on the example at http://afana.me/post/aspnet-mvc-internationalization.aspx.
