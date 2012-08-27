@@ -24,7 +24,7 @@ using Microsoft.Practices.Unity;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
-using SteamAchievements.Web.Controllers;
+using SteamAchievements.Web.Filters;
 using SteamAchievements.Web.Models;
 using SteamAchievements.Web.Properties;
 using Unity.Mvc3;
@@ -56,8 +56,9 @@ namespace SteamAchievements.Web
                 container.RegisterType<ISteamRepository, MockSteamRepository>(new HierarchicalLifetimeManager());
                 container.RegisterType<IFacebookClientService, MockFacebookClientService>();
                 container.RegisterType<IUserService, MockUserService>();
-                container.RegisterType<SignedRequestAttribute, MockSignedRequestAttribute>();
                 container.RegisterType<IAchievementService, MockAchievementService>();
+
+                container.RegisterType<AuthorizeAttribute, MockCanvasAuthorizeAttribute>();
             }
             else
             {
@@ -66,8 +67,9 @@ namespace SteamAchievements.Web
                     new InjectionConstructor(settings.FacebookAppId, settings.FacebookAppSecret,
                                              settings.FacebookCanvasUrl));
                 container.RegisterType<IUserService, UserService>();
-                container.RegisterType<SignedRequestAttribute, CanvasSignedRequestAttribute>();
                 container.RegisterType<IAchievementService, AchievementService>();
+
+                container.RegisterType<AuthorizeAttribute, CanvasAuthorizeAttribute>();
             }
 
             container.RegisterType<ISteamCommunityManager, SteamCommunityManager>();
@@ -78,6 +80,8 @@ namespace SteamAchievements.Web
             container.RegisterType<IErrorLogger, ElmahErrorLogger>();
 
             container.RegisterType<IAchievementManager, AchievementManager>();
+
+            container.RegisterType<IFormsAuthenticationService, FormsAuthenticationService>();
 
             return container;
         }

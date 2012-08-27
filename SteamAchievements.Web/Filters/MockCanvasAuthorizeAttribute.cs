@@ -21,18 +21,22 @@
 
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
 
-namespace SteamAchievements.Web.Controllers
+namespace SteamAchievements.Web.Filters
 {
-    public abstract class SignedRequestAttribute : ActionFilterAttribute
+    public class MockCanvasAuthorizeAttribute : AuthorizeAttribute
     {
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
-        {
-            HttpContextBase context = filterContext.HttpContext;
-            context.Session["UserSettings"] = GetUser(context);
-        }
+        private readonly MockUserService _userService = new MockUserService();
 
-        protected abstract User GetUser(HttpContextBase context);
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        {
+            User user = _userService.GetUser(1234);
+            httpContext.Session[CanvasAuthorizeAttribute.UserSettingsKey] = user;
+
+            return true;
+        }
     }
 }

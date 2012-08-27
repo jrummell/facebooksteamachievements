@@ -22,12 +22,12 @@
 using System.Web.Mvc;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
+using SteamAchievements.Web.Filters;
 
 namespace SteamAchievements.Web.Controllers
 {
     public abstract class FacebookController : Controller
     {
-        private const string _userSettingsKey = "UserSettings";
         private readonly IErrorLogger _errorLogger;
         private readonly IUserService _userService;
 
@@ -47,8 +47,8 @@ namespace SteamAchievements.Web.Controllers
         /// </summary>
         public User UserSettings
         {
-            get { return Session[_userSettingsKey] as User; }
-            set { Session[_userSettingsKey] = value; }
+            get { return Session[CanvasAuthorizeAttribute.UserSettingsKey] as User; }
+            set { Session[CanvasAuthorizeAttribute.UserSettingsKey] = value; }
         }
 
         /// <summary>
