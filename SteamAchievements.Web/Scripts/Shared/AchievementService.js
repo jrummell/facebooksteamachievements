@@ -19,7 +19,7 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
     var self = this;
 
     // fields
-    self.mobile = typeof($.mobile) != "undefined";
+    self.mobile = typeof($.mobile) !== "undefined";
     self.steamUserId = steamUserId;
     self.signedRequest = signedRequest;
     self.serviceBase = "Achievement/";
@@ -29,10 +29,27 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
     // methods
     self.loadProfile = function(selector, callback)
     {
-        load(selector, "Profile", { steamUserId: self.steamUserId }, callback);
+        var ondone = function()
+        {
+            var $profileError = $("#profileError");
+            var profileErrorData = $profileError.data();
+            var hasError = profileErrorData && profileErrorData.error;
+            if (hasError)
+            {
+                $("#profileErrorMessage").html($profileError.val());
+                $("#steamIdError").message({ type: "error", dismiss: false });
+                $("#steamIdError a.help").button({ icons: { primary: "ui-icon-help" } });
+            }
+
+            if (isFunction(callback))
+            {
+                callback(hasError);
+            }
+        };
+        load(selector, "Profile", { steamUserId: self.steamUserId }, ondone);
     };
 
-    self.validateProfile = function(steamUserIdToValidate, callback)
+    self.validateProfile = function(steamUserIdToValidate, errorSelector, callback)
     {
         steamUserIdToValidate = steamUserIdToValidate || self.steamUserId;
         var data;
@@ -45,7 +62,21 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
             data = { };
         }
 
-        post("ValidateProfile", data, callback);
+        var ondone = function(profile)
+        {
+            if (!profile.Valid)
+            {
+                $(errorSelector).message({ type: "error", message: profile.Error, dismiss: false });
+                return;
+            }
+            
+            if (isFunction(callback))
+            {
+                callback(profile);
+            }
+        };
+
+        post("ValidateProfile", data, ondone);
     };
 
     self.updateAccessToken = function(callback)
@@ -79,8 +110,8 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
         // display publish dialog
 
         var image = null;
-        var description = new String();
-        var gameId = new String();
+        var description = "";
+        var gameId = "";
 
         $.each(achievements, function(i) {
             var achievement = this; // achievements[i];
@@ -169,7 +200,7 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
     self.validateSteamUserId = function(errorMessageSelector)
     {
         var valid = true;
-        if (self.steamUserId == null || self.steamUserId == "")
+        if (self.steamUserId == null || self.steamUserId === "")
         {
             valid = false;
         }
@@ -213,7 +244,7 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
             return;
         }
 
-        if (typeof(FB) != "undefined")
+        if (typeof(FB) !== "undefined")
         {
             //TODO: the canvas resize api has changed
             // update the size of the iframe to match the content
@@ -303,6 +334,11 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
     {
         // since this is an ajax request, we need to add the signed_request parameter explicitly
         params.signed_request = self.signedRequest;
+    }
+    
+    function isFunction(fn)
+    {
+        return typeof(fn) === "function";
     }
 
     // init

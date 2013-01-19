@@ -31,7 +31,6 @@ namespace SteamAchievements.Web.App_Start
             // shared scripts
             Bundle canvasScripts =
                 new ScriptBundle(BundlePaths.CanvasScripts);
-            canvasScripts.Orderer = new ExplicitBundleOrderer();
             canvasScripts.Include("~/Scripts/modernizr-*",
                                   "~/Scripts/json2.js",
                                   "~/Scripts/jquery.ui.message.js",
@@ -42,7 +41,6 @@ namespace SteamAchievements.Web.App_Start
 
             Bundle mobileScripts =
                 new ScriptBundle(BundlePaths.MobileScripts);
-            mobileScripts.Orderer = new ExplicitBundleOrderer();
             mobileScripts.Include("~/Scripts/modernizr-*",
                                   "~/Scripts/json2.js",
                                   "~/Scripts/jquery.mobile.message.js",

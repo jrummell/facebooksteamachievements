@@ -1,7 +1,19 @@
-﻿@model SteamProfile
-<img id="profileImage" src="@Model.AvatarUrl" align="left" />
-<h1 id="steamUserIdHeading">
-    @Model.SteamUserId
-</h1>
-<span>@Model.Headline</span>
-<br class="clear" />
+﻿@model ProfileViewModel
+@if (Model.Profile != null)
+{
+    <img id="profileImage" src="@Model.Profile.AvatarUrl" align="left" />
+    <h1 id="steamUserIdHeading">
+        @Model.Profile.SteamUserId
+    </h1>
+    <span>@Model.Profile.Headline</span>
+    <br class="clear" />
+}
+@if (Model.HasError)
+{
+    <div id="steamIdError">
+        <span id="profileErrorMessage"></span>
+        @Html.HelpLink(Strings.ButtonHelp, "Configure_your_Steam_Community_Profile")
+    </div>
+}
+
+<input id="profileError" type="hidden" value="@Model.Error" data-error="@Model.HasError.ToString().ToLower()" />

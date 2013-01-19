@@ -1,4 +1,4 @@
-﻿$(document).ready(function ()
+﻿$(document).ready(function()
 {
     var steamUserId = $("#SteamUserId").val();
     var signedRequest = $("#SignedRequest").val();
@@ -6,38 +6,20 @@
 
     var achievementService = new AchievementService(steamUserId, signedRequest, enableLog, false);
 
-    var valid = achievementService.validateSteamUserId("#steamIdError");
-    if (!valid)
-    {
-        return;
-    }
+    getProfile(getGames);
 
-    validateProfile();
-
-    function validateProfile()
+    function getProfile(callback)
     {
-        /// <summary>validates profile and then loads profile and games</summary>
-        var ondone = function (valid)
+        var ondone = function(error)
         {
-            if (!valid)
+            if (error)
             {
-                $("#steamIdError").message({ type: "error", dismiss: false });
                 return;
             }
-
-            getProfile();
-            getGames();
-
-            achievementService.updateAccessToken();
-        };
-
-        achievementService.validateProfile(null, ondone);
-    }
-
-    function getProfile()
-    {
-        var ondone = function ()
-        {
+            if (typeof(callback) == "function")
+            {
+                callback();
+            }
             achievementService.updateSize();
         };
 
@@ -50,7 +32,7 @@
         var updatingSelector = "#loadingGames";
         achievementService.showLoading(updatingSelector);
 
-        var ondone = function ()
+        var ondone = function()
         {
             if (achievementService.mobile)
             {

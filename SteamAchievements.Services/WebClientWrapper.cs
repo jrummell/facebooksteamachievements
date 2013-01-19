@@ -33,14 +33,14 @@ namespace SteamAchievements.Services
 
         public string DownloadString(Uri url)
         {
+            //TODO: wrap usages with retry logic?
             try
             {
                 return _webClient.DownloadString(url);
             }
             catch (Exception ex)
             {
-                string message = "Could not access url: " + url;
-                throw new InvalidOperationException(message, ex);
+                throw new SteamCommunityDataException(url, ex);
             }
         }
 

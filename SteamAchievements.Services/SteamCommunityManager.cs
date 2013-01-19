@@ -171,7 +171,16 @@ namespace SteamAchievements.Services
                 Uri xmlStatsUrl = GetStatsUrl(game.StatsUrl, language);
                 Debug.WriteLine(xmlStatsUrl);
 
-                string xml = _webClient.DownloadString(xmlStatsUrl);
+                string xml;
+                try
+                {
+                    xml = _webClient.DownloadString(xmlStatsUrl);
+                }
+                catch (SteamCommunityDataException)
+                {
+                    //TODO: notify the user that achievements could not be retrieved for this game
+                    continue;
+                }
 
                 if (xml == null)
                 {

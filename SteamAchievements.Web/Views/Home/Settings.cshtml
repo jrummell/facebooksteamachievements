@@ -6,9 +6,10 @@
     Settings</h1>
 @if (ViewBag.Success == true)
 {
-    <div id="saveSuccess" style="display: none;">
+    <div id="saveSuccess" class="hidden">
         @Strings.SettingsSuccess</div>
 }
+<div id="validateProfileError" class="hidden"></div>
 @using (Html.BeginForm("SaveSettings", "Home"))
 {
     @Html.HiddenFor(model => model.FacebookUserId)

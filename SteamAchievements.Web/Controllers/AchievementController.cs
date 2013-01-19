@@ -25,6 +25,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
+using SteamAchievements.Web.Models;
 
 namespace SteamAchievements.Web.Controllers
 {
@@ -56,7 +57,10 @@ namespace SteamAchievements.Web.Controllers
                 return Json(false);
             }
 
-            return Json(_achievementService.GetProfile(steamUserId) != null);
+            ProfileViewModel model = GetProfileViewModel(steamUserId);
+
+            var data = new {Valid = model.Error == null, Error = model.Error};
+            return Json(data);
         }
 
         [HttpPost]
@@ -64,7 +68,35 @@ namespace SteamAchievements.Web.Controllers
         {
             steamUserId = steamUserId ?? UserSettings.SteamUserId;
 
-            return PartialView(_achievementService.GetProfile(steamUserId));
+            ProfileViewModel model = GetProfileViewModel(steamUserId);
+
+            return PartialView(model);
+        }
+
+        private ProfileViewModel GetProfileViewModel(string steamUserId)
+        {
+            ProfileViewModel model = new ProfileViewModel();
+            
+            if (String.IsNullOrEmpty(steamUserId))
+            {
+                model.Error =
+                    String.Format(
+                        "You haven't set your Steam Community Profile URL. Please set it on the <a href='{0}'>Settings</a> page.",
+                        Url.Action("Settings", "Home"));
+
+                return model;
+            }
+
+            try
+            {
+                model.Profile = _achievementService.GetProfile(steamUserId);
+            }
+            catch (Exception ex)
+            {
+                model.Error = ex.Message;
+            }
+
+            return model;
         }
 
         [HttpPost]
@@ -84,7 +116,8 @@ namespace SteamAchievements.Web.Controllers
         {
             steamUserId = steamUserId ?? UserSettings.SteamUserId;
 
-            return PartialView(_achievementService.GetGames(steamUserId));
+            ICollection<Game> games = _achievementService.GetGames(steamUserId);
+            return PartialView(games);
         }
 
         [HttpPost]
