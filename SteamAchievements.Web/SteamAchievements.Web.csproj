@@ -18,6 +18,10 @@
     <UseIISExpress>true</UseIISExpress>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MobileStaging|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -157,7 +161,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\ExplicitBundleOrderer.cs" />
     <Compile Include="Filters\CanvasAuthorizeAttribute.cs" />
     <Compile Include="Filters\MockCanvasAuthorizeAttribute.cs" />
     <Compile Include="Models\FormsAuthenticationService.cs" />
@@ -182,6 +185,7 @@
     <Compile Include="Models\IndexViewModel.cs" />
     <Compile Include="Models\InvalidSignedRequestException.cs" />
     <Compile Include="Models\LogOnViewModel.cs" />
+    <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\SettingsViewModel.cs" />
     <Compile Include="Models\ViewModelMapCreator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -387,7 +391,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51958</DevelopmentServerPort>
           <DevelopmentServerVPath>/fbsa/canvas</DevelopmentServerVPath>

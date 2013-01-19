@@ -1,6 +1,6 @@
-#region License
+﻿#region License
 
-//  Copyright 2012 John Rummell
+//  Copyright 2013 John Rummell
 //  
 //  This file is part of SteamAchievements.
 //  
@@ -19,21 +19,23 @@
 
 #endregion
 
-using System.Collections.Generic;
-using System.IO;
-using System.Web.Optimization;
+using System;
 
-namespace SteamAchievements.Web.App_Start
+namespace SteamAchievements.Services
 {
-    public class ExplicitBundleOrderer : IBundleOrderer
+    public class SteamCommunityDataException : Exception
     {
-        #region IBundleOrderer Members
+        private const string _messageFormat =
+            "The Steam Community Data API is not available at this time. Please try again later. (Could not access url {0})";
 
-        public IEnumerable<FileInfo> OrderFiles(BundleContext context, IEnumerable<FileInfo> files)
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="SteamCommunityDataException" /> class.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="innerException">The inner exception.</param>
+        public SteamCommunityDataException(Uri url, Exception innerException)
+            : base(String.Format(_messageFormat, url), innerException)
         {
-            return files;
         }
-
-        #endregion
     }
 }

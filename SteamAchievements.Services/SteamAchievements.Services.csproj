@@ -120,6 +120,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserAchievement.cs" />
     <Compile Include="Models\SignedRequest.cs" />
+    <Compile Include="SteamCommunityDataException.cs" />
     <Compile Include="SteamProfileXmlParser.cs" />
     <Compile Include="AchievementService.cs" />
     <Compile Include="AchievementXmlParser.cs" />

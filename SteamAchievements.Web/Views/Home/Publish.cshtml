@@ -7,13 +7,14 @@
 @Html.HiddenFor(model => model.SteamUserId)
 @Html.HiddenFor(model => model.SignedRequest)
 @Html.HiddenFor(model => model.PublishDescription)
-<div id="steamIdError" style="display: none;">
+<div id="steamIdError" class="hidden">
     You haven't set your Steam Community Profile URL. Please set it on the
     @Html.ActionLink("settings", "Settings", "Home")
     page.
     @Html.HelpLink(Strings.ButtonHelp, "Configure_your_Steam_Community_Profile")
 </div>
-<div id="achievementsUpdateFailure" style="display: none;">
+<div id="validateProfileError" class="hidden"></div>
+<div id="achievementsUpdateFailure" class="hidden">
     Your achievements could not be updated. If this problem continues, 
     please verify that your Custom URL is correct and that your Steam Community Profile is public.
     @Html.HelpLink(Strings.ButtonHelp, "Configure_your_Steam_Community_Profile")

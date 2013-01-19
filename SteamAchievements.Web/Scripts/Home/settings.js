@@ -1,11 +1,13 @@
-﻿$(document).ready(function () {
+﻿$(document).ready(function()
+{
     var $steamUserId = $("#SteamUserId");
     var signedRequest = $("#SignedRequest").val();
-    var enableLog = $("#EnableLog").val() == "True";
+    var enableLog = $("#EnableLog").val() === "True";
     var achievementService = new AchievementService($steamUserId.val(), signedRequest, enableLog, false);
 
     // check the user's profile when they change it
-    $steamUserId.change(function () {
+    $steamUserId.change(function()
+    {
         checkProfile();
     });
 
@@ -17,34 +19,40 @@
 
     // show loading on click
     var $saveButton = $("#saveButton");
-    if (!achievementService.mobile) {
-        $saveButton.button({ icons: { primary: "ui-icon-disk"} });
+    if (!achievementService.mobile)
+    {
+        $saveButton.button({ icons: { primary: "ui-icon-disk" } });
     }
-    $saveButton.click(function () {
+    $saveButton.click(function()
+    {
         achievementService.showLoading("#saveImage");
         $("#saveSuccess").hide();
 
         return true;
     });
 
-    function checkProfile() {
+    function checkProfile()
+    {
         var steamUserId = $steamUserId.val();
 
         $("#steamIdError").hide();
         $("#steamIdVerified").hide();
 
-        var ondone = function (valid) {
+        var ondone = function(data)
+        {
             $(".settings .profile-url").attr("href", "http://steamcommunity.com/id/" + steamUserId);
 
-            if (!valid) {
+            if (!data.Valid)
+            {
                 $("#steamIdError").show();
                 return;
             }
-            else {
+            else
+            {
                 $("#steamIdVerified").show();
             }
         };
 
-        achievementService.validateProfile(steamUserId, ondone);
+        achievementService.validateProfile(steamUserId, "#validateProfileError", ondone);
     }
 });

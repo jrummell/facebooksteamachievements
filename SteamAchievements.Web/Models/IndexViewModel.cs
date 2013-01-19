@@ -1,6 +1,6 @@
 #region License
 
-//  Copyright 2012 John Rummell
+//  Copyright 2013 John Rummell
 //  
 //  This file is part of SteamAchievements.
 //  

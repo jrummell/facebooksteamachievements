@@ -68,6 +68,7 @@ namespace SteamAchievements.Services.Tests.Integration
             Assert.That(games.Any());
             Assert.That(games.Any(game => game.Name == "Left 4 Dead"));
             Assert.That(games.Any(game => game.Name == "Left 4 Dead 2"));
+            Assert.That(games.Any(game => game.Id == 730));
         }
 
         [Test]
