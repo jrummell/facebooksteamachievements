@@ -27,7 +27,7 @@ using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Services.Tests.Integration
 {
-    [TestFixture]
+    [TestFixture, Category("Integration")]
     public class SteamCommunityManagerFixture
     {
         #region Setup/Teardown
