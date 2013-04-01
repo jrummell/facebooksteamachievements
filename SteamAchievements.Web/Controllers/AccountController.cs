@@ -72,7 +72,7 @@ namespace SteamAchievements.Web.Controllers
                 return LogOnResult(model);
             }
 
-            User user = UserService.GetUser(model.FacebookUserId) ?? new User();
+            User user = UserService.GetUser(model.FacebookUserId) ?? new User {FacebookUserId = model.FacebookUserId};
             user.AccessToken = model.AccessToken;
 
             UserService.UpdateUser(user);

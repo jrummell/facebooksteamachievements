@@ -33,6 +33,22 @@ namespace SteamAchievements.Web.Helpers
     {
         private static readonly Settings _settings = Settings.Default;
 
+        public static MvcHtmlString CanvasLink(this HtmlHelper html, string linkText, string canvasAction = null,
+                                               object htmlAttributes = null)
+        {
+            TagBuilder a = new TagBuilder("a");
+            a.MergeAttribute("href", UrlHelperExtensions.GetCanvasUrl(canvasAction));
+            a.MergeAttribute("target", "_top");
+            a.SetInnerText(linkText);
+
+            if (htmlAttributes != null)
+            {
+                a.MergeAttributes(new RouteValueDictionary(htmlAttributes), false);
+            }
+
+            return MvcHtmlString.Create(a.ToString());
+        }
+
         public static MvcHtmlString HelpLink(this HtmlHelper html, string linkText, string anchor = null,
                                              object htmlAttributes = null)
         {
