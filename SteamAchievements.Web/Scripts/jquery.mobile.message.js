@@ -2,7 +2,7 @@
     Message plugin for jQuery Mobile
     Copyright (c) 2012 John Rummell (jrummell.com)
     Licensed under the GPL license (http://www.gnu.org/licenses/gpl.html)
-    Version: 1.7.2
+    Version: 1.8.2
 */
 
 //
