@@ -1,0 +1,6 @@
+packages
+**/bin
+**/obj
+*.user
+*.suo
+SteamAchievements.Web/App_Data/Config
