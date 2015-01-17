@@ -36,6 +36,7 @@ namespace SteamAchievements.Web.App_Start
                                   "~/Scripts/bootstrap.message.js",
                                   "~/Scripts/Shared/AchievementService.js",
                                   "~/Scripts/Shared/facebook.js",
+                                  "~/Scripts/toc.js",
                                   "~/Scripts/Shared/site.js");
             bundles.Add(canvasScripts);
 

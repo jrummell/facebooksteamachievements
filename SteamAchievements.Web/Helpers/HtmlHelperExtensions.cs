@@ -19,11 +19,9 @@
 
 #endregion
 
-using System;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Razor.Parser.SyntaxTree;
 using System.Web.Routing;
 using SteamAchievements.Web.Models;
 using SteamAchievements.Web.Properties;
@@ -35,10 +33,11 @@ namespace SteamAchievements.Web.Helpers
         private static readonly Settings _settings = Settings.Default;
 
         public static MvcHtmlString CanvasLink(this HtmlHelper html, string linkText, string canvasAction = null,
+                                               string canvasController = null,
                                                object htmlAttributes = null)
         {
             TagBuilder a = new TagBuilder("a");
-            a.MergeAttribute("href", UrlHelperExtensions.GetCanvasUrl(canvasAction));
+            a.MergeAttribute("href", UrlHelperExtensions.GetCanvasUrl(canvasAction, canvasController));
             a.MergeAttribute("target", "_top");
             a.SetInnerText(linkText);
 
@@ -53,7 +52,8 @@ namespace SteamAchievements.Web.Helpers
         public static MvcHtmlString HelpLink(this HtmlHelper html, string linkText, string anchor = null,
                                              object htmlAttributes = null)
         {
-            string link = String.Format("{0}#{1}", _settings.HelpUrl, anchor ?? String.Empty);
+            UrlHelper url = new UrlHelper(html.ViewContext.RequestContext);
+            string link = url.Help(anchor);
 
             TagBuilder button = new TagBuilder("button");
             button.AddCssClass("btn btn-default");

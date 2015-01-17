@@ -26,4 +26,10 @@
 $(document).ready(function()
 {
     $("form .field-validation-error").message({ type: "error", dismiss: false });
+
+    var $toc = $("#toc");
+    if ($toc.length > 0)
+    {
+        $toc.toc();
+    }
 });

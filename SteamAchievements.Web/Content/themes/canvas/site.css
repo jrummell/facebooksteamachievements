@@ -221,6 +221,13 @@ fieldset.settings
 }
 
 /****************** 
+    Documents 
+******************/
+#toc .toc-h3 {
+    padding-left: 1em;
+}
+
+/****************** 
     validation 
 ******************/
 .field-validation-error, .validation-summary-errors

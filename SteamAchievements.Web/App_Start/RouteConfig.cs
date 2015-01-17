@@ -30,6 +30,10 @@ namespace SteamAchievements.Web.App_Start
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute("HelpController",
+                            "Help/{action}",
+                            new {controller = "Help", action = "Index"});
+
             routes.MapRoute(
                 "DefaultController", // Route name
                 "{action}", // URL with parameters

@@ -30,28 +30,34 @@ namespace SteamAchievements.Web.Helpers
     {
         private static readonly Settings _settings = Settings.Default;
 
-        public static MvcHtmlString CanvasAction(this UrlHelper url, string canvasAction)
+        public static MvcHtmlString CanvasAction(this UrlHelper url, string canvasAction, string canvasController = null)
         {
-            return MvcHtmlString.Create(GetCanvasUrl(canvasAction));
+            return MvcHtmlString.Create(GetCanvasUrl(canvasAction, canvasController));
         }
 
-        public static MvcHtmlString Help(this UrlHelper url, string anchor = null)
+        public static string Help(this UrlHelper url, string anchor = null)
         {
-            if (anchor == null)
+            var action = url.Action("Index", "Help");
+            if (!String.IsNullOrEmpty(anchor))
             {
-                return MvcHtmlString.Create(_settings.HelpUrl.ToString());
+                action += "#" + anchor;
             }
 
-            return MvcHtmlString.Create(String.Format("{0}#{1}", _settings.HelpUrl, anchor));
+            return action;
         }
 
-        public static string GetCanvasUrl(string canvasAction)
+        public static string GetCanvasUrl(string canvasAction, string canvasController = null)
         {
             string canvasUrl = _settings.FacebookCanvasUrl.ToString();
             StringBuilder canvasLink = new StringBuilder(canvasUrl);
             if (!canvasUrl.EndsWith("/"))
             {
                 canvasLink.Append("/");
+            }
+
+            if (!String.IsNullOrEmpty(canvasController))
+            {
+                canvasLink.Append(canvasController).Append("/");
             }
 
             if (!String.IsNullOrEmpty(canvasAction))
