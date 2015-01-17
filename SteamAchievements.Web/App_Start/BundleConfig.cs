@@ -35,10 +35,14 @@ namespace SteamAchievements.Web.App_Start
                                   "~/Scripts/json2.js",
                                   "~/Scripts/bootstrap.message.js",
                                   "~/Scripts/Shared/AchievementService.js",
-                                  "~/Scripts/Shared/facebook.js",
                                   "~/Scripts/toc.js",
                                   "~/Scripts/Shared/site.js");
             bundles.Add(canvasScripts);
+
+            Bundle facebookScripts 
+                = new ScriptBundle(BundlePaths.FacebookScripts);
+            facebookScripts.Include("~/Scripts/Shared/facebook.js");
+            bundles.Add(facebookScripts);
 
             // css themes
             Bundle canvasTheme =

@@ -1,17 +1,23 @@
-﻿<!DOCTYPE html>
+﻿@{
+    bool includeFacebookScripts = ViewBag.IncludeFacebookScripts ?? true;
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Steam Achievements - @ViewBag.Title</title>
-    <link href="~/Content/favicon.ico" rel="icon" type="image/x-icon"/>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="Stylesheet" type="text/css"/>
+    <link href="~/Content/favicon.ico" rel="icon" type="image/x-icon" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="Stylesheet" type="text/css" />
     @Styles.Render(BundlePaths.CanvasTheme)
     @RenderSection("head", false)
 </head>
 <body>
-    @Html.Partial("_FacebookPartial")
+    @if (includeFacebookScripts)
+    {
+        @Html.Partial("_FacebookPartial")
+    }
     <div id="topAdWrapper">
         @Html.Ad(AdLocation.Top)
     </div>
@@ -47,7 +53,10 @@
             document.write('<script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"><\/script>');
         }
     </script>
-
+    @if (includeFacebookScripts)
+    {
+        @Scripts.Render(BundlePaths.FacebookScripts)
+    }
     @Scripts.Render(BundlePaths.CanvasScripts)
     @RenderSection("scripts", required: false)
     @Html.UserVoice()
