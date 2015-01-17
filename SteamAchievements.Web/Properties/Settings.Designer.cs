@@ -25,15 +25,6 @@ namespace SteamAchievements.Web.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://example.com/help")]
-        public global::System.Uri HelpUrl {
-            get {
-                return ((global::System.Uri)(this["HelpUrl"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<p>your ad code here</p>")]
         public string TopAdMarkup {
             get {

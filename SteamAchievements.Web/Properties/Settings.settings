@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SteamAchievements.Web.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="HelpUrl" Type="System.Uri" Scope="Application">
-      <Value Profile="(Default)">http://example.com/help</Value>
-    </Setting>
     <Setting Name="TopAdMarkup" Type="System.String" Scope="Application">
       <Value Profile="(Default)">&lt;p&gt;your ad code here&lt;/p&gt;</Value>
     </Setting>

@@ -120,12 +120,6 @@ namespace SteamAchievements.Web.Helpers
         {
             return MvcHtmlString.Create(Assembly.GetExecutingAssembly().GetName().Version.ToString(3));
         }
-
-        public static bool IsMobileDevice(this HtmlHelper html)
-        {
-            HttpRequestBase request = html.ViewContext.RequestContext.HttpContext.Request;
-            return Settings.Default.Mode == FacebookMode.Mobile || request["device"] == "mobile";
-        }
     }
 
     public enum AdLocation

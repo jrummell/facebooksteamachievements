@@ -317,8 +317,6 @@
     <Content Include="Views\Shared\_IconPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
-    <Content Include="Views\Shared\_MobileLayout.cshtml" />
-    <Content Include="Views\Shared\_MobileMenuPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SteamAchievements.Data\SteamAchievements.Data.csproj">
