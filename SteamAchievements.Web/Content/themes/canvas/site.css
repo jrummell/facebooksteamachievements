@@ -30,7 +30,7 @@ fieldset
     http://devtacular.com/articles/bkonrad/how-to-style-an-application-like-facebook/ 
 ******************/
 
-h1, h2, h3, h4, h5, legend
+/*h1, h2, h3, h4, h5, legend
 {
     font-size: 13px;
     color: #333;
@@ -45,7 +45,7 @@ h4, h5
 {
     font-size: 11px;
 }
-
+*/
 .fbbody
 {
     width: 710px;
@@ -53,14 +53,14 @@ h4, h5
 }
 
 /* Default Facebook CSS */
-.fbbody, .fbbody input
+/*.fbbody, .fbbody input
 {
     font-family: "lucida grande" , tahoma, verdana, arial, sans-serif;
     font-size: 11px;
     color: #333333;
-}
+}*/
 /* Default Anchor Style */
-.fbbody a
+/*.fbbody a
 {
     color: #3b5998;
     outline-style: none;
@@ -71,7 +71,7 @@ h4, h5
 .fbbody a:hover
 {
     text-decoration: underline;
-}
+}*/
 
 /****************** 
     general styles 
@@ -113,11 +113,21 @@ div.form label
     display: block;
 }
 
+button a {
+    padding-left: .75em;
+}
+
+.checkbox input[type=checkbox] {
+    margin-left: 0;
+}
+
 /****************** 
     Index styles 
 ******************/
 #profileDiv #steamUserIdHeading
 {
+    padding-top: 0;
+    margin-top: 0;
     font-size: 200%;
 }
 #profileDiv #profileImage
@@ -127,21 +137,15 @@ div.form label
     padding: 0 5px 5px 0;
 }
 
-#gamesDiv ul
+#gamesDiv .game
 {
-    padding-left: 1em;
-}
-#gamesDiv ul li.game
-{
-    float: left;
     text-align: center;
     padding: 5px;
     margin: 0px;
-    list-style-type: none;
     width: 215px;
     height: 115px;
 }
-#gamesDiv ul li.game img
+#gamesDiv .game img
 {
     display: inline-block;
     width: 184px;
@@ -153,33 +157,22 @@ div.form label
 /****************** 
     Publish styles 
 ******************/
-#newAchievements ul
-{
-    padding-left: 1em;
 }
-#newAchievements ul li
-{
-    display: block;
-    list-style-type: none;
-}
-.unpublished li.game 
+.unpublished .game 
 {
     height: 2em;
     width: 695px;
-    clear: both;
 }
-.unpublished li.game h3
+.unpublished .game h3
 {
     font-size: 150%;
 }
-.unpublished li.achievement
+.unpublished .achievement
 {
-    float: left;
     height: 74px;
     padding: 0px;
     margin: 5px;
     border: 1px solid #fff;
-    width: 320px;
 }
 .unpublished .selected
 {
@@ -204,12 +197,12 @@ div.form label
 .unpublished .achievement .name
 {
     display: block;
-    font-size: 125%;
     font-weight: bold;
     margin-bottom: 0.5em;
 }
 .unpublished .achievement .description
 {
+    font-weight: normal;
     display: block;
 }
 
@@ -236,7 +229,7 @@ fieldset.settings
 }
 
 /****************** 
-    jquery UI message 
+    bootstrap message 
 ******************/
 .message-dismiss
 {
@@ -253,7 +246,7 @@ fieldset.settings
 {
     padding: 0 1em;
 }
-.message-container p .ui-icon
+.message-container p .glyphicon
 {
     margin-right: .3em;
 }

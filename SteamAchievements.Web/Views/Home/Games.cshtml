@@ -1,0 +1,27 @@
+﻿@model IndexViewModel
+@{
+    ViewBag.Title = Strings.TitleHome;
+}
+@Html.HiddenFor(model => model.SteamUserId)
+@Html.HiddenFor(model => model.SignedRequest)
+<div id="profileDiv" class="row">
+</div>
+
+<div id="gamesContainer" class="row hidden panel panel-default">
+    <div class="panel-body">
+        <div class="alert alert-info">
+            <p>
+                @Strings.GamesYourGames
+                @Html.HelpLink(Strings.ButtonHelp, "Supported_Games")
+            </p>
+        </div>
+        <img id="loadingGames" class="loading" src="@Url.Content("~/Content/images/ajax-loader.gif")" alt="Loading..." />
+        <div id="gamesDiv"></div>
+    </div>
+</div>
+@Html.HiddenFor(model => model.EnableLog)
+@Html.HiddenFor(model => model.LogOnRedirectUrl)
+@section scripts
+{
+    @Scripts.Render(BundlePaths.GamesScripts)
+}

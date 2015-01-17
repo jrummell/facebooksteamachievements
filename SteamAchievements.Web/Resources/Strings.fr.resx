@@ -135,14 +135,14 @@
   <data name="GamesYourGames" xml:space="preserve">
     <value>Vos jeux. Cette liste inclut tout les jeux Steam que vous possédez (incluant certains Mods Source gratuit) qui supportent les succès.</value>
   </data>
+  <data name="MenuGames" xml:space="preserve">
+    <value>Jeux</value>
+  </data>
   <data name="MenuHelp" xml:space="preserve">
     <value>Aide</value>
   </data>
   <data name="MenuHome" xml:space="preserve">
     <value>Accueil</value>
-  </data>
-  <data name="MenuPublish" xml:space="preserve">
-    <value>Publier</value>
   </data>
   <data name="MenuSettings" xml:space="preserve">
     <value>Paramètres</value>

@@ -135,14 +135,14 @@
   <data name="GamesYourGames" xml:space="preserve">
     <value>Your games. This list includes all Steam games that you own (including some free Source Mods) that support achievements.</value>
   </data>
+  <data name="MenuGames" xml:space="preserve">
+    <value>Games</value>
+  </data>
   <data name="MenuHelp" xml:space="preserve">
     <value>Help</value>
   </data>
   <data name="MenuHome" xml:space="preserve">
     <value>Home</value>
-  </data>
-  <data name="MenuPublish" xml:space="preserve">
-    <value>Publish</value>
   </data>
   <data name="MenuSettings" xml:space="preserve">
     <value>Settings</value>

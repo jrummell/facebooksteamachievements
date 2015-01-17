@@ -135,14 +135,14 @@
   <data name="GamesYourGames" xml:space="preserve">
     <value>Twoje gry. Ta lista zawiera wszystkie gry Steam które posiadasz (włączając niektóre darmowe mody) które wspierają osiągnięcia.</value>
   </data>
+  <data name="MenuGames" xml:space="preserve">
+    <value>Gry</value>
+  </data>
   <data name="MenuHelp" xml:space="preserve">
     <value>Pomoc</value>
   </data>
   <data name="MenuHome" xml:space="preserve">
     <value>Start</value>
-  </data>
-  <data name="MenuPublish" xml:space="preserve">
-    <value>Publikuj</value>
   </data>
   <data name="MenuSettings" xml:space="preserve">
     <value>Ustawienia</value>

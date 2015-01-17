@@ -54,7 +54,7 @@ namespace SteamAchievements.Web.Controllers
             }
         }
 
-        public ActionResult Index()
+        public ActionResult Games()
         {
             if (UserSettings == null)
             {
@@ -73,7 +73,7 @@ namespace SteamAchievements.Web.Controllers
             return View(model);
         }
 
-        public ActionResult Publish()
+        public ActionResult Index()
         {
             User user = UserSettings ?? new User();
 

@@ -33,21 +33,11 @@ namespace SteamAchievements.Web.App_Start
                 new ScriptBundle(BundlePaths.CanvasScripts);
             canvasScripts.Include("~/Scripts/modernizr-*",
                                   "~/Scripts/json2.js",
-                                  "~/Scripts/jquery.ui.message.js",
+                                  "~/Scripts/bootstrap.message.js",
                                   "~/Scripts/Shared/AchievementService.js",
                                   "~/Scripts/Shared/facebook.js",
-                                  "~/Scripts/Shared/canvas.js");
+                                  "~/Scripts/Shared/site.js");
             bundles.Add(canvasScripts);
-
-            Bundle mobileScripts =
-                new ScriptBundle(BundlePaths.MobileScripts);
-            mobileScripts.Include("~/Scripts/modernizr-*",
-                                  "~/Scripts/json2.js",
-                                  "~/Scripts/jquery.mobile.message.js",
-                                  "~/Scripts/shared/AchievementService.js",
-                                  "~/Scripts/Shared/facebook.js",
-                                  "~/Scripts/Shared/mobile.js");
-            bundles.Add(mobileScripts);
 
             // css themes
             Bundle canvasTheme =
@@ -62,8 +52,8 @@ namespace SteamAchievements.Web.App_Start
 
             // view specific scripts
             Bundle indexScripts =
-                new ScriptBundle(BundlePaths.IndexScripts)
-                    .Include("~/Scripts/Home/index.js");
+                new ScriptBundle(BundlePaths.GamesScripts)
+                    .Include("~/Scripts/Home/games.js");
             bundles.Add(indexScripts);
 
             Bundle publishScripts =

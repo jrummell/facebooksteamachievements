@@ -1,6 +1,11 @@
-﻿@Html.CanvasLink(Strings.MenuHome, "Index")
-|
-@Html.CanvasLink(Strings.MenuPublish, "Publish")
-|
-@Html.CanvasLink(Strings.MenuSettings, "Settings")
-| <a href="@Url.Help()" target="_blank">@Strings.MenuHelp</a> 
+﻿@helper IsActive(string action)
+{
+    @(ViewContext.RouteData.Values["action"].ToString() == action ? "active" : "");
+}
+
+<ul class="nav nav-tabs">
+    <li role="presentation" class="@IsActive("Index")">@Html.CanvasLink(Strings.MenuHome, "Index")</li>
+    <li role="presentation" class="@IsActive("Games")">@Html.CanvasLink(Strings.MenuGames, "Games")</li>
+    <li role="presentation" class="@IsActive("Settings") @IsActive("SaveSettings")">@Html.CanvasLink(Strings.MenuSettings, "Settings")</li>
+    <li role="presentation" class="@IsActive("Help")"><a href="@Url.Help()" target="_blank">@Strings.MenuHelp</a> </li>
+</ul>

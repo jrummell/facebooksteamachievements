@@ -1,7 +1,7 @@
 ﻿@model ProfileViewModel
 @if (Model.Profile != null)
 {
-    <img id="profileImage" src="@Model.Profile.AvatarUrl" align="left" />
+    <img id="profileImage" src="@Model.Profile.AvatarUrl" class="pull-left" />
     <h1 id="steamUserIdHeading">
         @Model.Profile.SteamUserId
     </h1>

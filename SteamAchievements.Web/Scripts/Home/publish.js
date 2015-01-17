@@ -47,6 +47,8 @@ $(document).ready(function()
         {
             achievementService.publishAchievements(achievementsToPublish, getNewAchievements);
         }
+
+        return false;
     });
 
     $("#hideSelectedButton").click(function()
@@ -67,6 +69,8 @@ $(document).ready(function()
         {
             achievementService.hideAchievements(achievementsToHide, getNewAchievements);
         }
+
+        return false;
     });
 
     function getNewAchievements()

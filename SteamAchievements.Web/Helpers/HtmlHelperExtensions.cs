@@ -23,6 +23,7 @@ using System;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Razor.Parser.SyntaxTree;
 using System.Web.Routing;
 using SteamAchievements.Web.Models;
 using SteamAchievements.Web.Properties;
@@ -54,10 +55,14 @@ namespace SteamAchievements.Web.Helpers
         {
             string link = String.Format("{0}#{1}", _settings.HelpUrl, anchor ?? String.Empty);
 
+            TagBuilder button = new TagBuilder("button");
+            button.AddCssClass("btn btn-default");
+            TagBuilder icon = new TagBuilder("span");
+            icon.AddCssClass("glyphicon glyphicon-question-sign");
             TagBuilder a = new TagBuilder("a");
             a.MergeAttribute("href", link);
             a.MergeAttribute("target", "_blank");
-            a.AddCssClass("help");
+            a.AddCssClass("");
             a.SetInnerText(linkText);
 
             if (htmlAttributes != null)
@@ -65,14 +70,9 @@ namespace SteamAchievements.Web.Helpers
                 a.MergeAttributes(new RouteValueDictionary(htmlAttributes), false);
             }
 
-            if (html.IsMobileDevice())
-            {
-                a.MergeAttribute("data-role", "button");
-                a.MergeAttribute("data-inline", "true");
-                a.MergeAttribute("data-icon", "info");
-            }
+            button.InnerHtml = icon.ToString() + a.ToString();
 
-            return MvcHtmlString.Create(a.ToString());
+            return MvcHtmlString.Create(button.ToString());
         }
 
         public static MvcHtmlString FacebookAppId(this HtmlHelper html)

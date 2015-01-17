@@ -1,53 +1,56 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Steam Achievements - @ViewBag.Title</title>
-    <link href="~/Content/favicon.ico" rel="icon" type="image/x-icon" />
-    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/redmond/jquery-ui.css"
-          rel="Stylesheet" type="text/css" />
+    <link href="~/Content/favicon.ico" rel="icon" type="image/x-icon"/>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="Stylesheet" type="text/css"/>
     @Styles.Render(BundlePaths.CanvasTheme)
     @RenderSection("head", false)
 </head>
-    <body>
-        @Html.Partial("_FacebookPartial")
-        <div id="topAdWrapper">
-            @Html.Ad(AdLocation.Top)
+<body>
+    @Html.Partial("_FacebookPartial")
+    <div id="topAdWrapper">
+        @Html.Ad(AdLocation.Top)
+    </div>
+    <div class="fbbody container">
+        <div class="row header">
+            <a href="@Url.Action("Games", "Home")">
+                <img src="~/Content/themes/canvas/banner-light.png" class="img-responsive" alt="Steam Achievements" />
+            </a>
         </div>
-        <div class="fbbody">
-            <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-            <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-            <script type="text/javascript">
-                if (!window.jQuery || !window.jQuery.ui)
-                {
-                    // fallback on local jquery if CDN fails
-                    document.write('<link rel="stylesheet" href="@Url.Content("~/Content/themes/base/minified/jquery-ui.min.css")" />');
-                    document.write('<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.9.1.min.js")"><\/script>');
-                    document.write('<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.10.3.min.js")"><\/script>');
-                }
-            </script>
-            <div class="header">
-                <a href="@Url.Action("Index", "Home")">
-                    <img src="~/Content/themes/canvas/banner-light.png" alt="Steam Achievements" />
-                </a>
-            </div>
-            <div class="menu">
-                @Html.Partial("_MenuPartial")
-            </div>
-            <div id="body">
-                @RenderBody()
-            </div>
-            <div class="footer">
-                @Html.Disclaimer()
-                <p>
-                    Version @Html.Version().</p>
-            </div>
+        <nav class="row nav navbar">
+            @Html.Partial("_MenuPartial")
+        </nav>
+        <div id="body">
+            @RenderBody()
         </div>
-        <div id="bottomAdWrapper">
-            @Html.Ad(AdLocation.Bottom)
+        <div class="footer">
+            @Html.Disclaimer()
+            <p>
+                Version @Html.Version().
+            </p>
         </div>
-        @Scripts.Render(BundlePaths.CanvasScripts)
-        @RenderSection("scripts", required: false)
-        @Html.UserVoice()
-        @Html.Analytics()
-    </body>
+    </div>
+    <div id="bottomAdWrapper">
+        @Html.Ad(AdLocation.Bottom)
+    </div>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        if (!window.jQuery || !window.jQuery.fn.modal) {
+            // fallback on local jquery if CDN fails
+            document.write('<link rel="stylesheet" href="@Url.Content("~/Content/themes/base/minified/jquery-ui.min.css")" />');
+            document.write('<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-2.1.3.min.js")"><\/script>');
+            document.write('<script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"><\/script>');
+        }
+    </script>
+
+    @Scripts.Render(BundlePaths.CanvasScripts)
+    @RenderSection("scripts", required: false)
+    @Html.UserVoice()
+    @Html.Analytics()
+</body>
 </html>
