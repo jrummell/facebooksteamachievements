@@ -25,7 +25,7 @@ namespace SteamAchievements.Web.Controllers
 
         private MarkdownModel GetModel(string id)
         {
-            var fileName = Path.Combine(Server.MapPath("~/App_Data/Documents"), id + ".md");
+            var fileName = Path.Combine(Server.MapPath("~/Documents"), id + ".md");
             if (!System.IO.File.Exists(fileName))
             {
                 return null;

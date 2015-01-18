@@ -28,6 +28,7 @@ namespace SteamAchievements.Web.App_Start
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            routes.IgnoreRoute("Documents/{*pathInfo}");
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute("HelpController",

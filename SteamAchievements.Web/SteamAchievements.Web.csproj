@@ -254,8 +254,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="App_Data\Documents\Help.md" />
-    <Content Include="App_Data\Documents\AutoUpdate.md" />
+    <Content Include="Documents\Help.md" />
+    <Content Include="Documents\AutoUpdate.md" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.message.js" />
@@ -300,7 +300,9 @@
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <None Include="Views\Help\Topic.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

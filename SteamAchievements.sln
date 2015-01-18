@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamAchievements.Services", "SteamAchievements.Services\SteamAchievements.Services.csproj", "{097473AA-B8FB-4A5E-889E-00559C65C660}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamAchievements.Data", "SteamAchievements.Data\SteamAchievements.Data.csproj", "{D654EA50-07D2-42FF-B420-17373D0B4C74}"
@@ -27,6 +29,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{9F61B389-C36E-432B-A38D-9E49FC4F4E0F}"
 	ProjectSection(SolutionItems) = preProject
 		Build.proj = Build.proj
+		Deploy.xml = Deploy.xml
 		.build\MSBuild.Community.Tasks.dll = .build\MSBuild.Community.Tasks.dll
 		.build\MSBuild.Community.Tasks.targets = .build\MSBuild.Community.Tasks.targets
 	EndProjectSection
