@@ -22,6 +22,7 @@
 using System;
 using System.Text;
 using System.Web.Mvc;
+using SteamAchievements.Web.Models;
 using SteamAchievements.Web.Properties;
 
 namespace SteamAchievements.Web.Helpers
@@ -30,14 +31,9 @@ namespace SteamAchievements.Web.Helpers
     {
         private static readonly Settings _settings = Settings.Default;
 
-        public static MvcHtmlString CanvasAction(this UrlHelper url, string canvasAction, string canvasController = null)
-        {
-            return MvcHtmlString.Create(GetCanvasUrl(canvasAction, canvasController));
-        }
-
         public static string Help(this UrlHelper url, string anchor = null)
         {
-            var action = url.Action("Index", "Help");
+            var action = CanvasAction(url, "Index", "Help");
             if (!String.IsNullOrEmpty(anchor))
             {
                 action += "#" + anchor;
@@ -46,8 +42,13 @@ namespace SteamAchievements.Web.Helpers
             return action;
         }
 
-        public static string GetCanvasUrl(string canvasAction, string canvasController = null)
+        public static string CanvasAction(this UrlHelper url, string canvasAction, string canvasController)
         {
+            if (_settings.Mode != FacebookMode.Canvas)
+            {
+                return url.Action(canvasAction, canvasController ?? "Home");
+            }
+
             string canvasUrl = _settings.FacebookCanvasUrl.ToString();
             StringBuilder canvasLink = new StringBuilder(canvasUrl);
             if (!canvasUrl.EndsWith("/"))

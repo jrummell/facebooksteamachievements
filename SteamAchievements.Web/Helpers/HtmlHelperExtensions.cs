@@ -36,8 +36,9 @@ namespace SteamAchievements.Web.Helpers
                                                string canvasController = null,
                                                object htmlAttributes = null)
         {
+            UrlHelper url = new UrlHelper(html.ViewContext.RequestContext);
             TagBuilder a = new TagBuilder("a");
-            a.MergeAttribute("href", UrlHelperExtensions.GetCanvasUrl(canvasAction, canvasController));
+            a.MergeAttribute("href", url.CanvasAction(canvasAction, canvasController));
             a.MergeAttribute("target", "_top");
             a.SetInnerText(linkText);
 
