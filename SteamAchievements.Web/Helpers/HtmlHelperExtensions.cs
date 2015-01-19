@@ -50,16 +50,36 @@ namespace SteamAchievements.Web.Helpers
             return MvcHtmlString.Create(a.ToString());
         }
 
+        public static MvcHtmlString HelpButton(this HtmlHelper html, string linkText, string anchor = null,
+                                               object htmlAttributes = null)
+        {
+            UrlHelper url = new UrlHelper(html.ViewContext.RequestContext);
+            string link = url.Help(anchor);
+
+            TagBuilder icon = new TagBuilder("span");
+            icon.AddCssClass("glyphicon glyphicon-question-sign");
+            TagBuilder a = new TagBuilder("a");
+            a.MergeAttribute("href", link);
+            a.MergeAttribute("target", "_blank");
+            a.AddCssClass("btn btn-default");
+            a.SetInnerText(linkText);
+
+            if (htmlAttributes != null)
+            {
+                a.MergeAttributes(new RouteValueDictionary(htmlAttributes), false);
+            }
+
+            a.InnerHtml = icon.ToString() + linkText;
+
+            return MvcHtmlString.Create(a.ToString());
+        }
+
         public static MvcHtmlString HelpLink(this HtmlHelper html, string linkText, string anchor = null,
                                              object htmlAttributes = null)
         {
             UrlHelper url = new UrlHelper(html.ViewContext.RequestContext);
             string link = url.Help(anchor);
 
-            TagBuilder button = new TagBuilder("button");
-            button.AddCssClass("btn btn-default");
-            TagBuilder icon = new TagBuilder("span");
-            icon.AddCssClass("glyphicon glyphicon-question-sign");
             TagBuilder a = new TagBuilder("a");
             a.MergeAttribute("href", link);
             a.MergeAttribute("target", "_blank");
@@ -71,9 +91,7 @@ namespace SteamAchievements.Web.Helpers
                 a.MergeAttributes(new RouteValueDictionary(htmlAttributes), false);
             }
 
-            button.InnerHtml = icon.ToString() + a.ToString();
-
-            return MvcHtmlString.Create(button.ToString());
+            return MvcHtmlString.Create(a.ToString());
         }
 
         public static MvcHtmlString FacebookAppId(this HtmlHelper html)

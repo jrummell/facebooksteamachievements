@@ -24,7 +24,7 @@ $(document).ready(function()
 
         getNewAchievements();
     };
-    achievementService.validateProfile(steamUserId, "#validateProfileError", validateProfileCallback);
+    achievementService.validateProfile(steamUserId, "#steamIdError", validateProfileCallback);
 
     $("#publishSelectedButton").click(function()
     {
@@ -108,7 +108,7 @@ $(document).ready(function()
                 if (!disableUnchecked || $achievementDiv.hasClass("selected"))
                 {
                     $achievementDiv.toggleClass("selected");
-                    if (this.tagName == "IMG")
+                    if (this.tagName === "IMG")
                     {
                         var checkbox = $achievementDiv.find(":checkbox").get(0);
                         checkbox.checked = !checkbox.checked;
@@ -133,7 +133,7 @@ $(document).ready(function()
                 $("#newAchievements ul").attr("data-inset", "true").listview();
             }
 
-            if (_newAchievements.length == 0)
+            if (_newAchievements.length === 0)
             {
                 $("#noUnpublishedMessage").message({ type: "info" });
             }

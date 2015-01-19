@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = Strings.TitleSettings;
 }
-<div class="row panel panel-default">
+<div class="row settings-page panel panel-default">
     <div class="panel-body">
         @if (ViewBag.Success == true)
         {
@@ -23,8 +23,8 @@
                 <div class="row form-group">
                     <div class="col-md-10">
                         <div class="input-group">
-                            <div class="input-group-addon">http://steamcommunity.com/id/</div>
-                            @Html.EditorFor(model => model.SteamUserId, new {maxlength = 50})
+                            <div class="input-group-addon hidden-xs">http://steamcommunity.com/id/</div>
+                            @Html.EditorFor(model => model.SteamUserId, new { htmlAttributes = new {maxlength = 50}})
                             <div id="steamIdVerified" class="hidden input-group-btn">
                                 @Html.Partial("_IconPartial", "ok")
                             </div>
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="col-md-2">
-                        @Html.HelpLink(Strings.ButtonHelp, "configure-your-steam-community-profile")
+                        @Html.HelpButton(Strings.ButtonHelp, "toc-configure-your-steam-community-profile")
                     </div>
                 </div>
             </div>

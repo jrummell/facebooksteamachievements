@@ -25,7 +25,9 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
+using SteamAchievements.Web.Helpers;
 using SteamAchievements.Web.Models;
+using SteamAchievements.Web.Resources;
 
 namespace SteamAchievements.Web.Controllers
 {
@@ -59,7 +61,7 @@ namespace SteamAchievements.Web.Controllers
 
             ProfileViewModel model = GetProfileViewModel(steamUserId);
 
-            var data = new {Valid = model.Error == null, Error = model.Error};
+            var data = new {Valid = !model.HasError, Error = model.Error};
             return Json(data);
         }
 
@@ -82,7 +84,7 @@ namespace SteamAchievements.Web.Controllers
                 model.Error =
                     String.Format(
                         "You haven't set your Steam Community Profile URL. Please set it on the <a href='{0}'>Settings</a> page.",
-                        Url.Action("Settings", "Home"));
+                        Url.CanvasAction("Settings"));
 
                 return model;
             }
@@ -94,6 +96,18 @@ namespace SteamAchievements.Web.Controllers
             catch (Exception ex)
             {
                 model.Error = ex.Message;
+            }
+
+            if (model.Profile == null)
+            {
+                model.Error = Strings.SettingsInvalidCustomUrl;
+            }
+
+            if (model.HasError)
+            {
+                model.Error += String.Format(" <a class='error-settings-link' href='{0}'>{1}</a>",
+                                             Url.CanvasAction("Settings"),
+                                             Strings.MenuSettings);
             }
 
             return model;

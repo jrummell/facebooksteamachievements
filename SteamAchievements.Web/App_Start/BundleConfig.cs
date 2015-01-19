@@ -45,6 +45,11 @@ namespace SteamAchievements.Web.App_Start
             bundles.Add(facebookScripts);
 
             // css themes
+            Bundle siteTheme =
+                new StyleBundle(BundlePaths.BaseTheme)
+                    .IncludeDirectory("~/Content/themes", "*.css");
+            bundles.Add(siteTheme);
+
             Bundle canvasTheme =
                 new StyleBundle(BundlePaths.CanvasTheme)
                     .IncludeDirectory("~/Content/themes/canvas", "*.css");

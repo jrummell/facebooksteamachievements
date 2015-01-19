@@ -42,7 +42,7 @@ namespace SteamAchievements.Web.Helpers
             return action;
         }
 
-        public static string CanvasAction(this UrlHelper url, string canvasAction, string canvasController)
+        public static string CanvasAction(this UrlHelper url, string canvasAction, string canvasController = null)
         {
             if (_settings.Mode != FacebookMode.Canvas)
             {

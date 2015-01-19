@@ -23,11 +23,14 @@ using System.Web.Mvc;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
 using SteamAchievements.Web.Filters;
+using SteamAchievements.Web.Models;
+using SteamAchievements.Web.Properties;
 
 namespace SteamAchievements.Web.Controllers
 {
     public abstract class FacebookController : Controller
     {
+        private static readonly FacebookMode _facebookMode = Settings.Default.Mode;
         private readonly IErrorLogger _errorLogger;
         private readonly IUserService _userService;
 
@@ -66,5 +69,25 @@ namespace SteamAchievements.Web.Controllers
         {
             get { return _errorLogger; }
         }
+
+        protected static FacebookMode FacebookMode
+        {
+            get { return _facebookMode; }
+        }
+
+        #region Overrides of Controller
+
+        /// <summary>
+        /// Called after the action method is invoked.
+        /// </summary>
+        /// <param name="filterContext">Information about the current request and action.</param>
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            ViewBag.FacebookMode = FacebookMode;
+
+            base.OnActionExecuted(filterContext);
+        }
+
+        #endregion
     }
 }

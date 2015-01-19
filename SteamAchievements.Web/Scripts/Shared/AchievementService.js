@@ -1,5 +1,5 @@
-﻿/// <reference path="jquery-1.4.4.js" />
-/// <reference path="jquery.ui.message.js" />
+﻿/// <reference path="~/Scripts/jquery-2.1.3.js" />
+/// <reference path="~/Scripts/bootstrap.message.js" />
 /// <reference path="json2.js" />
 /// <reference path="columnizer.js" />
 
@@ -26,8 +26,78 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
     self.enableLog = enableLog === true;
     self.publishDescription = publishDescription;
 
+    // private functions
+    function setSignedRequest(params)
+    {
+        // since this is an ajax request, we need to add the signed_request parameter explicitly
+        params.signed_request = self.signedRequest;
+    }
+
+    function load(selector, method, params, ondone)
+    {
+        if (params == null)
+        {
+            params = { };
+        }
+        setSignedRequest(params);
+
+        var url = self.serviceBase + method;
+        $(selector).load(url, params, ondone);
+    }
+
+    function post(method, params, ondone, onerror)
+    {
+        if (onerror == null) {
+            onerror = function (m) {
+                self.log(m.Message);
+            };
+        }
+
+        if (params == null) {
+            params = {};
+        }
+        setSignedRequest(params);
+
+        $.ajax({
+            url: self.serviceBase + method,
+            data: JSON.stringify(params),
+            type: "POST",
+            processData: true,
+            contentType: "application/json",
+            timeout: 120000, // 2 minutes
+            dataType: "json",
+            success: ondone,
+            error: function (xhr) {
+                if (!onerror) {
+                    return;
+                }
+
+                if (xhr.responseText) {
+                    try {
+                        var err = JSON.parse(xhr.responseText);
+                        if (err) {
+                            onerror(err);
+                        }
+                        else {
+                            onerror({ Message: "Unknown server error." });
+                        }
+                    }
+                    catch (e) {
+                        onerror({ Message: "Unknown server error." });
+                    }
+                }
+                return;
+            }
+        });
+    }
+
+    function isFunction(fn)
+    {
+        return typeof(fn) === "function";
+    }
+
     // methods
-    self.loadProfile = function(selector, callback)
+    self.loadProfile = function (selector, callback)
     {
         var ondone = function()
         {
@@ -67,7 +137,6 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
             if (!profile.Valid)
             {
                 $(errorSelector).message({ type: "error", message: profile.Error, dismiss: false });
-                return;
             }
             
             if (isFunction(callback))
@@ -166,7 +235,7 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
 
         // create and anchor in the middle of the page and focus on it so that the dialog will be visible to the user.
         var $middleAnchor = $("#middleAnchor");
-        if ($middleAnchor.length == 0)
+        if ($middleAnchor.length === 0)
         {
             // add an anchor in the middle of the page
             var middleX = $(document).width() / 2;
@@ -261,86 +330,6 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
     };
 
     // private methods
-
-    function load(selector, method, params, ondone)
-    {
-        if (params == null)
-        {
-            params = { };
-        }
-        setSignedRequest(params);
-
-        var url = self.serviceBase + method;
-        $(selector).load(url, params, ondone);
-    }
-
-    function post(method, params, ondone, onerror)
-    {
-        if (onerror == null)
-        {
-            onerror = function(m)
-            {
-                self.log(m.Message);
-            };
-        }
-
-        if (params == null)
-        {
-            params = { };
-        }
-        setSignedRequest(params);
-
-        $.ajax({
-            url: self.serviceBase + method,
-            data: JSON.stringify(params),
-            type: "POST",
-            processData: true,
-            contentType: "application/json",
-            timeout: 120000, // 2 minutes
-            dataType: "json",
-            success: ondone,
-            error: function(xhr)
-            {
-                if (!onerror)
-                {
-                    return;
-                }
-
-                if (xhr.responseText)
-                {
-                    try
-                    {
-                        var err = JSON.parse(xhr.responseText);
-                        if (err)
-                        {
-                            onerror(err);
-                        }
-                        else
-                        {
-                            onerror({ Message: "Unknown server error." });
-                        }
-                    }
-                    catch(e)
-                    {
-                        onerror({ Message: "Unknown server error." });
-                    }
-                }
-                return;
-            }
-        });
-    }
-
-    function setSignedRequest(params)
-    {
-        // since this is an ajax request, we need to add the signed_request parameter explicitly
-        params.signed_request = self.signedRequest;
-    }
-    
-    function isFunction(fn)
-    {
-        return typeof(fn) === "function";
-    }
-
     // init
     self.hideLoading("img.loading");
 }

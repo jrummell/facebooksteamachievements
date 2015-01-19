@@ -1,5 +1,6 @@
 ﻿@{
     bool includeFacebookScripts = ViewBag.IncludeFacebookScripts ?? true;
+    FacebookMode mode = ViewBag.FacebookMode ?? FacebookMode.None;
 }
 <!DOCTYPE html>
 <html>
@@ -10,7 +11,15 @@
     <title>Steam Achievements - @ViewBag.Title</title>
     <link href="~/Content/favicon.ico" rel="icon" type="image/x-icon" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="Stylesheet" type="text/css" />
-    @Styles.Render(BundlePaths.CanvasTheme)
+    @Styles.Render(BundlePaths.BaseTheme)
+    @if (mode == FacebookMode.Canvas)
+    {
+        @Styles.Render(BundlePaths.CanvasTheme)
+    }
+    else if (mode == FacebookMode.Mobile)
+    {
+        @Styles.Render(BundlePaths.MobileTheme)
+    }
     @RenderSection("head", false)
 </head>
 <body>

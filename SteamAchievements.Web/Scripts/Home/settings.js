@@ -1,4 +1,6 @@
-﻿$(document).ready(function()
+﻿/// <reference path="~/Scripts/Shared/AchievementService.js"/>
+
+$(document).ready(function ()
 {
     var $steamUserId = $("#SteamUserId");
     var signedRequest = $("#SignedRequest").val();

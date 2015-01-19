@@ -50,7 +50,7 @@ Please see the [auto update page](Help/Topic/AutoUpdate) for more information ho
 If you have a long list of unpublished achievements, you may have to scroll down the page so see the publish dialog.
 
 ### Why do I keep getting the message "Your achievements could not be updated. If this problem continues, please verify that your Custom URL is correct and that your Steam Community Profile is public." when my settings are correct?
-Please [verify your settings](Help#configure-steam-achievements) and try again. If you only see this occasionally, its likely because you are trying to update your achievements when the Steam Community is unavailable.
+Please [verify your settings](Help#toc-configure-steam-achievements) and try again. If you only see this occasionally, its likely because you are trying to update your achievements when the Steam Community is unavailable.
 
 ### How do I remove all information the app collected about my steam profile and Facebook account?
 Visit the following link to remove all of your information from the app: https://apps.facebook.com/steamachievementsx/Deauthorize

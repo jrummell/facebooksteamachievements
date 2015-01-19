@@ -30,7 +30,6 @@ namespace SteamAchievements.Web.Controllers
 {
     public class HomeController : FacebookController
     {
-        private static readonly FacebookMode _facebookMode = Properties.Settings.Default.Mode;
         private readonly IAchievementService _achievementService;
 
         public HomeController(IAchievementService achievementService, IUserService userService, IErrorLogger errorLogger)
@@ -65,7 +64,7 @@ namespace SteamAchievements.Web.Controllers
 
             // this technically shouldn't be necessary, but sometimes we don't get the signed_request parameter 
             // in CanvasSignedRequestAttribute and we don't have a valid facebook user
-            if (_facebookMode != FacebookMode.None && model.FacebookUserId == 0)
+            if (FacebookMode != FacebookMode.None && model.FacebookUserId == 0)
             {
                 return RedirectToAction("LogOn", "Account");
             }
@@ -79,7 +78,7 @@ namespace SteamAchievements.Web.Controllers
 
             SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(user);
 
-            if (_facebookMode == FacebookMode.None)
+            if (FacebookMode == FacebookMode.None)
             {
                 model.FacebookUserId = 1234;
                 model.SteamUserId = "NullReference";
