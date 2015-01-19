@@ -39,13 +39,12 @@
                    Exclude="$(ConfigPath)\**\.hg\**" />
     </ItemGroup>
 
-    <Message Text="ftp://$(DeployIisSite)/$(WebApplicationPath)/$(ConfigPath)"/>
-
+    <!-- This times out ...
     <FtpUpload Username="$(UserName)"
                Password="$(Password)"
                LocalFiles="@(configFiles)"
                RemoteFiles="@(configFiles->'%(RecursiveDir)%(Filename)%(Extension)')"
-               RemoteUri="ftp://$(DeployIisSite)/$(WebApplicationPath)/$(AppRelativeConfigPath)/" />
+               RemoteUri="ftp://$(DeployIisSite)/$(WebApplicationPath)/$(AppRelativeConfigPath)/" />-->
   </Target>
 
 </Project>
