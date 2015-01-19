@@ -98,7 +98,7 @@ $(document).ready(function()
         var ondone = function()
         {
             // allow user to select only 5 achievements since only 5 images can be displayed at a time
-            $("#newAchievements .achievement :checkbox, #newAchievements .achievement img").click(function()
+            $("#newAchievements").on("click touch touchstart", ".achievement :checkbox, .achievement img", function ()
             {
                 var $checked = $("#newAchievements :checked");
                 var disableUnchecked = $checked.length >= 5;
@@ -126,12 +126,6 @@ $(document).ready(function()
                     return !this.checked;
                 }).attr("disabled", disableUnchecked);
             });
-
-            if (achievementService.mobile)
-            {
-                $("#newAchievements .achievement :checkbox").checkboxradio();
-                $("#newAchievements ul").attr("data-inset", "true").listview();
-            }
 
             if (_newAchievements.length === 0)
             {
