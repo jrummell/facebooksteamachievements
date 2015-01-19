@@ -23,17 +23,16 @@
                 continue;
             }
             <div class="achievement col-md-6">
-                <div class="clear">
-                    <img class="pull-left" src="@achievement.ImageUrl" alt="@achievement.Name" />
-                    <div class="pull-left text">
-                        @{var checkboxId = "a" + achievement.Id;}
-                        <input type="checkbox" value="@achievement.Id" id="@checkboxId" />
-                        <label for="@checkboxId">
-                            <span class="name">@achievement.Name</span>
-                            <span class="description">@achievement.Description</span>
-                        </label>
-                    </div>
+                <img class="pull-left" src="@achievement.ImageUrl" alt="@achievement.Name" />
+                <div class="pull-left text">
+                    @{var checkboxId = "a" + achievement.Id;}
+                    <input type="checkbox" value="@achievement.Id" id="@checkboxId" />
+                    <label for="@checkboxId">
+                        <span class="name">@achievement.Name</span>
+                        <span class="description">@achievement.Description</span>
+                    </label>
                 </div>
+                <br class="clear"/>
             </div>
             i++;
         }
