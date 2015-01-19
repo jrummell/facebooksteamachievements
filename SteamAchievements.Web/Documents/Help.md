@@ -19,7 +19,7 @@ Publish your achievements on the Publish page. Select up to five achievements an
 
 ![](http://www.fbsteamachievements.com/fbsa/canvas/content/images/achievements.png)
 
-Note that only achievements earned within the past two weeks will be displayed on the publish page. You may also see older achievements from games that you've played recently if the unlocked date wasn't recorded. See the [auto update page](AutoUpdate) for more information.
+Note that only achievements earned within the past two weeks will be displayed on the publish page. You may also see older achievements from games that you've played recently if the unlocked date wasn't recorded.
 
 ## View Your Achievements
 Click the View Achievements link under any game in the Games box to view your achievements.
@@ -44,13 +44,19 @@ Not all achievements are made available to the [Steam Community XML API](https:/
 Unfortunately, there's not much we can do about missing achievements. You can help by posting on the [Steam forums](http://forums.steampowered.com/forums/forumdisplay.php?f=316).
 
 ### I turned on Auto Update. Why did it publish old achievements?
-Please see the [auto update page](Help/Topic/AutoUpdate) for more information how it works.
+**Unfortunately, due to the undependable nature of the Steam Community XML API, automatic publishing has been disabled.**
+
+A lot of you have been asking, so here is how Automatic Publishing works. The app looks for new achievements for games that you have played recently (last two weeks). If it found new achievements, it publishes up to the five latest. However, the Steam Community XML API doesn't include the unlock date for some achievements. In this case, the app uses the date that it discovered the achievement.
+
+So if you earned a bunch of achievements in a game that you haven't played for a few months, and then you play it today, Auto Update will then discover your "old" achievements for the first time. If they don't have unlock dates they will get today's date and will be published.
+
+This is a major annoyance of the Steam Community XML API, and I wish there was a better way to work around it. If you're a developer and have a better idea, please let us know!
 
 ### Why does nothing happen when I select a few achievements on the Publish page and click publish?
 If you have a long list of unpublished achievements, you may have to scroll down the page so see the publish dialog.
 
 ### Why do I keep getting the message "Your achievements could not be updated. If this problem continues, please verify that your Custom URL is correct and that your Steam Community Profile is public." when my settings are correct?
-Please [verify your settings](Help#toc-configure-steam-achievements) and try again. If you only see this occasionally, its likely because you are trying to update your achievements when the Steam Community is unavailable.
+Please [verify your settings](#toc-configure-steam-achievements) and try again. If you only see this occasionally, its likely because you are trying to update your achievements when the Steam Community is unavailable.
 
 ### How do I remove all information the app collected about my steam profile and Facebook account?
 Visit the following link to remove all of your information from the app: https://apps.facebook.com/steamachievementsx/Deauthorize

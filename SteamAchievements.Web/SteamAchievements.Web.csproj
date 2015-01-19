@@ -265,7 +265,6 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Documents\Help.md" />
-    <Content Include="Documents\AutoUpdate.md" />
     <Content Include="Content\themes\site.less" />
     <Content Include="Content\themes\canvas\canvas.less" />
     <Content Include="Content\themes\mobile\mobile.less" />
