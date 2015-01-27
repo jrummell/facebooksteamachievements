@@ -60,7 +60,6 @@ namespace SteamAchievements.Web.Helpers
             icon.AddCssClass("glyphicon glyphicon-question-sign");
             TagBuilder a = new TagBuilder("a");
             a.MergeAttribute("href", link);
-            a.MergeAttribute("target", "_blank");
             a.AddCssClass("btn btn-default");
             a.SetInnerText(linkText);
 
@@ -82,7 +81,6 @@ namespace SteamAchievements.Web.Helpers
 
             TagBuilder a = new TagBuilder("a");
             a.MergeAttribute("href", link);
-            a.MergeAttribute("target", "_blank");
             a.AddCssClass("");
             a.SetInnerText(linkText);
 
