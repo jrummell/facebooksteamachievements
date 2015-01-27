@@ -21,6 +21,8 @@
 
 using System.Web.Optimization;
 using SteamAchievements.Web.Helpers;
+using SteamAchievements.Web.Models;
+using SteamAchievements.Web.Properties;
 
 namespace SteamAchievements.Web.App_Start
 {
@@ -46,19 +48,18 @@ namespace SteamAchievements.Web.App_Start
 
             // css themes
             Bundle siteTheme =
-                new StyleBundle(BundlePaths.BaseTheme)
+                new StyleBundle(BundlePaths.Styles)
                     .IncludeDirectory("~/Content/themes", "*.css");
             bundles.Add(siteTheme);
 
-            Bundle canvasTheme =
-                new StyleBundle(BundlePaths.CanvasTheme)
-                    .IncludeDirectory("~/Content/themes/canvas", "*.css");
-            bundles.Add(canvasTheme);
-
-            Bundle mobileTheme =
-                new StyleBundle(BundlePaths.MobileTheme)
-                    .IncludeDirectory("~/Content/themes/mobile", "*.css");
-            bundles.Add(mobileTheme);
+            if (Settings.Default.Mode == FacebookMode.Canvas)
+            {
+                siteTheme.IncludeDirectory("~/Content/themes/canvas", "*.css");
+            }
+            else if (Settings.Default.Mode == FacebookMode.Mobile)
+            {
+                siteTheme.IncludeDirectory("~/Content/themes/mobile", "*.css");
+            }
 
             // view specific scripts
             Bundle indexScripts =

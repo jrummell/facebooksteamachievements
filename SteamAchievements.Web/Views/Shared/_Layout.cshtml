@@ -1,6 +1,7 @@
 ﻿@{
     bool includeFacebookScripts = ViewBag.IncludeFacebookScripts ?? true;
     FacebookMode mode = ViewBag.FacebookMode ?? FacebookMode.None;
+    string containerClass = mode == FacebookMode.Canvas ? "container-fluid" : "container";
 }
 <!DOCTYPE html>
 <html>
@@ -11,15 +12,7 @@
     <title>Steam Achievements - @ViewBag.Title</title>
     <link href="~/Content/favicon.ico" rel="icon" type="image/x-icon" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="Stylesheet" type="text/css" />
-    @Styles.Render(BundlePaths.BaseTheme)
-    @if (mode == FacebookMode.Canvas)
-    {
-        @Styles.Render(BundlePaths.CanvasTheme)
-    }
-    else if (mode == FacebookMode.Mobile)
-    {
-        @Styles.Render(BundlePaths.MobileTheme)
-    }
+    @Styles.Render(BundlePaths.Styles)
     @RenderSection("head", false)
 </head>
 <body>
@@ -30,7 +23,7 @@
     <div id="topAdWrapper">
         @Html.Ad(AdLocation.Top)
     </div>
-    <div class="fbbody container">
+    <div class="fbbody @containerClass">
         <div class="row header">
             <a href="@Url.Action("Index", "Home")">
                 <img src="~/Content/themes/canvas/banner-light.png" class="img-responsive" alt="Steam Achievements" />

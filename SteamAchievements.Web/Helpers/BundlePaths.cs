@@ -24,9 +24,7 @@ namespace SteamAchievements.Web.Helpers
     public static class BundlePaths
     {
         public const string CanvasScripts = "~/bundles/scripts/canvas";
-        public const string CanvasTheme = "~/bundles/themes/canvas";
-        public const string BaseTheme = "~/bundles/themes/base";
-        public const string MobileTheme = "~/bundles/themes/mobile";
+        public const string Styles = "~/bundles/css";
         public const string GamesScripts = "~/bundles/scripts/games";
         public const string PublishScripts = "~/bundles/scripts/publish";
         public const string SettingsScripts = "~/bundles/scripts/settings";
