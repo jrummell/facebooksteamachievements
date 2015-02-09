@@ -26,6 +26,31 @@ $(document).ready(function()
     };
     achievementService.validateProfile(steamUserId, "#steamIdError", validateProfileCallback);
 
+    // allow user to select only 5 achievements since only 5 images can be displayed at a time
+    $(".panel-body").on("click", ".achievement :checkbox, .achievement img", function () {
+        var $checked = $("#newAchievements :checked");
+        var disableUnchecked = $checked.length >= 5;
+
+        // toggle the selection if there are less than 5 selected or if the current item is already selected
+        var $achievementDiv = $(this).parents(".achievement");
+        if (!disableUnchecked || $achievementDiv.hasClass("selected")) {
+            $achievementDiv.toggleClass("selected");
+            if (this.tagName === "IMG") {
+                var checkbox = $achievementDiv.find(":checkbox").get(0);
+                checkbox.checked = !checkbox.checked;
+
+                if (achievementService.mobile) {
+                    checkbox.checkboxradio("refresh");
+                }
+            }
+        }
+
+        // disable unchecked boxes if there are 5 checked
+        $("#newAchievements .achievement :checkbox").filter(function () {
+            return !this.checked;
+        }).attr("disabled", disableUnchecked);
+    });
+
     $("#publishSelectedButton").click(function()
     {
         var achievementsToPublish = new Array();
@@ -97,36 +122,6 @@ $(document).ready(function()
     {
         var ondone = function()
         {
-            // allow user to select only 5 achievements since only 5 images can be displayed at a time
-            $("#newAchievements").on("click touch touchstart", ".achievement :checkbox, .achievement img", function ()
-            {
-                var $checked = $("#newAchievements :checked");
-                var disableUnchecked = $checked.length >= 5;
-
-                // toggle the selection if there are less than 5 selected or if the current item is already selected
-                var $achievementDiv = $(this).parents(".achievement");
-                if (!disableUnchecked || $achievementDiv.hasClass("selected"))
-                {
-                    $achievementDiv.toggleClass("selected");
-                    if (this.tagName === "IMG")
-                    {
-                        var checkbox = $achievementDiv.find(":checkbox").get(0);
-                        checkbox.checked = !checkbox.checked;
-
-                        if (achievementService.mobile)
-                        {
-                            checkbox.checkboxradio("refresh");
-                        }
-                    }
-                }
-
-                // disable unchecked boxes if there are 5 checked
-                $("#newAchievements .achievement :checkbox").filter(function()
-                {
-                    return !this.checked;
-                }).attr("disabled", disableUnchecked);
-            });
-
             if (_newAchievements.length === 0)
             {
                 $("#noUnpublishedMessage").message({ type: "info" });
