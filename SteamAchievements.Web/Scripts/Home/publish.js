@@ -15,6 +15,8 @@ $(document).ready(function()
         return;
     }
 
+    getProfile();
+
     var validateProfileCallback = function(data)
     {
         if (!data.Valid)
@@ -97,6 +99,24 @@ $(document).ready(function()
 
         return false;
     });
+
+    function getProfile(callback)
+    {
+        var ondone = function(error)
+        {
+            if (error)
+            {
+                return;
+            }
+            if (typeof (callback) == "function")
+            {
+                callback();
+            }
+            achievementService.updateSize();
+        };
+
+        achievementService.loadProfile("#profileDiv", ondone);
+    }
 
     function getNewAchievements()
     {

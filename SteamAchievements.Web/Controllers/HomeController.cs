@@ -53,14 +53,11 @@ namespace SteamAchievements.Web.Controllers
             }
         }
 
-        public ActionResult Games()
+        public ActionResult Index()
         {
-            if (UserSettings == null)
-            {
-                UserSettings = new User();
-            }
+            UserSettings = UserSettings ?? new User();
 
-            IndexViewModel model = Mapper.Map<User, IndexViewModel>(UserSettings);
+            SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(UserSettings);
 
             // this technically shouldn't be necessary, but sometimes we don't get the signed_request parameter 
             // in CanvasSignedRequestAttribute and we don't have a valid facebook user
@@ -72,16 +69,17 @@ namespace SteamAchievements.Web.Controllers
             return View(model);
         }
 
-        public ActionResult Index()
+        public ActionResult Games()
         {
             User user = UserSettings ?? new User();
 
-            SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(user);
+            IndexViewModel model = Mapper.Map<User, IndexViewModel>(user);
 
-            if (FacebookMode == FacebookMode.None)
+            // this technically shouldn't be necessary, but sometimes we don't get the signed_request parameter 
+            // in CanvasSignedRequestAttribute and we don't have a valid facebook user
+            if (FacebookMode != FacebookMode.None && model.FacebookUserId == 0)
             {
-                model.FacebookUserId = 1234;
-                model.SteamUserId = "NullReference";
+                return RedirectToAction("LogOn", "Account");
             }
 
             return View(model);
