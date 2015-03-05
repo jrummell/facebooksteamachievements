@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.IO;
 using System.Web.Mvc;
 using MarkdownSharp;
@@ -7,6 +8,9 @@ namespace SteamAchievements.Web.Controllers
 {
     public class HelpController : Controller
     {
+        private static readonly ConcurrentDictionary<string, MarkdownModel> _cache =
+            new ConcurrentDictionary<string, MarkdownModel>();
+
         public ActionResult Index()
         {
             return View("Topic", GetModel("Help"));
@@ -14,7 +18,7 @@ namespace SteamAchievements.Web.Controllers
 
         public ActionResult Topic(string id)
         {
-            var model = GetModel(id);
+            var model = _cache.GetOrAdd(id, GetModel);
             if (model == null)
             {
                 return HttpNotFound();
