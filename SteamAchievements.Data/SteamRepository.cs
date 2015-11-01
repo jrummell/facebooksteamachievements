@@ -20,6 +20,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Linq;
 using System.Linq;
 
@@ -27,12 +28,12 @@ namespace SteamAchievements.Data
 {
     public class SteamRepository : Disposable, ISteamRepository
     {
-        private readonly SteamDataContext _context = new SteamDataContext();
+        private readonly SteamContext _context = new SteamContext();
 
         /// <summary>
         /// Gets the context.
         /// </summary>
-        public DataContext Context
+        public DbContext Context
         {
             get { return _context; }
         }
@@ -83,7 +84,7 @@ namespace SteamAchievements.Data
         /// <param name="user">The user.</param>
         public void InsertOnSubmit(User user)
         {
-            _context.Users.InsertOnSubmit(user);
+            _context.Users.Add(user);
         }
 
         /// <summary>
@@ -92,7 +93,7 @@ namespace SteamAchievements.Data
         /// <param name="achievements">The achievements.</param>
         public void DeleteAllOnSubmit(IEnumerable<UserAchievement> achievements)
         {
-            _context.UserAchievements.DeleteAllOnSubmit(achievements);
+            _context.UserAchievements.RemoveRange(achievements);
         }
 
         /// <summary>
@@ -101,7 +102,7 @@ namespace SteamAchievements.Data
         /// <param name="user">The user.</param>
         public void DeleteOnSubmit(User user)
         {
-            _context.Users.DeleteOnSubmit(user);
+            _context.Users.Remove(user);
         }
 
         /// <summary>
@@ -109,7 +110,7 @@ namespace SteamAchievements.Data
         /// </summary>
         public void SubmitChanges()
         {
-            _context.SubmitChanges();
+            _context.SaveChanges();
         }
 
         /// <summary>
@@ -118,7 +119,7 @@ namespace SteamAchievements.Data
         /// <param name="achievement">The achievement.</param>
         public void InsertOnSubmit(Achievement achievement)
         {
-            _context.Achievements.InsertOnSubmit(achievement);
+            _context.Achievements.Add(achievement);
         }
 
         /// <summary>
@@ -127,7 +128,7 @@ namespace SteamAchievements.Data
         /// <param name="achievements">The achievements.</param>
         public void InsertAllOnSubmit(IEnumerable<UserAchievement> achievements)
         {
-            _context.UserAchievements.InsertAllOnSubmit(achievements);
+            _context.UserAchievements.AddRange(achievements);
         }
 
         /// <summary>
@@ -136,7 +137,7 @@ namespace SteamAchievements.Data
         /// <param name="achievementName">Name of the achievement.</param>
         public void InsertOnSubmit(AchievementName achievementName)
         {
-            _context.AchievementNames.InsertOnSubmit(achievementName);
+            _context.AchievementNames.Add(achievementName);
         }
 
         #endregion

@@ -7,12 +7,12 @@ namespace SteamAchievements.Data
     using System.Data.Entity.Spatial;
 
     [Table("steam_User")]
-    public partial class steam_User
+    public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public steam_User()
+        public User()
         {
-            steam_UserAchievement = new HashSet<steam_UserAchievement>();
+            UserAchievements = new HashSet<UserAchievement>();
         }
 
         [Key]
@@ -35,6 +35,6 @@ namespace SteamAchievements.Data
         public string Language { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<steam_UserAchievement> steam_UserAchievement { get; set; }
+        public virtual ICollection<UserAchievement> UserAchievements { get; set; }
     }
 }

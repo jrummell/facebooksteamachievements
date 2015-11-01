@@ -1,4 +1,5 @@
 using System.Data.Entity;
+using System.Diagnostics;
 
 namespace SteamAchievements.Data
 {
@@ -7,54 +8,55 @@ namespace SteamAchievements.Data
         public SteamContext()
             : base("name=SteamContext")
         {
+            Database.Log = message => Debug.WriteLine(message);
         }
 
-        public virtual DbSet<steam_Achievement> steam_Achievement { get; set; }
-        public virtual DbSet<steam_AchievementName> steam_AchievementName { get; set; }
-        public virtual DbSet<steam_User> steam_User { get; set; }
-        public virtual DbSet<steam_UserAchievement> steam_UserAchievement { get; set; }
+        public virtual DbSet<Achievement> Achievements { get; set; }
+        public virtual DbSet<AchievementName> AchievementNames { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserAchievement> UserAchievements { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<steam_Achievement>()
+            modelBuilder.Entity<Achievement>()
                 .Property(e => e.ApiName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<steam_Achievement>()
+            modelBuilder.Entity<Achievement>()
                 .Property(e => e.ImageUrl)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<steam_Achievement>()
-                .HasMany(e => e.steam_AchievementName)
-                .WithRequired(e => e.steam_Achievement)
+            modelBuilder.Entity<Achievement>()
+                .HasMany(e => e.AchievementNames)
+                .WithRequired(e => e.Achievement)
                 .HasForeignKey(e => e.AchievementId)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<steam_Achievement>()
-                .HasMany(e => e.steam_UserAchievement)
-                .WithRequired(e => e.steam_Achievement)
+            modelBuilder.Entity<Achievement>()
+                .HasMany(e => e.UserAchievements)
+                .WithRequired(e => e.Achievement)
                 .HasForeignKey(e => e.AchievementId)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<steam_AchievementName>()
+            modelBuilder.Entity<AchievementName>()
                 .Property(e => e.Language)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<steam_User>()
+            modelBuilder.Entity<User>()
                 .Property(e => e.SteamUserId)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<steam_User>()
+            modelBuilder.Entity<User>()
                 .Property(e => e.AccessToken)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<steam_User>()
+            modelBuilder.Entity<User>()
                 .Property(e => e.Language)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<steam_User>()
-                .HasMany(e => e.steam_UserAchievement)
-                .WithRequired(e => e.steam_User)
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.UserAchievements)
+                .WithRequired(e => e.User)
                 .WillCascadeOnDelete(false);
         }
     }

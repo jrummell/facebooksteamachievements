@@ -110,13 +110,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AchievementManager.cs" />
-    <Compile Include="DebuggerWriter.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="IAchievementManager.cs" />
     <Compile Include="ISteamRepository.cs" />
     <Compile Include="Migrations\201511011829557_Initial.cs" />
     <Compile Include="Migrations\201511011829557_Initial.Designer.cs">
       <DependentUpon>201511011829557_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511011856271_EFCleanUpNoChanges.cs" />
+    <Compile Include="Migrations\201511011856271_EFCleanUpNoChanges.Designer.cs">
+      <DependentUpon>201511011856271_EFCleanUpNoChanges.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,38 +128,21 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Steam.cs">
-      <DependentUpon>Steam.dbml</DependentUpon>
-    </Compile>
-    <Compile Include="Steam.designer.cs">
-      <DependentUpon>Steam.dbml</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Include="SteamContext.cs" />
-    <Compile Include="SteamDataContext.cs" />
     <Compile Include="SteamRepository.cs" />
-    <Compile Include="steam_Achievement.cs" />
-    <Compile Include="steam_AchievementName.cs" />
-    <Compile Include="steam_User.cs" />
-    <Compile Include="steam_UserAchievement.cs" />
+    <Compile Include="Achievement.cs" />
+    <Compile Include="AchievementName.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UserAchievement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Steam.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>Steam.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Steam.dbml.layout">
-      <DependentUpon>Steam.dbml</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +151,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201511011829557_Initial.resx">
       <DependentUpon>201511011829557_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511011856271_EFCleanUpNoChanges.resx">
+      <DependentUpon>201511011856271_EFCleanUpNoChanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
