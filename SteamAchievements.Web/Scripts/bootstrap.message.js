@@ -2,7 +2,7 @@
     Message plugin for Bootstrap
     Copyright (c) 2014 John Rummell (jrummell.com)
     Licensed under the GPL license (http://www.gnu.org/licenses/gpl.html)
-    Version: 1.9.2
+    Version: _VERSION_
 */
 
 //

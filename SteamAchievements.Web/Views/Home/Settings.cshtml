@@ -6,59 +6,61 @@
     <div class="panel-body">
         @if (ViewBag.Success == true)
         {
-            <div id="saveSuccess" class="row hidden">
-                @Strings.SettingsSuccess
-            </div>
+        <div id="saveSuccess" class="row hidden">
+            @Strings.SettingsSuccess
+        </div>
         }
         <div id="validateProfileError" class="row hidden"></div>
 
         @using (Html.BeginForm("SaveSettings", "Home"))
         {
-            @Html.HiddenFor(model => model.FacebookUserId)
-            @Html.HiddenFor(model => model.SignedRequest)
-            @Html.HiddenFor(model => model.EnableLog)
-            @Html.ValidationMessageFor(model => model.SteamUserId)
-            <div class="settings">
-                @Html.LabelFor(model => model.SteamUserId, Strings.SettingsCustomUrl)
-                <div class="row form-group">
-                    <div class="col-md-10">
-                        <div class="input-group">
-                            <div class="input-group-addon hidden-xs">http://steamcommunity.com/id/</div>
-                            @Html.EditorFor(model => model.SteamUserId, new { htmlAttributes = new {maxlength = 50}})
-                            <div id="steamIdVerified" class="hidden input-group-btn">
-                                @Html.Partial("_IconPartial", "ok")
-                            </div>
-                            <div id="steamIdError" class="hidden input-group-btn">
-                                @Html.Partial("_IconPartial", "exclamation-sign")
-                            </div>
+        @Html.HiddenFor(model => model.FacebookUserId)
+        @Html.HiddenFor(model => model.SignedRequest)
+        @Html.HiddenFor(model => model.EnableLog)
+        @Html.ValidationMessageFor(model => model.SteamUserId)
+        <div class="settings">
+            @Html.LabelFor(model => model.SteamUserId, Strings.SettingsCustomUrl)
+            <div class="row form-group">
+                <div class="col-md-10">
+                    <div class="input-group">
+                        <div class="input-group-addon hidden-xs">http://steamcommunity.com/id/</div>
+                        @Html.EditorFor(model => model.SteamUserId, new { htmlAttributes = new {maxlength = 50}})
+                        <div id="steamIdVerified" class="hidden input-group-btn">
+                            @Html.Partial("_IconPartial", "ok")
+                        </div>
+                        <div id="steamIdError" class="hidden input-group-btn">
+                            @Html.Partial("_IconPartial", "exclamation-sign")
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        @Html.HelpButton(Strings.ButtonHelp, "toc-configure-your-steam-community-profile")
-                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.HelpButton(Strings.ButtonHelp, "toc-configure-your-steam-community-profile")
                 </div>
             </div>
-            <div class="settings">
-                <label>Publish Options</label>
-                <div class="form-group">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.AutoUpdate)
-                        @Html.LabelFor(model => model.AutoUpdate)
-                    </div>
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.PublishDescription)
-                        @Html.LabelFor(model => model.PublishDescription)
-                    </div>
+        </div>
+        <div class="settings">
+            <label>Publish Options</label>
+            <div class="form-group">
+                <!--
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.AutoUpdate)
+                    @Html.LabelFor(model => model.AutoUpdate)
+                </div>
+                -->
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.PublishDescription)
+                    @Html.LabelFor(model => model.PublishDescription)
                 </div>
             </div>
-            <div class="">
-                <button type="submit" id="saveButton" class="save btn btn-default">
-                    <span class="glyphicon glyphicon-floppy-disk"></span>
-                    Save
-                </button>
-                <img id="saveImage" class="loading" src="@Url.Content("~/Content/images/ajax-loader.gif")" alt="Saving..."
-                     style="display: none" />
-            </div>
+        </div>
+        <div class="">
+            <button type="submit" id="saveButton" class="save btn btn-default">
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+                Save
+            </button>
+            <img id="saveImage" class="loading" src="@Url.Content(" ~/Content/images/ajax-loader.gif")" alt="Saving..."
+            style="display: none" />
+        </div>
         }
     </div>
 </div>
