@@ -33,6 +33,8 @@ namespace SteamAchievements.Data
         /// <returns></returns>
         User GetUser(long facebookUserId);
 
+        User GetUser(string userName);
+
         /// <summary>
         /// Gets the unpublished achievements.
         /// </summary>

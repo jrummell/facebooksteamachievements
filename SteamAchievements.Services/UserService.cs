@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using SteamAchievements.Data;
+using User = SteamAchievements.Services.Models.User;
 
 namespace SteamAchievements.Services
 {
@@ -50,9 +51,16 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Gets the user.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="userName">The user name.</param>
         /// <returns></returns>
-        public Models.User GetUser(long facebookUserId)
+        public User GetUser(string userName)
+        {
+            Data.User user = _manager.GetUser(userName);
+
+            return Map(user);
+        }
+
+        public User GetUser(long facebookUserId)
         {
             Data.User user = _manager.GetUser(facebookUserId);
 

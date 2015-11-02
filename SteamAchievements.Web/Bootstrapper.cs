@@ -57,8 +57,6 @@ namespace SteamAchievements.Web
                 container.RegisterType<IFacebookClientService, MockFacebookClientService>();
                 container.RegisterType<IUserService, MockUserService>();
                 container.RegisterType<IAchievementService, MockAchievementService>();
-
-                container.RegisterType<AuthorizeAttribute, MockCanvasAuthorizeAttribute>();
             }
             else
             {
@@ -68,8 +66,6 @@ namespace SteamAchievements.Web
                                              settings.FacebookCanvasUrl));
                 container.RegisterType<IUserService, UserService>();
                 container.RegisterType<IAchievementService, AchievementService>();
-
-                container.RegisterType<AuthorizeAttribute, CanvasAuthorizeAttribute>();
             }
 
             container.RegisterType<ISteamCommunityManager, SteamCommunityManager>();

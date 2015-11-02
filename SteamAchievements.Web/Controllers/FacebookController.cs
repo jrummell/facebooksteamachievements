@@ -19,10 +19,10 @@
 
 #endregion
 
+using System;
 using System.Web.Mvc;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
-using SteamAchievements.Web.Filters;
 using SteamAchievements.Web.Models;
 using SteamAchievements.Web.Properties;
 
@@ -30,55 +30,46 @@ namespace SteamAchievements.Web.Controllers
 {
     public abstract class FacebookController : Controller
     {
-        private static readonly FacebookMode _facebookMode = Settings.Default.Mode;
-        private readonly IErrorLogger _errorLogger;
-        private readonly IUserService _userService;
+        private readonly Lazy<long> _facebookUserId;
+        private readonly Lazy<User> _user;
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="FacebookController" /> class.
+        ///     Initializes a new instance of the <see cref="FacebookController" /> class.
         /// </summary>
         /// <param name="userService"> The user service. </param>
         /// <param name="errorLogger"> </param>
         protected FacebookController(IUserService userService, IErrorLogger errorLogger)
         {
-            _userService = userService;
-            _errorLogger = errorLogger;
+            UserService = userService;
+            ErrorLogger = errorLogger;
+
+            _facebookUserId = new Lazy<long>(() =>
+            {
+                var user = UserService.GetUser(User.Identity.Name);
+                return user?.FacebookUserId ?? 0;
+            });
+
+            _user = new Lazy<User>(() => UserService.GetUser(User.Identity.Name));
         }
+
+        public User UserSettings => _user.Value;
+        
+        /// <summary>
+        ///     Gets the user service.
+        /// </summary>
+        protected IUserService UserService { get; }
 
         /// <summary>
-        ///   Gets the user settings.
+        ///     Gets the error logger.
         /// </summary>
-        public User UserSettings
-        {
-            get { return Session[CanvasAuthorizeAttribute.UserSettingsKey] as User; }
-            set { Session[CanvasAuthorizeAttribute.UserSettingsKey] = value; }
-        }
+        protected IErrorLogger ErrorLogger { get; }
 
-        /// <summary>
-        ///   Gets the user service.
-        /// </summary>
-        protected IUserService UserService
-        {
-            get { return _userService; }
-        }
-
-        /// <summary>
-        ///   Gets the error logger.
-        /// </summary>
-        protected IErrorLogger ErrorLogger
-        {
-            get { return _errorLogger; }
-        }
-
-        protected static FacebookMode FacebookMode
-        {
-            get { return _facebookMode; }
-        }
+        protected static FacebookMode FacebookMode { get; } = Settings.Default.Mode;
 
         #region Overrides of Controller
 
         /// <summary>
-        /// Called after the action method is invoked.
+        ///     Called after the action method is invoked.
         /// </summary>
         /// <param name="filterContext">Information about the current request and action.</param>
         protected override void OnActionExecuted(ActionExecutedContext filterContext)

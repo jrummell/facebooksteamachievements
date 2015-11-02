@@ -38,9 +38,14 @@ namespace SteamAchievements.Services
             throw new NotImplementedException();
         }
 
+        public User GetUser(string userName)
+        {
+            return new User {FacebookUserId = 1000, UserName = userName, SteamUserId = "SteamUser"};
+        }
+
         public User GetUser(long facebookUserId)
         {
-            return new User {FacebookUserId = facebookUserId, SteamUserId = "SteamUser"};
+            return new User { FacebookUserId = facebookUserId, UserName = facebookUserId.ToString(), SteamUserId = "SteamUser" };
         }
 
         public void UpdateUser(User user)

@@ -55,15 +55,13 @@ namespace SteamAchievements.Web.Controllers
 
         public ActionResult Index()
         {
-            UserSettings = UserSettings ?? new User();
-
-            SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(UserSettings);
+            SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(UserSettings ?? new User());
 
             // this technically shouldn't be necessary, but sometimes we don't get the signed_request parameter 
             // in CanvasSignedRequestAttribute and we don't have a valid facebook user
             if (FacebookMode != FacebookMode.None && model.FacebookUserId == 0)
             {
-                return RedirectToAction("LogOn", "Account");
+                return RedirectToAction("Login", "Account");
             }
 
             return View(model);
@@ -115,8 +113,6 @@ namespace SteamAchievements.Web.Controllers
 
             UserService.UpdateUser(user);
 
-            UserSettings = user;
-
             if (newUser)
             {
                 try
@@ -144,7 +140,7 @@ namespace SteamAchievements.Web.Controllers
 
             UserService.DeauthorizeUser(UserSettings.FacebookUserId);
 
-            UserSettings = null;
+            //TODO: logout
 
             return View();
         }

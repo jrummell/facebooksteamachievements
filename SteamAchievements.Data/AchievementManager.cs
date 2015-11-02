@@ -63,6 +63,11 @@ namespace SteamAchievements.Data
             return query.SingleOrDefault();
         }
 
+        public User GetUser(string userName)
+        {
+            return _repository.Users.Where(e => e.UserName == userName).SingleOrDefault();
+        }
+
         /// <summary>
         /// Gets the auto update users.
         /// </summary>

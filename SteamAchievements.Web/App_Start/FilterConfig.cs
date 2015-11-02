@@ -19,32 +19,25 @@
 
 #endregion
 
-using System;
 using System.Web.Mvc;
 using Elmah.Contrib.Mvc;
-using SteamAchievements.Web.Controllers;
 using SteamAchievements.Web.Filters;
-using SteamAchievements.Web.Helpers;
+using SteamAchievements.Web.Models;
+using SteamAchievements.Web.Properties;
 
-namespace SteamAchievements.Web.App_Start
+namespace SteamAchievements.Web
 {
     public class FilterConfig
     {
-        public static void RegisterGlobalFilters(GlobalFilterCollection filters, IDependencyResolver dependencyResolver)
+        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new RequestCultureAttribute());
             filters.Add(new ElmahHandleErrorAttribute());
 
-            IFilterProvider provider = new ConditionalFilterProvider(
-                new Func<ControllerContext, ActionDescriptor, object>[]
-                    {
-                        (controller, action) =>
-                        controller.Controller.GetType() != typeof (AccountController)
-                            ? dependencyResolver.GetService<AuthorizeAttribute>()
-                            : null
-                    });
-
-            FilterProviders.Providers.Add(provider);
+            if (Settings.Default.Mode != FacebookMode.None)
+            {
+                filters.Add(new AuthorizeAttribute());
+            }
         }
     }
 }

@@ -66,8 +66,6 @@ namespace SteamAchievements.Web.Tests
             FakeControllerContext context = new FakeControllerContext(controller, sessionItems);
             controller.ControllerContext = context;
 
-            controller.UserSettings = originalUser;
-
             SettingsViewModel model =
                 new SettingsViewModel
                     {

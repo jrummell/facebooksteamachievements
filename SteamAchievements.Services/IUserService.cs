@@ -35,7 +35,13 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Gets the user.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="userName">The user name.</param>
+        User GetUser(string userName);
+
+        /// <summary>
+        /// Gets the user.
+        /// </summary>
+        /// <param name="facebookUserId">The user id.</param>
         User GetUser(long facebookUserId);
 
         /// <summary>

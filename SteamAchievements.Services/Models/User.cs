@@ -25,6 +25,8 @@ namespace SteamAchievements.Services.Models
 {
     public class User : IEquatable<User>
     {
+        public string UserName { get; set; }
+
         /// <summary>
         /// Gets or sets the access token.
         /// </summary>

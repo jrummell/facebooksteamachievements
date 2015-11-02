@@ -1,9 +1,10 @@
 using System.Data.Entity;
 using System.Diagnostics;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace SteamAchievements.Data
 {
-    public class SteamContext : DbContext
+    public class SteamContext : IdentityDbContext<User>
     {
         public SteamContext()
             : base("name=SteamContext")
@@ -13,7 +14,6 @@ namespace SteamAchievements.Data
 
         public virtual DbSet<Achievement> Achievements { get; set; }
         public virtual DbSet<AchievementName> AchievementNames { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserAchievement> UserAchievements { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
