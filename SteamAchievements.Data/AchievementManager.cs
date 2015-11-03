@@ -216,6 +216,8 @@ namespace SteamAchievements.Data
             existingUser.AutoUpdate = user.AutoUpdate;
             existingUser.SteamUserId = user.SteamUserId;
             existingUser.PublishDescription = user.PublishDescription;
+            existingUser.UserName = user.UserName;
+            existingUser.Email = user.Email;
 
             _repository.SubmitChanges();
         }

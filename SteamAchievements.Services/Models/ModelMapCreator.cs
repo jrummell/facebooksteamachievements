@@ -44,7 +44,6 @@ namespace SteamAchievements.Services.Models
                 .ForMember(entity => entity.Logins, options => options.Ignore())
                 .ForMember(entity => entity.LockoutEnabled, options => options.Ignore())
                 .ForMember(entity => entity.LockoutEndDateUtc, options => options.Ignore())
-                .ForMember(entity => entity.Id, options => options.Ignore())
                 .ForMember(entity => entity.PasswordHash, options => options.Ignore())
                 .ForMember(entity => entity.PhoneNumber, options => options.Ignore())
                 .ForMember(entity => entity.PhoneNumberConfirmed, options => options.Ignore())

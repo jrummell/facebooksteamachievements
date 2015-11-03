@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -6,12 +7,20 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SteamAchievements.Data;
+using SteamAchievements.Services;
 
 namespace SteamAchievements.Web.Controllers
 {
     [Authorize]
     public class AccountController : UserController
     {
+        private readonly IUserService _userService;
+
+        public AccountController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -44,18 +53,38 @@ namespace SteamAchievements.Web.Controllers
                 return RedirectToAction("Login");
             }
 
-            // Sign in the user with this external login provider if the user already has a login
-            var result = await SignInManager.ExternalSignInAsync(loginInfo, true);
-            switch (result)
+            var user = await UserManager.FindByNameAsync(loginInfo.Login.ProviderKey);
+            if (user == null)
             {
-                case SignInStatus.Success:
-                    return RedirectToLocal("~/");
-                default:
-                    // If the user does not have an account, then prompt the user to create an account
-                    ViewBag.ReturnUrl = returnUrl;
-                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+                long facebookId = Convert.ToInt64(loginInfo.Login.ProviderKey);
+                user = new steam_User {UserName = loginInfo.Login.ProviderKey, FacebookUserId = facebookId};
+                var createResult = await UserManager.CreateAsync(user);
+                if (!createResult.Succeeded)
+                {
+                    AddErrors(createResult);
                     return View("ExternalLoginFailure");
+                }
             }
+
+            var logins = await UserManager.GetLoginsAsync(user.Id);
+            if (!logins.Any())
+            {
+                var addResult = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
+                if (!addResult.Succeeded)
+                {
+                    AddErrors(addResult);
+                    return View("ExternalLoginFailure");
+                }
+            }
+
+            //if (String.IsNullOrEmpty(loginInfo.Email))
+            //{
+            //    loginInfo.Email = "none@example.com";
+            //}
+
+            user = await UserManager.FindByNameAsync(user.UserName);
+            await SignInManager.SignInAsync(user, true, true);
+            return RedirectToLocal("~/");
         }
 
         //

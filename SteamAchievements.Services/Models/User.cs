@@ -25,6 +25,8 @@ namespace SteamAchievements.Services.Models
 {
     public class User : IEquatable<User>
     {
+        public int Id { get; set; }
+
         public string UserName { get; set; }
 
         /// <summary>

@@ -121,6 +121,14 @@
     <Compile Include="Migrations\201511030026084_AddIdentity.Designer.cs">
       <DependentUpon>201511030026084_AddIdentity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511031718041_AddFacebookLogins.cs" />
+    <Compile Include="Migrations\201511031718041_AddFacebookLogins.Designer.cs">
+      <DependentUpon>201511031718041_AddFacebookLogins.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511031720102_SetUserName.cs" />
+    <Compile Include="Migrations\201511031720102_SetUserName.Designer.cs">
+      <DependentUpon>201511031720102_SetUserName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -158,6 +166,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511030026084_AddIdentity.resx">
       <DependentUpon>201511030026084_AddIdentity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511031718041_AddFacebookLogins.resx">
+      <DependentUpon>201511031718041_AddFacebookLogins.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511031720102_SetUserName.resx">
+      <DependentUpon>201511031720102_SetUserName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
