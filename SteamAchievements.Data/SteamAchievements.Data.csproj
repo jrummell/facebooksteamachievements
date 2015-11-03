@@ -160,6 +160,10 @@
       <DependentUpon>201511030026084_AddIdentity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Migrations\ProdScripts\2-AddIdentityMigration.sql" />
+    <Content Include="Migrations\ProdScripts\1-InitialMigration.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -77,7 +77,7 @@ namespace SteamAchievements.Web.Controllers
             // in CanvasSignedRequestAttribute and we don't have a valid facebook user
             if (FacebookMode != FacebookMode.None && model.FacebookUserId == 0)
             {
-                return RedirectToAction("LogOn", "Account");
+                return RedirectToAction("Login", "Account");
             }
 
             return View(model);
