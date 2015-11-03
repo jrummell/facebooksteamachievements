@@ -45,7 +45,7 @@ namespace SteamAchievements.Web.Controllers
             }
 
             // Sign in the user with this external login provider if the user already has a login
-            var result = await SignInManager.ExternalSignInAsync(loginInfo, false);
+            var result = await SignInManager.ExternalSignInAsync(loginInfo, true);
             switch (result)
             {
                 case SignInStatus.Success:
