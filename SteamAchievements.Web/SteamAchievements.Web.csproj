@@ -238,6 +238,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\FormsAuthenticationService.cs" />
     <Compile Include="Helpers\BundlePaths.cs" />
@@ -361,7 +362,6 @@
     <Content Include="fbchannel.ashx" />
     <Content Include="Views\Shared\_FacebookPartial.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />

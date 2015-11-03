@@ -1,17 +1,12 @@
-﻿@model LoginViewModel
-@{
+﻿@{
     ViewBag.Title = "Log in";
 }
 
 <div class="row">
-    <div class="login-box">
+    <div class="panel">
         <!-- TODO: style me -->
         <section id="socialLoginForm">
             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
         </section>
     </div>
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

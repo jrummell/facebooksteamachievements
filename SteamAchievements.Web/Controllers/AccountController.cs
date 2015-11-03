@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -7,29 +6,12 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SteamAchievements.Data;
-using SteamAchievements.Web.Models;
 
 namespace SteamAchievements.Web.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : UserController
     {
-        private SignInManager<steam_User, int> _signInManager;
-        private UserManager<steam_User, int> _userManager;
-        //TODO: Dependency Injection for ASP.NET Identity
-
-        public SignInManager<steam_User, int> SignInManager
-        {
-            get { return _signInManager ?? HttpContext.GetOwinContext().Get<SignInManager<steam_User, int>>(); }
-            private set { _signInManager = value; }
-        }
-
-        public UserManager<steam_User, int> UserManager
-        {
-            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<UserManager<steam_User, int>>(); }
-            private set { _userManager = value; }
-        }
-
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -68,16 +50,11 @@ namespace SteamAchievements.Web.Controllers
             {
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = false});
-                case SignInStatus.Failure:
                 default:
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation");
+                    return View("ExternalLoginFailure");
             }
         }
 
@@ -104,6 +81,7 @@ namespace SteamAchievements.Web.Controllers
                 var user = new steam_User
                 {
                     UserName = info.DefaultUserName,
+                    Email = info.Email,
                     AccessToken = info.ExternalIdentity.FindFirstValue("AccessToken"),
                     FacebookUserId = Convert.ToInt64(info.ExternalIdentity.GetUserId())
                 };
@@ -140,26 +118,6 @@ namespace SteamAchievements.Web.Controllers
         public ActionResult ExternalLoginFailure()
         {
             return View();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (_userManager != null)
-                {
-                    _userManager.Dispose();
-                    _userManager = null;
-                }
-
-                if (_signInManager != null)
-                {
-                    _signInManager.Dispose();
-                    _signInManager = null;
-                }
-            }
-
-            base.Dispose(disposing);
         }
 
         #region Helpers
