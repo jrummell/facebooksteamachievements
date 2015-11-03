@@ -54,18 +54,19 @@ namespace SteamAchievements.Web.Tests
                     AutoUpdate = true,
                     FacebookUserId = 12345,
                     PublishDescription = true,
-                    SteamUserId = "NullReference"
+                    SteamUserId = "NullReference",
+                    UserName = 12345.ToString()
                 };
-            mockUserService.Setup(service => service.GetUser(originalUser.FacebookUserId))
+            mockUserService.Setup(service => service.GetUser(originalUser.UserName))
                 .Returns(() => originalUser).Verifiable();
 
             SessionStateItemCollection sessionItems = new SessionStateItemCollection();
             HomeController controller = new HomeController(mockAchievementService.Object,
                                                            mockUserService.Object,
                                                            new Mock<IErrorLogger>().Object);
-            FakeControllerContext context = new FakeControllerContext(controller, sessionItems);
+            FakeControllerContext context = new FakeControllerContext(controller, originalUser.UserName, new string[0]);
             controller.ControllerContext = context;
-
+            
             SettingsViewModel model =
                 new SettingsViewModel
                     {

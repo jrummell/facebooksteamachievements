@@ -37,6 +37,20 @@ namespace SteamAchievements.Services.Models
 
             Mapper.CreateMap<User, Data.steam_User>()
                 .ForMember(entity => entity.UserAchievements, options => options.Ignore())
+                .ForMember(entity => entity.AccessFailedCount, options => options.Ignore())
+                .ForMember(entity => entity.Claims, options => options.Ignore())
+                .ForMember(entity => entity.Email, options => options.Ignore())
+                .ForMember(entity => entity.EmailConfirmed, options => options.Ignore())
+                .ForMember(entity => entity.Logins, options => options.Ignore())
+                .ForMember(entity => entity.LockoutEnabled, options => options.Ignore())
+                .ForMember(entity => entity.LockoutEndDateUtc, options => options.Ignore())
+                .ForMember(entity => entity.Id, options => options.Ignore())
+                .ForMember(entity => entity.PasswordHash, options => options.Ignore())
+                .ForMember(entity => entity.PhoneNumber, options => options.Ignore())
+                .ForMember(entity => entity.PhoneNumberConfirmed, options => options.Ignore())
+                .ForMember(entity => entity.SecurityStamp, options => options.Ignore())
+                .ForMember(entity => entity.TwoFactorEnabled, options => options.Ignore())
+                .ForMember(entity => entity.Roles, options => options.Ignore())
                 .ForMember(entity => entity.AccessToken,
                            options => options.MapFrom(model => model.AccessToken ?? String.Empty));
 
@@ -45,6 +59,7 @@ namespace SteamAchievements.Services.Models
                 .ForMember(entity => entity.User, options => options.Ignore())
                 .ForMember(entity => entity.Id, options => options.Ignore())
                 .ForMember(entity => entity.Hidden, options => options.Ignore())
+                .ForMember(entity => entity.UserId, options => options.Ignore())
                 .ForMember(entity => entity.Published, options => options.Ignore());
 
             // Achievement
