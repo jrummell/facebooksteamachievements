@@ -7,13 +7,13 @@ namespace SteamAchievements.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class EFCleanUpNoChanges : IMigrationMetadata
+    public sealed partial class AddIdentity : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(EFCleanUpNoChanges));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddIdentity));
         
         string IMigrationMetadata.Id
         {
-            get { return "201511011856271_EFCleanUpNoChanges"; }
+            get { return "201511030026084_AddIdentity"; }
         }
         
         string IMigrationMetadata.Source

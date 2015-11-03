@@ -31,16 +31,16 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="facebookUserId">The facebook user id.</param>
         /// <returns></returns>
-        User GetUser(long facebookUserId);
+        steam_User GetUser(long facebookUserId);
 
-        User GetUser(string userName);
+        steam_User GetUser(string userName);
 
         /// <summary>
         /// Gets the unpublished achievements.
         /// </summary>
         /// <param name="facebookUserId">The facebook user id.</param>
         /// <returns></returns>
-        ICollection<Achievement> GetUnpublishedAchievements(long facebookUserId);
+        ICollection<steam_Achievement> GetUnpublishedAchievements(long facebookUserId);
 
         /// <summary>
         /// Gets the unpublished achievements by oldest date.
@@ -48,19 +48,19 @@ namespace SteamAchievements.Data
         /// <param name="facebookUserId">The facebook user id.</param>
         /// <param name="oldestDate">The oldest date.</param>
         /// <returns></returns>
-        ICollection<Achievement> GetUnpublishedAchievements(long facebookUserId, DateTime oldestDate);
+        ICollection<steam_Achievement> GetUnpublishedAchievements(long facebookUserId, DateTime oldestDate);
 
         /// <summary>
         /// Gets the auto update users.
         /// </summary>
         /// <returns></returns>
-        ICollection<User> GetAutoUpdateUsers();
+        ICollection<steam_User> GetAutoUpdateUsers();
 
         /// <summary>
         /// Updates the achievements.
         /// </summary>
         /// <param name="achievements">The achievements.</param>
-        int UpdateAchievements(IEnumerable<UserAchievement> achievements);
+        int UpdateAchievements(IEnumerable<steam_UserAchievement> achievements);
 
         /// <summary>
         /// Updates the published flag on the given achievements.
@@ -80,7 +80,7 @@ namespace SteamAchievements.Data
         /// Updates the user.
         /// </summary>
         /// <param name="user"></param>
-        void UpdateUser(User user);
+        void UpdateUser(steam_User user);
 
         /// <summary>
         /// Deauthorizes the user.

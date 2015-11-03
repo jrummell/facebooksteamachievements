@@ -1,6 +1,12 @@
 ﻿using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security.Facebook;
 using Owin;
+using SteamAchievements.Data;
 using SteamAchievements.Web.Properties;
 
 namespace SteamAchievements.Web
@@ -11,6 +17,35 @@ namespace SteamAchievements.Web
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
+
+            app.CreatePerOwinContext(() => new SteamContext());
+            app.CreatePerOwinContext<UserManager<steam_User, int>>((options, context) =>
+            {
+                var userStore = new UserStore<steam_User, Role, int, UserLogin, UserRole, UserClaim>(context.Get<SteamContext>());
+                var manager = new UserManager<steam_User, int>(userStore);
+
+                manager.UserValidator = new UserValidator<steam_User, int>(manager) {RequireUniqueEmail = false, AllowOnlyAlphanumericUserNames = false};
+                manager.PasswordValidator = new PasswordValidator();
+
+                manager.UserLockoutEnabledByDefault = false;
+
+                var dataProtectionProvider = options.DataProtectionProvider;
+                if (dataProtectionProvider != null)
+                {
+                    manager.UserTokenProvider =
+                        new DataProtectorTokenProvider<steam_User, int>(dataProtectionProvider.Create("ASP.NET Identity"));
+                }
+
+                return manager;
+            });
+
+            app.CreatePerOwinContext<SignInManager<steam_User, int>>((options, context) =>
+            {
+                var manager = new SignInManager<steam_User, int>(context.GetUserManager<UserManager<steam_User, int>>(), context.Authentication);
+
+                return manager;
+            });
+
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
@@ -67,8 +102,21 @@ namespace SteamAchievements.Web
 
             if (!string.IsNullOrEmpty(Settings.Default.FacebookAppId))
             {
-                app.UseFacebookAuthentication(Settings.Default.FacebookAppId,
-                                            Settings.Default.FacebookAppSecret);
+                var options = new FacebookAuthenticationOptions
+                {
+                    Provider = new FacebookAuthenticationProvider
+                    {
+                        OnAuthenticated = context =>
+                        {
+                            context.Identity.AddClaim(new Claim("AccessToken", context.AccessToken));
+
+                            return Task.FromResult(0);
+                        }
+                    },
+                    AppId = Settings.Default.FacebookAppId,
+                    AppSecret = Settings.Default.FacebookAppSecret
+                };
+                app.UseFacebookAuthentication(options);
             }
         }
     }

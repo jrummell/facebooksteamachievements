@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -13,19 +14,19 @@ namespace SteamAchievements.Web.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private SignInManager<User, string> _signInManager;
-        private UserManager<User> _userManager;
+        private SignInManager<steam_User, int> _signInManager;
+        private UserManager<steam_User, int> _userManager;
         //TODO: Dependency Injection for ASP.NET Identity
 
-        public SignInManager<User, string> SignInManager
+        public SignInManager<steam_User, int> SignInManager
         {
-            get { return _signInManager ?? HttpContext.GetOwinContext().Get<SignInManager<User, string>>(); }
+            get { return _signInManager ?? HttpContext.GetOwinContext().Get<SignInManager<steam_User, int>>(); }
             private set { _signInManager = value; }
         }
 
-        public UserManager<User> UserManager
+        public UserManager<steam_User, int> UserManager
         {
-            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<UserManager<User>>(); }
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<UserManager<steam_User, int>>(); }
             private set { _userManager = value; }
         }
 
@@ -35,62 +36,6 @@ namespace SteamAchievements.Web.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
-        }
-
-        //
-        // GET: /Account/VerifyCode
-        [AllowAnonymous]
-        public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
-        {
-            // Require that the user has already logged in via username/password or external login
-            if (!await SignInManager.HasBeenVerifiedAsync())
-            {
-                return View("Error");
-            }
-            return View(new VerifyCodeViewModel {Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe});
-        }
-
-        //
-        // POST: /Account/VerifyCode
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            // The following code protects for brute force attacks against the two factor codes. 
-            // If a user enters incorrect codes for a specified amount of time then the user account 
-            // will be locked out for a specified amount of time. 
-            // You can configure the account lockout settings in IdentityConfig
-            var result =
-                await
-                SignInManager.TwoFactorSignInAsync(model.Provider,
-                                                   model.Code,
-                                                   model.RememberMe,
-                                                   model.RememberBrowser);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(model.ReturnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid code.");
-                    return View(model);
-            }
-        }
-
-        //
-        // GET: /Account/Register
-        [AllowAnonymous]
-        public ActionResult Register()
-        {
             return View();
         }
 
@@ -132,8 +77,7 @@ namespace SteamAchievements.Web.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation",
-                                new ExternalLoginConfirmationViewModel {Email = loginInfo.Email});
+                    return View("ExternalLoginConfirmation");
             }
         }
 
@@ -142,8 +86,7 @@ namespace SteamAchievements.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model,
-                                                                  string returnUrl)
+        public async Task<ActionResult> ExternalLoginConfirmation(string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -158,7 +101,12 @@ namespace SteamAchievements.Web.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new User {UserName = model.Email, Email = model.Email};
+                var user = new steam_User
+                {
+                    UserName = info.DefaultUserName,
+                    AccessToken = info.ExternalIdentity.FindFirstValue("AccessToken"),
+                    FacebookUserId = Convert.ToInt64(info.ExternalIdentity.GetUserId())
+                };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -173,7 +121,7 @@ namespace SteamAchievements.Web.Controllers
             }
 
             ViewBag.ReturnUrl = returnUrl;
-            return View(model);
+            return View();
         }
 
         //

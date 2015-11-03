@@ -31,19 +31,19 @@ namespace SteamAchievements.Data
         /// Gets the achievements.
         /// </summary>
         /// <value>The achievements.</value>
-        IQueryable<Achievement> Achievements { get; }
+        IQueryable<steam_Achievement> Achievements { get; }
 
         /// <summary>
         /// Gets the user achievements.
         /// </summary>
         /// <value>The user achievements.</value>
-        IQueryable<UserAchievement> UserAchievements { get; }
+        IQueryable<steam_UserAchievement> UserAchievements { get; }
 
         /// <summary>
         /// Gets the users.
         /// </summary>
         /// <value>The users.</value>
-        IQueryable<User> Users { get; }
+        IQueryable<steam_User> Users { get; }
 
         /// <summary>
         /// Gets the achievement names.
@@ -51,25 +51,25 @@ namespace SteamAchievements.Data
         /// <value>
         /// The achievement names.
         /// </value>
-        IQueryable<AchievementName> AchievementNames { get; }
+        IQueryable<steam_AchievementName> AchievementNames { get; }
 
         /// <summary>
         /// Inserts the user on submit.
         /// </summary>
         /// <param name="user">The user.</param>
-        void InsertOnSubmit(User user);
+        void InsertOnSubmit(steam_User user);
 
         /// <summary>
         /// Deletes all given achievements on submit.
         /// </summary>
         /// <param name="achievements">The achievements.</param>
-        void DeleteAllOnSubmit(IEnumerable<UserAchievement> achievements);
+        void DeleteAllOnSubmit(IEnumerable<steam_UserAchievement> achievements);
 
         /// <summary>
         /// Deletes the user on submit.
         /// </summary>
         /// <param name="user">The user.</param>
-        void DeleteOnSubmit(User user);
+        void DeleteOnSubmit(steam_User user);
 
         /// <summary>
         /// Submits the changes.
@@ -80,18 +80,18 @@ namespace SteamAchievements.Data
         /// Inserts the achievement on submit.
         /// </summary>
         /// <param name="achievement">The achievement.</param>
-        void InsertOnSubmit(Achievement achievement);
+        void InsertOnSubmit(steam_Achievement achievement);
 
         /// <summary>
         /// Inserts all given achievements on submit.
         /// </summary>
         /// <param name="achievements">The achievements.</param>
-        void InsertAllOnSubmit(IEnumerable<UserAchievement> achievements);
+        void InsertAllOnSubmit(IEnumerable<steam_UserAchievement> achievements);
 
         /// <summary>
         /// Inserts the on submit.
         /// </summary>
         /// <param name="achievementName">Name of the achievement.</param>
-        void InsertOnSubmit(AchievementName achievementName);
+        void InsertOnSubmit(steam_AchievementName achievementName);
     }
 }

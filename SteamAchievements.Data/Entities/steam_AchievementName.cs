@@ -7,7 +7,7 @@ namespace SteamAchievements.Data
     using System.Data.Entity.Spatial;
 
     [Table("steam_AchievementName")]
-    public partial class AchievementName
+    public partial class steam_AchievementName
     {
         public int Id { get; set; }
 
@@ -25,6 +25,6 @@ namespace SteamAchievements.Data
         [StringLength(1000)]
         public string Description { get; set; }
 
-        public virtual Achievement Achievement { get; set; }
+        public virtual steam_Achievement Achievement { get; set; }
     }
 }

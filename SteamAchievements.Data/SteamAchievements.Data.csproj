@@ -117,9 +117,9 @@
     <Compile Include="Migrations\201511011829557_Initial.Designer.cs">
       <DependentUpon>201511011829557_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201511011856271_EFCleanUpNoChanges.cs" />
-    <Compile Include="Migrations\201511011856271_EFCleanUpNoChanges.Designer.cs">
-      <DependentUpon>201511011856271_EFCleanUpNoChanges.cs</DependentUpon>
+    <Compile Include="Migrations\201511030026084_AddIdentity.cs" />
+    <Compile Include="Migrations\201511030026084_AddIdentity.Designer.cs">
+      <DependentUpon>201511030026084_AddIdentity.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -128,12 +128,16 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Role.cs" />
     <Compile Include="SteamContext.cs" />
     <Compile Include="SteamRepository.cs" />
-    <Compile Include="Achievement.cs" />
-    <Compile Include="AchievementName.cs" />
-    <Compile Include="User.cs" />
-    <Compile Include="UserAchievement.cs" />
+    <Compile Include="Entities\steam_Achievement.cs" />
+    <Compile Include="Entities\steam_AchievementName.cs" />
+    <Compile Include="Entities\steam_User.cs" />
+    <Compile Include="Entities\steam_UserAchievement.cs" />
+    <Compile Include="Entities\UserClaim.cs" />
+    <Compile Include="Entities\UserLogin.cs" />
+    <Compile Include="Entities\UserRole.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -152,8 +156,8 @@
     <EmbeddedResource Include="Migrations\201511011829557_Initial.resx">
       <DependentUpon>201511011829557_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511011856271_EFCleanUpNoChanges.resx">
-      <DependentUpon>201511011856271_EFCleanUpNoChanges.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511030026084_AddIdentity.resx">
+      <DependentUpon>201511030026084_AddIdentity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

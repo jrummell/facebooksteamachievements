@@ -7,13 +7,13 @@ namespace SteamAchievements.Data
     using System.Data.Entity.Spatial;
 
     [Table("steam_Achievement")]
-    public partial class Achievement
+    public partial class steam_Achievement
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Achievement()
+        public steam_Achievement()
         {
-            AchievementNames = new HashSet<AchievementName>();
-            UserAchievements = new HashSet<UserAchievement>();
+            AchievementNames = new HashSet<steam_AchievementName>();
+            UserAchievements = new HashSet<steam_UserAchievement>();
         }
 
         public int Id { get; set; }
@@ -29,9 +29,9 @@ namespace SteamAchievements.Data
         public string ImageUrl { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AchievementName> AchievementNames { get; set; }
+        public virtual ICollection<steam_AchievementName> AchievementNames { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserAchievement> UserAchievements { get; set; }
+        public virtual ICollection<steam_UserAchievement> UserAchievements { get; set; }
     }
 }

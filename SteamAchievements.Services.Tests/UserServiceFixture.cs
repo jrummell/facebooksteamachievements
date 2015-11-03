@@ -68,7 +68,7 @@ namespace SteamAchievements.Services.Tests
         {
             const string steamUserId = "user1";
             _managerMock.Setup(manager => manager.GetAutoUpdateUsers())
-                .Returns(new List<Data.User> {new Data.User {SteamUserId = steamUserId}})
+                .Returns(new List<Data.steam_User> {new Data.steam_User {SteamUserId = steamUserId}})
                 .Verifiable();
 
             ICollection<Models.User> users = _service.GetAutoUpdateUsers();
@@ -83,7 +83,7 @@ namespace SteamAchievements.Services.Tests
         {
             const int facebookUserId = 1234;
             _managerMock.Setup(manager => manager.GetUser(facebookUserId))
-                .Returns(new Data.User {FacebookUserId = facebookUserId})
+                .Returns(new Data.steam_User {FacebookUserId = facebookUserId})
                 .Verifiable();
 
             Models.User user = _service.GetUser(facebookUserId);
@@ -102,7 +102,7 @@ namespace SteamAchievements.Services.Tests
             managerMock.Setup(
                 rep =>
                 rep.UpdateUser(
-                    It.Is<Data.User>(u => u.SteamUserId == user.SteamUserId && u.FacebookUserId == user.FacebookUserId)))
+                    It.Is<Data.steam_User>(u => u.SteamUserId == user.SteamUserId && u.FacebookUserId == user.FacebookUserId)))
                 .Verifiable();
 
             UserService service = new UserService(managerMock.Object);

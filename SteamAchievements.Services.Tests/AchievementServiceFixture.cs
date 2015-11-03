@@ -49,7 +49,7 @@ namespace SteamAchievements.Services.Tests
 
             // expect
             Models.User user = new Models.User {FacebookUserId = 1234, SteamUserId = "user1"};
-            Data.User dataUser = new Data.User {FacebookUserId = 1234, SteamUserId = "user1"};
+            Data.steam_User dataUser = new Data.steam_User {FacebookUserId = 1234, SteamUserId = "user1"};
             achievementManagerMock.Setup(rep => rep.GetUser(user.FacebookUserId))
                 .Returns(dataUser).Verifiable();
 
@@ -76,21 +76,21 @@ namespace SteamAchievements.Services.Tests
 
             achievementManagerMock.Setup(rep => rep.GetUser(user.FacebookUserId))
                 .Returns(dataUser).Verifiable();
-            achievementManagerMock.Setup(rep => rep.UpdateAchievements(It.IsAny<IEnumerable<Data.UserAchievement>>()))
+            achievementManagerMock.Setup(rep => rep.UpdateAchievements(It.IsAny<IEnumerable<Data.steam_UserAchievement>>()))
                 .Returns(5).Verifiable();
 
             ICollection<Game> games = new GameXmlParser().Parse(File.ReadAllText("games.xml"));
             communityManagerMock.Setup(rep => rep.GetGames(user.SteamUserId, "english"))
                 .Returns(games).Verifiable();
 
-            Data.Achievement[] dataAchievements = new[]
+            Data.steam_Achievement[] dataAchievements = new[]
                                                       {
-                                                          new Data.Achievement
+                                                          new Data.steam_Achievement
                                                               {
                                                                   AchievementNames =
-                                                                      new EntitySet<AchievementName>
+                                                                      new EntitySet<steam_AchievementName>
                                                                           {
-                                                                              new AchievementName
+                                                                              new steam_AchievementName
                                                                                   {
                                                                                       Name = "x",
                                                                                       Description = "y",

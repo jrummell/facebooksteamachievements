@@ -1,18 +1,15 @@
+using System.Data.Entity.Migrations;
+
 namespace SteamAchievements.Data.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<SteamAchievements.Data.SteamContext>
+    public sealed class Configuration : DbMigrationsConfiguration<SteamContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(SteamAchievements.Data.SteamContext context)
+        protected override void Seed(SteamContext context)
         {
             //  This method will be called after migrating to the latest version.
 

@@ -54,16 +54,16 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="facebookUserId">The facebook user id.</param>
         /// <returns></returns>
-        public User GetUser(long facebookUserId)
+        public steam_User GetUser(long facebookUserId)
         {
-            IQueryable<User> query = from user in _repository.Users
+            IQueryable<steam_User> query = from user in _repository.Users
                                      where user.FacebookUserId == facebookUserId
                                      select user;
 
             return query.SingleOrDefault();
         }
 
-        public User GetUser(string userName)
+        public steam_User GetUser(string userName)
         {
             return _repository.Users.Where(e => e.UserName == userName).SingleOrDefault();
         }
@@ -72,7 +72,7 @@ namespace SteamAchievements.Data
         /// Gets the auto update users.
         /// </summary>
         /// <returns></returns>
-        public ICollection<User> GetAutoUpdateUsers()
+        public ICollection<steam_User> GetAutoUpdateUsers()
         {
             return (from user in _repository.Users
                     where user.AutoUpdate && user.AccessToken != null && user.AccessToken.Length > 0
@@ -85,7 +85,7 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="facebookUserId">The facebook user id.</param>
         /// <returns></returns>
-        public ICollection<Achievement> GetUnpublishedAchievements(long facebookUserId)
+        public ICollection<steam_Achievement> GetUnpublishedAchievements(long facebookUserId)
         {
             return (from achievement in _repository.UserAchievements
                     where achievement.FacebookUserId == facebookUserId
@@ -101,7 +101,7 @@ namespace SteamAchievements.Data
         /// <param name="facebookUserId">The facebook user id.</param>
         /// <param name="oldestDate">The oldest date.</param>
         /// <returns></returns>
-        public ICollection<Achievement> GetUnpublishedAchievements(long facebookUserId, DateTime oldestDate)
+        public ICollection<steam_Achievement> GetUnpublishedAchievements(long facebookUserId, DateTime oldestDate)
         {
             oldestDate = ValidateDate(oldestDate);
 
@@ -122,7 +122,7 @@ namespace SteamAchievements.Data
         /// <remarks>
         /// Calls <see cref="InsertMissingAchievements"/> and <see cref="AssignAchievements"/>.
         /// </remarks>
-        public int UpdateAchievements(IEnumerable<UserAchievement> userAchievements)
+        public int UpdateAchievements(IEnumerable<steam_UserAchievement> userAchievements)
         {
             if (userAchievements == null)
             {
@@ -140,14 +140,14 @@ namespace SteamAchievements.Data
                 throw new ArgumentException("All achievements must have the same SteamUserId", "userAchievements");
             }
 
-            List<Achievement> achievements = userAchievements.Select(a => a.Achievement).ToList();
-            ICollection<Achievement> missingAchievements = GetMissingAchievements(achievements);
+            List<steam_Achievement> achievements = userAchievements.Select(a => a.Achievement).ToList();
+            ICollection<steam_Achievement> missingAchievements = GetMissingAchievements(achievements);
             if (missingAchievements.Any())
             {
                 InsertMissingAchievements(missingAchievements);
             }
 
-            ICollection<AchievementName> missingAchievementNames =
+            ICollection<steam_AchievementName> missingAchievementNames =
                 GetMissingAchievementNames(userAchievements.Select(a => a.Achievement).ToList());
             if (missingAchievementNames.Any())
             {
@@ -161,7 +161,7 @@ namespace SteamAchievements.Data
         /// Updates the user. Passing a new user with FacebookUserId and SteamUserId will insert a new User.
         /// </summary>
         /// <param name="user">The user.</param>
-        public void UpdateUser(User user)
+        public void UpdateUser(steam_User user)
         {
             if (user == null)
             {
@@ -182,7 +182,7 @@ namespace SteamAchievements.Data
             if (!exists)
             {
                 // the user does not exist, create a new one.
-                User newUser = new User
+                steam_User newUser = new steam_User
                                    {
                                        FacebookUserId = user.FacebookUserId,
                                        SteamUserId = user.SteamUserId,
@@ -198,7 +198,7 @@ namespace SteamAchievements.Data
             }
 
             // update
-            User existingUser = _repository.Users.Where(u => u.FacebookUserId == user.FacebookUserId).Single();
+            steam_User existingUser = _repository.Users.Where(u => u.FacebookUserId == user.FacebookUserId).Single();
             
             // if the user changed steam IDs, remove their achievements
             if (existingUser.SteamUserId != user.SteamUserId)
@@ -226,13 +226,13 @@ namespace SteamAchievements.Data
         /// <param name="facebookUserId">The facebook user id.</param>
         public void DeauthorizeUser(long facebookUserId)
         {
-            User user = _repository.Users.Where(u => u.FacebookUserId == facebookUserId).SingleOrDefault();
+            steam_User user = _repository.Users.Where(u => u.FacebookUserId == facebookUserId).SingleOrDefault();
             if (user == null)
             {
                 return;
             }
 
-            IQueryable<UserAchievement> userAchievements =
+            IQueryable<steam_UserAchievement> userAchievements =
                 _repository.UserAchievements.Where(ua => ua.FacebookUserId == facebookUserId);
             _repository.DeleteAllOnSubmit(userAchievements);
             _repository.SubmitChanges();
@@ -258,12 +258,12 @@ namespace SteamAchievements.Data
                 return;
             }
 
-            IQueryable<UserAchievement> achievementsToUpdate =
+            IQueryable<steam_UserAchievement> achievementsToUpdate =
                 from achievement in _repository.UserAchievements
                 where achievement.FacebookUserId == facebookUserId && achievementIds.Contains(achievement.AchievementId)
                 select achievement;
 
-            foreach (UserAchievement achievement in achievementsToUpdate)
+            foreach (steam_UserAchievement achievement in achievementsToUpdate)
             {
                 achievement.Published = true;
             }
@@ -289,12 +289,12 @@ namespace SteamAchievements.Data
             }
 
             //Note: achievementIds.Contains() will only translate to SQL if achievementIds is IEnumerable<int> (not ICollection<int>).
-            IQueryable<UserAchievement> achievementsToUpdate =
+            IQueryable<steam_UserAchievement> achievementsToUpdate =
                 from achievement in _repository.UserAchievements
                 where achievement.FacebookUserId == facebookUserId && achievementIds.Contains(achievement.AchievementId)
                 select achievement;
 
-            foreach (UserAchievement achievement in achievementsToUpdate)
+            foreach (steam_UserAchievement achievement in achievementsToUpdate)
             {
                 achievement.Hidden = true;
             }
@@ -324,7 +324,7 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="achievements">All achievements for the given user.</param>
         /// <returns></returns>
-        public int AssignAchievements(IEnumerable<UserAchievement> achievements)
+        public int AssignAchievements(IEnumerable<steam_UserAchievement> achievements)
         {
             if (achievements == null)
             {
@@ -338,7 +338,7 @@ namespace SteamAchievements.Data
 
             // get the achievement ids for the games in the given achievements
             long facebookUserId = achievements.First().FacebookUserId;
-            IEnumerable<Achievement> unassignedAchievements =
+            IEnumerable<steam_Achievement> unassignedAchievements =
                 GetUnassignedAchievements(facebookUserId, achievements.Select(achievement => achievement.Achievement));
 
             if (!unassignedAchievements.Any())
@@ -347,7 +347,7 @@ namespace SteamAchievements.Data
             }
 
             // create the unassigned achievements and insert them
-            IEnumerable<UserAchievement> newUserAchievements =
+            IEnumerable<steam_UserAchievement> newUserAchievements =
                 from achievement in unassignedAchievements
                 join userAchievement in achievements on
                     new
@@ -360,7 +360,7 @@ namespace SteamAchievements.Data
                             userAchievement.Achievement.ApiName,
                             userAchievement.Achievement.GameId
                         }
-                select new UserAchievement
+                select new steam_UserAchievement
                            {
                                FacebookUserId = facebookUserId,
                                AchievementId = achievement.Id,
@@ -397,8 +397,8 @@ namespace SteamAchievements.Data
         /// <param name="facebookUserId">The facebook user id.</param>
         /// <param name="allAchievements">All achievements. These will not necessarily have an Id set.</param>
         /// <returns></returns>
-        public ICollection<Achievement> GetUnassignedAchievements(long facebookUserId,
-                                                                  IEnumerable<Achievement> allAchievements)
+        public ICollection<steam_Achievement> GetUnassignedAchievements(long facebookUserId,
+                                                                  IEnumerable<steam_Achievement> allAchievements)
         {
             if (allAchievements == null)
             {
@@ -407,7 +407,7 @@ namespace SteamAchievements.Data
 
             if (!allAchievements.Any())
             {
-                return new Achievement[0];
+                return new steam_Achievement[0];
             }
 
             IEnumerable<int> gameIds = (from a in allAchievements
@@ -418,17 +418,17 @@ namespace SteamAchievements.Data
                                                        select a.ApiName).Distinct();
 
             // get the possible achievements by name
-            IEnumerable<Achievement> possibleAchievements = (from a in _repository.Achievements
+            IEnumerable<steam_Achievement> possibleAchievements = (from a in _repository.Achievements
                                                              where achievementApiNames.Contains(a.ApiName)
                                                              select a).ToList();
 
             if (!possibleAchievements.Any())
             {
-                return new Achievement[0];
+                return new steam_Achievement[0];
             }
 
             // get all assigned achievements
-            IEnumerable<Achievement> assignedAchievements = (from a in _repository.UserAchievements
+            IEnumerable<steam_Achievement> assignedAchievements = (from a in _repository.UserAchievements
                                                              where a.FacebookUserId == facebookUserId
                                                              select a.Achievement).ToList();
 
@@ -450,7 +450,7 @@ namespace SteamAchievements.Data
         /// Inserts the missing achievements.
         /// </summary>
         /// <param name="missingAchievements">The missing achievements.</param>
-        public void InsertMissingAchievements(ICollection<Achievement> missingAchievements)
+        public void InsertMissingAchievements(ICollection<steam_Achievement> missingAchievements)
         {
             if (missingAchievements == null)
             {
@@ -462,16 +462,16 @@ namespace SteamAchievements.Data
                 return;
             }
 
-            foreach (Achievement achievement in missingAchievements)
+            foreach (steam_Achievement achievement in missingAchievements)
             {
-                Achievement newAchievement = new Achievement
+                steam_Achievement newAchievement = new steam_Achievement
                                                  {
                                                      ApiName = achievement.ApiName,
                                                      GameId = achievement.GameId,
                                                      ImageUrl = achievement.ImageUrl
                                                  };
-                AchievementName name = achievement.AchievementNames.First();
-                AchievementName newAchievementName = new AchievementName
+                steam_AchievementName name = achievement.AchievementNames.First();
+                steam_AchievementName newAchievementName = new steam_AchievementName
                                                          {
                                                              Language = name.Language,
                                                              Name = name.Name,
@@ -489,7 +489,7 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="missingAchievementNames">The missing achievement names.</param>
         /// <returns></returns>
-        private void InsertMissingAchievementNames(ICollection<AchievementName> missingAchievementNames)
+        private void InsertMissingAchievementNames(ICollection<steam_AchievementName> missingAchievementNames)
         {
             if (missingAchievementNames == null)
             {
@@ -501,9 +501,9 @@ namespace SteamAchievements.Data
                 return;
             }
 
-            foreach (AchievementName achievementName in missingAchievementNames)
+            foreach (steam_AchievementName achievementName in missingAchievementNames)
             {
-                AchievementName newAchievementName = new AchievementName
+                steam_AchievementName newAchievementName = new steam_AchievementName
                                                          {
                                                              AchievementId = achievementName.AchievementId,
                                                              Language = achievementName.Language,
@@ -521,7 +521,7 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="communityAchievements">The community achievements.</param>
         /// <returns></returns>
-        public ICollection<Achievement> GetMissingAchievements(ICollection<Achievement> communityAchievements)
+        public ICollection<steam_Achievement> GetMissingAchievements(ICollection<steam_Achievement> communityAchievements)
         {
             if (communityAchievements == null)
             {
@@ -530,7 +530,7 @@ namespace SteamAchievements.Data
 
             if (communityAchievements.Count == 0)
             {
-                return new Achievement[0];
+                return new steam_Achievement[0];
             }
 
             var communityGameIds = communityAchievements.Select(a => a.GameId).Distinct();
@@ -543,12 +543,12 @@ namespace SteamAchievements.Data
                  select new { achievement.GameId, ApiName = achievement.ApiName.Trim() })
                  .ToList();
 
-            List<Achievement> missingAchievements = new List<Achievement>();
+            List<steam_Achievement> missingAchievements = new List<steam_Achievement>();
             if (communityAchievements.Count != dbAchievements.Count)
             {
-                foreach (Achievement achievement in communityAchievements)
+                foreach (steam_Achievement achievement in communityAchievements)
                 {
-                    Achievement communityAchievement = achievement;
+                    steam_Achievement communityAchievement = achievement;
                     bool exists =
                         dbAchievements.Where(
                             a => a.GameId == communityAchievement.GameId
@@ -570,7 +570,7 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="communityAchievements">The community achievements.</param>
         /// <returns></returns>
-        private ICollection<AchievementName> GetMissingAchievementNames(ICollection<Achievement> communityAchievements)
+        private ICollection<steam_AchievementName> GetMissingAchievementNames(ICollection<steam_Achievement> communityAchievements)
         {
             if (communityAchievements == null)
             {
@@ -579,7 +579,7 @@ namespace SteamAchievements.Data
 
             if (communityAchievements.Count == 0)
             {
-                return new AchievementName[0];
+                return new steam_AchievementName[0];
             }
 
             var communityAchievementKeys =
@@ -608,10 +608,10 @@ namespace SteamAchievements.Data
                              Languages = achievement.AchievementNames.Select(name => name.Language)
                          }).ToList();
 
-            List<AchievementName> missingAchievementNames = new List<AchievementName>();
-            foreach (AchievementName achievementName in communityAchievements.SelectMany(a => a.AchievementNames))
+            List<steam_AchievementName> missingAchievementNames = new List<steam_AchievementName>();
+            foreach (steam_AchievementName achievementName in communityAchievements.SelectMany(a => a.AchievementNames))
             {
-                AchievementName communityName = achievementName;
+                steam_AchievementName communityName = achievementName;
                 var key =
                     dbAchievementNames.Where(
                         a => a.GameId == communityName.Achievement.GameId
@@ -620,7 +620,7 @@ namespace SteamAchievements.Data
 
                 if (key != null && !key.Languages.Contains(communityName.Language))
                 {
-                    missingAchievementNames.Add(new AchievementName
+                    missingAchievementNames.Add(new steam_AchievementName
                                                     {
                                                         AchievementId = key.Id,
                                                         Language = communityName.Language,
@@ -638,14 +638,14 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="gameId">The game id.</param>
         /// <param name="achievements">The game achievements.</param>
-        public void AddAchievements(int gameId, IEnumerable<Achievement> achievements)
+        public void AddAchievements(int gameId, IEnumerable<steam_Achievement> achievements)
         {
             if (achievements == null)
             {
                 throw new ArgumentNullException("achievements");
             }
 
-            foreach (Achievement achievement in achievements)
+            foreach (steam_Achievement achievement in achievements)
             {
                 achievement.GameId = gameId;
 

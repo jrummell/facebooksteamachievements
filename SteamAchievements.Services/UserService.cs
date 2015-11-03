@@ -55,14 +55,14 @@ namespace SteamAchievements.Services
         /// <returns></returns>
         public User GetUser(string userName)
         {
-            Data.User user = _manager.GetUser(userName);
+            Data.steam_User user = _manager.GetUser(userName);
 
             return Map(user);
         }
 
         public User GetUser(long facebookUserId)
         {
-            Data.User user = _manager.GetUser(facebookUserId);
+            Data.steam_User user = _manager.GetUser(facebookUserId);
 
             return Map(user);
         }
@@ -111,7 +111,7 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        private static Models.User Map(Data.User user)
+        private static Models.User Map(Data.steam_User user)
         {
             if (user == null)
             {
@@ -126,14 +126,14 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        private static Data.User Map(Models.User user)
+        private static Data.steam_User Map(Models.User user)
         {
             if (user == null)
             {
                 return null;
             }
 
-            return Mapper.Map<Data.User>(user);
+            return Mapper.Map<Data.steam_User>(user);
         }
     }
     

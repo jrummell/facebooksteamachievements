@@ -10,15 +10,16 @@ namespace SteamAchievements.Data
     using System.Data.Entity.Spatial;
 
     [Table("steam_User")]
-    public partial class User : IdentityUser
+    public partial class steam_User : IdentityUser<int, UserLogin, UserRole, UserClaim>
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public steam_User()
         {
-            UserAchievements = new HashSet<UserAchievement>();
+            UserAchievements = new HashSet<steam_UserAchievement>();
         }
 
-        [Key]
+        [Obsolete]
+        [Index(IsUnique = true)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long FacebookUserId { get; set; }
 
@@ -26,6 +27,7 @@ namespace SteamAchievements.Data
         [StringLength(50)]
         public string SteamUserId { get; set; }
 
+        [Obsolete]
         [Required]
         [StringLength(250)]
         public string AccessToken { get; set; }
@@ -38,6 +40,6 @@ namespace SteamAchievements.Data
         public string Language { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserAchievement> UserAchievements { get; set; }
+        public virtual ICollection<steam_UserAchievement> UserAchievements { get; set; }
     }
 }

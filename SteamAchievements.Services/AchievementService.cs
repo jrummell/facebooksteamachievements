@@ -27,7 +27,6 @@ using SteamAchievements.Data;
 using SteamAchievements.Services.Models;
 using Achievement = SteamAchievements.Services.Models.Achievement;
 using User = SteamAchievements.Services.Models.User;
-using UserAchievement = SteamAchievements.Data.UserAchievement;
 
 namespace SteamAchievements.Services
 {
@@ -93,7 +92,7 @@ namespace SteamAchievements.Services
                 achievement.FacebookUserId = facebookUserId;
             }
 
-            var dataUserAchievements = Mapper.Map<ICollection<UserAchievement>>(userAchievements);
+            var dataUserAchievements = Mapper.Map<ICollection<steam_UserAchievement>>(userAchievements);
             int updated = _achievementManager.UpdateAchievements(dataUserAchievements);
 
             return updated;
@@ -118,7 +117,7 @@ namespace SteamAchievements.Services
 
             IEnumerable<Game> games = _communityService.GetGames(steamUserId, language);
 
-            ICollection<Data.Achievement> dataAchievements;
+            ICollection<Data.steam_Achievement> dataAchievements;
             if (oldestDate == null)
             {
                 dataAchievements = _achievementManager.GetUnpublishedAchievements(facebookUserId);
@@ -128,7 +127,7 @@ namespace SteamAchievements.Services
                 dataAchievements = _achievementManager.GetUnpublishedAchievements(facebookUserId, oldestDate.Value);
             }
 
-            IEnumerable<Data.Achievement> missingNames =
+            IEnumerable<Data.steam_Achievement> missingNames =
                 dataAchievements.Where(a => !a.AchievementNames.Where(n => n.Language == language).Any());
 
             if (missingNames.Any())
@@ -137,7 +136,7 @@ namespace SteamAchievements.Services
                     _communityService.GetAchievements(steamUserId, language)
                         .Select(ua => ua.Achievement);
 
-                foreach (Data.Achievement achievement in missingNames)
+                foreach (Data.steam_Achievement achievement in missingNames)
                 {
                     Achievement missing =
                         communityAchievements
@@ -146,7 +145,7 @@ namespace SteamAchievements.Services
 
                     if (missing != null)
                     {
-                        achievement.AchievementNames.Add(new AchievementName
+                        achievement.AchievementNames.Add(new steam_AchievementName
                             {
                                 Language = language,
                                 Name = missing.Name,
@@ -245,7 +244,7 @@ namespace SteamAchievements.Services
 
         private string GetSteamUserId(long facebookUserId)
         {
-            Data.User user = _achievementManager.GetUser(facebookUserId);
+            Data.steam_User user = _achievementManager.GetUser(facebookUserId);
             if (user != null)
             {
                 return user.SteamUserId;

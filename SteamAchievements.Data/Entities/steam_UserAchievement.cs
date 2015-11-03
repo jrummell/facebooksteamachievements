@@ -7,7 +7,7 @@ namespace SteamAchievements.Data
     using System.Data.Entity.Spatial;
 
     [Table("steam_UserAchievement")]
-    public partial class UserAchievement
+    public partial class steam_UserAchievement
     {
         public long FacebookUserId { get; set; }
 
@@ -21,8 +21,9 @@ namespace SteamAchievements.Data
 
         public bool Hidden { get; set; }
 
-        public virtual Achievement Achievement { get; set; }
+        public virtual steam_Achievement Achievement { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual steam_User User { get; set; }
+        public int UserId { get; set; }
     }
 }

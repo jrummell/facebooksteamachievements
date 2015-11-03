@@ -19,10 +19,13 @@
 
 #endregion
 
+using System.Data.Entity;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using SteamAchievements.Data;
+using SteamAchievements.Data.Migrations;
 using SteamAchievements.Web.App_Start;
 
 namespace SteamAchievements.Web
@@ -34,6 +37,8 @@ namespace SteamAchievements.Web
     {
         protected void Application_Start()
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<SteamContext, Configuration>());
+
             Bootstrapper.Initialize();
 
             AreaRegistration.RegisterAllAreas();

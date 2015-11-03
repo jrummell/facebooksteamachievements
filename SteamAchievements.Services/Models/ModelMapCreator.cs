@@ -32,29 +32,29 @@ namespace SteamAchievements.Services.Models
         public void CreateMappings()
         {
             // User
-            Mapper.CreateMap<Data.User, User>()
+            Mapper.CreateMap<Data.steam_User, User>()
                 .ForMember(model => model.SignedRequest, options => options.Ignore());
 
-            Mapper.CreateMap<User, Data.User>()
+            Mapper.CreateMap<User, Data.steam_User>()
                 .ForMember(entity => entity.UserAchievements, options => options.Ignore())
                 .ForMember(entity => entity.AccessToken,
                            options => options.MapFrom(model => model.AccessToken ?? String.Empty));
 
             // UserAchievement
-            Mapper.CreateMap<UserAchievement, Data.UserAchievement>()
+            Mapper.CreateMap<UserAchievement, Data.steam_UserAchievement>()
                 .ForMember(entity => entity.User, options => options.Ignore())
                 .ForMember(entity => entity.Id, options => options.Ignore())
                 .ForMember(entity => entity.Hidden, options => options.Ignore())
                 .ForMember(entity => entity.Published, options => options.Ignore());
 
             // Achievement
-            Mapper.CreateMap<Achievement, Data.Achievement>()
+            Mapper.CreateMap<Achievement, Data.steam_Achievement>()
                 .ForMember(entity => entity.UserAchievements, options => options.Ignore())
                 .ForMember(entity => entity.AchievementNames,
                            options => options.MapFrom(model =>
-                                                      new EntitySet<AchievementName>
+                                                      new EntitySet<steam_AchievementName>
                                                           {
-                                                              new AchievementName
+                                                              new steam_AchievementName
                                                                   {
                                                                       AchievementId = model.Id,
                                                                       Language = model.Language,
@@ -64,14 +64,14 @@ namespace SteamAchievements.Services.Models
                                                           }));
 
             string language = CultureHelper.GetLanguage();
-            Mapper.CreateMap<Data.Achievement, Achievement>()
+            Mapper.CreateMap<Data.steam_Achievement, Achievement>()
                 .ForMember(model => model.Name, options => options.Ignore())
                 .ForMember(model => model.Description, options => options.Ignore())
                 .ForMember(model => model.Game, options => options.Ignore())
                 .ForMember(model => model.Language, options => options.MapFrom(entity => language))
                 .AfterMap((entity, model) =>
                               {
-                                  AchievementName name = entity.AchievementNames
+                                  steam_AchievementName name = entity.AchievementNames
                                                              .Where(n => n.Language == language)
                                                              .SingleOrDefault() ??
                                                          entity.AchievementNames.FirstOrDefault();
