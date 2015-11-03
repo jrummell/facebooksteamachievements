@@ -38,5 +38,8 @@
     <Setting Name="EnableClientLogging" Type="System.Boolean" Scope="Application">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="HelpUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://github.com/jrummell/facebooksteamachievements/wiki/Help</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

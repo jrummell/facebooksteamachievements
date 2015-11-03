@@ -114,9 +114,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Facebook.6.8.0\lib\net45\Facebook.dll</HintPath>
     </Reference>
-    <Reference Include="MarkdownSharp">
-      <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
       <Private>True</Private>
@@ -241,7 +238,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\FormsAuthenticationService.cs" />
     <Compile Include="Helpers\BundlePaths.cs" />
@@ -254,7 +250,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ConditionalFilterProvider.cs" />
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\UrlHelperExtensions.cs" />
     <Compile Include="Models\ElmahErrorLogger.cs" />
@@ -262,7 +257,6 @@
     <Compile Include="Models\IFormsAuthenticationService.cs" />
     <Compile Include="Models\IndexViewModel.cs" />
     <Compile Include="Models\InvalidSignedRequestException.cs" />
-    <Compile Include="Models\MarkdownModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\SettingsViewModel.cs" />
     <Compile Include="Models\ViewModelMapCreator.cs" />
@@ -318,7 +312,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Documents\Help.md" />
     <Content Include="Content\themes\site.less" />
     <Content Include="Content\themes\canvas\canvas.less" />
     <Content Include="Content\themes\mobile\mobile.less" />
@@ -368,7 +361,6 @@
     <Content Include="fbchannel.ashx" />
     <Content Include="Views\Shared\_FacebookPartial.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
-    <Content Include="Views\Help\Topic.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />

@@ -31,17 +31,6 @@ namespace SteamAchievements.Web.Helpers
     {
         private static readonly Settings _settings = Settings.Default;
 
-        public static string Help(this UrlHelper url, string anchor = null)
-        {
-            var action = CanvasAction(url, "Index", "Help");
-            if (!String.IsNullOrEmpty(anchor))
-            {
-                action += "#" + anchor;
-            }
-
-            return action;
-        }
-
         public static string CanvasAction(this UrlHelper url, string canvasAction, string canvasController = null)
         {
             if (_settings.Mode != FacebookMode.Canvas)

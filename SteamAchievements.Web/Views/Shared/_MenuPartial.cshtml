@@ -7,5 +7,5 @@
     <li role="presentation" class="@IsActive("Index", "Home")">@Html.CanvasLink(Strings.MenuHome, "Index")</li>
     <li role="presentation" class="@IsActive("Games", "Home")">@Html.CanvasLink(Strings.MenuGames, "Games")</li>
     <li role="presentation" class="@IsActive("Settings", "Home") @IsActive("SaveSettings", "Home")">@Html.CanvasLink(Strings.MenuSettings, "Settings")</li>
-    <li role="presentation" class="@IsActive("Topic", "Help") @IsActive("Index", "Help")">@Html.CanvasLink(Strings.MenuHelp, "Index", "Help")</li>
+    <li role="presentation">@Html.HelpLink(Strings.MenuHelp)</li>
 </ul>

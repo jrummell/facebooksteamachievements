@@ -53,8 +53,7 @@ namespace SteamAchievements.Web.Helpers
         public static MvcHtmlString HelpButton(this HtmlHelper html, string linkText, string anchor = null,
                                                object htmlAttributes = null)
         {
-            UrlHelper url = new UrlHelper(html.ViewContext.RequestContext);
-            string link = url.Help(anchor);
+            string link = Settings.Default.HelpUrl + "#" + anchor;
 
             TagBuilder icon = new TagBuilder("span");
             icon.AddCssClass("glyphicon glyphicon-question-sign");
@@ -77,8 +76,7 @@ namespace SteamAchievements.Web.Helpers
         public static MvcHtmlString HelpLink(this HtmlHelper html, string linkText, string anchor = null,
                                              object htmlAttributes = null)
         {
-            UrlHelper url = new UrlHelper(html.ViewContext.RequestContext);
-            string link = url.Help(anchor);
+            string link = Settings.Default.HelpUrl + "#" + anchor;
 
             TagBuilder a = new TagBuilder("a");
             a.MergeAttribute("href", link);
