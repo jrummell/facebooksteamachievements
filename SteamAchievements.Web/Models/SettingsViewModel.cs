@@ -31,6 +31,8 @@ namespace SteamAchievements.Web.Models
 {
     public class SettingsViewModel : IValidatableObject
     {
+        public int Id { get; set; }
+
         [Display(ResourceType = typeof (Strings), Name = "SettingsCustomUrl")]
         [Required(ErrorMessageResourceType = typeof (Strings), ErrorMessageResourceName = "SettingsCustomUrlRequired")]
         public string SteamUserId { get; set; }

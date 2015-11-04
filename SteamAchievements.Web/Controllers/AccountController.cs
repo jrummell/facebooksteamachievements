@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -7,20 +8,12 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SteamAchievements.Data;
-using SteamAchievements.Services;
 
 namespace SteamAchievements.Web.Controllers
 {
     [Authorize]
     public class AccountController : UserController
     {
-        private readonly IUserService _userService;
-
-        public AccountController(IUserService userService)
-        {
-            _userService = userService;
-        }
-
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -77,13 +70,32 @@ namespace SteamAchievements.Web.Controllers
                 }
             }
 
+            //var userClaims = await UserManager.GetClaimsAsync(user.Id);
+            //foreach (var claim in loginInfo.ExternalIdentity.Claims)
+            //{
+            //    if (userClaims.Where(e => e.Type == claim.Type).FirstOrDefault() == null)
+            //    {
+            //        await UserManager.AddClaimAsync(user.Id, claim);
+            //    }
+            //}
+
             //if (String.IsNullOrEmpty(loginInfo.Email))
             //{
             //    loginInfo.Email = "none@example.com";
             //}
 
-            user = await UserManager.FindByNameAsync(user.UserName);
-            await SignInManager.SignInAsync(user, true, true);
+            //TODO:
+
+            /* [ArgumentNullException: Value cannot be null.
+Parameter name: value]
+   System.Security.Claims.Claim..ctor(String type, String value, String valueType, String issuer, String originalIssuer, ClaimsIdentity subject, String propertyKey, String propertyValue) +14015857
+   System.Security.Claims.Claim..ctor(String type, String value) +73
+   Microsoft.AspNet.Identity.<CreateAsync>d__0.MoveNext() +977
+   System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task) +13908500
+   System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task) +61
+   Microsoft.AspNet.Identity.Owin.<SignInAsync>d__2.MoveNext() +266
+            */
+            await SignInManager.ExternalSignInAsync(loginInfo, true);
             return RedirectToLocal("~/");
         }
 
