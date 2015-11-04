@@ -84,7 +84,7 @@ namespace SteamAchievements.Web.Controllers
             //    loginInfo.Email = "none@example.com";
             //}
 
-            //TODO:
+            //TODO: The error seems to happening in CreateAsync() in https://aspnetidentity.codeplex.com/SourceControl/latest#src/Microsoft.AspNet.Identity.Core/ClaimsIdentityFactory.cs
 
             /* [ArgumentNullException: Value cannot be null.
 Parameter name: value]
