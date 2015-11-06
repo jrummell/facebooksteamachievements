@@ -45,12 +45,12 @@
     <div id="bottomAdWrapper">
         @Html.Ad(AdLocation.Bottom)
     </div>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         if (!window.jQuery || !window.jQuery.fn.modal) {
             // fallback on local jquery if CDN fails
-            document.write('<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-2.1.3.min.js")"><\/script>');
+            document.write('<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-2.1.4.min.js")"><\/script>');
             document.write('<script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"><\/script>');
         }
     </script>

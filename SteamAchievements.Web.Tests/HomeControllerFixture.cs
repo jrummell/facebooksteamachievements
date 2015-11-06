@@ -63,7 +63,8 @@ namespace SteamAchievements.Web.Tests
             SessionStateItemCollection sessionItems = new SessionStateItemCollection();
             HomeController controller = new HomeController(mockAchievementService.Object,
                                                            mockUserService.Object,
-                                                           new Mock<IErrorLogger>().Object);
+                                                           new Mock<IErrorLogger>().Object,
+                                                           Mock.Of<IFormsAuthenticationService>());
             FakeControllerContext context = new FakeControllerContext(controller, originalUser.UserName, new string[0]);
             controller.ControllerContext = context;
             

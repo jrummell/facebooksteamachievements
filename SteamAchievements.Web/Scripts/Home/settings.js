@@ -3,9 +3,8 @@
 $(document).ready(function ()
 {
     var $steamUserId = $("#SteamUserId");
-    var signedRequest = $("#SignedRequest").val();
     var enableLog = $("#EnableLog").val() === "True";
-    var achievementService = new AchievementService($steamUserId.val(), signedRequest, enableLog, false);
+    var achievementService = new AchievementService($steamUserId.val(), enableLog, false);
 
     // check the user's profile when they change it
     $steamUserId.change(function()
@@ -21,10 +20,6 @@ $(document).ready(function ()
 
     // show loading on click
     var $saveButton = $("#saveButton");
-    if (!achievementService.mobile)
-    {
-        $saveButton.button({ icons: { primary: "ui-icon-disk" } });
-    }
     $saveButton.click(function()
     {
         achievementService.showLoading("#saveImage");

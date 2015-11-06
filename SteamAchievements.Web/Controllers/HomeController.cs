@@ -31,11 +31,13 @@ namespace SteamAchievements.Web.Controllers
     public class HomeController : FacebookController
     {
         private readonly IAchievementService _achievementService;
+        private readonly IFormsAuthenticationService _authenticationService;
 
-        public HomeController(IAchievementService achievementService, IUserService userService, IErrorLogger errorLogger)
+        public HomeController(IAchievementService achievementService, IUserService userService, IErrorLogger errorLogger, IFormsAuthenticationService authenticationService)
             : base(userService, errorLogger)
         {
             _achievementService = achievementService;
+            _authenticationService = authenticationService;
         }
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
@@ -57,13 +59,6 @@ namespace SteamAchievements.Web.Controllers
         {
             SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(UserSettings ?? new User());
 
-            // this technically shouldn't be necessary, but sometimes we don't get the signed_request parameter 
-            // in CanvasSignedRequestAttribute and we don't have a valid facebook user
-            if (FacebookMode != FacebookMode.None && model.FacebookUserId == 0)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
             return View(model);
         }
 
@@ -72,13 +67,6 @@ namespace SteamAchievements.Web.Controllers
             User user = UserSettings ?? new User();
 
             IndexViewModel model = Mapper.Map<User, IndexViewModel>(user);
-
-            // this technically shouldn't be necessary, but sometimes we don't get the signed_request parameter 
-            // in CanvasSignedRequestAttribute and we don't have a valid facebook user
-            if (FacebookMode != FacebookMode.None && model.FacebookUserId == 0)
-            {
-                return RedirectToAction("Login", "Account");
-            }
 
             return View(model);
         }
@@ -140,7 +128,7 @@ namespace SteamAchievements.Web.Controllers
 
             UserService.DeauthorizeUser(UserSettings.FacebookUserId);
 
-            //TODO: logout
+            _authenticationService.SignOut();
 
             return View();
         }

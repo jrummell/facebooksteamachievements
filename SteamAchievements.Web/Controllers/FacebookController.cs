@@ -30,7 +30,6 @@ namespace SteamAchievements.Web.Controllers
 {
     public abstract class FacebookController : UserController
     {
-        private readonly Lazy<long> _facebookUserId;
         private readonly Lazy<User> _user;
 
         /// <summary>
@@ -42,11 +41,6 @@ namespace SteamAchievements.Web.Controllers
         {
             UserService = userService;
             ErrorLogger = errorLogger;
-
-            _facebookUserId = new Lazy<long>(() =>
-            {
-                return UserSettings?.FacebookUserId ?? 0;
-            });
 
             _user = new Lazy<User>(() => UserService.GetUser(User.Identity.Name));
         }
