@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SteamAchievements.Data;
 
@@ -59,6 +58,11 @@ namespace SteamAchievements.Web.Controllers
                 }
             }
 
+            // update access token and facebook id
+            user.AccessToken = loginInfo.ExternalIdentity.FindFirstValue("AccessToken");
+            user.FacebookUserId = Convert.ToInt64(loginInfo.ExternalIdentity.GetUserId());
+            await UserManager.UpdateAsync(user);
+
             var logins = await UserManager.GetLoginsAsync(user.Id);
             if (!logins.Any())
             {
@@ -84,63 +88,28 @@ namespace SteamAchievements.Web.Controllers
             //    loginInfo.Email = "none@example.com";
             //}
 
-            //TODO: The error seems to happening in CreateAsync() in https://aspnetidentity.codeplex.com/SourceControl/latest#src/Microsoft.AspNet.Identity.Core/ClaimsIdentityFactory.cs
+            try
+            {
+                //TODO: The error seems to happening in CreateAsync() in https://aspnetidentity.codeplex.com/SourceControl/latest#src/Microsoft.AspNet.Identity.Core/ClaimsIdentityFactory.cs
 
-            /* [ArgumentNullException: Value cannot be null.
-Parameter name: value]
-   System.Security.Claims.Claim..ctor(String type, String value, String valueType, String issuer, String originalIssuer, ClaimsIdentity subject, String propertyKey, String propertyValue) +14015857
-   System.Security.Claims.Claim..ctor(String type, String value) +73
-   Microsoft.AspNet.Identity.<CreateAsync>d__0.MoveNext() +977
-   System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task) +13908500
-   System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task) +61
-   Microsoft.AspNet.Identity.Owin.<SignInAsync>d__2.MoveNext() +266
-            */
-            await SignInManager.ExternalSignInAsync(loginInfo, true);
+                /* [ArgumentNullException: Value cannot be null.
+    Parameter name: value]
+       System.Security.Claims.Claim..ctor(String type, String value, String valueType, String issuer, String originalIssuer, ClaimsIdentity subject, String propertyKey, String propertyValue) +14015857
+       System.Security.Claims.Claim..ctor(String type, String value) +73
+       Microsoft.AspNet.Identity.<CreateAsync>d__0.MoveNext() +977
+       System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task) +13908500
+       System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task) +61
+       Microsoft.AspNet.Identity.Owin.<SignInAsync>d__2.MoveNext() +266
+                */
+
+                await SignInManager.ExternalSignInAsync(loginInfo, true);
+            }
+            catch (Exception)
+            {
+                // For now, here's my work around
+                FormsAuthentication.SetAuthCookie(user.UserName, true);
+            }
             return RedirectToLocal("~/");
-        }
-
-        //
-        // POST: /Account/ExternalLoginConfirmation
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(string returnUrl)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (ModelState.IsValid)
-            {
-                // Get the information about the user from the external login provider
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-                if (info == null)
-                {
-                    return View("ExternalLoginFailure");
-                }
-                var user = new steam_User
-                {
-                    UserName = info.DefaultUserName,
-                    Email = info.Email,
-                    AccessToken = info.ExternalIdentity.FindFirstValue("AccessToken"),
-                    FacebookUserId = Convert.ToInt64(info.ExternalIdentity.GetUserId())
-                };
-                var result = await UserManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
-                    if (result.Succeeded)
-                    {
-                        await SignInManager.SignInAsync(user, false, false);
-                        return RedirectToLocal(returnUrl);
-                    }
-                }
-                AddErrors(result);
-            }
-
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
         }
 
         //
