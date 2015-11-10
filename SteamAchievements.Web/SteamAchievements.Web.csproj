@@ -253,7 +253,6 @@
     <Compile Include="Models\FacebookMode.cs" />
     <Compile Include="Models\IFormsAuthenticationService.cs" />
     <Compile Include="Models\IndexViewModel.cs" />
-    <Compile Include="Models\InvalidSignedRequestException.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\SettingsViewModel.cs" />
     <Compile Include="Models\ViewModelMapCreator.cs" />

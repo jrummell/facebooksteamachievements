@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using SteamAchievements.Data;
@@ -48,7 +47,7 @@ namespace SteamAchievements.Web.Controllers
             var user = await UserManager.FindByNameAsync(loginInfo.Login.ProviderKey);
             if (user == null)
             {
-                long facebookId = Convert.ToInt64(loginInfo.Login.ProviderKey);
+                var facebookId = Convert.ToInt64(loginInfo.Login.ProviderKey);
                 user = new steam_User {UserName = loginInfo.Login.ProviderKey, FacebookUserId = facebookId};
                 var createResult = await UserManager.CreateAsync(user);
                 if (!createResult.Succeeded)
@@ -74,48 +73,11 @@ namespace SteamAchievements.Web.Controllers
                 }
             }
 
-            //var userClaims = await UserManager.GetClaimsAsync(user.Id);
-            //foreach (var claim in loginInfo.ExternalIdentity.Claims)
-            //{
-            //    if (userClaims.Where(e => e.Type == claim.Type).FirstOrDefault() == null)
-            //    {
-            //        await UserManager.AddClaimAsync(user.Id, claim);
-            //    }
-            //}
+            await SignInManager.ExternalSignInAsync(loginInfo, true);
 
-            //if (String.IsNullOrEmpty(loginInfo.Email))
-            //{
-            //    loginInfo.Email = "none@example.com";
-            //}
-
-            try
-            {
-                //TODO: The error seems to happening in CreateAsync() in https://aspnetidentity.codeplex.com/SourceControl/latest#src/Microsoft.AspNet.Identity.Core/ClaimsIdentityFactory.cs
-
-                /* [ArgumentNullException: Value cannot be null.
-    Parameter name: value]
-       System.Security.Claims.Claim..ctor(String type, String value, String valueType, String issuer, String originalIssuer, ClaimsIdentity subject, String propertyKey, String propertyValue) +14015857
-       System.Security.Claims.Claim..ctor(String type, String value) +73
-       Microsoft.AspNet.Identity.<CreateAsync>d__0.MoveNext() +977
-       System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task) +13908500
-       System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task) +61
-       Microsoft.AspNet.Identity.Owin.<SignInAsync>d__2.MoveNext() +266
-                */
-
-                await SignInManager.ExternalSignInAsync(loginInfo, true);
-            }
-            catch (Exception)
-            {
-                // For now, here's my work around
-                FormsAuthentication.SetAuthCookie(user.UserName, true);
-            }
             return RedirectToLocal("~/");
         }
 
-        //
-        // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();

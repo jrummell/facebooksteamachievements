@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -16,6 +18,33 @@ namespace SteamAchievements.Web
 {
     public partial class Startup
     {
+        private class ApplicationIdentityFactory : ClaimsIdentityFactory<steam_User, int>
+        {
+            public async override Task<ClaimsIdentity> CreateAsync(UserManager<steam_User, int> manager, steam_User user, string authenticationType)
+            {
+                var claims = new[]
+                             {
+                                 new Claim(UserIdClaimType, user.Id.ToString()),
+                                 new Claim(UserNameClaimType, user.UserName)
+                             };
+
+                var identity = new ClaimsIdentity(claims, authenticationType, UserNameClaimType, RoleClaimType);
+
+                if (manager.SupportsUserRole)
+                {
+                    var roles = await manager.GetRolesAsync(user.Id);
+                    identity.AddClaims(roles.Select(r => new Claim(RoleClaimType, r)));
+                }
+
+                if (manager.SupportsUserClaim)
+                {
+                    identity.AddClaims(await manager.GetClaimsAsync(user.Id));
+                }
+
+                return identity;
+            }
+        }
+
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
@@ -43,6 +72,8 @@ namespace SteamAchievements.Web
                     manager.UserTokenProvider =
                         new DataProtectorTokenProvider<steam_User, int>(dataProtectionProvider.Create("ASP.NET Identity"));
                 }
+
+                manager.ClaimsIdentityFactory = new ApplicationIdentityFactory();
 
                 return manager;
             });
