@@ -24,7 +24,6 @@ using Microsoft.Practices.Unity;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
-using SteamAchievements.Web.Filters;
 using SteamAchievements.Web.Models;
 using SteamAchievements.Web.Properties;
 using Unity.Mvc3;
@@ -61,9 +60,7 @@ namespace SteamAchievements.Web
             else
             {
                 container.RegisterType<ISteamRepository, SteamRepository>(new HierarchicalLifetimeManager());
-                container.RegisterType<IFacebookClientService, FacebookClientService>(
-                    new InjectionConstructor(settings.FacebookAppId, settings.FacebookAppSecret,
-                                             settings.FacebookCanvasUrl));
+                container.RegisterType<IFacebookClientService, FacebookClientService>();
                 container.RegisterType<IUserService, UserService>();
                 container.RegisterType<IAchievementService, AchievementService>();
             }

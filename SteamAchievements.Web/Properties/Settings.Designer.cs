@@ -72,15 +72,6 @@ namespace SteamAchievements.Web.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("None")]
-        public global::SteamAchievements.Web.Models.FacebookMode Mode {
-            get {
-                return ((global::SteamAchievements.Web.Models.FacebookMode)(this["Mode"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("http://apps.facebook.com/your_canvas_url/")]
         public global::System.Uri FacebookCanvasUrl {
             get {
@@ -121,6 +112,15 @@ namespace SteamAchievements.Web.Properties {
         public string HelpUrl {
             get {
                 return ((string)(this["HelpUrl"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::SteamAchievements.Web.Models.FacebookMode Mode {
+            get {
+                return ((global::SteamAchievements.Web.Models.FacebookMode)(this["Mode"]));
             }
         }
     }

@@ -14,16 +14,8 @@
     <RootNamespace>SteamAchievements.Web</RootNamespace>
     <AssemblyName>SteamAchievements.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
-    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MobileStaging|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -33,7 +25,6 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
-    <MvcBuildViews>true</MvcBuildViews>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MobileRelease|AnyCPU'">
@@ -45,7 +36,6 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
-    <MvcBuildViews>true</MvcBuildViews>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
@@ -58,7 +48,6 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
-    <MvcBuildViews>true</MvcBuildViews>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -78,7 +67,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <MvcBuildViews>true</MvcBuildViews>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
@@ -287,26 +275,24 @@
     <Content Include="Content\Policy\policy.htm" />
     <Content Include="Content\Policy\policy.txt" />
     <Content Include="Content\Policy\policy.xml" />
-    <Content Include="Content\themes\canvas\banner-light.png" />
-    <Content Include="Content\themes\canvas\canvas.css">
+    <Content Include="Content\theme\banner-light.png" />
+    <Content Include="Content\theme\canvas.css">
       <DependentUpon>canvas.less</DependentUpon>
     </Content>
-    <Content Include="Content\themes\canvas\canvas.min.css">
+    <Content Include="Content\theme\canvas.min.css">
       <DependentUpon>canvas.css</DependentUpon>
     </Content>
-    <Content Include="Content\themes\mobile\banner-light-mobile.png" />
-    <Content Include="Content\themes\site.css">
+    <Content Include="Content\theme\site.css">
       <DependentUpon>site.less</DependentUpon>
     </Content>
-    <Content Include="Content\themes\site.min.css">
+    <Content Include="Content\theme\site.min.css">
       <DependentUpon>site.css</DependentUpon>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\themes\site.less" />
-    <Content Include="Content\themes\canvas\canvas.less" />
-    <Content Include="Content\themes\mobile\mobile.less" />
+    <Content Include="Content\theme\site.less" />
+    <Content Include="Content\theme\canvas.less" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -318,6 +304,9 @@
     <Content Include="Scripts\bootstrap.message.min.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fbchannel.ashx" />
+    <None Include="Properties\PublishProfiles\fbsteamachievements-dev - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\fbsteamachievements-dev - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\fbsteamachievements-dev - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -419,9 +408,6 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
-  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
-    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
-  </Target>
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
@@ -431,7 +417,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

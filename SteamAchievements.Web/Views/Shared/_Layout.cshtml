@@ -1,7 +1,6 @@
 ﻿@{
     bool includeFacebookScripts = ViewBag.IncludeFacebookScripts ?? true;
-    FacebookMode mode = ViewBag.FacebookMode ?? FacebookMode.None;
-    string containerClass = mode == FacebookMode.Canvas ? "container-fluid" : "container";
+    string containerClass = "container";
 }
 <!DOCTYPE html>
 <html>
@@ -26,7 +25,7 @@
     <div class="fbbody @containerClass">
         <div class="row header">
             <a href="@Url.Action("Index", "Home")">
-                <img src="~/Content/themes/canvas/banner-light.png" class="img-responsive" alt="Steam Achievements" />
+                <img src="~/Content/theme/banner-light.png" class="img-responsive" alt="Steam Achievements" />
             </a>
         </div>
         <nav class="row nav navbar">

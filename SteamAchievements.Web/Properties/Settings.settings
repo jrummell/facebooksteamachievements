@@ -23,9 +23,6 @@
                     &lt;/script&gt;
                 </Value>
     </Setting>
-    <Setting Name="Mode" Type="SteamAchievements.Web.Models.FacebookMode" Scope="Application">
-      <Value Profile="(Default)">None</Value>
-    </Setting>
     <Setting Name="FacebookCanvasUrl" Type="System.Uri" Scope="Application">
       <Value Profile="(Default)">http://apps.facebook.com/your_canvas_url/</Value>
     </Setting>
@@ -40,6 +37,9 @@
     </Setting>
     <Setting Name="HelpUrl" Type="System.String" Scope="Application">
       <Value Profile="(Default)">https://github.com/jrummell/facebooksteamachievements/wiki/Help</Value>
+    </Setting>
+    <Setting Name="Mode" Type="SteamAchievements.Web.Models.FacebookMode" Scope="Application">
+      <Value Profile="(Default)">None</Value>
     </Setting>
   </Settings>
 </SettingsFile>

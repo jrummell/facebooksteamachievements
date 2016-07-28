@@ -7,3 +7,4 @@ SteamAchievements.Web/App_Data/Config
 SteamAchievements.Web/App_Data/elmah
 *.db
 /.vs
+/SteamAchievements.Web/Properties/PublishProfiles

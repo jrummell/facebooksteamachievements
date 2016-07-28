@@ -32,8 +32,7 @@ namespace SteamAchievements.Services.Models
         public void CreateMappings()
         {
             // User
-            Mapper.CreateMap<Data.steam_User, User>()
-                .ForMember(model => model.SignedRequest, options => options.Ignore());
+            Mapper.CreateMap<Data.steam_User, User>();
 
             Mapper.CreateMap<User, Data.steam_User>()
                 .ForMember(entity => entity.UserAchievements, options => options.Ignore())

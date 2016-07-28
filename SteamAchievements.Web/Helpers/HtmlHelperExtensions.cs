@@ -100,17 +100,8 @@ namespace SteamAchievements.Web.Helpers
         public static MvcHtmlString ChannelUrl(this HtmlHelper html)
         {
             string channelPath = VirtualPathUtility.ToAbsolute("~/fbchannel.ashx");
-            string url;
-            if (_settings.Mode == FacebookMode.Canvas)
-            {
-                url = "//" + html.ViewContext.HttpContext.Request.Url.Host + channelPath;
-            }
-            else
-            {
-                url = channelPath;
-            }
 
-            return MvcHtmlString.Create(url);
+            return MvcHtmlString.Create(channelPath);
         }
 
         public static MvcHtmlString Ad(this HtmlHelper html, AdLocation location)

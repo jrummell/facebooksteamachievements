@@ -95,6 +95,7 @@ namespace SteamAchievements.Web
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
+                CookieName = ".fbsa",
                 Provider = new CookieAuthenticationProvider
                 {
                 // Enables the application to validate the security stamp when the user logs in.
@@ -109,30 +110,6 @@ namespace SteamAchievements.Web
 
             app.SetDefaultSignInAsAuthenticationType(DefaultAuthenticationTypes.ExternalCookie);
 
-            // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
-            //app.UseTwoFactorSignInCookie(DefaultAuthenticationTypes.TwoFactorCookie, TimeSpan.FromMinutes(5));
-
-            // Enables the application to remember the second login verification factor such as phone or email.
-            // Once you check this option, your second step of verification during the login process will be remembered on the device where you logged in from.
-            // This is similar to the RememberMe option when you log in.
-            //app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
-
-            // Uncomment the following lines to enable logging in with third party login providers
-
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
-
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
-
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
-
             if (!string.IsNullOrEmpty(Settings.Default.FacebookAppId))
             {
                 var options = new FacebookAuthenticationOptions
@@ -142,6 +119,7 @@ namespace SteamAchievements.Web
                         OnAuthenticated = context =>
                         {
                             context.Identity.AddClaim(new Claim("AccessToken", context.AccessToken));
+                            context.Identity.AddClaim(new Claim("FacebookUserId", context.Id));
 
                             return Task.FromResult(0);
                         }
@@ -155,8 +133,7 @@ namespace SteamAchievements.Web
 
         private async Task<ClaimsIdentity> CreateIdentityAsync(UserManager<steam_User, int> manager, steam_User user)
         {
-            //TODO: DefaultAuthenticationTypes.ApplicationCookie?
-            return await manager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ExternalCookie);
+            return await manager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
         }
     }
 }

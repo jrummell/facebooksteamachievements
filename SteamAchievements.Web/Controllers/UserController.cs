@@ -12,13 +12,13 @@ namespace SteamAchievements.Web.Controllers
         private UserManager<steam_User, int> _userManager;
         //TODO: Dependency Injection for ASP.NET Identity
 
-        public SignInManager<steam_User, int> SignInManager
+        protected SignInManager<steam_User, int> SignInManager
         {
             get { return _signInManager ?? HttpContext.GetOwinContext().Get<SignInManager<steam_User, int>>(); }
             private set { _signInManager = value; }
         }
 
-        public UserManager<steam_User, int> UserManager
+        protected UserManager<steam_User, int> UserManager
         {
             get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<UserManager<steam_User, int>>(); }
             private set { _userManager = value; }

@@ -25,8 +25,6 @@ namespace SteamAchievements.Services.Models
 {
     public class User : IEquatable<User>
     {
-        public int Id { get; set; }
-
         public string UserName { get; set; }
 
         /// <summary>
@@ -76,14 +74,6 @@ namespace SteamAchievements.Services.Models
         /// The language.
         /// </value>
         public string Language { get; set; }
-
-        /// <summary>
-        /// Gets or sets the signed request.
-        /// </summary>
-        /// <value>
-        /// The signed request.
-        /// </value>
-        public string SignedRequest { get; set; }
 
         #region IEquatable<User> Members
 

@@ -249,7 +249,7 @@ namespace SteamAchievements.Services
             {
                 return user.SteamUserId;
             }
-            throw new ArgumentException("User does not exist.", "facebookUserId");
+            throw new ArgumentException($"User {facebookUserId} does not exist.", nameof(facebookUserId));
         }
 
         protected override void DisposeManaged()

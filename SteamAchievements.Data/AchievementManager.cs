@@ -56,11 +56,10 @@ namespace SteamAchievements.Data
         /// <returns></returns>
         public steam_User GetUser(long facebookUserId)
         {
-            IQueryable<steam_User> query = from user in _repository.Users
-                                     where user.FacebookUserId == facebookUserId
-                                     select user;
-
-            return query.SingleOrDefault();
+            return _repository.Users
+                              .Where(e => e.Logins.Any(l => l.LoginProvider == "Facebook"
+                                                            && l.ProviderKey == facebookUserId.ToString()))
+                              .SingleOrDefault();
         }
 
         public steam_User GetUser(string userName)

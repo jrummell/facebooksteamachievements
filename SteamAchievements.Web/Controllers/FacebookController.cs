@@ -20,7 +20,9 @@
 #endregion
 
 using System;
+using System.Security.Claims;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
 using SteamAchievements.Web.Models;
@@ -42,10 +44,27 @@ namespace SteamAchievements.Web.Controllers
             UserService = userService;
             ErrorLogger = errorLogger;
 
-            _user = new Lazy<User>(() => UserService.GetUser(User.Identity.Name));
+            _user = new Lazy<User>(() =>
+                                   {
+                                       var user = UserService.GetUser(User.Identity.Name);
+                                       if (user != null && User.Identity.IsAuthenticated)
+                                       {
+                                           var claimsIdentity = User.Identity as ClaimsIdentity;
+                                           if (claimsIdentity != null)
+                                           {
+                                               user.AccessToken = claimsIdentity.FindFirstValue("AccessToken");
+                                               user.FacebookUserId = Convert.ToInt64(User.Identity.Name);
+                                           }
+                                           else
+                                           {
+                                               ErrorLogger.Log(new Exception("Identity is not ClaimsIdentity"));
+                                           }
+                                       }
+                                       return user;
+                                   });
         }
 
-        public User UserSettings => _user.Value;
+        protected User UserSettings => _user.Value;
         
         /// <summary>
         ///     Gets the user service.

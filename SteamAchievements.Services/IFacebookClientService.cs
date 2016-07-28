@@ -19,7 +19,6 @@
 
 #endregion
 
-using System;
 using SteamAchievements.Services.Models;
 using System.Collections.Generic;
 
@@ -28,33 +27,10 @@ namespace SteamAchievements.Services
     public interface IFacebookClientService
     {
         /// <summary>
-        /// Get's the facebook user id.
-        /// </summary>
-        /// <param name="accessToken"></param>
-        long GetUserId(string accessToken);
-
-        /// <summary>
         /// Publishes a post to the user's profile.
         /// </summary>
         /// <param name="user">The user.</param>
         /// <param name="parameters">The post parameters.</param>
         void Publish(User user, IDictionary<string, object> parameters);
-
-        /// <summary>
-        /// Parses the signed request.
-        /// </summary>
-        /// <param name="signedRequest">The signed request.</param>
-        SignedRequest ParseSignedRequest(string signedRequest);
-
-        /// <summary>
-        /// Gets the log on URL.
-        /// </summary>
-        Uri GetLogOnUrl();
-
-        /// <summary>
-        /// Updates the access token.
-        /// </summary>
-        /// <param name="accessToken">The access token.</param>
-        string UpdateAccessToken(string accessToken);
     }
 }

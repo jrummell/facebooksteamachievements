@@ -28,42 +28,7 @@ namespace SteamAchievements.Services
 {
     public class FacebookClientService : IFacebookClientService
     {
-        private readonly string _appId;
-        private readonly string _appSecret;
-        private readonly Uri _canvasUrl;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FacebookClientService"/> class.
-        /// </summary>
-        /// <param name="appId">The app id.</param>
-        /// <param name="appSecret">The app secret.</param>
-        /// <param name="canvasUrl">The canvas URL.</param>
-        public FacebookClientService(string appId, string appSecret, Uri canvasUrl)
-        {
-            _appId = appId;
-            _appSecret = appSecret;
-            _canvasUrl = canvasUrl;
-        }
-
         #region IFacebookClientService Members
-
-        /// <summary>
-        ///   Get's the facebook user id.
-        /// </summary>
-        /// <param name="accessToken"> </param>
-        /// <returns> </returns>
-        public long GetUserId(string accessToken)
-        {
-            FacebookClient client = new FacebookClient(accessToken);
-            dynamic user = client.Get("me", new {fields = "name,id"});
-
-            if (user == null)
-            {
-                return 0;
-            }
-
-            return Convert.ToInt64(user.id);
-        }
 
         /// <summary>
         ///   Publishes a post to the user's profile.
@@ -75,64 +40,6 @@ namespace SteamAchievements.Services
             FacebookClient client = new FacebookClient(user.AccessToken);
             string userFeedPath = String.Format("/{0}/feed/", user.FacebookUserId);
             client.Post(userFeedPath, parameters);
-        }
-
-        /// <summary>
-        ///   Parses the signed request.
-        /// </summary>
-        /// <param name="signedRequest"> </param>
-        /// <returns> </returns>
-        public SignedRequest ParseSignedRequest(string signedRequest)
-        {
-            FacebookClient client = new FacebookClient {AppId = _appId, AppSecret = _appSecret};
-            dynamic request = client.ParseSignedRequest(signedRequest);
-
-            return new SignedRequest
-                       {
-                           UserId = Convert.ToInt64(request.user_id),
-                           AccessToken = Convert.ToString(request.oauth_token)
-                       };
-        }
-
-        /// <summary>
-        ///   Gets the log on URL.
-        /// </summary>
-        /// <returns> </returns>
-        public Uri GetLogOnUrl()
-        {
-            dynamic parameters = new
-                                     {
-                                         client_id = _appId,
-                                         redirect_uri = _canvasUrl.ToString(),
-                                         response_type = "token",
-                                         scope = "publish_stream,offline_access"
-                                     };
-
-            FacebookClient client = new FacebookClient();
-            return client.GetLoginUrl(parameters);
-        }
-
-        public string UpdateAccessToken(string accessToken)
-        {
-            //See http://stackoverflow.com/questions/8982025/how-to-extend-access-token-validity-since-offline-access-deprecation
-
-            dynamic parameters = new
-                                     {
-                                         client_id = _appId,
-                                         client_secret = _appSecret,
-                                         grant_type = "fb_exchange_token",
-                                         fb_exchange_token = accessToken
-                                     };
-
-            FacebookClient client = new FacebookClient(accessToken);
-            dynamic response = client.Post("/oauth/access_token", parameters);
-
-            if (response.access_token != null)
-            {
-                return response.access_token;
-            }
-
-            return null;
         }
 
         #endregion

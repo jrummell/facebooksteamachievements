@@ -47,8 +47,7 @@ namespace SteamAchievements.Web.Controllers
             var user = await UserManager.FindByNameAsync(loginInfo.Login.ProviderKey);
             if (user == null)
             {
-                var facebookId = Convert.ToInt64(loginInfo.Login.ProviderKey);
-                user = new steam_User {UserName = loginInfo.Login.ProviderKey, FacebookUserId = facebookId};
+                user = new steam_User {UserName = loginInfo.Login.ProviderKey};
                 var createResult = await UserManager.CreateAsync(user);
                 if (!createResult.Succeeded)
                 {
@@ -56,11 +55,6 @@ namespace SteamAchievements.Web.Controllers
                     return View("ExternalLoginFailure");
                 }
             }
-
-            // update access token and facebook id
-            user.AccessToken = loginInfo.ExternalIdentity.FindFirstValue("AccessToken");
-            user.FacebookUserId = Convert.ToInt64(loginInfo.ExternalIdentity.GetUserId());
-            await UserManager.UpdateAsync(user);
 
             var logins = await UserManager.GetLoginsAsync(user.Id);
             if (!logins.Any())
