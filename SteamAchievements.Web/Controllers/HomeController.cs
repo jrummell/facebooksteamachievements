@@ -119,6 +119,12 @@ namespace SteamAchievements.Web.Controllers
             return View("Settings", model);
         }
 
+        [AllowAnonymous]
+        public ActionResult Canvas()
+        {
+            return View();
+        }
+
         public ActionResult Deauthorize()
         {
             if (UserSettings == null)
