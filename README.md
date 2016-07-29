@@ -1,6 +1,6 @@
 # Steam Achievements for Facebook
 
-Steam Achievements is a Facebook app that displays and publishes achievements for Steam games. It's an IFrame Canvas application built with ASP.NET, [Facebook .NET SDK](http://facebooksdk.codeplex.com/), and jQuery. You can see it action at https://apps.facebook.com/steamachievementsx/
+Steam Achievements is a Facebook app that displays and publishes achievements for Steam games. It's an IFrame Canvas application built with ASP.NET MVC, ASP.NET Identity, [Facebook .NET SDK](http://facebooksdk.codeplex.com/), and jQuery. You can see it action at https://fbsteamachievements.azurewebsites.net/
 
 [![Build Status](https://ci.appveyor.com/api/projects/status/github/jrummell/facebooksteamachievements)](https://ci.appveyor.com/project/jrummell/facebooksteamachievements)
 
