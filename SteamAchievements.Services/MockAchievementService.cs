@@ -26,6 +26,7 @@ using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Services
 {
+    [Obsolete("replace with moq")]
     public class MockAchievementService : IAchievementService
     {
         #region IAchievementService Members
@@ -39,7 +40,7 @@ namespace SteamAchievements.Services
             return new SteamProfile {SteamUserId = steamUserId, Headline = "Witty headline"};
         }
 
-        public ICollection<Achievement> GetUnpublishedAchievements(long facebookUserId, DateTime? oldestDate,
+        public ICollection<Achievement> GetUnpublishedAchievements(int userId, DateTime? oldestDate,
                                                                    string language = null)
         {
             var random = new Random();
@@ -59,7 +60,7 @@ namespace SteamAchievements.Services
                         }).ToArray();
         }
 
-        public ICollection<Game> GetGames(long facebookUserId)
+        public ICollection<Game> GetGames(int userId)
         {
             return new[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
                 .Select(i => new Game {Id = i, Name = "Game " + i})
@@ -71,17 +72,17 @@ namespace SteamAchievements.Services
             return GetGames(1);
         }
 
-        public int UpdateAchievements(long facebookUserId, string language = null)
+        public int UpdateAchievements(int userId, string language = null)
         {
             return 0;
         }
 
-        public bool PublishAchievements(long facebookUserId, IEnumerable<int> achievementIds)
+        public bool PublishAchievements(int userId, IEnumerable<int> achievementIds)
         {
             return true;
         }
 
-        public bool HideAchievements(long facebookUserId, IEnumerable<int> achievementIds)
+        public bool HideAchievements(int userId, IEnumerable<int> achievementIds)
         {
             return true;
         }

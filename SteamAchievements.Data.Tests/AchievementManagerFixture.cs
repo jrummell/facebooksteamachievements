@@ -32,134 +32,132 @@ namespace SteamAchievements.Data.Tests
     [TestFixture]
     public class AchievementManagerFixture
     {
-        #region Setup/Teardown
-
         [SetUp]
         public void SetUp()
         {
-            _achievements = (new[]
-                                 {
-                                     new steam_Achievement
-                                         {
-                                             Id = 1,
-                                             GameId = 1,
-                                             ApiName = "1",
-                                             AchievementNames = new EntitySet<steam_AchievementName>
-                                                                    {
-                                                                        new steam_AchievementName
-                                                                            {
-                                                                                Id = 1,
-                                                                                AchievementId = 1,
-                                                                                Name = "Achievement 1 for Game 1",
-                                                                                Description = ""
-                                                                            }
-                                                                    }
-                                         },
-                                     new steam_Achievement
-                                         {
-                                             Id = 2,
-                                             GameId = 1,
-                                             ApiName = "2",
-                                             AchievementNames = new EntitySet<steam_AchievementName>
-                                                                    {
-                                                                        new steam_AchievementName
-                                                                            {
-                                                                                Id = 2,
-                                                                                AchievementId = 2,
-                                                                                Name = "Achievement 1 for Game 1",
-                                                                                Description = ""
-                                                                            }
-                                                                    }
-                                         },
-                                     new steam_Achievement
-                                         {
-                                             Id = 3,
-                                             GameId = 1,
-                                             ApiName = "3",
-                                             AchievementNames = new EntitySet<steam_AchievementName>
-                                                                    {
-                                                                        new steam_AchievementName
-                                                                            {
-                                                                                Id = 3,
-                                                                                AchievementId = 3,
-                                                                                Name = "Achievement 2 for Game 1",
-                                                                                Description = ""
-                                                                            }
-                                                                    }
-                                         },
-                                     new steam_Achievement
-                                         {
-                                             Id = 4,
-                                             GameId = 2,
-                                             ApiName = "4",
-                                             AchievementNames = new EntitySet<steam_AchievementName>
-                                                                    {
-                                                                        new steam_AchievementName
-                                                                            {
-                                                                                Id = 4,
-                                                                                AchievementId = 4,
-                                                                                Name = "Achievement 1 for Game 2",
-                                                                                Description = ""
-                                                                            }
-                                                                    }
-                                         },
-                                     new steam_Achievement
-                                         {
-                                             Id = 5,
-                                             GameId = 2,
-                                             ApiName = "5",
-                                             AchievementNames = new EntitySet<steam_AchievementName>
-                                                                    {
-                                                                        new steam_AchievementName
-                                                                            {
-                                                                                Id = 5,
-                                                                                AchievementId = 5,
-                                                                                Name = "Achievement 2 for Game 2",
-                                                                                Description = ""
-                                                                            }
-                                                                    }
-                                         }
-                                 }).AsQueryable();
+            _achievements = new[]
+                            {
+                                new steam_Achievement
+                                {
+                                    Id = 1,
+                                    GameId = 1,
+                                    ApiName = "1",
+                                    AchievementNames = new EntitySet<steam_AchievementName>
+                                                       {
+                                                           new steam_AchievementName
+                                                           {
+                                                               Id = 1,
+                                                               AchievementId = 1,
+                                                               Name = "Achievement 1 for Game 1",
+                                                               Description = ""
+                                                           }
+                                                       }
+                                },
+                                new steam_Achievement
+                                {
+                                    Id = 2,
+                                    GameId = 1,
+                                    ApiName = "2",
+                                    AchievementNames = new EntitySet<steam_AchievementName>
+                                                       {
+                                                           new steam_AchievementName
+                                                           {
+                                                               Id = 2,
+                                                               AchievementId = 2,
+                                                               Name = "Achievement 1 for Game 1",
+                                                               Description = ""
+                                                           }
+                                                       }
+                                },
+                                new steam_Achievement
+                                {
+                                    Id = 3,
+                                    GameId = 1,
+                                    ApiName = "3",
+                                    AchievementNames = new EntitySet<steam_AchievementName>
+                                                       {
+                                                           new steam_AchievementName
+                                                           {
+                                                               Id = 3,
+                                                               AchievementId = 3,
+                                                               Name = "Achievement 2 for Game 1",
+                                                               Description = ""
+                                                           }
+                                                       }
+                                },
+                                new steam_Achievement
+                                {
+                                    Id = 4,
+                                    GameId = 2,
+                                    ApiName = "4",
+                                    AchievementNames = new EntitySet<steam_AchievementName>
+                                                       {
+                                                           new steam_AchievementName
+                                                           {
+                                                               Id = 4,
+                                                               AchievementId = 4,
+                                                               Name = "Achievement 1 for Game 2",
+                                                               Description = ""
+                                                           }
+                                                       }
+                                },
+                                new steam_Achievement
+                                {
+                                    Id = 5,
+                                    GameId = 2,
+                                    ApiName = "5",
+                                    AchievementNames = new EntitySet<steam_AchievementName>
+                                                       {
+                                                           new steam_AchievementName
+                                                           {
+                                                               Id = 5,
+                                                               AchievementId = 5,
+                                                               Name = "Achievement 2 for Game 2",
+                                                               Description = ""
+                                                           }
+                                                       }
+                                }
+                            }.AsQueryable();
 
-            _users = (new[]
-                          {
-                              new steam_User {FacebookUserId = 1, SteamUserId = "user1"},
-                              new steam_User {FacebookUserId = 2, SteamUserId = "user2"}
-                          }).AsQueryable();
+            _users = new[]
+                     {
+                         new steam_User {Id = 1, SteamUserId = "user1"},
+                         new steam_User {Id = 2, SteamUserId = "user2"}
+                     }.AsQueryable();
 
-            _userAchievements = (new[]
-                                     {
-                                         new steam_UserAchievement
-                                             {
-                                                 Id = 1,
-                                                 AchievementId = 1,
-                                                 Date = DateTime.Now,
-                                                 FacebookUserId = 1,
-                                                 Achievement = _achievements.Single(achievement => achievement.Id == 1),
-                                                 Published = true,
-                                                 Hidden = false
-                                             },
-                                         new steam_UserAchievement
-                                             {
-                                                 Id = 2,
-                                                 AchievementId = 2,
-                                                 Date = DateTime.Now,
-                                                 FacebookUserId = 1,
-                                                 Achievement = _achievements.Single(achievement => achievement.Id == 2),
-                                                 Published = true,
-                                                 Hidden = false
-                                             },
-                                         new steam_UserAchievement
-                                             {
-                                                 Id = 3,
-                                                 AchievementId = 3,
-                                                 Date = DateTime.Now,
-                                                 FacebookUserId = 1,
-                                                 Achievement = _achievements.Single(achievement => achievement.Id == 3),
-                                                 Published = false,
-                                                 Hidden = false
-                                             }
-                                     }).AsQueryable();
+            _userAchievements = new[]
+                                {
+                                    new steam_UserAchievement
+                                    {
+                                        Id = 1,
+                                        AchievementId = 1,
+                                        Date = DateTime.Now,
+                                        UserId = 1,
+                                        Achievement = _achievements.Single(achievement => achievement.Id == 1),
+                                        Published = true,
+                                        Hidden = false
+                                    },
+                                    new steam_UserAchievement
+                                    {
+                                        Id = 2,
+                                        AchievementId = 2,
+                                        Date = DateTime.Now,
+                                        UserId = 1,
+                                        Achievement = _achievements.Single(achievement => achievement.Id == 2),
+                                        Published = true,
+                                        Hidden = false
+                                    },
+                                    new steam_UserAchievement
+                                    {
+                                        Id = 3,
+                                        AchievementId = 3,
+                                        Date = DateTime.Now,
+                                        UserId = 1,
+                                        Achievement = _achievements.Single(achievement => achievement.Id == 3),
+                                        Published = false,
+                                        Hidden = false
+                                    }
+                                }.AsQueryable();
 
             _repositoryMock = new Mock<ISteamRepository>();
             _manager = new AchievementManager(_repositoryMock.Object);
@@ -171,8 +169,6 @@ namespace SteamAchievements.Data.Tests
             _manager.Dispose();
         }
 
-        #endregion
-
         private AchievementManager _manager;
         private IQueryable<steam_Achievement> _achievements;
         private IQueryable<steam_User> _users;
@@ -183,22 +179,22 @@ namespace SteamAchievements.Data.Tests
         public void AddGameAchievements()
         {
             const int gameId = 99;
-            List<steam_Achievement> gameAchievements = new List<steam_Achievement>();
-            for (int i = 0; i < 10; i++)
+            var gameAchievements = new List<steam_Achievement>();
+            for (var i = 0; i < 10; i++)
             {
-                steam_Achievement achievement = new steam_Achievement
-                                              {
-                                                  ImageUrl = "http://example.com/achievement" + i + ".gif",
-                                                  ApiName = i.ToString(),
-                                                  AchievementNames = new EntitySet<steam_AchievementName>
-                                                                         {
-                                                                             new steam_AchievementName
-                                                                                 {
-                                                                                     Name = "Achievement " + i,
-                                                                                     Description = "Achievement " + i
-                                                                                 }
-                                                                         }
-                                              };
+                var achievement = new steam_Achievement
+                                  {
+                                      ImageUrl = "http://example.com/achievement" + i + ".gif",
+                                      ApiName = i.ToString(),
+                                      AchievementNames = new EntitySet<steam_AchievementName>
+                                                         {
+                                                             new steam_AchievementName
+                                                             {
+                                                                 Name = "Achievement " + i,
+                                                                 Description = "Achievement " + i
+                                                             }
+                                                         }
+                                  };
                 gameAchievements.Add(achievement);
             }
 
@@ -211,7 +207,7 @@ namespace SteamAchievements.Data.Tests
                                    Times.Exactly(gameAchievements.Count));
             _repositoryMock.Verify(rep => rep.SubmitChanges());
 
-            List<steam_Achievement> expectedAchievements = new List<steam_Achievement>(_achievements);
+            var expectedAchievements = new List<steam_Achievement>(_achievements);
             expectedAchievements.AddRange(gameAchievements);
             _repositoryMock.SetupGet(rep => rep.Achievements).Returns(expectedAchievements.AsQueryable());
 
@@ -224,21 +220,21 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.SetupGet(rep => rep.Achievements).Returns(_achievements);
             _repositoryMock.SetupGet(rep => rep.UserAchievements).Returns(_userAchievements);
 
-            const long facebookUserId = 1;
+            const int userId = 1;
             IEnumerable<steam_Achievement> achievements =
-                _manager.GetUnassignedAchievements(facebookUserId, _achievements);
+                _manager.GetUnassignedAchievements(userId, _achievements);
             Assert.That(achievements.Any());
 
             _repositoryMock.VerifyGet(rep => rep.Achievements);
             _repositoryMock.VerifyGet(rep => rep.UserAchievements);
 
-            IEnumerable<steam_UserAchievement> userAchievements =
+            var userAchievements =
                 from achievement in achievements
                 select new steam_UserAchievement
-                           {
-                               FacebookUserId = facebookUserId,
-                               Achievement = achievement
-                           };
+                       {
+                           UserId = userId,
+                           Achievement = achievement
+                       };
 
             _manager.AssignAchievements(userAchievements);
 
@@ -249,20 +245,20 @@ namespace SteamAchievements.Data.Tests
         [Test]
         public void GetMissingAchievements()
         {
-            steam_Achievement achievement1Game5 = new steam_Achievement {GameId = 5, ApiName = "1"};
-            steam_Achievement achievement2Game5 = new steam_Achievement {GameId = 5, ApiName = "2"};
+            var achievement1Game5 = new steam_Achievement {GameId = 5, ApiName = "1"};
+            var achievement2Game5 = new steam_Achievement {GameId = 5, ApiName = "2"};
             ICollection<steam_Achievement> communityAchievements =
                 new[]
-                    {
-                        new steam_Achievement {GameId = 1, ApiName = "1"},
-                        new steam_Achievement {GameId = 1, ApiName = "2"},
-                        new steam_Achievement {GameId = 1, ApiName = "3"},
-                        achievement1Game5,
-                        achievement2Game5
-                    };
+                {
+                    new steam_Achievement {GameId = 1, ApiName = "1"},
+                    new steam_Achievement {GameId = 1, ApiName = "2"},
+                    new steam_Achievement {GameId = 1, ApiName = "3"},
+                    achievement1Game5,
+                    achievement2Game5
+                };
 
             _repositoryMock.SetupGet(rep => rep.Achievements).Returns(_achievements);
-            ICollection<steam_Achievement> missingAchievements =
+            var missingAchievements =
                 _manager.GetMissingAchievements(communityAchievements.ToList());
 
             _repositoryMock.VerifyGet(rep => rep.Achievements);
@@ -279,7 +275,7 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.SetupGet(rep => rep.Achievements).Returns(_achievements);
             _repositoryMock.SetupGet(rep => rep.UserAchievements).Returns(_userAchievements);
 
-            ICollection<steam_Achievement> achievements = _manager.GetUnassignedAchievements(1, _achievements);
+            var achievements = _manager.GetUnassignedAchievements(1, _achievements);
 
             _repositoryMock.VerifyGet(rep => rep.UserAchievements);
             _repositoryMock.VerifyGet(rep => rep.Achievements);
@@ -295,7 +291,7 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.SetupGet(rep => rep.UserAchievements).Returns(_userAchievements);
             _repositoryMock.SetupGet(rep => rep.Users).Returns(_users);
 
-            ICollection<steam_Achievement> achievements = _manager.GetUnpublishedAchievements(1);
+            var achievements = _manager.GetUnpublishedAchievements(1);
 
             _repositoryMock.VerifyGet(rep => rep.UserAchievements);
 
@@ -307,28 +303,28 @@ namespace SteamAchievements.Data.Tests
         public void InsertMissingAchievements()
         {
             _repositoryMock.SetupGet(rep => rep.Achievements).Returns(_achievements);
-            int maxId = _achievements.Select(a => a.Id).Max();
+            var maxId = _achievements.Select(a => a.Id).Max();
 
-            steam_Achievement achievement1Game5 =
+            var achievement1Game5 =
                 new steam_Achievement
-                    {
-                        Id = ++maxId,
-                        GameId = 5,
-                        ImageUrl = "",
-                        ApiName = "1",
-                        AchievementNames = new EntitySet<steam_AchievementName> {new steam_AchievementName()}
-                    };
-            steam_Achievement achievement2Game5 =
+                {
+                    Id = ++maxId,
+                    GameId = 5,
+                    ImageUrl = "",
+                    ApiName = "1",
+                    AchievementNames = new EntitySet<steam_AchievementName> {new steam_AchievementName()}
+                };
+            var achievement2Game5 =
                 new steam_Achievement
-                    {
-                        Id = ++maxId,
-                        GameId = 5,
-                        ImageUrl = "",
-                        ApiName = "2",
-                        AchievementNames = new EntitySet<steam_AchievementName> {new steam_AchievementName()}
-                    };
+                {
+                    Id = ++maxId,
+                    GameId = 5,
+                    ImageUrl = "",
+                    ApiName = "2",
+                    AchievementNames = new EntitySet<steam_AchievementName> {new steam_AchievementName()}
+                };
 
-            steam_Achievement[] missingAchievements = new[] {achievement1Game5, achievement2Game5};
+            steam_Achievement[] missingAchievements = {achievement1Game5, achievement2Game5};
 
             _manager.InsertMissingAchievements(missingAchievements);
 
@@ -340,169 +336,169 @@ namespace SteamAchievements.Data.Tests
         [Test]
         public void UpdateAchievements()
         {
-            long facebookUserId = _users.First().FacebookUserId;
+            var userId = _users.First().Id;
 
             ICollection<steam_UserAchievement> userAchievements =
                 new[]
+                {
+                    new steam_UserAchievement
                     {
-                        new steam_UserAchievement
-                            {
-                                FacebookUserId = facebookUserId,
-                                Achievement = new steam_Achievement
-                                                  {
-                                                      GameId = 1,
-                                                      ApiName = "1",
-                                                      AchievementNames =
-                                                          new EntitySet<steam_AchievementName>
-                                                              {
-                                                                  new steam_AchievementName
-                                                                      {Language = "english"}
-                                                              }
-                                                  }
-                            },
-                        new steam_UserAchievement
-                            {
-                                FacebookUserId = facebookUserId,
-                                Achievement = new steam_Achievement
-                                                  {
-                                                      GameId = 1,
-                                                      ApiName = "2",
-                                                      AchievementNames =
-                                                          new EntitySet<steam_AchievementName>
-                                                              {
-                                                                  new steam_AchievementName
-                                                                      {Language = "english"}
-                                                              }
-                                                  }
-                            },
-                        new steam_UserAchievement
-                            {
-                                FacebookUserId = facebookUserId,
-                                AchievementId = 3,
-                                Achievement = new steam_Achievement
-                                                  {
-                                                      Id = 3,
-                                                      GameId = 1,
-                                                      ApiName = "3",
-                                                      AchievementNames =
-                                                          new EntitySet<steam_AchievementName>
-                                                              {
-                                                                  new steam_AchievementName
-                                                                      {AchievementId = 3, Language = "english"}
-                                                              }
-                                                  }
-                            },
-                        new steam_UserAchievement
-                            {
-                                FacebookUserId = facebookUserId,
-                                AchievementId = 4,
-                                Achievement = new steam_Achievement
-                                                  {
-                                                      Id = 4,
-                                                      GameId = 2,
-                                                      ApiName = "4",
-                                                      AchievementNames =
-                                                          new EntitySet<steam_AchievementName>
-                                                              {
-                                                                  new steam_AchievementName
-                                                                      {AchievementId = 4, Language = "english"}
-                                                              }
-                                                  }
-                            },
-                        new steam_UserAchievement
-                            {
-                                FacebookUserId = facebookUserId,
-                                AchievementId = 5,
-                                Achievement = new steam_Achievement
-                                                  {
-                                                      Id = 5,
-                                                      GameId = 2,
-                                                      ApiName = "5",
-                                                      AchievementNames =
-                                                          new EntitySet<steam_AchievementName>
-                                                              {
-                                                                  new steam_AchievementName
-                                                                      {AchievementId = 5, Language = "english"}
-                                                              }
-                                                  }
-                            },
-                        new steam_UserAchievement
-                            {
-                                FacebookUserId = facebookUserId,
-                                AchievementId = 6,
-                                Achievement = new steam_Achievement
-                                                  {
-                                                      Id = 6,
-                                                      GameId = 3,
-                                                      ApiName = "6",
-                                                      AchievementNames =
-                                                          new EntitySet<steam_AchievementName>
-                                                              {
-                                                                  new steam_AchievementName
-                                                                      {AchievementId = 6, Language = "english"}
-                                                              }
-                                                  }
-                            },
-                        new steam_UserAchievement
-                            {
-                                FacebookUserId = facebookUserId,
-                                AchievementId = 7,
-                                Achievement = new steam_Achievement
-                                                  {
-                                                      Id = 7,
-                                                      GameId = 3,
-                                                      ApiName = "7",
-                                                      AchievementNames =
-                                                          new EntitySet<steam_AchievementName>
-                                                              {
-                                                                  new steam_AchievementName
-                                                                      {AchievementId = 7, Language = "german"}
-                                                              }
-                                                  }
-                            },
-                        new steam_UserAchievement
-                            {
-                                FacebookUserId = facebookUserId,
-                                AchievementId = 8,
-                                Achievement = new steam_Achievement
-                                                  {
-                                                      Id = 8,
-                                                      GameId = 4,
-                                                      ApiName = "8",
-                                                      AchievementNames =
-                                                          new EntitySet<steam_AchievementName>
-                                                              {
-                                                                  new steam_AchievementName
-                                                                      {AchievementId = 8, Language = "german"}
-                                                              }
-                                                  }
-                            }
-                    };
+                        UserId = userId,
+                        Achievement = new steam_Achievement
+                                      {
+                                          GameId = 1,
+                                          ApiName = "1",
+                                          AchievementNames =
+                                              new EntitySet<steam_AchievementName>
+                                              {
+                                                  new steam_AchievementName
+                                                  {Language = "english"}
+                                              }
+                                      }
+                    },
+                    new steam_UserAchievement
+                    {
+                        UserId = userId,
+                        Achievement = new steam_Achievement
+                                      {
+                                          GameId = 1,
+                                          ApiName = "2",
+                                          AchievementNames =
+                                              new EntitySet<steam_AchievementName>
+                                              {
+                                                  new steam_AchievementName
+                                                  {Language = "english"}
+                                              }
+                                      }
+                    },
+                    new steam_UserAchievement
+                    {
+                        UserId = userId,
+                        AchievementId = 3,
+                        Achievement = new steam_Achievement
+                                      {
+                                          Id = 3,
+                                          GameId = 1,
+                                          ApiName = "3",
+                                          AchievementNames =
+                                              new EntitySet<steam_AchievementName>
+                                              {
+                                                  new steam_AchievementName
+                                                  {AchievementId = 3, Language = "english"}
+                                              }
+                                      }
+                    },
+                    new steam_UserAchievement
+                    {
+                        UserId = userId,
+                        AchievementId = 4,
+                        Achievement = new steam_Achievement
+                                      {
+                                          Id = 4,
+                                          GameId = 2,
+                                          ApiName = "4",
+                                          AchievementNames =
+                                              new EntitySet<steam_AchievementName>
+                                              {
+                                                  new steam_AchievementName
+                                                  {AchievementId = 4, Language = "english"}
+                                              }
+                                      }
+                    },
+                    new steam_UserAchievement
+                    {
+                        UserId = userId,
+                        AchievementId = 5,
+                        Achievement = new steam_Achievement
+                                      {
+                                          Id = 5,
+                                          GameId = 2,
+                                          ApiName = "5",
+                                          AchievementNames =
+                                              new EntitySet<steam_AchievementName>
+                                              {
+                                                  new steam_AchievementName
+                                                  {AchievementId = 5, Language = "english"}
+                                              }
+                                      }
+                    },
+                    new steam_UserAchievement
+                    {
+                        UserId = userId,
+                        AchievementId = 6,
+                        Achievement = new steam_Achievement
+                                      {
+                                          Id = 6,
+                                          GameId = 3,
+                                          ApiName = "6",
+                                          AchievementNames =
+                                              new EntitySet<steam_AchievementName>
+                                              {
+                                                  new steam_AchievementName
+                                                  {AchievementId = 6, Language = "english"}
+                                              }
+                                      }
+                    },
+                    new steam_UserAchievement
+                    {
+                        UserId = userId,
+                        AchievementId = 7,
+                        Achievement = new steam_Achievement
+                                      {
+                                          Id = 7,
+                                          GameId = 3,
+                                          ApiName = "7",
+                                          AchievementNames =
+                                              new EntitySet<steam_AchievementName>
+                                              {
+                                                  new steam_AchievementName
+                                                  {AchievementId = 7, Language = "german"}
+                                              }
+                                      }
+                    },
+                    new steam_UserAchievement
+                    {
+                        UserId = userId,
+                        AchievementId = 8,
+                        Achievement = new steam_Achievement
+                                      {
+                                          Id = 8,
+                                          GameId = 4,
+                                          ApiName = "8",
+                                          AchievementNames =
+                                              new EntitySet<steam_AchievementName>
+                                              {
+                                                  new steam_AchievementName
+                                                  {AchievementId = 8, Language = "german"}
+                                              }
+                                      }
+                    }
+                };
 
-            foreach (steam_UserAchievement userAchievement in userAchievements)
+            foreach (var userAchievement in userAchievements)
             {
                 userAchievement.Achievement.UserAchievements = new EntitySet<steam_UserAchievement> {userAchievement};
-                foreach (steam_AchievementName name in userAchievement.Achievement.AchievementNames)
+                foreach (var name in userAchievement.Achievement.AchievementNames)
                 {
                     name.Achievement = userAchievement.Achievement;
                 }
             }
 
             _repositoryMock.SetupSequence(rep => rep.Achievements)
-                .Returns(new steam_Achievement[0].AsQueryable())
-                .Returns(userAchievements.Select(a => a.Achievement).AsQueryable())
-                .Returns(userAchievements.Select(a => a.Achievement).AsQueryable());
+                           .Returns(new steam_Achievement[0].AsQueryable())
+                           .Returns(userAchievements.Select(a => a.Achievement).AsQueryable())
+                           .Returns(userAchievements.Select(a => a.Achievement).AsQueryable());
 
             _repositoryMock.SetupSequence(rep => rep.UserAchievements)
-                .Returns(new steam_UserAchievement[0].AsQueryable())
-                .Returns(userAchievements.AsQueryable())
-                .Returns(userAchievements.AsQueryable());
+                           .Returns(new steam_UserAchievement[0].AsQueryable())
+                           .Returns(userAchievements.AsQueryable())
+                           .Returns(userAchievements.AsQueryable());
 
             _repositoryMock.Setup(rep => rep.InsertAllOnSubmit(It.IsAny<IEnumerable<steam_UserAchievement>>()))
-                .Verifiable();
+                           .Verifiable();
 
             _repositoryMock.Setup(rep => rep.SubmitChanges())
-                .Verifiable();
+                           .Verifiable();
 
             _manager.UpdateAchievements(userAchievements);
 
@@ -520,14 +516,14 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.SetupGet(rep => rep.Achievements).Returns(_achievements);
 
             const int userId = 1;
-            ICollection<steam_Achievement> achievements = _manager.GetUnpublishedAchievements(userId);
+            var achievements = _manager.GetUnpublishedAchievements(userId);
             _manager.UpdateHidden(userId, achievements.Select(acheivement => acheivement.Id));
 
-            IEnumerable<int> achievementIds = from achievement in achievements
-                                              select achievement.Id;
-            IQueryable<steam_UserAchievement> userAchievements =
+            var achievementIds = from achievement in achievements
+                                 select achievement.Id;
+            var userAchievements =
                 from achievement in _repositoryMock.Object.UserAchievements
-                where achievement.FacebookUserId == userId && achievementIds.Contains(achievement.AchievementId)
+                where achievement.UserId == userId && achievementIds.Contains(achievement.AchievementId)
                 select achievement;
 
             Assert.That(userAchievements.Any(achievement => !achievement.Hidden), Is.False);
@@ -541,15 +537,15 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.SetupGet(rep => rep.Achievements).Returns(_achievements);
 
             const int userId = 1;
-            ICollection<steam_Achievement> achievements = _manager.GetUnpublishedAchievements(userId);
+            var achievements = _manager.GetUnpublishedAchievements(userId);
             _manager.UpdatePublished(userId, achievements.Select(acheivement => acheivement.Id));
 
-            IEnumerable<int> achievementIds = from achievement in achievements
-                                              select achievement.Id;
+            var achievementIds = from achievement in achievements
+                                 select achievement.Id;
 
-            IQueryable<steam_UserAchievement> userAchievements =
+            var userAchievements =
                 from achievement in _repositoryMock.Object.UserAchievements
-                where achievement.FacebookUserId == userId && achievementIds.Contains(achievement.AchievementId)
+                where achievement.UserId == userId && achievementIds.Contains(achievement.AchievementId)
                 select achievement;
 
             Assert.That(userAchievements.Any(achievement => !achievement.Published), Is.False);
@@ -562,44 +558,44 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.Setup(rep => rep.SubmitChanges());
 
             const string steamUserId = "user1";
-            const int facebookUserId = 1;
+            const int userId = 1;
 
-            steam_User user = new steam_User {SteamUserId = steamUserId, FacebookUserId = facebookUserId, AccessToken = "asdf"};
+            var user = new steam_User {SteamUserId = steamUserId, Id = userId};
             _manager.UpdateUser(user);
 
-            _repositoryMock.VerifyGet(rep => rep.Users, Times.Exactly(2));
+            _repositoryMock.VerifyGet(rep => rep.Users, Times.Exactly(1));
             _repositoryMock.Verify(rep => rep.SubmitChanges());
             _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<steam_User>()), Times.Never());
         }
-        
+
         [Test]
         public void UpdateUserWithNewSteamUserId()
         {
-        	_repositoryMock.SetupGet(rep => rep.Users)
-        		.Returns(new[]{new steam_User {SteamUserId = "user1", FacebookUserId = 1}}.AsQueryable())
-        		.Verifiable();
-        	_repositoryMock.SetupGet(rep => rep.UserAchievements)
-        		.Returns(new[]{new steam_UserAchievement {FacebookUserId = 1}}.AsQueryable())
-        		.Verifiable();
+            _repositoryMock.SetupGet(rep => rep.Users)
+                           .Returns(new[] {new steam_User {SteamUserId = "user1", Id = 1}}.AsQueryable())
+                           .Verifiable();
+            _repositoryMock.SetupGet(rep => rep.UserAchievements)
+                           .Returns(new[] {new steam_UserAchievement {UserId = 1}}.AsQueryable())
+                           .Verifiable();
             _repositoryMock.Setup(rep => rep.DeleteAllOnSubmit(It.IsAny<IEnumerable<steam_UserAchievement>>()))
-            	.Verifiable();
+                           .Verifiable();
             _repositoryMock.Setup(rep => rep.SubmitChanges())
-            	.Verifiable();
+                           .Verifiable();
 
-            steam_User user = new steam_User {SteamUserId = "userxxx", FacebookUserId = 1};
+            var user = new steam_User {SteamUserId = "userxxx", Id = 1};
             _manager.UpdateUser(user);
 
             _repositoryMock.Verify();
-            _repositoryMock.VerifyGet(rep => rep.Users, Times.Exactly(2));
+            _repositoryMock.VerifyGet(rep => rep.Users, Times.Exactly(1));
             _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<steam_User>()), Times.Never());
         }
-        
+
         [Test]
         public void ValidateDate()
         {
-            DateTime date = AchievementManager.ValidateDate(DateTime.MinValue);
+            var date = AchievementManager.ValidateDate(DateTime.MinValue);
 
-            long sqlMinTicks = SqlDateTime.MinValue.Value.Ticks;
+            var sqlMinTicks = SqlDateTime.MinValue.Value.Ticks;
             Assert.That(date.Ticks, Is.GreaterThan(sqlMinTicks));
         }
     }

@@ -53,14 +53,12 @@ namespace SteamAchievements.Web
             if (settings.Mode == FacebookMode.None)
             {
                 container.RegisterType<ISteamRepository, MockSteamRepository>(new HierarchicalLifetimeManager());
-                container.RegisterType<IFacebookClientService, MockFacebookClientService>();
                 container.RegisterType<IUserService, MockUserService>();
                 container.RegisterType<IAchievementService, MockAchievementService>();
             }
             else
             {
                 container.RegisterType<ISteamRepository, SteamRepository>(new HierarchicalLifetimeManager());
-                container.RegisterType<IFacebookClientService, FacebookClientService>();
                 container.RegisterType<IUserService, UserService>();
                 container.RegisterType<IAchievementService, AchievementService>();
             }

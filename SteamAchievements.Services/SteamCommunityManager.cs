@@ -51,11 +51,11 @@ namespace SteamAchievements.Services
                                      IGameXmlParser gamesParser, IAchievementXmlParser achievementParser,
                                      IErrorLogger errorLogger)
         {
-            if (webClient == null) throw new ArgumentNullException("webClient");
-            if (profileParser == null) throw new ArgumentNullException("profileParser");
-            if (gamesParser == null) throw new ArgumentNullException("gamesParser");
-            if (achievementParser == null) throw new ArgumentNullException("achievementParser");
-            if (errorLogger == null) throw new ArgumentNullException("errorLogger");
+            if (webClient == null) throw new ArgumentNullException(nameof(webClient));
+            if (profileParser == null) throw new ArgumentNullException(nameof(profileParser));
+            if (gamesParser == null) throw new ArgumentNullException(nameof(gamesParser));
+            if (achievementParser == null) throw new ArgumentNullException(nameof(achievementParser));
+            if (errorLogger == null) throw new ArgumentNullException(nameof(errorLogger));
 
             _webClient = webClient;
             _achievementParser = achievementParser;
@@ -75,7 +75,7 @@ namespace SteamAchievements.Services
         {
             if (steamUserId == null)
             {
-                throw new ArgumentNullException("steamUserId");
+                throw new ArgumentNullException(nameof(steamUserId));
             }
 
             string xml = _webClient.DownloadString(GetProfileUrl(steamUserId, true));
@@ -120,7 +120,7 @@ namespace SteamAchievements.Services
         {
             if (steamUserId == null)
             {
-                throw new ArgumentNullException("steamUserId");
+                throw new ArgumentNullException(nameof(steamUserId));
             }
 
             Uri gamesUrl = GetGamesUrl(steamUserId, true, language);
@@ -156,7 +156,7 @@ namespace SteamAchievements.Services
         {
             if (steamUserId == null)
             {
-                throw new ArgumentNullException("steamUserId");
+                throw new ArgumentNullException(nameof(steamUserId));
             }
 
             List<UserAchievement> achievements = new List<UserAchievement>();

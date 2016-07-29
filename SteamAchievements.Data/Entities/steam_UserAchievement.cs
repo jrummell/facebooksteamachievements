@@ -9,6 +9,7 @@ namespace SteamAchievements.Data
     [Table("steam_UserAchievement")]
     public partial class steam_UserAchievement
     {
+        [Obsolete]
         public long FacebookUserId { get; set; }
 
         public int AchievementId { get; set; }

@@ -51,8 +51,7 @@ namespace SteamAchievements.Web.Tests
             Mock<IUserService> mockUserService = new Mock<IUserService>();
             User originalUser = new User
                 {
-                    AutoUpdate = true,
-                    FacebookUserId = 12345,
+                    Id = 12345,
                     PublishDescription = true,
                     SteamUserId = "NullReference",
                     UserName = 12345.ToString()
@@ -71,7 +70,6 @@ namespace SteamAchievements.Web.Tests
             SettingsViewModel model =
                 new SettingsViewModel
                     {
-                        AutoUpdate = true,
                         PublishDescription = true,
                         SteamUserId = originalUser.SteamUserId
                     };

@@ -120,10 +120,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CultureHelper.cs" />
-    <Compile Include="FacebookClientService.cs" />
     <Compile Include="IAchievementXmlParser.cs" />
     <Compile Include="IErrorLogger.cs" />
-    <Compile Include="IFacebookClientService.cs" />
     <Compile Include="IGameXmlParser.cs" />
     <Compile Include="InvalidGamesXmlException.cs" />
     <Compile Include="InvalidStatsXmlException.cs" />
@@ -132,7 +130,6 @@
     <Compile Include="IUserService.cs" />
     <Compile Include="IWebClientWrapper.cs" />
     <Compile Include="MockAchievementService.cs" />
-    <Compile Include="MockFacebookClientService.cs" />
     <Compile Include="MockSteamRepository.cs" />
     <Compile Include="MockUserService.cs" />
     <Compile Include="Models\Achievement.cs" />
@@ -179,4 +176,3 @@
     </VisualStudio>
   </ProjectExtensions>
 </Project>
-

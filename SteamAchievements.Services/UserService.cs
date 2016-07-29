@@ -20,7 +20,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using SteamAchievements.Data;
@@ -40,7 +39,7 @@ namespace SteamAchievements.Services
         {
             if (manager == null)
             {
-                throw new ArgumentNullException("manager");
+                throw new ArgumentNullException(nameof(manager));
             }
 
             _manager = manager;
@@ -75,7 +74,7 @@ namespace SteamAchievements.Services
         {
             if (user == null)
             {
-                throw new ArgumentNullException("user");
+                throw new ArgumentNullException(nameof(user));
             }
 
             _manager.UpdateUser(Map(user));
@@ -84,19 +83,10 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Deauthorizes the user.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
-        public void DeauthorizeUser(long facebookUserId)
+        /// <param name="userId">The user identifier.</param>
+        public void DeauthorizeUser(int userId)
         {
-            _manager.DeauthorizeUser(facebookUserId);
-        }
-
-        /// <summary>
-        /// Gets the auto update users.
-        /// </summary>
-        /// <returns></returns>
-        public ICollection<Models.User> GetAutoUpdateUsers()
-        {
-            return _manager.GetAutoUpdateUsers().Select(Map).ToArray();
+            _manager.DeauthorizeUser(userId);
         }
 
         #endregion

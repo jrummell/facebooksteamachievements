@@ -112,7 +112,7 @@ namespace SteamAchievements.Web.Controllers
         public PartialViewResult UnpublishedAchievements()
         {
             var achievements =
-                _achievementService.GetUnpublishedAchievements(UserSettings.FacebookUserId, null);
+                _achievementService.GetUnpublishedAchievements(UserSettings.Id, null);
 
             var serializer = new JavaScriptSerializer();
             ViewBag.Achievements = serializer.Serialize(achievements);
@@ -134,7 +134,7 @@ namespace SteamAchievements.Web.Controllers
         {
             try
             {
-                return Json(_achievementService.UpdateAchievements(UserSettings.FacebookUserId));
+                return Json(_achievementService.UpdateAchievements(UserSettings.Id));
             }
             catch (Exception exception)
             {
@@ -148,13 +148,13 @@ namespace SteamAchievements.Web.Controllers
         [HttpPost]
         public JsonResult PublishAchievements(IEnumerable<int> achievementIds)
         {
-            return Json(_achievementService.PublishAchievements(UserSettings.FacebookUserId, achievementIds));
+            return Json(_achievementService.PublishAchievements(UserSettings.Id, achievementIds));
         }
 
         [HttpPost]
         public JsonResult HideAchievements(IEnumerable<int> achievementIds)
         {
-            return Json(_achievementService.HideAchievements(UserSettings.FacebookUserId, achievementIds));
+            return Json(_achievementService.HideAchievements(UserSettings.Id, achievementIds));
         }
     }
 }

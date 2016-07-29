@@ -28,11 +28,6 @@ namespace SteamAchievements.Services
     public interface IUserService : IDisposable
     {
         /// <summary>
-        /// Gets the auto update users.
-        /// </summary>
-        ICollection<User> GetAutoUpdateUsers();
-
-        /// <summary>
         /// Gets the user.
         /// </summary>
         /// <param name="userName">The user name.</param>
@@ -53,7 +48,7 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Deauthorizes the user.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
-        void DeauthorizeUser(long facebookUserId);
+        /// <param name="userId">The user identifier.</param>
+        void DeauthorizeUser(int userId);
     }
 }

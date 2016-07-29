@@ -81,38 +81,16 @@ namespace SteamAchievements.Web.Controllers
         [HttpPost]
         public ActionResult SaveSettings(SettingsViewModel model)
         {
-            // Since facebook posts to the canvas iframe, we need a separate action to post
-            // our form.
-
             if (!ModelState.IsValid)
             {
                 return View("Settings", model);
             }
 
-            User user = UserService.GetUser(UserSettings.FacebookUserId);
-            bool newUser = false;
-            if (user == null)
-            {
-                newUser = true;
-                user = new User {FacebookUserId = UserSettings.FacebookUserId, AccessToken = String.Empty};
-            }
+            User user = UserService.GetUser(UserSettings.Id);
 
             Mapper.Map(model, user);
 
             UserService.UpdateUser(user);
-
-            if (newUser)
-            {
-                try
-                {
-                    _achievementService.UpdateNewUserAchievements(user);
-                }
-                catch (Exception ex)
-                {
-                    // log and swallow exceptions so that the settings can be saved
-                    ErrorLogger.Log(ex);
-                }
-            }
 
             ViewBag.Success = true;
 
@@ -132,7 +110,7 @@ namespace SteamAchievements.Web.Controllers
                 return View();
             }
 
-            UserService.DeauthorizeUser(UserSettings.FacebookUserId);
+            UserService.DeauthorizeUser(UserSettings.Id);
 
             _authenticationService.SignOut();
 

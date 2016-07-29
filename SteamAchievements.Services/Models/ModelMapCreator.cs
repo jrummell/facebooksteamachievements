@@ -49,15 +49,16 @@ namespace SteamAchievements.Services.Models
                 .ForMember(entity => entity.SecurityStamp, options => options.Ignore())
                 .ForMember(entity => entity.TwoFactorEnabled, options => options.Ignore())
                 .ForMember(entity => entity.Roles, options => options.Ignore())
-                .ForMember(entity => entity.AccessToken,
-                           options => options.MapFrom(model => model.AccessToken ?? String.Empty));
+                .ForMember(entity => entity.FacebookUserId, options => options.Ignore())
+                .ForMember(entity => entity.AccessToken, options => options.Ignore())
+                .ForMember(entity => entity.AutoUpdate, options => options.Ignore());
 
             // UserAchievement
             Mapper.CreateMap<UserAchievement, Data.steam_UserAchievement>()
                 .ForMember(entity => entity.User, options => options.Ignore())
                 .ForMember(entity => entity.Id, options => options.Ignore())
                 .ForMember(entity => entity.Hidden, options => options.Ignore())
-                .ForMember(entity => entity.UserId, options => options.Ignore())
+                .ForMember(entity => entity.FacebookUserId, options => options.Ignore())
                 .ForMember(entity => entity.Published, options => options.Ignore());
 
             // Achievement

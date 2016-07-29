@@ -49,13 +49,15 @@ namespace SteamAchievements.Services
         #region IAchievementService Members
 
         /// <summary>
-        ///   Gets the games.
+        /// Gets the games.
         /// </summary>
-        /// <param name="facebookUserId"> The facebook user id. </param>
-        /// <returns> All <see cref="Game" /> s. </returns>
-        public ICollection<Game> GetGames(long facebookUserId)
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>
+        /// All <see cref="Game" /> s.
+        /// </returns>
+        public ICollection<Game> GetGames(int userId)
         {
-            string steamUserId = GetSteamUserId(facebookUserId);
+            string steamUserId = GetSteamUserId(userId);
 
             return _communityService.GetGames(steamUserId, CultureHelper.GetLanguage()).ToList();
         }
@@ -71,25 +73,27 @@ namespace SteamAchievements.Services
         }
 
         /// <summary>
-        ///   Updates the achievements.
+        /// Updates the achievements.
         /// </summary>
-        /// <param name="facebookUserId"> The facebook user id. </param>
-        /// <param name="language"> The language. </param>
-        /// <returns> true if successful, else false. </returns>
-        public int UpdateAchievements(long facebookUserId, string language = null)
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="language">The language.</param>
+        /// <returns>
+        /// true if successful, else false.
+        /// </returns>
+        public int UpdateAchievements(int userId, string language = null)
         {
             if (language == null)
             {
                 language = CultureHelper.GetLanguage();
             }
 
-            string steamUserId = GetSteamUserId(facebookUserId);
+            string steamUserId = GetSteamUserId(userId);
 
             var userAchievements = _communityService.GetClosedAchievements(steamUserId, language);
 
             foreach (var achievement in userAchievements)
             {
-                achievement.FacebookUserId = facebookUserId;
+                achievement.UserId = userId;
             }
 
             var dataUserAchievements = Mapper.Map<ICollection<steam_UserAchievement>>(userAchievements);
@@ -99,13 +103,15 @@ namespace SteamAchievements.Services
         }
 
         /// <summary>
-        ///   Gets the unpublished achievements newer than the given date.
+        /// Gets the unpublished achievements newer than the given date.
         /// </summary>
-        /// <param name="facebookUserId"> </param>
-        /// <param name="oldestDate"> The oldest date. </param>
-        /// <param name="language"> The language. </param>
-        /// <returns> The achievements that haven't been published yet. </returns>
-        public ICollection<Achievement> GetUnpublishedAchievements(long facebookUserId, DateTime? oldestDate,
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="oldestDate">The oldest date.</param>
+        /// <param name="language">The language.</param>
+        /// <returns>
+        /// The achievements that haven't been published yet.
+        /// </returns>
+        public ICollection<Achievement> GetUnpublishedAchievements(int userId, DateTime? oldestDate,
                                                                    string language = null)
         {
             if (language == null)
@@ -113,28 +119,30 @@ namespace SteamAchievements.Services
                 language = CultureHelper.GetLanguage();
             }
 
-            string steamUserId = GetSteamUserId(facebookUserId);
+            string steamUserId = GetSteamUserId(userId);
 
             IEnumerable<Game> games = _communityService.GetGames(steamUserId, language);
 
             ICollection<Data.steam_Achievement> dataAchievements;
             if (oldestDate == null)
             {
-                dataAchievements = _achievementManager.GetUnpublishedAchievements(facebookUserId);
+                dataAchievements = _achievementManager.GetUnpublishedAchievements(userId);
             }
             else
             {
-                dataAchievements = _achievementManager.GetUnpublishedAchievements(facebookUserId, oldestDate.Value);
+                dataAchievements = _achievementManager.GetUnpublishedAchievements(userId, oldestDate.Value);
             }
 
             IEnumerable<Data.steam_Achievement> missingNames =
-                dataAchievements.Where(a => !a.AchievementNames.Where(n => n.Language == language).Any());
+                dataAchievements.Where(a => !a.AchievementNames.Where(n => n.Language == language).Any())
+                .ToArray();
 
             if (missingNames.Any())
             {
                 IEnumerable<Achievement> communityAchievements =
                     _communityService.GetAchievements(steamUserId, language)
-                        .Select(ua => ua.Achievement);
+                        .Select(ua => ua.Achievement)
+                        .ToArray();
 
                 foreach (Data.steam_Achievement achievement in missingNames)
                 {
@@ -176,21 +184,21 @@ namespace SteamAchievements.Services
         /// <param name="user"> The user. </param>
         public void UpdateNewUserAchievements(User user)
         {
-            bool exists = _achievementManager.GetUser(user.FacebookUserId) != null;
+            bool exists = _achievementManager.GetUser(user.Id) != null;
 
             if (!exists)
             {
-                throw new ArgumentException("The given user does not exist", "user");
+                throw new ArgumentException("The given user does not exist", nameof(user));
             }
 
-            int updatedCount = UpdateAchievements(user.FacebookUserId);
+            int updatedCount = UpdateAchievements(user.Id);
             if (updatedCount > 0)
             {
                 // hide achievements more than two days old
                 ICollection<Achievement> achievements =
-                    GetUnpublishedAchievements(user.FacebookUserId, DateTime.UtcNow.Date.AddDays(-2));
+                    GetUnpublishedAchievements(user.Id, DateTime.UtcNow.Date.AddDays(-2));
                 IEnumerable<int> achievementIds = achievements.Select(achievement => achievement.Id);
-                HideAchievements(user.FacebookUserId, achievementIds);
+                HideAchievements(user.Id, achievementIds);
             }
         }
 
@@ -203,53 +211,56 @@ namespace SteamAchievements.Services
         {
             if (steamUserId == null)
             {
-                throw new ArgumentNullException("steamUserId");
+                throw new ArgumentNullException(nameof(steamUserId));
             }
 
             return _communityService.GetProfile(steamUserId);
         }
 
         /// <summary>
-        ///   Updates the Published field for the given achievements for the given user.
+        /// Updates the Published field for the given achievements for the given user.
         /// </summary>
-        /// <param name="facebookUserId"> The facebook user id. </param>
-        /// <param name="achievementIds"> The ids of the achievements to publish. </param>
-        /// <returns> true if successful, else false. </returns>
-        public bool PublishAchievements(long facebookUserId, IEnumerable<int> achievementIds)
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="achievementIds">The ids of the achievements to publish.</param>
+        /// <returns>
+        /// true if successful, else false.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        public bool PublishAchievements(int userId, IEnumerable<int> achievementIds)
         {
             if (achievementIds == null)
             {
-                throw new ArgumentNullException("achievementIds");
+                throw new ArgumentNullException(nameof(achievementIds));
             }
 
-            _achievementManager.UpdatePublished(facebookUserId, achievementIds);
+            _achievementManager.UpdatePublished(userId, achievementIds);
 
             return true;
         }
 
         /// <summary>
-        ///   Hides the given user's achievements.
+        /// Hides the given user's achievements.
         /// </summary>
-        /// <param name="facebookUserId"> The facebook user id. </param>
-        /// <param name="achievementIds"> The ids of the achievements to hide. </param>
-        /// <returns> </returns>
-        public bool HideAchievements(long facebookUserId, IEnumerable<int> achievementIds)
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="achievementIds">The ids of the achievements to hide.</param>
+        /// <returns></returns>
+        public bool HideAchievements(int userId, IEnumerable<int> achievementIds)
         {
-            _achievementManager.UpdateHidden(facebookUserId, achievementIds);
+            _achievementManager.UpdateHidden(userId, achievementIds);
 
             return true;
         }
 
         #endregion
 
-        private string GetSteamUserId(long facebookUserId)
+        private string GetSteamUserId(int userId)
         {
-            Data.steam_User user = _achievementManager.GetUser(facebookUserId);
+            Data.steam_User user = _achievementManager.GetUser(userId);
             if (user != null)
             {
                 return user.SteamUserId;
             }
-            throw new ArgumentException($"User {facebookUserId} does not exist.", nameof(facebookUserId));
+            throw new ArgumentException($"User {userId} does not exist.", nameof(userId));
         }
 
         protected override void DisposeManaged()

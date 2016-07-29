@@ -25,23 +25,21 @@ namespace SteamAchievements.Services.Models
 {
     public class User : IEquatable<User>
     {
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the user.
+        /// </summary>
+        /// <value>
+        /// The name of the user.
+        /// </value>
         public string UserName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the access token.
-        /// </summary>
-        /// <value>
-        /// The access token.
-        /// </value>
-        public string AccessToken { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [auto update].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [auto update]; otherwise, <c>false</c>.
-        /// </value>
-        public bool AutoUpdate { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [publish description].
@@ -50,14 +48,6 @@ namespace SteamAchievements.Services.Models
         ///   <c>true</c> if [publish description]; otherwise, <c>false</c>.
         /// </value>
         public bool PublishDescription { get; set; }
-
-        /// <summary>
-        /// Gets or sets the facebook user id.
-        /// </summary>
-        /// <value>
-        /// The facebook user id.
-        /// </value>
-        public long FacebookUserId { get; set; }
 
         /// <summary>
         /// Gets or sets the steam user id.
@@ -87,7 +77,7 @@ namespace SteamAchievements.Services.Models
             {
                 return true;
             }
-            return other.FacebookUserId == FacebookUserId && Equals(other.SteamUserId, SteamUserId);
+            return other.Id == Id && Equals(other.SteamUserId, SteamUserId);
         }
 
         #endregion
@@ -113,7 +103,7 @@ namespace SteamAchievements.Services.Models
         {
             unchecked
             {
-                return (FacebookUserId.GetHashCode()*397) ^ (SteamUserId != null ? SteamUserId.GetHashCode() : 0);
+                return (Id.GetHashCode()*397) ^ (SteamUserId != null ? SteamUserId.GetHashCode() : 0);
             }
         }
     }

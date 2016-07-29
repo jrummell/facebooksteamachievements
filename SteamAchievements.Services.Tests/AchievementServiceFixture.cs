@@ -48,9 +48,9 @@ namespace SteamAchievements.Services.Tests
             Mock<ISteamCommunityManager> communityManagerMock = new Mock<ISteamCommunityManager>();
 
             // expect
-            Models.User user = new Models.User {FacebookUserId = 1234, SteamUserId = "user1"};
-            Data.steam_User dataUser = new Data.steam_User {FacebookUserId = 1234, SteamUserId = "user1"};
-            achievementManagerMock.Setup(rep => rep.GetUser(user.FacebookUserId))
+            Models.User user = new Models.User {Id = 1234, SteamUserId = "user1"};
+            Data.steam_User dataUser = new Data.steam_User {Id = 1234, SteamUserId = "user1"};
+            achievementManagerMock.Setup(rep => rep.GetUser(user.Id))
                 .Returns(dataUser).Verifiable();
 
             AchievementXmlParser achievementXmlParser = new AchievementXmlParser();
@@ -74,7 +74,7 @@ namespace SteamAchievements.Services.Tests
             communityManagerMock.Setup(rep => rep.GetClosedAchievements(user.SteamUserId, "english"))
                 .Returns(new List<Models.UserAchievement>()).Verifiable();
 
-            achievementManagerMock.Setup(rep => rep.GetUser(user.FacebookUserId))
+            achievementManagerMock.Setup(rep => rep.GetUser(user.Id))
                 .Returns(dataUser).Verifiable();
             achievementManagerMock.Setup(rep => rep.UpdateAchievements(It.IsAny<IEnumerable<Data.steam_UserAchievement>>()))
                 .Returns(5).Verifiable();
@@ -102,11 +102,11 @@ namespace SteamAchievements.Services.Tests
                                                               }
                                                       };
             achievementManagerMock.Setup(
-                rep => rep.GetUnpublishedAchievements(user.FacebookUserId, DateTime.UtcNow.Date.AddDays(-2)))
+                rep => rep.GetUnpublishedAchievements(user.Id, DateTime.UtcNow.Date.AddDays(-2)))
                 .Returns(dataAchievements).Verifiable();
             achievementManagerMock.Setup(
                 rep =>
-                rep.UpdateHidden(user.FacebookUserId, It.IsAny<IEnumerable<int>>()))
+                rep.UpdateHidden(user.Id, It.IsAny<IEnumerable<int>>()))
                 .Verifiable();
 
             // execute

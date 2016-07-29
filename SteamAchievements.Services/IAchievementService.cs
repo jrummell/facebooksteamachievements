@@ -37,22 +37,13 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Gets the unpublished achievements newer than the given date.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="userId">The user identifier.</param>
         /// <param name="oldestDate">The oldest date.</param>
         /// <param name="language">The language.</param>
         /// <returns>
         /// The achievements that haven't been published yet.
         /// </returns>
-        ICollection<Achievement> GetUnpublishedAchievements(long facebookUserId, DateTime? oldestDate, string language = null);
-
-        /// <summary>
-        /// Gets the games.
-        /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
-        /// <returns>
-        ///   <see cref="Game"/>s for the givem steam user id.
-        /// </returns>
-        ICollection<Game> GetGames(long facebookUserId);
+        ICollection<Achievement> GetUnpublishedAchievements(int userId, DateTime? oldestDate, string language = null);
 
         /// <summary>
         /// Gets the games.
@@ -66,30 +57,30 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Updates the achievements.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="userId">The user identifier.</param>
         /// <param name="language">The language.</param>
         /// <returns>
         /// The number of achievements that were updated.
         /// </returns>
-        int UpdateAchievements(long facebookUserId, string language = null);
+        int UpdateAchievements(int userId, string language = null);
 
         /// <summary>
         /// Publishes the given user's achievements.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="userId">The user identifier.</param>
         /// <param name="achievementIds">The ids of the achievements to publish.</param>
         /// <returns>
         /// true if successful, else false.
         /// </returns>
-        bool PublishAchievements(long facebookUserId, IEnumerable<int> achievementIds);
+        bool PublishAchievements(int userId, IEnumerable<int> achievementIds);
 
         /// <summary>
         /// Hides the given user's achievements
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="userId">The user identifier.</param>
         /// <param name="achievementIds">The ids of the achievements to hide.</param>
         /// <returns></returns>
-        bool HideAchievements(long facebookUserId, IEnumerable<int> achievementIds);
+        bool HideAchievements(int userId, IEnumerable<int> achievementIds);
 
         /// <summary>
         /// Updates the new user's achievements and hides any that are more than 2 days old.

@@ -32,6 +32,7 @@ namespace SteamAchievements.Data
         [StringLength(250)]
         public string AccessToken { get; set; }
 
+        [Obsolete]
         public bool AutoUpdate { get; set; }
 
         public bool PublishDescription { get; set; }

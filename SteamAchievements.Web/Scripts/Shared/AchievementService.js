@@ -137,11 +137,6 @@ function AchievementService(steamUserId, enableLog, publishDescription)
         post("ValidateProfile", data, ondone);
     };
 
-    self.updateAccessToken = function(callback)
-    {
-        post("UpdateAccessToken", { }, callback);
-    };
-
     self.loadGames = function(selector, callback)
     {
         load(selector, "Games", { steamUserId: self.steamUserId }, callback);

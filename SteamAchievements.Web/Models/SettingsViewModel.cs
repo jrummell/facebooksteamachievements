@@ -37,15 +37,8 @@ namespace SteamAchievements.Web.Models
         [Required(ErrorMessageResourceType = typeof (Strings), ErrorMessageResourceName = "SettingsCustomUrlRequired")]
         public string SteamUserId { get; set; }
 
-        [Display(ResourceType = typeof (Strings), Name = "SettingsAutoUpdateLabel")]
-        public bool AutoUpdate { get; set; }
-
         [Display(ResourceType = typeof (Strings), Name = "SettingsPublishDescriptionLabel")]
         public bool PublishDescription { get; set; }
-
-        public long FacebookUserId { get; set; }
-
-        public string SignedRequest { get; set; }
 
         public bool EnableLog { get; set; }
 
