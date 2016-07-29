@@ -39,9 +39,9 @@ namespace SteamAchievements.Services
             return new User {Id = 1000, UserName = userName, SteamUserId = "SteamUser"};
         }
 
-        public User GetUser(long facebookUserId)
+        public User GetUser(int userId)
         {
-            return new User { Id = 1234, UserName = facebookUserId.ToString(), SteamUserId = "SteamUser" };
+            return new User { Id = userId, UserName = userId.ToString(), SteamUserId = "SteamUser" };
         }
 
         public void UpdateUser(User user)

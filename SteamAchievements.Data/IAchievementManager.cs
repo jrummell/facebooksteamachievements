@@ -29,9 +29,9 @@ namespace SteamAchievements.Data
         /// <summary>
         /// Gets the user.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        steam_User GetUser(long facebookUserId);
+        steam_User GetUser(int userId);
 
         /// <summary>
         /// Gets the user.

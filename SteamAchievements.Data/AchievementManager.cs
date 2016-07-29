@@ -52,14 +52,11 @@ namespace SteamAchievements.Data
         /// <summary>
         /// Gets the user.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public steam_User GetUser(long facebookUserId)
+        public steam_User GetUser(int userId)
         {
-            return _repository.Users
-                              .Where(e => e.Logins.Any(l => l.LoginProvider == "Facebook"
-                                                            && l.ProviderKey == facebookUserId.ToString()))
-                              .SingleOrDefault();
+            return _repository.Users.Where(e => e.Id == userId).SingleOrDefault();
         }
 
         public steam_User GetUser(string userName)
@@ -145,7 +142,7 @@ namespace SteamAchievements.Data
         }
 
         /// <summary>
-        /// Updates the user. Passing a new user with FacebookUserId and SteamUserId will insert a new User.
+        /// Updates the user.
         /// </summary>
         /// <param name="user">The user.</param>
         public void UpdateUser(steam_User user)

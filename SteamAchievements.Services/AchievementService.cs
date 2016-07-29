@@ -49,20 +49,6 @@ namespace SteamAchievements.Services
         #region IAchievementService Members
 
         /// <summary>
-        /// Gets the games.
-        /// </summary>
-        /// <param name="userId">The user identifier.</param>
-        /// <returns>
-        /// All <see cref="Game" /> s.
-        /// </returns>
-        public ICollection<Game> GetGames(int userId)
-        {
-            string steamUserId = GetSteamUserId(userId);
-
-            return _communityService.GetGames(steamUserId, CultureHelper.GetLanguage()).ToList();
-        }
-
-        /// <summary>
         ///   Gets the games.
         /// </summary>
         /// <param name="steamUserId"> The steam user id. </param>

@@ -88,7 +88,8 @@ namespace SteamAchievements.Web.Controllers
 
             User user = UserService.GetUser(UserSettings.Id);
 
-            Mapper.Map(model, user);
+            user.SteamUserId = model.SteamUserId;
+            user.PublishDescription = model.PublishDescription;
 
             UserService.UpdateUser(user);
 

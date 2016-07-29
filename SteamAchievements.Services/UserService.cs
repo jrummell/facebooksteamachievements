@@ -59,9 +59,14 @@ namespace SteamAchievements.Services
             return Map(user);
         }
 
-        public User GetUser(long facebookUserId)
+        /// <summary>
+        /// Gets the user.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public User GetUser(int userId)
         {
-            Data.steam_User user = _manager.GetUser(facebookUserId);
+            Data.steam_User user = _manager.GetUser(userId);
 
             return Map(user);
         }
