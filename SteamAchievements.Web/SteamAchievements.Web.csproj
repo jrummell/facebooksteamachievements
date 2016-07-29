@@ -324,7 +324,6 @@
     <Content Include="Scripts\Home\settings.js" />
     <Content Include="Scripts\toc.js" />
     <Content Include="Scripts\toc.min.js" />
-    <Content Include="Unity.Mvc3.README.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -380,12 +379,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Web.MobileStaging.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.MobileRelease.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
