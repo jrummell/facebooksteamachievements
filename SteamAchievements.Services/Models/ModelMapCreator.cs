@@ -32,9 +32,9 @@ namespace SteamAchievements.Services.Models
         public void CreateMappings()
         {
             // User
-            Mapper.CreateMap<Data.steam_User, User>();
+            Mapper.CreateMap<Data.User, User>();
 
-            Mapper.CreateMap<User, Data.steam_User>()
+            Mapper.CreateMap<User, Data.User>()
                 .ForMember(entity => entity.UserAchievements, options => options.Ignore())
                 .ForMember(entity => entity.AccessFailedCount, options => options.Ignore())
                 .ForMember(entity => entity.Claims, options => options.Ignore())
@@ -48,21 +48,17 @@ namespace SteamAchievements.Services.Models
                 .ForMember(entity => entity.PhoneNumberConfirmed, options => options.Ignore())
                 .ForMember(entity => entity.SecurityStamp, options => options.Ignore())
                 .ForMember(entity => entity.TwoFactorEnabled, options => options.Ignore())
-                .ForMember(entity => entity.Roles, options => options.Ignore())
-                .ForMember(entity => entity.FacebookUserId, options => options.Ignore())
-                .ForMember(entity => entity.AccessToken, options => options.Ignore())
-                .ForMember(entity => entity.AutoUpdate, options => options.Ignore());
+                .ForMember(entity => entity.Roles, options => options.Ignore());
 
             // UserAchievement
-            Mapper.CreateMap<UserAchievement, Data.steam_UserAchievement>()
+            Mapper.CreateMap<UserAchievement, Data.UserAchievement>()
                 .ForMember(entity => entity.User, options => options.Ignore())
                 .ForMember(entity => entity.Id, options => options.Ignore())
                 .ForMember(entity => entity.Hidden, options => options.Ignore())
-                .ForMember(entity => entity.FacebookUserId, options => options.Ignore())
                 .ForMember(entity => entity.Published, options => options.Ignore());
 
             // Achievement
-            Mapper.CreateMap<Achievement, Data.steam_Achievement>()
+            Mapper.CreateMap<Achievement, Data.Achievement>()
                 .ForMember(entity => entity.UserAchievements, options => options.Ignore())
                 .ForMember(entity => entity.AchievementNames,
                            options => options.MapFrom(model =>
@@ -78,7 +74,7 @@ namespace SteamAchievements.Services.Models
                                                           }));
 
             string language = CultureHelper.GetLanguage();
-            Mapper.CreateMap<Data.steam_Achievement, Achievement>()
+            Mapper.CreateMap<Data.Achievement, Achievement>()
                 .ForMember(model => model.Name, options => options.Ignore())
                 .ForMember(model => model.Description, options => options.Ignore())
                 .ForMember(model => model.Game, options => options.Ignore())

@@ -23,6 +23,7 @@ using Moq;
 using NUnit.Framework;
 using SteamAchievements.Data;
 using SteamAchievements.Services.Models;
+using User = SteamAchievements.Data.User;
 
 namespace SteamAchievements.Services.Tests
 {
@@ -62,7 +63,7 @@ namespace SteamAchievements.Services.Tests
         {
             const int userId = 1234;
             _managerMock.Setup(manager => manager.GetUser(userId))
-                        .Returns(new steam_User {Id = userId})
+                        .Returns(new User {Id = userId})
                         .Verifiable();
 
             var user = _service.GetUser(userId);
@@ -75,13 +76,13 @@ namespace SteamAchievements.Services.Tests
         [Test]
         public void UpdateUser()
         {
-            var user = new User {Id = 1234, SteamUserId = "user1"};
+            var user = new Models.User {Id = 1234, SteamUserId = "user1"};
 
             var managerMock = new Mock<IAchievementManager>();
             managerMock.Setup(
                               rep =>
                               rep.UpdateUser(
-                                             It.Is<steam_User>(u => u.SteamUserId == user.SteamUserId && u.Id == user.Id)))
+                                             It.Is<User>(u => u.SteamUserId == user.SteamUserId && u.Id == user.Id)))
                        .Verifiable();
 
             var service = new UserService(managerMock.Object);

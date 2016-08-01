@@ -31,21 +31,21 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        steam_User GetUser(int userId);
+        User GetUser(int userId);
 
         /// <summary>
         /// Gets the user.
         /// </summary>
         /// <param name="userName">Name of the user.</param>
         /// <returns></returns>
-        steam_User GetUser(string userName);
+        User GetUser(string userName);
 
         /// <summary>
         /// Gets the unpublished achievements.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        ICollection<steam_Achievement> GetUnpublishedAchievements(int userId);
+        ICollection<Achievement> GetUnpublishedAchievements(int userId);
 
         /// <summary>
         /// Gets the unpublished achievements by oldest date.
@@ -53,13 +53,13 @@ namespace SteamAchievements.Data
         /// <param name="userId">The user identifier.</param>
         /// <param name="oldestDate">The oldest date.</param>
         /// <returns></returns>
-        ICollection<steam_Achievement> GetUnpublishedAchievements(int userId, DateTime oldestDate);
+        ICollection<Achievement> GetUnpublishedAchievements(int userId, DateTime oldestDate);
 
         /// <summary>
         /// Updates the achievements.
         /// </summary>
         /// <param name="achievements">The achievements.</param>
-        int UpdateAchievements(IEnumerable<steam_UserAchievement> achievements);
+        int UpdateAchievements(IEnumerable<UserAchievement> achievements);
 
         /// <summary>
         /// Updates the published flag on the given achievements.
@@ -79,7 +79,7 @@ namespace SteamAchievements.Data
         /// Updates the user.
         /// </summary>
         /// <param name="user"></param>
-        void UpdateUser(steam_User user);
+        void UpdateUser(User user);
 
         /// <summary>
         /// Deauthorizes the user.

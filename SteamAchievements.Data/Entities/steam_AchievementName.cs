@@ -25,6 +25,6 @@ namespace SteamAchievements.Data
         [StringLength(1000)]
         public string Description { get; set; }
 
-        public virtual steam_Achievement Achievement { get; set; }
+        public virtual Achievement Achievement { get; set; }
     }
 }

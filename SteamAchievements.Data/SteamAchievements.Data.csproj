@@ -136,6 +136,10 @@
     <Compile Include="Migrations\201608012136400_Setsteam_UserAccessTokenNotRequired.Designer.cs">
       <DependentUpon>201608012136400_Setsteam_UserAccessTokenNotRequired.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608012157259_RemoveDeprecatedFields.cs" />
+    <Compile Include="Migrations\201608012157259_RemoveDeprecatedFields.Designer.cs">
+      <DependentUpon>201608012157259_RemoveDeprecatedFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -146,10 +150,10 @@
     <Compile Include="Entities\Role.cs" />
     <Compile Include="SteamContext.cs" />
     <Compile Include="SteamRepository.cs" />
-    <Compile Include="Entities\steam_Achievement.cs" />
+    <Compile Include="Entities\Achievement.cs" />
     <Compile Include="Entities\steam_AchievementName.cs" />
-    <Compile Include="Entities\steam_User.cs" />
-    <Compile Include="Entities\steam_UserAchievement.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserAchievement.cs" />
     <Compile Include="Entities\UserClaim.cs" />
     <Compile Include="Entities\UserLogin.cs" />
     <Compile Include="Entities\UserRole.cs" />
@@ -185,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608012136400_Setsteam_UserAccessTokenNotRequired.resx">
       <DependentUpon>201608012136400_Setsteam_UserAccessTokenNotRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608012157259_RemoveDeprecatedFields.resx">
+      <DependentUpon>201608012157259_RemoveDeprecatedFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

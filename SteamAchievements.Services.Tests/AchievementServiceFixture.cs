@@ -49,7 +49,7 @@ namespace SteamAchievements.Services.Tests
 
             // expect
             Models.User user = new Models.User {Id = 1234, SteamUserId = "user1"};
-            Data.steam_User dataUser = new Data.steam_User {Id = 1234, SteamUserId = "user1"};
+            Data.User dataUser = new Data.User {Id = 1234, SteamUserId = "user1"};
             achievementManagerMock.Setup(rep => rep.GetUser(user.Id))
                 .Returns(dataUser).Verifiable();
 
@@ -76,16 +76,16 @@ namespace SteamAchievements.Services.Tests
 
             achievementManagerMock.Setup(rep => rep.GetUser(user.Id))
                 .Returns(dataUser).Verifiable();
-            achievementManagerMock.Setup(rep => rep.UpdateAchievements(It.IsAny<IEnumerable<Data.steam_UserAchievement>>()))
+            achievementManagerMock.Setup(rep => rep.UpdateAchievements(It.IsAny<IEnumerable<Data.UserAchievement>>()))
                 .Returns(5).Verifiable();
 
             ICollection<Game> games = new GameXmlParser().Parse(File.ReadAllText("games.xml"));
             communityManagerMock.Setup(rep => rep.GetGames(user.SteamUserId, "english"))
                 .Returns(games).Verifiable();
 
-            Data.steam_Achievement[] dataAchievements = new[]
+            Data.Achievement[] dataAchievements = new[]
                                                       {
-                                                          new Data.steam_Achievement
+                                                          new Data.Achievement
                                                               {
                                                                   AchievementNames =
                                                                       new EntitySet<steam_AchievementName>

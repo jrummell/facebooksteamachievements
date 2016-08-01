@@ -37,7 +37,7 @@ namespace SteamAchievements.Data.Tests
         {
             _achievements = new[]
                             {
-                                new steam_Achievement
+                                new Achievement
                                 {
                                     Id = 1,
                                     GameId = 1,
@@ -53,7 +53,7 @@ namespace SteamAchievements.Data.Tests
                                                            }
                                                        }
                                 },
-                                new steam_Achievement
+                                new Achievement
                                 {
                                     Id = 2,
                                     GameId = 1,
@@ -69,7 +69,7 @@ namespace SteamAchievements.Data.Tests
                                                            }
                                                        }
                                 },
-                                new steam_Achievement
+                                new Achievement
                                 {
                                     Id = 3,
                                     GameId = 1,
@@ -85,7 +85,7 @@ namespace SteamAchievements.Data.Tests
                                                            }
                                                        }
                                 },
-                                new steam_Achievement
+                                new Achievement
                                 {
                                     Id = 4,
                                     GameId = 2,
@@ -101,7 +101,7 @@ namespace SteamAchievements.Data.Tests
                                                            }
                                                        }
                                 },
-                                new steam_Achievement
+                                new Achievement
                                 {
                                     Id = 5,
                                     GameId = 2,
@@ -121,13 +121,13 @@ namespace SteamAchievements.Data.Tests
 
             _users = new[]
                      {
-                         new steam_User {Id = 1, SteamUserId = "user1"},
-                         new steam_User {Id = 2, SteamUserId = "user2"}
+                         new User {Id = 1, SteamUserId = "user1"},
+                         new User {Id = 2, SteamUserId = "user2"}
                      }.AsQueryable();
 
             _userAchievements = new[]
                                 {
-                                    new steam_UserAchievement
+                                    new UserAchievement
                                     {
                                         Id = 1,
                                         AchievementId = 1,
@@ -137,7 +137,7 @@ namespace SteamAchievements.Data.Tests
                                         Published = true,
                                         Hidden = false
                                     },
-                                    new steam_UserAchievement
+                                    new UserAchievement
                                     {
                                         Id = 2,
                                         AchievementId = 2,
@@ -147,7 +147,7 @@ namespace SteamAchievements.Data.Tests
                                         Published = true,
                                         Hidden = false
                                     },
-                                    new steam_UserAchievement
+                                    new UserAchievement
                                     {
                                         Id = 3,
                                         AchievementId = 3,
@@ -170,19 +170,19 @@ namespace SteamAchievements.Data.Tests
         }
 
         private AchievementManager _manager;
-        private IQueryable<steam_Achievement> _achievements;
-        private IQueryable<steam_User> _users;
-        private IQueryable<steam_UserAchievement> _userAchievements;
+        private IQueryable<Achievement> _achievements;
+        private IQueryable<User> _users;
+        private IQueryable<UserAchievement> _userAchievements;
         private Mock<ISteamRepository> _repositoryMock;
 
         [Test]
         public void AddGameAchievements()
         {
             const int gameId = 99;
-            var gameAchievements = new List<steam_Achievement>();
+            var gameAchievements = new List<Achievement>();
             for (var i = 0; i < 10; i++)
             {
-                var achievement = new steam_Achievement
+                var achievement = new Achievement
                                   {
                                       ImageUrl = "http://example.com/achievement" + i + ".gif",
                                       ApiName = i.ToString(),
@@ -203,11 +203,11 @@ namespace SteamAchievements.Data.Tests
             _manager.AddAchievements(99, gameAchievements);
 
             _repositoryMock.VerifyGet(rep => rep.Achievements);
-            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<steam_Achievement>()),
+            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<Achievement>()),
                                    Times.Exactly(gameAchievements.Count));
             _repositoryMock.Verify(rep => rep.SubmitChanges());
 
-            var expectedAchievements = new List<steam_Achievement>(_achievements);
+            var expectedAchievements = new List<Achievement>(_achievements);
             expectedAchievements.AddRange(gameAchievements);
             _repositoryMock.SetupGet(rep => rep.Achievements).Returns(expectedAchievements.AsQueryable());
 
@@ -221,7 +221,7 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.SetupGet(rep => rep.UserAchievements).Returns(_userAchievements);
 
             const int userId = 1;
-            IEnumerable<steam_Achievement> achievements =
+            IEnumerable<Achievement> achievements =
                 _manager.GetUnassignedAchievements(userId, _achievements);
             Assert.That(achievements.Any());
 
@@ -230,7 +230,7 @@ namespace SteamAchievements.Data.Tests
 
             var userAchievements =
                 from achievement in achievements
-                select new steam_UserAchievement
+                select new UserAchievement
                        {
                            UserId = userId,
                            Achievement = achievement
@@ -238,21 +238,21 @@ namespace SteamAchievements.Data.Tests
 
             _manager.AssignAchievements(userAchievements);
 
-            _repositoryMock.Verify(rep => rep.InsertAllOnSubmit(It.IsAny<IEnumerable<steam_UserAchievement>>()));
+            _repositoryMock.Verify(rep => rep.InsertAllOnSubmit(It.IsAny<IEnumerable<UserAchievement>>()));
             _repositoryMock.Verify(rep => rep.SubmitChanges());
         }
 
         [Test]
         public void GetMissingAchievements()
         {
-            var achievement1Game5 = new steam_Achievement {GameId = 5, ApiName = "1"};
-            var achievement2Game5 = new steam_Achievement {GameId = 5, ApiName = "2"};
-            ICollection<steam_Achievement> communityAchievements =
+            var achievement1Game5 = new Achievement {GameId = 5, ApiName = "1"};
+            var achievement2Game5 = new Achievement {GameId = 5, ApiName = "2"};
+            ICollection<Achievement> communityAchievements =
                 new[]
                 {
-                    new steam_Achievement {GameId = 1, ApiName = "1"},
-                    new steam_Achievement {GameId = 1, ApiName = "2"},
-                    new steam_Achievement {GameId = 1, ApiName = "3"},
+                    new Achievement {GameId = 1, ApiName = "1"},
+                    new Achievement {GameId = 1, ApiName = "2"},
+                    new Achievement {GameId = 1, ApiName = "3"},
                     achievement1Game5,
                     achievement2Game5
                 };
@@ -306,7 +306,7 @@ namespace SteamAchievements.Data.Tests
             var maxId = _achievements.Select(a => a.Id).Max();
 
             var achievement1Game5 =
-                new steam_Achievement
+                new Achievement
                 {
                     Id = ++maxId,
                     GameId = 5,
@@ -315,7 +315,7 @@ namespace SteamAchievements.Data.Tests
                     AchievementNames = new EntitySet<steam_AchievementName> {new steam_AchievementName()}
                 };
             var achievement2Game5 =
-                new steam_Achievement
+                new Achievement
                 {
                     Id = ++maxId,
                     GameId = 5,
@@ -324,11 +324,11 @@ namespace SteamAchievements.Data.Tests
                     AchievementNames = new EntitySet<steam_AchievementName> {new steam_AchievementName()}
                 };
 
-            steam_Achievement[] missingAchievements = {achievement1Game5, achievement2Game5};
+            Achievement[] missingAchievements = {achievement1Game5, achievement2Game5};
 
             _manager.InsertMissingAchievements(missingAchievements);
 
-            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<steam_Achievement>()),
+            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<Achievement>()),
                                    Times.Exactly(missingAchievements.Length));
             _repositoryMock.Verify(rep => rep.SubmitChanges());
         }
@@ -338,13 +338,13 @@ namespace SteamAchievements.Data.Tests
         {
             var userId = _users.First().Id;
 
-            ICollection<steam_UserAchievement> userAchievements =
+            ICollection<UserAchievement> userAchievements =
                 new[]
                 {
-                    new steam_UserAchievement
+                    new UserAchievement
                     {
                         UserId = userId,
-                        Achievement = new steam_Achievement
+                        Achievement = new Achievement
                                       {
                                           GameId = 1,
                                           ApiName = "1",
@@ -356,10 +356,10 @@ namespace SteamAchievements.Data.Tests
                                               }
                                       }
                     },
-                    new steam_UserAchievement
+                    new UserAchievement
                     {
                         UserId = userId,
-                        Achievement = new steam_Achievement
+                        Achievement = new Achievement
                                       {
                                           GameId = 1,
                                           ApiName = "2",
@@ -371,11 +371,11 @@ namespace SteamAchievements.Data.Tests
                                               }
                                       }
                     },
-                    new steam_UserAchievement
+                    new UserAchievement
                     {
                         UserId = userId,
                         AchievementId = 3,
-                        Achievement = new steam_Achievement
+                        Achievement = new Achievement
                                       {
                                           Id = 3,
                                           GameId = 1,
@@ -388,11 +388,11 @@ namespace SteamAchievements.Data.Tests
                                               }
                                       }
                     },
-                    new steam_UserAchievement
+                    new UserAchievement
                     {
                         UserId = userId,
                         AchievementId = 4,
-                        Achievement = new steam_Achievement
+                        Achievement = new Achievement
                                       {
                                           Id = 4,
                                           GameId = 2,
@@ -405,11 +405,11 @@ namespace SteamAchievements.Data.Tests
                                               }
                                       }
                     },
-                    new steam_UserAchievement
+                    new UserAchievement
                     {
                         UserId = userId,
                         AchievementId = 5,
-                        Achievement = new steam_Achievement
+                        Achievement = new Achievement
                                       {
                                           Id = 5,
                                           GameId = 2,
@@ -422,11 +422,11 @@ namespace SteamAchievements.Data.Tests
                                               }
                                       }
                     },
-                    new steam_UserAchievement
+                    new UserAchievement
                     {
                         UserId = userId,
                         AchievementId = 6,
-                        Achievement = new steam_Achievement
+                        Achievement = new Achievement
                                       {
                                           Id = 6,
                                           GameId = 3,
@@ -439,11 +439,11 @@ namespace SteamAchievements.Data.Tests
                                               }
                                       }
                     },
-                    new steam_UserAchievement
+                    new UserAchievement
                     {
                         UserId = userId,
                         AchievementId = 7,
-                        Achievement = new steam_Achievement
+                        Achievement = new Achievement
                                       {
                                           Id = 7,
                                           GameId = 3,
@@ -456,11 +456,11 @@ namespace SteamAchievements.Data.Tests
                                               }
                                       }
                     },
-                    new steam_UserAchievement
+                    new UserAchievement
                     {
                         UserId = userId,
                         AchievementId = 8,
-                        Achievement = new steam_Achievement
+                        Achievement = new Achievement
                                       {
                                           Id = 8,
                                           GameId = 4,
@@ -477,7 +477,7 @@ namespace SteamAchievements.Data.Tests
 
             foreach (var userAchievement in userAchievements)
             {
-                userAchievement.Achievement.UserAchievements = new EntitySet<steam_UserAchievement> {userAchievement};
+                userAchievement.Achievement.UserAchievements = new EntitySet<UserAchievement> {userAchievement};
                 foreach (var name in userAchievement.Achievement.AchievementNames)
                 {
                     name.Achievement = userAchievement.Achievement;
@@ -485,16 +485,16 @@ namespace SteamAchievements.Data.Tests
             }
 
             _repositoryMock.SetupSequence(rep => rep.Achievements)
-                           .Returns(new steam_Achievement[0].AsQueryable())
+                           .Returns(new Achievement[0].AsQueryable())
                            .Returns(userAchievements.Select(a => a.Achievement).AsQueryable())
                            .Returns(userAchievements.Select(a => a.Achievement).AsQueryable());
 
             _repositoryMock.SetupSequence(rep => rep.UserAchievements)
-                           .Returns(new steam_UserAchievement[0].AsQueryable())
+                           .Returns(new UserAchievement[0].AsQueryable())
                            .Returns(userAchievements.AsQueryable())
                            .Returns(userAchievements.AsQueryable());
 
-            _repositoryMock.Setup(rep => rep.InsertAllOnSubmit(It.IsAny<IEnumerable<steam_UserAchievement>>()))
+            _repositoryMock.Setup(rep => rep.InsertAllOnSubmit(It.IsAny<IEnumerable<UserAchievement>>()))
                            .Verifiable();
 
             _repositoryMock.Setup(rep => rep.SubmitChanges())
@@ -503,7 +503,7 @@ namespace SteamAchievements.Data.Tests
             _manager.UpdateAchievements(userAchievements);
 
             _repositoryMock.VerifyGet(rep => rep.Achievements);
-            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<steam_Achievement>()),
+            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<Achievement>()),
                                    Times.Exactly(userAchievements.Count));
             _repositoryMock.Verify();
         }
@@ -560,34 +560,34 @@ namespace SteamAchievements.Data.Tests
             const string steamUserId = "user1";
             const int userId = 1;
 
-            var user = new steam_User {SteamUserId = steamUserId, Id = userId};
+            var user = new User {SteamUserId = steamUserId, Id = userId};
             _manager.UpdateUser(user);
 
             _repositoryMock.VerifyGet(rep => rep.Users, Times.Exactly(1));
             _repositoryMock.Verify(rep => rep.SubmitChanges());
-            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<steam_User>()), Times.Never());
+            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<User>()), Times.Never());
         }
 
         [Test]
         public void UpdateUserWithNewSteamUserId()
         {
             _repositoryMock.SetupGet(rep => rep.Users)
-                           .Returns(new[] {new steam_User {SteamUserId = "user1", Id = 1}}.AsQueryable())
+                           .Returns(new[] {new User {SteamUserId = "user1", Id = 1}}.AsQueryable())
                            .Verifiable();
             _repositoryMock.SetupGet(rep => rep.UserAchievements)
-                           .Returns(new[] {new steam_UserAchievement {UserId = 1}}.AsQueryable())
+                           .Returns(new[] {new UserAchievement {UserId = 1}}.AsQueryable())
                            .Verifiable();
-            _repositoryMock.Setup(rep => rep.DeleteAllOnSubmit(It.IsAny<IEnumerable<steam_UserAchievement>>()))
+            _repositoryMock.Setup(rep => rep.DeleteAllOnSubmit(It.IsAny<IEnumerable<UserAchievement>>()))
                            .Verifiable();
             _repositoryMock.Setup(rep => rep.SubmitChanges())
                            .Verifiable();
 
-            var user = new steam_User {SteamUserId = "userxxx", Id = 1};
+            var user = new User {SteamUserId = "userxxx", Id = 1};
             _manager.UpdateUser(user);
 
             _repositoryMock.Verify();
             _repositoryMock.VerifyGet(rep => rep.Users, Times.Exactly(1));
-            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<steam_User>()), Times.Never());
+            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<User>()), Times.Never());
         }
 
         [Test]

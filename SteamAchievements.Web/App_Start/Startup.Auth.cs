@@ -18,9 +18,9 @@ namespace SteamAchievements.Web
 {
     public partial class Startup
     {
-        private class ApplicationIdentityFactory : ClaimsIdentityFactory<steam_User, int>
+        private class ApplicationIdentityFactory : ClaimsIdentityFactory<User, int>
         {
-            public async override Task<ClaimsIdentity> CreateAsync(UserManager<steam_User, int> manager, steam_User user, string authenticationType)
+            public async override Task<ClaimsIdentity> CreateAsync(UserManager<User, int> manager, User user, string authenticationType)
             {
                 var claims = new[]
                              {
@@ -51,13 +51,13 @@ namespace SteamAchievements.Web
             // Configure the db context, user manager and signin manager to use a single instance per request
 
             app.CreatePerOwinContext(() => new SteamContext());
-            app.CreatePerOwinContext<UserManager<steam_User, int>>((options, context) =>
+            app.CreatePerOwinContext<UserManager<User, int>>((options, context) =>
             {
                 var userStore =
-                    new UserStore<steam_User, Role, int, UserLogin, UserRole, UserClaim>(context.Get<SteamContext>());
-                var manager = new UserManager<steam_User, int>(userStore);
+                    new UserStore<User, Role, int, UserLogin, UserRole, UserClaim>(context.Get<SteamContext>());
+                var manager = new UserManager<User, int>(userStore);
 
-                manager.UserValidator = new UserValidator<steam_User, int>(manager)
+                manager.UserValidator = new UserValidator<User, int>(manager)
                 {
                     RequireUniqueEmail = false,
                     AllowOnlyAlphanumericUserNames = false
@@ -70,7 +70,7 @@ namespace SteamAchievements.Web
                 if (dataProtectionProvider != null)
                 {
                     manager.UserTokenProvider =
-                        new DataProtectorTokenProvider<steam_User, int>(dataProtectionProvider.Create("ASP.NET Identity"));
+                        new DataProtectorTokenProvider<User, int>(dataProtectionProvider.Create("ASP.NET Identity"));
                 }
 
                 manager.ClaimsIdentityFactory = new ApplicationIdentityFactory();
@@ -78,9 +78,9 @@ namespace SteamAchievements.Web
                 return manager;
             });
 
-            app.CreatePerOwinContext<SignInManager<steam_User, int>>((options, context) =>
+            app.CreatePerOwinContext<SignInManager<User, int>>((options, context) =>
             {
-                var manager = new SignInManager<steam_User, int>(context.Get<UserManager<steam_User, int>>(),
+                var manager = new SignInManager<User, int>(context.Get<UserManager<User, int>>(),
                     context.Authentication);
 
                 return manager;
@@ -101,7 +101,7 @@ namespace SteamAchievements.Web
                 // Enables the application to validate the security stamp when the user logs in.
                 // This is a security feature which is used when you change a password or add an external login to your account.  
                 OnValidateIdentity =
-                        SecurityStampValidator.OnValidateIdentity<UserManager<steam_User, int>, steam_User, int>(
+                        SecurityStampValidator.OnValidateIdentity<UserManager<User, int>, User, int>(
                             TimeSpan.FromMinutes(30),
                             CreateIdentityAsync, identity => identity.GetUserId<int>())
                 }
@@ -131,7 +131,7 @@ namespace SteamAchievements.Web
             }
         }
 
-        private async Task<ClaimsIdentity> CreateIdentityAsync(UserManager<steam_User, int> manager, steam_User user)
+        private async Task<ClaimsIdentity> CreateIdentityAsync(UserManager<User, int> manager, User user)
         {
             return await manager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
         }

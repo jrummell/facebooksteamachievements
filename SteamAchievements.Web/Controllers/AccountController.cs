@@ -47,7 +47,7 @@ namespace SteamAchievements.Web.Controllers
             var user = await UserManager.FindByNameAsync(loginInfo.Login.ProviderKey);
             if (user == null)
             {
-                user = new steam_User {UserName = loginInfo.Login.ProviderKey};
+                user = new User {UserName = loginInfo.Login.ProviderKey};
                 var createResult = await UserManager.CreateAsync(user);
                 if (!createResult.Succeeded)
                 {

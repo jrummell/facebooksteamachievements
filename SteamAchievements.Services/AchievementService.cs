@@ -27,6 +27,7 @@ using SteamAchievements.Data;
 using SteamAchievements.Services.Models;
 using Achievement = SteamAchievements.Services.Models.Achievement;
 using User = SteamAchievements.Services.Models.User;
+using UserAchievement = SteamAchievements.Data.UserAchievement;
 
 namespace SteamAchievements.Services
 {
@@ -82,7 +83,7 @@ namespace SteamAchievements.Services
                 achievement.UserId = userId;
             }
 
-            var dataUserAchievements = Mapper.Map<ICollection<steam_UserAchievement>>(userAchievements);
+            var dataUserAchievements = Mapper.Map<ICollection<UserAchievement>>(userAchievements);
             int updated = _achievementManager.UpdateAchievements(dataUserAchievements);
 
             return updated;
@@ -109,7 +110,7 @@ namespace SteamAchievements.Services
 
             IEnumerable<Game> games = _communityService.GetGames(steamUserId, language);
 
-            ICollection<Data.steam_Achievement> dataAchievements;
+            ICollection<Data.Achievement> dataAchievements;
             if (oldestDate == null)
             {
                 dataAchievements = _achievementManager.GetUnpublishedAchievements(userId);
@@ -119,7 +120,7 @@ namespace SteamAchievements.Services
                 dataAchievements = _achievementManager.GetUnpublishedAchievements(userId, oldestDate.Value);
             }
 
-            IEnumerable<Data.steam_Achievement> missingNames =
+            IEnumerable<Data.Achievement> missingNames =
                 dataAchievements.Where(a => !a.AchievementNames.Where(n => n.Language == language).Any())
                 .ToArray();
 
@@ -130,7 +131,7 @@ namespace SteamAchievements.Services
                         .Select(ua => ua.Achievement)
                         .ToArray();
 
-                foreach (Data.steam_Achievement achievement in missingNames)
+                foreach (Data.Achievement achievement in missingNames)
                 {
                     Achievement missing =
                         communityAchievements
@@ -241,7 +242,7 @@ namespace SteamAchievements.Services
 
         private string GetSteamUserId(int userId)
         {
-            Data.steam_User user = _achievementManager.GetUser(userId);
+            Data.User user = _achievementManager.GetUser(userId);
             if (user != null)
             {
                 return user.SteamUserId;

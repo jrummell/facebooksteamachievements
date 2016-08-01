@@ -28,9 +28,9 @@ namespace SteamAchievements.Services
 {
     public class MockSteamRepository : Data.ISteamRepository
     {
-        private static readonly Dictionary<int, Data.steam_Achievement> _achievements;
-        private static readonly Dictionary<int, Data.steam_UserAchievement> _userAchievements;
-        private static readonly Dictionary<long, Data.steam_User> _users;
+        private static readonly Dictionary<int, Data.Achievement> _achievements;
+        private static readonly Dictionary<int, Data.UserAchievement> _userAchievements;
+        private static readonly Dictionary<int, Data.User> _users;
         private static readonly Dictionary<int, Data.steam_AchievementName> _achievementNames;
 
         static MockSteamRepository()
@@ -46,11 +46,11 @@ namespace SteamAchievements.Services
                                                                         "Use a Molotov to burn a Clown leading at least 10 Common Infected."
                                                                 }}
                                     };
-            _achievements = new Dictionary<int, Data.steam_Achievement>
+            _achievements = new Dictionary<int, Data.Achievement>
                                 {
                                     {
                                         1,
-                                        new Data.steam_Achievement
+                                        new Data.Achievement
                                             {
                                                 Id = 1,
                                                 ApiName = "ach_incendiary_clown_posse",
@@ -72,31 +72,28 @@ namespace SteamAchievements.Services
                                             }
                                         }
                                 };
-            _users = new Dictionary<long, Data.steam_User>
+            _users = new Dictionary<int, Data.User>
                          {
                              {
                                  1234567890,
-                                 new Data.steam_User
+                                 new Data.User
                                      {
-                                         AccessToken = "",
-                                         AutoUpdate = true,
-                                         FacebookUserId = 1234567890,
+                                         Id = 1234567890,
                                          SteamUserId = "NullReference",
                                          PublishDescription = true
                                      }
                                  }
                          };
-            _userAchievements = new Dictionary<int, Data.steam_UserAchievement>
+            _userAchievements = new Dictionary<int, Data.UserAchievement>
                                     {
                                         {
                                             1,
-                                            new Data.steam_UserAchievement
+                                            new Data.UserAchievement
                                                 {
                                                     Achievement = _achievements.Values.First(),
                                                     AchievementId = _achievements.Keys.First(),
-                                                    FacebookUserId = _users.Keys.First(),
                                                     Date = DateTime.Now.AddDays(-1),
-                                                    Id = 1,
+                                                    Id = _users.Keys.First(),
                                                     User = _users.Values.First(),
                                                     Hidden = false,
                                                     Published = false
@@ -111,17 +108,17 @@ namespace SteamAchievements.Services
         {
         }
 
-        public IQueryable<Data.steam_Achievement> Achievements
+        public IQueryable<Data.Achievement> Achievements
         {
             get { return _achievements.Values.AsQueryable(); }
         }
 
-        public IQueryable<Data.steam_UserAchievement> UserAchievements
+        public IQueryable<Data.UserAchievement> UserAchievements
         {
             get { return _userAchievements.Values.AsQueryable(); }
         }
 
-        public IQueryable<Data.steam_User> Users
+        public IQueryable<Data.User> Users
         {
             get { return _users.Values.AsQueryable(); }
         }
@@ -131,25 +128,25 @@ namespace SteamAchievements.Services
             get { return _achievementNames.Values.AsQueryable(); }
         }
 
-        public void InsertOnSubmit(Data.steam_User user)
+        public void InsertOnSubmit(Data.User user)
         {
-            _users.Add(user.FacebookUserId, user);
+            _users.Add(user.Id, user);
         }
 
-        public void DeleteOnSubmit(Data.steam_User user)
+        public void DeleteOnSubmit(Data.User user)
         {
-            _users.Remove(user.FacebookUserId);
+            _users.Remove(user.Id);
         }
 
-        public void InsertOnSubmit(Data.steam_Achievement achievement)
+        public void InsertOnSubmit(Data.Achievement achievement)
         {
             achievement.Id = _achievements.Keys.Max() + 1;
             _achievements.Add(achievement.Id, achievement);
         }
 
-        public void InsertAllOnSubmit(IEnumerable<Data.steam_UserAchievement> achievements)
+        public void InsertAllOnSubmit(IEnumerable<Data.UserAchievement> achievements)
         {
-            foreach (Data.steam_UserAchievement userAchievement in achievements)
+            foreach (Data.UserAchievement userAchievement in achievements)
             {
             	userAchievement.Id = _userAchievements.Any() ? (_userAchievements.Keys.Max() + 1) : 1;
                 if (userAchievement.Achievement == null && _achievements.ContainsKey(userAchievement.AchievementId))
@@ -161,9 +158,9 @@ namespace SteamAchievements.Services
             }
         }
 
-        public void DeleteAllOnSubmit(IEnumerable<Data.steam_UserAchievement> achievements)
+        public void DeleteAllOnSubmit(IEnumerable<Data.UserAchievement> achievements)
         {
-            foreach (Data.steam_UserAchievement userAchievement in achievements.ToArray())
+            foreach (Data.UserAchievement userAchievement in achievements.ToArray())
             {
                 _userAchievements.Remove(userAchievement.Id);
             }
