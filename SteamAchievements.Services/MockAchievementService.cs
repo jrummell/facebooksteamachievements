@@ -35,12 +35,12 @@ namespace SteamAchievements.Services
         {
         }
 
-        public SteamProfile GetProfile(string steamUserId)
+        public SteamProfileModel GetProfile(string steamUserId)
         {
-            return new SteamProfile {SteamUserId = steamUserId, Headline = "Witty headline"};
+            return new SteamProfileModel {SteamUserId = steamUserId, Headline = "Witty headline"};
         }
 
-        public ICollection<Achievement> GetUnpublishedAchievements(int userId, DateTime? oldestDate,
+        public ICollection<AchievementModel> GetUnpublishedAchievements(int userId, DateTime? oldestDate,
                                                                    string language = null)
         {
             var random = new Random();
@@ -48,26 +48,26 @@ namespace SteamAchievements.Services
                 .Select(i => new {achievementId = i, gameId = random.Next(1, 3)})
                 .OrderBy(a => a.gameId).ThenBy(a => a.achievementId)
                 .Select(a =>
-                        new Achievement
+                        new AchievementModel
                         {
                             ApiName = "Achievement" + a.achievementId,
                             Id = a.achievementId,
                             Description =
                                 "Achievement " + a.achievementId +
                                 " with a longer description ... a longer description ... a longer description.",
-                            Game = new Game {Id = a.gameId, Name = "Game " + a.gameId},
+                            Game = new GameModel {Id = a.gameId, Name = "Game " + a.gameId},
                             Name = "Achievement " + a.achievementId
                         }).ToArray();
         }
 
-        public ICollection<Game> GetGames(int userId)
+        public ICollection<GameModel> GetGames(int userId)
         {
             return new[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-                .Select(i => new Game {Id = i, Name = "Game " + i})
+                .Select(i => new GameModel {Id = i, Name = "Game " + i})
                 .ToArray();
         }
 
-        public ICollection<Game> GetGames(string steamUserId)
+        public ICollection<GameModel> GetGames(string steamUserId)
         {
             return GetGames(1);
         }
@@ -87,7 +87,7 @@ namespace SteamAchievements.Services
             return true;
         }
 
-        public void UpdateNewUserAchievements(User user)
+        public void UpdateNewUserAchievements(UserModel user)
         {
         }
 

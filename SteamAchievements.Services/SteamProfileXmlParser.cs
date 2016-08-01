@@ -35,7 +35,7 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="xml">The XML.</param>
         /// <returns></returns>
-        public ICollection<SteamProfile> Parse(string xml)
+        public ICollection<SteamProfileModel> Parse(string xml)
         {
             XDocument document = XDocument.Parse(xml);
 
@@ -53,7 +53,7 @@ namespace SteamAchievements.Services
                            };
 
             return (from profile in profiles
-                    select new SteamProfile
+                    select new SteamProfileModel
                                {
                                    SteamUserId = profile.steamId,
                                    AvatarUrl = profile.avatarMedium,

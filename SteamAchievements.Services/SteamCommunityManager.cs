@@ -71,7 +71,7 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="steamUserId"> The steam user id. </param>
         /// <returns> </returns>
-        public SteamProfile GetProfile(string steamUserId)
+        public SteamProfileModel GetProfile(string steamUserId)
         {
             if (steamUserId == null)
             {
@@ -116,7 +116,7 @@ namespace SteamAchievements.Services
         /// <param name="steamUserId"> The steam user id. </param>
         /// <param name="language"> The language. </param>
         /// <returns> </returns>
-        public ICollection<Game> GetGames(string steamUserId, string language)
+        public ICollection<GameModel> GetGames(string steamUserId, string language)
         {
             if (steamUserId == null)
             {
@@ -130,7 +130,7 @@ namespace SteamAchievements.Services
 
             if (xml == null)
             {
-                return new Game[0];
+                return new GameModel[0];
             }
 
             try
@@ -161,12 +161,12 @@ namespace SteamAchievements.Services
 
             List<UserAchievement> achievements = new List<UserAchievement>();
 
-            IEnumerable<Game> games = GetGames(steamUserId, language);
+            IEnumerable<GameModel> games = GetGames(steamUserId, language);
             if (closedOnly)
             {
                 games = games.Where(g => g.PlayedRecently);
             }
-            foreach (Game game in games)
+            foreach (GameModel game in games)
             {
                 Uri xmlStatsUrl = GetStatsUrl(game.StatsUrl, language);
                 Debug.WriteLine(xmlStatsUrl);
@@ -213,7 +213,7 @@ namespace SteamAchievements.Services
                 }
 
                 List<UserAchievement> achievementList = gameAchievements.ToList();
-                Game game1 = game;
+                GameModel game1 = game;
                 achievementList.ForEach(a =>
                     {
                         a.Achievement.Game = game1;

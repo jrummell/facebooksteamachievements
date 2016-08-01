@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using AutoMapper;
 using SteamAchievements.Data;
-using User = SteamAchievements.Services.Models.User;
+using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Services
 {
@@ -52,7 +52,7 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="userName">The user name.</param>
         /// <returns></returns>
-        public User GetUser(string userName)
+        public UserModel GetUser(string userName)
         {
             Data.User user = _manager.GetUser(userName);
 
@@ -64,7 +64,7 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public User GetUser(int userId)
+        public UserModel GetUser(int userId)
         {
             Data.User user = _manager.GetUser(userId);
 
@@ -75,7 +75,7 @@ namespace SteamAchievements.Services
         /// Updates the user.
         /// </summary>
         /// <param name="user">The user.</param>
-        public void UpdateUser(Models.User user)
+        public void UpdateUser(Models.UserModel user)
         {
             if (user == null)
             {
@@ -106,14 +106,14 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        private static Models.User Map(Data.User user)
+        private static Models.UserModel Map(Data.User user)
         {
             if (user == null)
             {
                 return null;
             }
 
-            return Mapper.Map<Models.User>(user);
+            return Mapper.Map<Models.UserModel>(user);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        private static Data.User Map(Models.User user)
+        private static Data.User Map(Models.UserModel user)
         {
             if (user == null)
             {

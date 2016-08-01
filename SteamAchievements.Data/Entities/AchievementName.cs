@@ -19,33 +19,30 @@
 
 #endregion
 
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 
 namespace SteamAchievements.Data
 {
-    [Table("steam_Achievement")]
-    public class Achievement
+    [Table("steam_AchievementName")]
+    public class AchievementName
     {
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string ApiName { get; set; }
-
-        public int GameId { get; set; }
+        public int AchievementId { get; set; }
 
         [Required]
-        [StringLength(200)]
-        public string ImageUrl { get; set; }
+        [StringLength(20)]
+        public string Language { get; set; }
 
-        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AchievementName> AchievementNames { get; set; } =
-            new List<AchievementName>();
+        [Required]
+        [StringLength(250)]
+        public string Name { get; set; }
 
-        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserAchievement> UserAchievements { get; set; } = new List<UserAchievement>();
+        [Required]
+        [StringLength(1000)]
+        public string Description { get; set; }
+
+        public virtual Achievement Achievement { get; set; }
     }
 }

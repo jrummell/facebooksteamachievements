@@ -26,7 +26,7 @@ namespace SteamAchievements.Web.Models
 {
     public class ProfileViewModel
     {
-        public SteamProfile Profile { get; set; }
+        public SteamProfileModel Profile { get; set; }
 
         public string Error { get; set; }
 

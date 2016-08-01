@@ -34,17 +34,17 @@ namespace SteamAchievements.Services
         {
         }
 
-        public User GetUser(string userName)
+        public UserModel GetUser(string userName)
         {
-            return new User {Id = 1000, UserName = userName, SteamUserId = "SteamUser"};
+            return new UserModel {Id = 1000, UserName = userName, SteamUserId = "SteamUser"};
         }
 
-        public User GetUser(int userId)
+        public UserModel GetUser(int userId)
         {
-            return new User { Id = userId, UserName = userId.ToString(), SteamUserId = "SteamUser" };
+            return new UserModel { Id = userId, UserName = userId.ToString(), SteamUserId = "SteamUser" };
         }
 
-        public void UpdateUser(User user)
+        public void UpdateUser(UserModel user)
         {
         }
 

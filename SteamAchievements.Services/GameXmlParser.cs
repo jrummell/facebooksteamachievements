@@ -32,9 +32,9 @@ namespace SteamAchievements.Services
         #region IXmlParser<Game> Members
 
         /// <summary>
-        /// Returns a collection of <see cref="Game"/>s from the given xml.
+        /// Returns a collection of <see cref="GameModel"/>s from the given xml.
         /// </summary>
-        public ICollection<Game> Parse(string xml)
+        public ICollection<GameModel> Parse(string xml)
         {
             XDocument document = XDocument.Parse(xml);
 
@@ -60,7 +60,7 @@ namespace SteamAchievements.Services
                            };
 
             return (from game in games
-                    select new Game
+                    select new GameModel
                                {
                                    Id = Convert.ToInt32(game.id),
                                    Name = game.name,

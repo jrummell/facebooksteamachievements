@@ -151,7 +151,7 @@
     <Compile Include="SteamContext.cs" />
     <Compile Include="SteamRepository.cs" />
     <Compile Include="Entities\Achievement.cs" />
-    <Compile Include="Entities\steam_AchievementName.cs" />
+    <Compile Include="Entities\AchievementName.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserAchievement.cs" />
     <Compile Include="Entities\UserClaim.cs" />

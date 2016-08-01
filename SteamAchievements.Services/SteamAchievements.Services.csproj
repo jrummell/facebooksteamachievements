@@ -132,11 +132,11 @@
     <Compile Include="MockAchievementService.cs" />
     <Compile Include="MockSteamRepository.cs" />
     <Compile Include="MockUserService.cs" />
-    <Compile Include="Models\Achievement.cs" />
-    <Compile Include="Models\Game.cs" />
+    <Compile Include="Models\AchievementModel.cs" />
+    <Compile Include="Models\GameModel.cs" />
     <Compile Include="Models\ModelMapCreator.cs" />
-    <Compile Include="Models\SteamProfile.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\SteamProfileModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UserAchievement.cs" />
     <Compile Include="SteamCommunityDataException.cs" />
     <Compile Include="SteamProfileXmlParser.cs" />

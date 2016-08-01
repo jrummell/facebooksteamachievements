@@ -32,7 +32,7 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <returns></returns>
-        SteamProfile GetProfile(string steamUserId);
+        SteamProfileModel GetProfile(string steamUserId);
 
         /// <summary>
         /// Gets the unpublished achievements newer than the given date.
@@ -43,16 +43,16 @@ namespace SteamAchievements.Services
         /// <returns>
         /// The achievements that haven't been published yet.
         /// </returns>
-        ICollection<Achievement> GetUnpublishedAchievements(int userId, DateTime? oldestDate, string language = null);
+        ICollection<AchievementModel> GetUnpublishedAchievements(int userId, DateTime? oldestDate, string language = null);
 
         /// <summary>
         /// Gets the games.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <returns>
-        ///   <see cref="Game"/>s for the givem steam user id.
+        ///   <see cref="GameModel"/>s for the givem steam user id.
         /// </returns>
-        ICollection<Game> GetGames(string steamUserId);
+        ICollection<GameModel> GetGames(string steamUserId);
 
         /// <summary>
         /// Updates the achievements.
@@ -86,6 +86,6 @@ namespace SteamAchievements.Services
         /// Updates the new user's achievements and hides any that are more than 2 days old.
         /// </summary>
         /// <param name="user">The user.</param>
-        void UpdateNewUserAchievements(User user);
+        void UpdateNewUserAchievements(UserModel user);
     }
 }

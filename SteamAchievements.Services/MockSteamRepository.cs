@@ -31,13 +31,13 @@ namespace SteamAchievements.Services
         private static readonly Dictionary<int, Data.Achievement> _achievements;
         private static readonly Dictionary<int, Data.UserAchievement> _userAchievements;
         private static readonly Dictionary<int, Data.User> _users;
-        private static readonly Dictionary<int, Data.steam_AchievementName> _achievementNames;
+        private static readonly Dictionary<int, Data.AchievementName> _achievementNames;
 
         static MockSteamRepository()
         {
-            _achievementNames = new Dictionary<int, Data.steam_AchievementName>
+            _achievementNames = new Dictionary<int, Data.AchievementName>
                                     {
-                                        {1, new Data.steam_AchievementName
+                                        {1, new Data.AchievementName
                                                                 {
                                                                     Id = 1,
                                                                     AchievementId = 1,
@@ -58,9 +58,9 @@ namespace SteamAchievements.Services
                                                 ImageUrl =
                                                     "http://media.steampowered.com/steamcommunity/public/images/apps/550/8a1dbb0d78c8e288ed5ce990a20454073d01ba9b.jpg",
                                                 AchievementNames =
-                                                    new EntitySet<Data.steam_AchievementName>
+                                                    new EntitySet<Data.AchievementName>
                                                         {
-                                                            new Data.steam_AchievementName
+                                                            new Data.AchievementName
                                                                 {
                                                                     Id = 1,
                                                                     AchievementId = 1,
@@ -123,7 +123,7 @@ namespace SteamAchievements.Services
             get { return _users.Values.AsQueryable(); }
         }
 
-        public IQueryable<Data.steam_AchievementName> AchievementNames
+        public IQueryable<Data.AchievementName> AchievementNames
         {
             get { return _achievementNames.Values.AsQueryable(); }
         }
@@ -166,7 +166,7 @@ namespace SteamAchievements.Services
             }
         }
 
-        public void InsertOnSubmit(Data.steam_AchievementName achievementName)
+        public void InsertOnSubmit(Data.AchievementName achievementName)
         {
             achievementName.Id = _achievementNames.Keys.Max() + 1;
             _achievementNames.Add(achievementName.Id, achievementName);

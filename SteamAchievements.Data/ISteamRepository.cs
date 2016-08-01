@@ -51,7 +51,7 @@ namespace SteamAchievements.Data
         /// <value>
         /// The achievement names.
         /// </value>
-        IQueryable<steam_AchievementName> AchievementNames { get; }
+        IQueryable<AchievementName> AchievementNames { get; }
 
         /// <summary>
         /// Inserts the user on submit.
@@ -92,6 +92,6 @@ namespace SteamAchievements.Data
         /// Inserts the on submit.
         /// </summary>
         /// <param name="achievementName">Name of the achievement.</param>
-        void InsertOnSubmit(steam_AchievementName achievementName);
+        void InsertOnSubmit(AchievementName achievementName);
     }
 }

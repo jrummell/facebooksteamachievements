@@ -107,7 +107,7 @@ namespace SteamAchievements.Services
                                    Closed = achievement.closed,
                                    Date = GetDate(achievement.date),
                                    Achievement =
-                                       new Achievement
+                                       new AchievementModel
                                            {
                                                ApiName = achievement.apiname,
                                                Name = achievement.name,

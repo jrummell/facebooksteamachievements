@@ -76,7 +76,7 @@ namespace SteamAchievements.Services.Tests
         [Test]
         public void UpdateUser()
         {
-            var user = new Models.User {Id = 1234, SteamUserId = "user1"};
+            var user = new Models.UserModel {Id = 1234, SteamUserId = "user1"};
 
             var managerMock = new Mock<IAchievementManager>();
             managerMock.Setup(

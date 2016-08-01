@@ -31,20 +31,20 @@ namespace SteamAchievements.Services
         /// Gets the user.
         /// </summary>
         /// <param name="userName">The user name.</param>
-        User GetUser(string userName);
+        UserModel GetUser(string userName);
 
         /// <summary>
         /// Gets the user.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        User GetUser(int userId);
+        UserModel GetUser(int userId);
 
         /// <summary>
         /// Updates the user.
         /// </summary>
         /// <param name="user">The user.</param>
-        void UpdateUser(User user);
+        void UpdateUser(UserModel user);
 
         /// <summary>
         /// Deauthorizes the user.

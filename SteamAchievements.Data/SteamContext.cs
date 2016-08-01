@@ -14,7 +14,7 @@ namespace SteamAchievements.Data
         }
 
         public virtual DbSet<Achievement> Achievements { get; set; }
-        public virtual DbSet<steam_AchievementName> AchievementNames { get; set; }
+        public virtual DbSet<AchievementName> AchievementNames { get; set; }
         public virtual DbSet<UserAchievement> UserAchievements { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -41,7 +41,7 @@ namespace SteamAchievements.Data
                 .HasForeignKey(e => e.AchievementId)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<steam_AchievementName>()
+            modelBuilder.Entity<AchievementName>()
                 .Property(e => e.Language)
                 .IsUnicode(false);
 

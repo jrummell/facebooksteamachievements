@@ -56,7 +56,7 @@ namespace SteamAchievements.Web.Models
 
             // Validate the profile url.
             IAchievementService achievementService = resolver.GetService<IAchievementService>();
-            SteamProfile profile;
+            SteamProfileModel profile;
             try
             {
                 profile = achievementService.GetProfile(SteamUserId);

@@ -49,7 +49,7 @@ namespace SteamAchievements.Web.Tests
             Mock<IAchievementService> mockAchievementService = new Mock<IAchievementService>();
 
             Mock<IUserService> mockUserService = new Mock<IUserService>();
-            User originalUser = new User
+            UserModel originalUser = new UserModel
                 {
                     Id = 12345,
                     PublishDescription = true,

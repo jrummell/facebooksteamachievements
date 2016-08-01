@@ -31,7 +31,7 @@ namespace SteamAchievements.Services.Models
         /// <value>
         /// The achievement.
         /// </value>
-        public Achievement Achievement { get; set; }
+        public AchievementModel Achievement { get; set; }
 
         /// <summary>
         /// Gets or sets the steam user ID.

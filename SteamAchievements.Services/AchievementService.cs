@@ -25,8 +25,6 @@ using System.Linq;
 using AutoMapper;
 using SteamAchievements.Data;
 using SteamAchievements.Services.Models;
-using Achievement = SteamAchievements.Services.Models.Achievement;
-using User = SteamAchievements.Services.Models.User;
 using UserAchievement = SteamAchievements.Data.UserAchievement;
 
 namespace SteamAchievements.Services
@@ -53,8 +51,8 @@ namespace SteamAchievements.Services
         ///   Gets the games.
         /// </summary>
         /// <param name="steamUserId"> The steam user id. </param>
-        /// <returns> <see cref="Game" /> s for the givem steam user id. </returns>
-        public ICollection<Game> GetGames(string steamUserId)
+        /// <returns> <see cref="GameModel" /> s for the givem steam user id. </returns>
+        public ICollection<GameModel> GetGames(string steamUserId)
         {
             return _communityService.GetGames(steamUserId, CultureHelper.GetLanguage()).ToList();
         }
@@ -98,7 +96,7 @@ namespace SteamAchievements.Services
         /// <returns>
         /// The achievements that haven't been published yet.
         /// </returns>
-        public ICollection<Achievement> GetUnpublishedAchievements(int userId, DateTime? oldestDate,
+        public ICollection<AchievementModel> GetUnpublishedAchievements(int userId, DateTime? oldestDate,
                                                                    string language = null)
         {
             if (language == null)
@@ -108,7 +106,7 @@ namespace SteamAchievements.Services
 
             string steamUserId = GetSteamUserId(userId);
 
-            IEnumerable<Game> games = _communityService.GetGames(steamUserId, language);
+            IEnumerable<GameModel> games = _communityService.GetGames(steamUserId, language);
 
             ICollection<Data.Achievement> dataAchievements;
             if (oldestDate == null)
@@ -126,21 +124,21 @@ namespace SteamAchievements.Services
 
             if (missingNames.Any())
             {
-                IEnumerable<Achievement> communityAchievements =
+                IEnumerable<AchievementModel> communityAchievements =
                     _communityService.GetAchievements(steamUserId, language)
                         .Select(ua => ua.Achievement)
                         .ToArray();
 
                 foreach (Data.Achievement achievement in missingNames)
                 {
-                    Achievement missing =
+                    AchievementModel missing =
                         communityAchievements
                             .Where(a => a.Game.Id == achievement.GameId && a.ApiName == achievement.ApiName)
                             .SingleOrDefault();
 
                     if (missing != null)
                     {
-                        achievement.AchievementNames.Add(new steam_AchievementName
+                        achievement.AchievementNames.Add(new AchievementName
                             {
                                 Language = language,
                                 Name = missing.Name,
@@ -150,7 +148,7 @@ namespace SteamAchievements.Services
                 }
             }
 
-            ICollection<Achievement> achievements = Mapper.Map<ICollection<Achievement>>(dataAchievements);
+            ICollection<AchievementModel> achievements = Mapper.Map<ICollection<AchievementModel>>(dataAchievements);
             // set game
             foreach (var dataAchievement in dataAchievements)
             {
@@ -169,7 +167,7 @@ namespace SteamAchievements.Services
         ///   Updates the new user's achievements and hides any that are more than 2 days old.
         /// </summary>
         /// <param name="user"> The user. </param>
-        public void UpdateNewUserAchievements(User user)
+        public void UpdateNewUserAchievements(UserModel user)
         {
             bool exists = _achievementManager.GetUser(user.Id) != null;
 
@@ -182,7 +180,7 @@ namespace SteamAchievements.Services
             if (updatedCount > 0)
             {
                 // hide achievements more than two days old
-                ICollection<Achievement> achievements =
+                ICollection<AchievementModel> achievements =
                     GetUnpublishedAchievements(user.Id, DateTime.UtcNow.Date.AddDays(-2));
                 IEnumerable<int> achievementIds = achievements.Select(achievement => achievement.Id);
                 HideAchievements(user.Id, achievementIds);
@@ -194,7 +192,7 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="steamUserId"> The steam user id. </param>
         /// <returns> </returns>
-        public SteamProfile GetProfile(string steamUserId)
+        public SteamProfileModel GetProfile(string steamUserId)
         {
             if (steamUserId == null)
             {

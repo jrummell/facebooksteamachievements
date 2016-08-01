@@ -57,7 +57,7 @@ namespace SteamAchievements.Web.Controllers
 
         public ActionResult Index()
         {
-            SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(UserSettings ?? new User());
+            SettingsViewModel model = Mapper.Map<UserModel, SettingsViewModel>(UserSettings ?? new UserModel());
 
             if (String.IsNullOrEmpty(model.SteamUserId))
             {
@@ -69,17 +69,17 @@ namespace SteamAchievements.Web.Controllers
 
         public ActionResult Games()
         {
-            User user = UserSettings ?? new User();
+            UserModel user = UserSettings ?? new UserModel();
 
-            IndexViewModel model = Mapper.Map<User, IndexViewModel>(user);
+            IndexViewModel model = Mapper.Map<UserModel, IndexViewModel>(user);
 
             return View(model);
         }
 
         public ActionResult Settings()
         {
-            User user = UserSettings ?? new User();
-            SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(user);
+            UserModel user = UserSettings ?? new UserModel();
+            SettingsViewModel model = Mapper.Map<UserModel, SettingsViewModel>(user);
             return View(model);
         }
 
@@ -91,7 +91,7 @@ namespace SteamAchievements.Web.Controllers
                 return View("Settings", model);
             }
 
-            User user = UserService.GetUser(UserSettings.Id);
+            UserModel user = UserService.GetUser(UserSettings.Id);
 
             user.SteamUserId = model.SteamUserId;
             user.PublishDescription = model.PublishDescription;
