@@ -59,6 +59,11 @@ namespace SteamAchievements.Web.Controllers
         {
             SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(UserSettings ?? new User());
 
+            if (String.IsNullOrEmpty(model.SteamUserId))
+            {
+                return RedirectToAction("Settings");
+            }
+
             return View(model);
         }
 

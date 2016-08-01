@@ -534,7 +534,8 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="communityAchievements">The community achievements.</param>
         /// <returns></returns>
-        private ICollection<steam_AchievementName> GetMissingAchievementNames(ICollection<steam_Achievement> communityAchievements)
+        private ICollection<steam_AchievementName> GetMissingAchievementNames(
+            ICollection<steam_Achievement> communityAchievements)
         {
             if (communityAchievements == null)
             {
@@ -547,14 +548,13 @@ namespace SteamAchievements.Data
             }
 
             var communityAchievementKeys =
-                from achievement in communityAchievements
-                from name in achievement.AchievementNames
-                select new
-                           {
-                               achievement.GameId,
-                               achievement.ApiName,
-                               name.Language
-                           };
+                (from achievement in communityAchievements
+                 select new
+                        {
+                            achievement.GameId,
+                            achievement.ApiName
+                        })
+                    .ToArray();
 
             IEnumerable<int> gameIds = communityAchievementKeys.Select(key => key.GameId).Distinct();
             IEnumerable<string> apiNames = communityAchievementKeys.Select(key => key.ApiName).Distinct();
@@ -565,32 +565,35 @@ namespace SteamAchievements.Data
                        && apiNames.Contains(achievement.ApiName)
                  select
                      new
-                         {
-                             achievement.Id,
-                             achievement.GameId,
-                             achievement.ApiName,
-                             Languages = achievement.AchievementNames.Select(name => name.Language)
-                         }).ToList();
+                     {
+                         achievement.Id,
+                         achievement.GameId,
+                         achievement.ApiName,
+                         Languages = achievement.AchievementNames.Select(name => name.Language)
+                     }).ToList();
 
             List<steam_AchievementName> missingAchievementNames = new List<steam_AchievementName>();
-            foreach (steam_AchievementName achievementName in communityAchievements.SelectMany(a => a.AchievementNames))
+            foreach (var communityAchievement in communityAchievements)
             {
-                steam_AchievementName communityName = achievementName;
-                var key =
-                    dbAchievementNames.Where(
-                        a => a.GameId == communityName.Achievement.GameId
-                             && a.ApiName == communityName.Achievement.ApiName)
-                        .SingleOrDefault();
-
-                if (key != null && !key.Languages.Contains(communityName.Language))
+                foreach (var achievementName in communityAchievement.AchievementNames)
                 {
-                    missingAchievementNames.Add(new steam_AchievementName
+                    steam_AchievementName communityName = achievementName;
+                    var key =
+                        dbAchievementNames.Where(
+                                                 a => a.GameId == communityAchievement.GameId
+                                                      && a.ApiName == communityAchievement.ApiName)
+                                          .SingleOrDefault();
+
+                    if (key != null && !key.Languages.Contains(communityName.Language))
+                    {
+                        missingAchievementNames.Add(new steam_AchievementName
                                                     {
                                                         AchievementId = key.Id,
                                                         Language = communityName.Language,
                                                         Name = communityName.Name,
                                                         Description = communityName.Description
                                                     });
+                    }
                 }
             }
 

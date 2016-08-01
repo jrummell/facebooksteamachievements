@@ -92,7 +92,7 @@ namespace SteamAchievements.Services
         /// Returns default culture name which is the first name decalared (e.g. en-US)
         /// </summary>
         /// <returns></returns>
-        public static string GetDefaultCulture()
+        private static string GetDefaultCulture()
         {
             return _cultures.Keys.First();
         }

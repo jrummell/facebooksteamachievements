@@ -23,12 +23,11 @@ namespace SteamAchievements.Data
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long FacebookUserId { get; set; }
 
-        [Required]
+        [Index]
         [StringLength(50)]
         public string SteamUserId { get; set; }
 
         [Obsolete]
-        [Required]
         [StringLength(250)]
         public string AccessToken { get; set; }
 

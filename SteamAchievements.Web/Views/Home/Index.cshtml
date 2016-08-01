@@ -6,7 +6,7 @@
 </div>
 @Html.HiddenFor(model => model.SteamUserId)
 @Html.HiddenFor(model => model.PublishDescription)
-<div id="steamIdError" class="row hidden"></div>
+<div id="steamIdError" class="row hidden">@Strings.SettingsInvalidCustomUrl</div>
 <div id="achievementsUpdateFailure" class="row hidden">
     Your achievements could not be updated. If this problem continues,
     please verify that your Custom URL is correct and that your Steam Community Profile is public.

@@ -128,6 +128,14 @@
     <Compile Include="Migrations\201511031720102_SetUserName.Designer.cs">
       <DependentUpon>201511031720102_SetUserName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608012132482_steam_UserSteamUserIdNotRequiredAddIndex.cs" />
+    <Compile Include="Migrations\201608012132482_steam_UserSteamUserIdNotRequiredAddIndex.Designer.cs">
+      <DependentUpon>201608012132482_steam_UserSteamUserIdNotRequiredAddIndex.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608012136400_Setsteam_UserAccessTokenNotRequired.cs" />
+    <Compile Include="Migrations\201608012136400_Setsteam_UserAccessTokenNotRequired.Designer.cs">
+      <DependentUpon>201608012136400_Setsteam_UserAccessTokenNotRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -172,6 +180,12 @@
     <EmbeddedResource Include="Migrations\201511031720102_SetUserName.resx">
       <DependentUpon>201511031720102_SetUserName.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608012132482_steam_UserSteamUserIdNotRequiredAddIndex.resx">
+      <DependentUpon>201608012132482_steam_UserSteamUserIdNotRequiredAddIndex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608012136400_Setsteam_UserAccessTokenNotRequired.resx">
+      <DependentUpon>201608012136400_Setsteam_UserAccessTokenNotRequired.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Migrations\ProdScripts\2-AddIdentityMigration.sql" />
@@ -186,4 +200,3 @@
   </Target>
   -->
 </Project>
-
