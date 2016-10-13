@@ -114,9 +114,9 @@ namespace SteamAchievements.Web.Helpers
             return MvcHtmlString.Create(_settings.AnalyticsMarkup);
         }
 
-        public static MvcHtmlString UserVoice(this HtmlHelper html)
+        public static MvcHtmlString IssueTracker(this HtmlHelper html)
         {
-            return MvcHtmlString.Create(_settings.UserVoiceMarkup);
+            return MvcHtmlString.Create(_settings.IssueTrackerMarkup);
         }
 
         public static MvcHtmlString Disclaimer(this HtmlHelper html)
