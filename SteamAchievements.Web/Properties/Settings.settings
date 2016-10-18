@@ -17,7 +17,7 @@
                     &lt;/script&gt;
                 </Value>
     </Setting>
-    <Setting Name="UserVoiceMarkup" Type="System.String" Scope="Application">
+    <Setting Name="IssueTrackerMarkup" Type="System.String" Scope="Application">
       <Value Profile="(Default)">                    &lt;script type="text/javascript"&gt;
                     // feedback script
                     &lt;/script&gt;
