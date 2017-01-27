@@ -8,3 +8,5 @@ SteamAchievements.Web/App_Data/elmah
 *.db
 /.vs
 /SteamAchievements.Web/Properties/PublishProfiles
+/SteamAchievements.Web/node_modules
+/SteamAchievements.Web/Scripts/lib

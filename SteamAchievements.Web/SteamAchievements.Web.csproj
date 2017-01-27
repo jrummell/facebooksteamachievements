@@ -305,11 +305,18 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Scripts\app\Home\games.js" />
+    <Content Include="Scripts\app\Home\publish.js" />
+    <Content Include="Scripts\app\Home\settings.js" />
+    <Content Include="Scripts\app\Shared\AchievementService.js" />
+    <Content Include="Scripts\app\Shared\facebook.js" />
+    <Content Include="Scripts\app\Shared\site.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.message.js" />
     <Content Include="Scripts\bootstrap.message.min.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fbchannel.ashx" />
+    <Content Include="package.json" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -411,7 +418,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>28949</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>https://localhost:44383/steamachievements</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

@@ -1,0 +1,16 @@
+{
+  "name": "steam-achievements-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel Scripts/app -d Scripts/lib",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "John Rummell",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-preset-env": "^1.1.8"
+  }
+}
