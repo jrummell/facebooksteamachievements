@@ -3,14 +3,21 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "build": "babel Scripts/app -d Scripts/lib",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+    "scripts": {
+        "build": "babel Scripts/src -d Scripts/babeled",
+        "combine": "uglifyjs Scripts/babeled/Shared/AchievementService.js Scripts/babeled/Shared/facebook.js Scripts/babeled/Shared/site.js Scripts/babeled/Home/games.js Scripts/babeled/Home/publish.js Scripts/babeled/Home/settings.js --compress --output Scripts/dist/all.min.js --source-map Scripts/dist/all.min.js.map",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
   "author": "John Rummell",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.22.2",
-    "babel-preset-env": "^1.1.8"
+    "babel-preset-env": "^1.1.8",
+    "uglify-js": "^2.7.5"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
   }
 }

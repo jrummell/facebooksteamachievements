@@ -1,4 +1,12 @@
-﻿(function($)
+﻿if (!window.console) {
+    window.console = {};
+    if (!window.console.log) {
+        window.console.log = function () {
+        };
+    }
+}
+
+(function ($)
 {
     // MonkeyPatch for Jquery hide() and show() to work with Bootstrap 3
     // https://gist.github.com/zimkies/8360181

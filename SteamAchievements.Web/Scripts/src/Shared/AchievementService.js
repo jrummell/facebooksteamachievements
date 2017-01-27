@@ -3,17 +3,6 @@
 /// <reference path="json2.js" />
 /// <reference path="columnizer.js" />
 
-if (!window.console)
-{
-    window.console = { };
-    if (!window.console.log)
-    {
-        window.console.log = function()
-        {
-        };
-    }
-}
-
 export default function AchievementService(steamUserId, enableLog, publishDescription)
 {
     var self = this;
