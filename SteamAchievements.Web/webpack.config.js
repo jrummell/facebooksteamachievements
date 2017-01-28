@@ -8,7 +8,6 @@ module.exports = {
         // Add your application's scripts below
         './Scripts/compiled/app',
         './Scripts/compiled/AchievementService',
-        './Scripts/compiled/facebook',
         './Scripts/compiled/games',
         './Scripts/compiled/publish',
         './Scripts/compiled/settings'
