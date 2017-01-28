@@ -1,5 +1,11 @@
-﻿$(document).ready(function()
+﻿import AchievementService from "./AchievementService";
+
+$(document).ready(function ()
 {
+    if ($(".games-page").length === 0) {
+        return;
+    }
+
     var steamUserId = $("#SteamUserId").val();
     var enableLog = $("#EnableLog").val() == "True";
 

@@ -1,8 +1,14 @@
 ﻿// achievement array set by the Unpublished Achievements view (loaded via ajax)
 var _newAchievements = new Array();
 
+import AchievementService from "./AchievementService";
+
 $(document).ready(function()
 {
+    if ($(".publish-page").length === 0) {
+        return;
+    }
+
     var steamUserId = $("#SteamUserId").val();
     var publishDescription = $("#PublishDescription").val() === "True";
     var enableLog = $("#EnableLog").val() === "True";

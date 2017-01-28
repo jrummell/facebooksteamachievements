@@ -2,38 +2,36 @@
 @{
     ViewBag.Title = Strings.TitleHome;
 }
-<div id="profileDiv" class="row">
-</div>
-@Html.HiddenFor(model => model.SteamUserId)
-@Html.HiddenFor(model => model.PublishDescription)
-<div id="steamIdError" class="row hidden">@Strings.SettingsInvalidCustomUrl</div>
-<div id="achievementsUpdateFailure" class="row hidden">
-    Your achievements could not be updated. If this problem continues,
-    please verify that your Custom URL is correct and that your Steam Community Profile is public.
-    @Html.HelpLink(Strings.ButtonHelp, "configure-your-steam-community-profile")
-    <p class="error-message hidden"></p>
-</div>
-<div class="row panel panel-default">
-    <div class="panel-body">
-        <div class="alert alert-info">
-            <p>
-                @Strings.PublishInstructions
-            </p>
-        </div>
-        <div id="buttons" class="hidden">
-            <a id="publishSelectedButton" class="button btn btn-default" href="#"><span class="glyphicon glyphicon-ok"></span> @Strings.ButtonPublish</a>
-            <a id="hideSelectedButton" class="button btn btn-default" href="#"><span class="glyphicon glyphicon-remove"></span> Hide</a>
-        </div>
-        <div id="noUnpublishedMessage" style="display: none;">
-            You have no unpublished achievements.
-        </div>
-        <img id="newAchievementsLoading" class="loading" src="@Url.Content("~/Content/images/ajax-loader.gif")" alt="Getting unpublished achievements..."/>
-        <div id="newAchievements" class="unpublished">
+<div class="publish-page">
+    <div id="profileDiv" class="row">
+    </div>
+    @Html.HiddenFor(model => model.SteamUserId)
+    @Html.HiddenFor(model => model.PublishDescription)
+    <div id="steamIdError" class="row hidden">@Strings.SettingsInvalidCustomUrl</div>
+    <div id="achievementsUpdateFailure" class="row hidden">
+        Your achievements could not be updated. If this problem continues,
+        please verify that your Custom URL is correct and that your Steam Community Profile is public.
+        @Html.HelpLink(Strings.ButtonHelp, "configure-your-steam-community-profile")
+        <p class="error-message hidden"></p>
+    </div>
+    <div class="row panel panel-default">
+        <div class="panel-body">
+            <div class="alert alert-info">
+                <p>
+                    @Strings.PublishInstructions
+                </p>
+            </div>
+            <div id="buttons" class="hidden">
+                <a id="publishSelectedButton" class="button btn btn-default" href="#"><span class="glyphicon glyphicon-ok"></span> @Strings.ButtonPublish</a>
+                <a id="hideSelectedButton" class="button btn btn-default" href="#"><span class="glyphicon glyphicon-remove"></span> Hide</a>
+            </div>
+            <div id="noUnpublishedMessage" style="display: none;">
+                You have no unpublished achievements.
+            </div>
+            <img id="newAchievementsLoading" class="loading" src="@Url.Content("~/Content/images/ajax-loader.gif")" alt="Getting unpublished achievements..." />
+            <div id="newAchievements" class="unpublished">
+            </div>
         </div>
     </div>
+    @Html.HiddenFor(model => model.EnableLog)
 </div>
-@Html.HiddenFor(model => model.EnableLog)
-@section scripts
-{
-    @Scripts.Render(BundlePaths.PublishScripts)
-}

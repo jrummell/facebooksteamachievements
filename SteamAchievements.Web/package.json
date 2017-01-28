@@ -1,23 +1,24 @@
 {
-  "name": "steam-achievements-web",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+    "name": "steam-achievements-web",
+    "version": "1.0.0",
+    "description": "",
+    "main": "Scripts/src/app.js",
     "scripts": {
-        "build": "babel Scripts/src -d Scripts/babeled",
-        "combine": "uglifyjs Scripts/babeled/Shared/AchievementService.js Scripts/babeled/Shared/facebook.js Scripts/babeled/Shared/site.js Scripts/babeled/Home/games.js Scripts/babeled/Home/publish.js Scripts/babeled/Home/settings.js --compress --output Scripts/dist/all.min.js --source-map Scripts/dist/all.min.js.map",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "build": "babel Scripts/src -d Scripts/compiled",
+        "pack": "webpack --config webpack.config.js"
     },
-  "author": "John Rummell",
-  "license": "ISC",
-  "devDependencies": {
-    "babel-cli": "^6.22.2",
-    "babel-preset-env": "^1.1.8",
-    "uglify-js": "^2.7.5"
-  },
-  "babel": {
-    "presets": [
-      "env"
-    ]
-  }
+    "author": "John Rummell",
+    "license": "ISC",
+    "devDependencies": {
+        "babel-cli": "^6.22.2",
+        "babel-core": "^6.22.1",
+        "babel-loader": "^6.2.10",
+        "babel-preset-es2015": "^6.22.0",
+        "webpack": "^1.14.0"
+    },
+    "babel": {
+        "presets": [
+            "es2015"
+        ]
+    }
 }

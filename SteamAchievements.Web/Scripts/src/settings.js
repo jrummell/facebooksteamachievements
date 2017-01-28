@@ -1,7 +1,11 @@
-﻿/// <reference path="~/Scripts/Shared/AchievementService.js"/>
+﻿import AchievementService from "./AchievementService";
 
 $(document).ready(function ()
 {
+    if ($(".settings-page").length === 0) {
+        return;
+    }
+
     var $steamUserId = $("#SteamUserId");
     var enableLog = $("#EnableLog").val() === "True";
     var achievementService = new AchievementService($steamUserId.val(), enableLog, false);

@@ -21,8 +21,6 @@
 
 using System.Web.Optimization;
 using SteamAchievements.Web.Helpers;
-using SteamAchievements.Web.Models;
-using SteamAchievements.Web.Properties;
 
 namespace SteamAchievements.Web.App_Start
 {
@@ -36,14 +34,15 @@ namespace SteamAchievements.Web.App_Start
             canvasScripts.Include("~/Scripts/modernizr-*",
                                   "~/Scripts/json2.js",
                                   "~/Scripts/bootstrap.message.js",
-                                  "~/Scripts/Shared/AchievementService.js",
-                                  "~/Scripts/toc.js",
-                                  "~/Scripts/Shared/site.js");
+                                  "~/Scripts/toc.js");
             bundles.Add(canvasScripts);
+
+            bundles.Add(new ScriptBundle(BundlePaths.SharedScripts)
+                            .Include("~/Scripts/dist/*.js"));
 
             Bundle facebookScripts 
                 = new ScriptBundle(BundlePaths.FacebookScripts);
-            facebookScripts.Include("~/Scripts/Shared/facebook.js");
+            facebookScripts.Include("~/Scripts/facebook.js");
             bundles.Add(facebookScripts);
 
             // css themes
@@ -51,22 +50,6 @@ namespace SteamAchievements.Web.App_Start
                 new StyleBundle(BundlePaths.Styles)
                     .IncludeDirectory("~/Content/theme", "*.css");
             bundles.Add(siteTheme);
-
-            // view specific scripts
-            Bundle indexScripts =
-                new ScriptBundle(BundlePaths.GamesScripts)
-                    .Include("~/Scripts/Home/games.js");
-            bundles.Add(indexScripts);
-
-            Bundle publishScripts =
-                new ScriptBundle(BundlePaths.PublishScripts)
-                    .Include("~/Scripts/Home/publish.js");
-            bundles.Add(publishScripts);
-
-            Bundle settingsScripts =
-                new ScriptBundle(BundlePaths.SettingsScripts)
-                    .Include("~/Scripts/Home/settings.js");
-            bundles.Add(settingsScripts);
         }
     }
 }
