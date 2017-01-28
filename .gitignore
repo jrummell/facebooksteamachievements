@@ -10,4 +10,4 @@ SteamAchievements.Web/App_Data/elmah
 /SteamAchievements.Web/Properties/PublishProfiles
 /SteamAchievements.Web/node_modules
 /SteamAchievements.Web/Scripts/dist
-/SteamAchievements.Web/Scripts/babeled
+SteamAchievements.Web/Scripts/compiled
