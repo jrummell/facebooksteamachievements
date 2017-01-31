@@ -21,6 +21,7 @@
             "es2015"
         ]
     },
+    "//": "This is added by the VS NPM Task Runner https://marketplace.visualstudio.com/items?itemName=MadsKristensen.NPMTaskRunner",
     "-vs-binding": {
         "AfterBuild": [ "build", "pack" ],
         "ProjectOpened": [ "install" ]
