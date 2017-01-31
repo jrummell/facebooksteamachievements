@@ -5,6 +5,8 @@ import AchievementService from "./AchievementService";
 
 $(document).ready(function()
 {
+    //TODO: convert to class
+
     if ($(".publish-page").length === 0) {
         return;
     }

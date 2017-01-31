@@ -33,8 +33,7 @@ namespace SteamAchievements.Web.App_Start
                 new ScriptBundle(BundlePaths.CanvasScripts);
             canvasScripts.Include("~/Scripts/modernizr-*",
                                   "~/Scripts/json2.js",
-                                  "~/Scripts/bootstrap.message.js",
-                                  "~/Scripts/toc.js");
+                                  "~/Scripts/bootstrap.message.js");
             bundles.Add(canvasScripts);
 
             bundles.Add(new ScriptBundle(BundlePaths.SharedScripts)

@@ -1,49 +1,50 @@
 ﻿import AchievementService from "./AchievementService";
 
-$(document).ready(function ()
-{
-    if ($(".games-page").length === 0) {
-        return;
+class GamesPage {
+    constructor() {
+        var steamUserId = $("#SteamUserId").val();
+        var enableLog = $("#EnableLog").val() == "True";
+
+        this.achievementService = new AchievementService(steamUserId, enableLog, false);
     }
 
-    var steamUserId = $("#SteamUserId").val();
-    var enableLog = $("#EnableLog").val() == "True";
-
-    var achievementService = new AchievementService(steamUserId, enableLog, false);
-
-    getProfile(getGames);
-
-    function getProfile(callback)
-    {
-        var ondone = function(error)
-        {
-            if (error)
-            {
-                return;
-            }
-            if (typeof(callback) == "function")
-            {
-                callback();
-            }
-            achievementService.updateSize();
-        };
-
-        achievementService.loadProfile("#profileDiv", ondone);
+    getProfile(callback) {
+        this.achievementService.loadProfile("#profileDiv",
+            error => {
+                if (error) {
+                    return;
+                }
+                if (typeof(callback) == "function") {
+                    callback();
+                }
+                this.achievementService.updateSize();
+            });
     }
 
-    function getGames()
+    getGames()
     {
         $("#gamesContainer").show();
         var updatingSelector = "#loadingGames";
-        achievementService.showLoading(updatingSelector);
+        this.achievementService.showLoading(updatingSelector);
 
-        var ondone = function()
-        {
-            achievementService.hideLoading(updatingSelector);
+        this.achievementService.loadGames("#gamesDiv",
+            () => {
+                this.achievementService.hideLoading(updatingSelector);
 
-            achievementService.updateSize();
-        };
-
-        achievementService.loadGames("#gamesDiv", ondone);
+                this.achievementService.updateSize();
+            });
     }
+
+    load() {
+        if ($(".games-page").length === 0) {
+            return;
+        }
+
+        this.getProfile(() => this.getGames());
+    }
+}
+
+$(document).ready(function () {
+    var games = new GamesPage();
+    games.load();
 });

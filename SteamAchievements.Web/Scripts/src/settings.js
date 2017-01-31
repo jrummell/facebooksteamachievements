@@ -1,40 +1,15 @@
 ﻿import AchievementService from "./AchievementService";
 
-$(document).ready(function ()
-{
-    if ($(".settings-page").length === 0) {
-        return;
+class SettingsPage {
+    constructor() {
+        this.$steamUserId = $("#SteamUserId");
+        this.enableLog = $("#EnableLog").val() === "True";
+        this.achievementService = new AchievementService(this.$steamUserId.val(), this.enableLog, false);
     }
 
-    var $steamUserId = $("#SteamUserId");
-    var enableLog = $("#EnableLog").val() === "True";
-    var achievementService = new AchievementService($steamUserId.val(), enableLog, false);
-
-    // check the user's profile when they change it
-    $steamUserId.change(function()
+    checkProfile()
     {
-        checkProfile();
-    });
-
-    // check the user's profile on load
-    checkProfile();
-
-    // init save success message
-    $("#saveSuccess").message({ type: "info" });
-
-    // show loading on click
-    var $saveButton = $("#saveButton");
-    $saveButton.click(function()
-    {
-        achievementService.showLoading("#saveImage");
-        $("#saveSuccess").hide();
-
-        return true;
-    });
-
-    function checkProfile()
-    {
-        var steamUserId = $steamUserId.val();
+        var steamUserId = this.$steamUserId.val();
 
         $("#steamIdError").hide();
         $("#steamIdVerified").hide();
@@ -54,6 +29,40 @@ $(document).ready(function ()
             }
         };
 
-        achievementService.validateProfile(steamUserId, "#validateProfileError", ondone);
+        this.achievementService.validateProfile(steamUserId, "#validateProfileError", ondone);
     }
+
+    load() {
+        var self = this;
+        if ($(".settings-page").length === 0) {
+            return;
+        }
+
+        // check the user's profile when they change it
+        this.$steamUserId.change(function()
+        {
+            self.checkProfile();
+        });
+
+        // check the user's profile on load
+        self.checkProfile();
+
+        // init save success message
+        $("#saveSuccess").message({ type: "info" });
+
+        // show loading on click
+        var $saveButton = $("#saveButton");
+        $saveButton.click(function()
+        {
+            self.achievementService.showLoading("#saveImage");
+            $("#saveSuccess").hide();
+
+            return true;
+        });
+    }
+}
+
+$(document).ready(function () {
+    var settings = new SettingsPage();
+    settings.load();
 });

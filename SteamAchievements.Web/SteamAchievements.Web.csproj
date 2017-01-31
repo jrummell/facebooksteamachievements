@@ -333,8 +333,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\json2.js" />
-    <Content Include="Scripts\toc.js" />
-    <Content Include="Scripts\toc.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

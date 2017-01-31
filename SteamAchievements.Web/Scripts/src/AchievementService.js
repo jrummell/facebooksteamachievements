@@ -12,7 +12,6 @@ export default class AchievementService
         this.enableLog = enableLog === true;
         this.publishDescription = publishDescription;
 
-        // private methods
         // init
         this.hideLoading("img.loading");
     }
