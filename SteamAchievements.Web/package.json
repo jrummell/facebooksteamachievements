@@ -20,5 +20,9 @@
         "presets": [
             "es2015"
         ]
+    },
+    "-vs-binding": {
+        "AfterBuild": [ "build", "pack" ],
+        "ProjectOpened": [ "install" ]
     }
 }

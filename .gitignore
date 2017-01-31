@@ -11,3 +11,4 @@ SteamAchievements.Web/App_Data/elmah
 /SteamAchievements.Web/node_modules
 /SteamAchievements.Web/Scripts/dist
 SteamAchievements.Web/Scripts/compiled
+*.lock

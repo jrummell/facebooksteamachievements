@@ -228,7 +228,7 @@ export default class AchievementService
 
     validateSteamUserId(errorMessageSelector) {
         var valid = true;
-        if (self.steamUserId == null || self.steamUserId === "") {
+        if (this.steamUserId == null || this.steamUserId === "") {
             valid = false;
         }
 
