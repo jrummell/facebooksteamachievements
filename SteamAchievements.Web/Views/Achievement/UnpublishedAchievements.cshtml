@@ -1,42 +1,39 @@
 ﻿@model IEnumerable<AchievementModel>
-    @{
-        int i = 0;
-    }
+@{
+    int i = 0;
+}
 
-    <div class="row">
-        @{var currentGameId = 0;}
-        @foreach (var achievement in Model)
+<div class="row unpublished-achievements-container" data-achievements="@(HttpUtility.HtmlEncode(Html.Raw(ViewBag.Achievements)))">
+    @{var currentGameId = 0;}
+    @foreach (var achievement in Model)
+    {
+        if (i % 2 == 0 && i > 0)
         {
-            if (i % 2 == 0 && i > 0)
-            {
-                @:</div><div class="row">
-            }
-            if (currentGameId != achievement.Game.Id)
-            {
-                @:</div><div class="row">
-                <div class="game col-md-12">
-                    <h4>@achievement.Game.Name</h4>
-                </div>
-                @:</div><div class="row">
-                currentGameId = achievement.Game.Id;
-                i = 0;
-                continue;
-            }
-            <div class="achievement col-md-6">
-                <img class="pull-left" src="@achievement.ImageUrl" alt="@achievement.Name" />
-                <div class="pull-left text">
-                    @{var checkboxId = "a" + achievement.Id;}
-                    <input type="checkbox" value="@achievement.Id" id="@checkboxId" />
-                    <label for="@checkboxId">
-                        <span class="name">@achievement.Name</span>
-                        <span class="description">@achievement.Description</span>
-                    </label>
-                </div>
-                <br class="clear"/>
-            </div>
-            i++;
+            @:</div><div class="row">
         }
-    </div>
-    <script type="text/javascript">
-        _newAchievements = @Html.Raw(ViewBag.Achievements);
-    </script>
+        if (currentGameId != achievement.Game.Id)
+        {
+            @:</div><div class="row">
+            <div class="game col-md-12">
+                <h4>@achievement.Game.Name</h4>
+            </div>
+            @:</div><div class="row">
+            currentGameId = achievement.Game.Id;
+            i = 0;
+            continue;
+        }
+        <div class="achievement col-md-6">
+            <img class="pull-left" src="@achievement.ImageUrl" alt="@achievement.Name" />
+            <div class="pull-left text">
+                @{var checkboxId = "a" + achievement.Id;}
+                <input type="checkbox" value="@achievement.Id" id="@checkboxId" />
+                <label for="@checkboxId">
+                    <span class="name">@achievement.Name</span>
+                    <span class="description">@achievement.Description</span>
+                </label>
+            </div>
+            <br class="clear"/>
+        </div>
+        i++;
+    }
+</div>

@@ -1,4 +1,5 @@
-﻿// achievement array set by the Unpublished Achievements view (loaded via ajax)
+﻿// achievement array set by the Achievement/UnpublishedAchievements request (loaded via ajax)
+//TODO: move to class variable
 var _newAchievements = new Array();
 
 import AchievementService from "./AchievementService";
@@ -143,8 +144,9 @@ $(document).ready(function()
 
     function displayAchievements()
     {
-        var ondone = function()
-        {
+        var ondone = function() {
+            _newAchievements = $(".unpublished-achievements-container").data("achievements");
+
             if (_newAchievements.length === 0)
             {
                 $("#noUnpublishedMessage").message({ type: "info" });
