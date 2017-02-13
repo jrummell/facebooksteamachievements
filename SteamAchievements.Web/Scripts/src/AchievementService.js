@@ -143,6 +143,8 @@ export default class AchievementService
         var description = "";
         var gameId = "";
 
+        var self = this;
+
         $.each(achievements,
             function(i) {
                 var achievement = this; // achievements[i];
@@ -176,7 +178,7 @@ export default class AchievementService
                     description += ".";
                 }
 
-                this.log(description);
+                self.log(description);
             });
 
         var message = self.steamUserId +

@@ -16,7 +16,6 @@ module.exports = {
         publicPath: '/Scripts/dist',
         filename: './Scripts/dist/all.js'
     },
-    debug: true,
     devtool: 'source-map',
     module: {
         loaders: [
