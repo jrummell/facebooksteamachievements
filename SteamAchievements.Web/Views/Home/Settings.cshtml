@@ -6,9 +6,9 @@
     <div class="panel-body">
         @if (ViewBag.Success == true)
         {
-        <div id="saveSuccess" class="row hidden">
-            @Strings.SettingsSuccess
-        </div>
+            <div id="saveSuccess" class="row hidden">
+                @Strings.SettingsSuccess
+            </div>
         }
         <div id="validateProfileError" class="row hidden">@Strings.SettingsInvalidCustomUrl</div>
 
@@ -56,3 +56,7 @@
         }
     </div>
 </div>
+
+@section scripts {
+    @Scripts.Render(BundlePaths.SettingsScripts)
+}

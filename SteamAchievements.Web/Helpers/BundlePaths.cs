@@ -24,6 +24,9 @@ namespace SteamAchievements.Web.Helpers
     public static class BundlePaths
     {
         public const string SharedScripts = "~/bundles/scripts/dist/shared";
+        public const string GamesScripts = "~/bundles/scripts/dist/games";
+        public const string PublishScripts = "~/bundles/scripts/dist/publish";
+        public const string SettingsScripts = "~/bundles/scripts/dist/settings";
         public const string CanvasScripts = "~/bundles/scripts/canvas";
         public const string Styles = "~/bundles/css";
         public const string FacebookScripts = "~/bundles/scripts/facebook";

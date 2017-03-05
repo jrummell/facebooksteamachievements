@@ -1,20 +1,23 @@
 ﻿var path = require('path');
 var webpack = require('webpack');
+var CommonsChunkPlugin = require("./node_modules/webpack/lib/optimize/CommonsChunkPlugin");
 
 module.exports = {
-    entry: [
-        // Set up an ES6-ish environment
-        'babel-polyfill',
-        // Add your application's scripts below
-        './Scripts/compiled/app',
-        './Scripts/compiled/AchievementService',
-        './Scripts/compiled/games',
-        './Scripts/compiled/publish',
-        './Scripts/compiled/settings'
-    ],
+    entry: {
+        app: [// Set up an ES6-ish environment
+            'babel-polyfill',
+            // Add your application's scripts below
+            './Scripts/compiled/app',
+            './Scripts/compiled/AchievementService'
+        ],
+        games: ['./Scripts/compiled/games'],
+        publish: ['./Scripts/compiled/publish'],
+        settings: ['./Scripts/compiled/settings']
+    },
     output: {
-        publicPath: '/Scripts/dist',
-        filename: './Scripts/dist/all.js'
+        path: path.join(__dirname, "Scripts/dist"),
+        filename: "[name].bundle.js",
+        chunkFilename: "[id].chunk.js"
     },
     devtool: 'source-map',
     module: {
@@ -31,5 +34,9 @@ module.exports = {
     },
     plugins: [
         //new webpack.optimize.UglifyJsPlugin()
+        new CommonsChunkPlugin({
+            filename: "shared.js",
+            name: "shared"
+        })
     ]
 }

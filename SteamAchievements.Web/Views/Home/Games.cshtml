@@ -23,3 +23,7 @@
     @Html.HiddenFor(model => model.EnableLog)
     @Html.HiddenFor(model => model.LogOnRedirectUrl)
 </div>
+
+@section scripts {
+    @Scripts.Render(BundlePaths.GamesScripts)
+}

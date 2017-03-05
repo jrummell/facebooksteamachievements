@@ -37,7 +37,16 @@ namespace SteamAchievements.Web.App_Start
             bundles.Add(canvasScripts);
 
             bundles.Add(new ScriptBundle(BundlePaths.SharedScripts)
-                            .Include("~/Scripts/dist/*.js"));
+                            .Include("~/Scripts/dist/shared.js", "~/Scripts/dist/app.bundle.js"));
+
+            bundles.Add(new ScriptBundle(BundlePaths.GamesScripts)
+                            .Include("~/Scripts/dist/games.bundle.js"));
+
+            bundles.Add(new ScriptBundle(BundlePaths.PublishScripts)
+                            .Include("~/Scripts/dist/publish.bundle.js"));
+
+            bundles.Add(new ScriptBundle(BundlePaths.SettingsScripts)
+                            .Include("~/Scripts/dist/settings.bundle.js"));
 
             Bundle facebookScripts 
                 = new ScriptBundle(BundlePaths.FacebookScripts);

@@ -35,3 +35,7 @@
     </div>
     @Html.HiddenFor(model => model.EnableLog)
 </div>
+
+@section scripts {
+    @Scripts.Render(BundlePaths.PublishScripts)
+}
