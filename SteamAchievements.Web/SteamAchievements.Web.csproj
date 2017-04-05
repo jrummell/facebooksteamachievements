@@ -307,15 +307,6 @@
     <Content Include="Scripts\bootstrap.message.min.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fbchannel.ashx" />
-    <Content Include="App_Data\Config\Release\authentication.config" />
-    <Content Include="App_Data\Config\Release\connectionStrings.config" />
-    <Content Include="App_Data\Config\Release\errorMail.config" />
-    <Content Include="App_Data\Config\Release\fbsteamachievements.PublishSettings" />
-    <None Include="App_Data\Config\Release\SteamAchievements.Web.Properties.Settings.config" />
-    <Content Include="App_Data\Config\Staging\authentication.config" />
-    <Content Include="App_Data\Config\Staging\connectionStrings.config" />
-    <Content Include="App_Data\Config\Staging\fbsteamachievements-dev.PublishSettings" />
-    <None Include="App_Data\Config\Staging\SteamAchievements.Web.Properties.Settings.config" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -355,7 +346,9 @@
     <Content Include="Views\Shared\_FacebookPartial.cshtml" />
     <Content Include="Views\Home\Canvas.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>
