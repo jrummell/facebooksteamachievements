@@ -23,15 +23,13 @@ using System;
 using System.Web.Mvc;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
-using SteamAchievements.Web.Models;
 using SteamAchievements.Web.Properties;
 
 namespace SteamAchievements.Web.Controllers
 {
     public abstract class FacebookController : UserController
     {
-        private readonly Lazy<long> _facebookUserId;
-        private readonly Lazy<User> _user;
+        private readonly Lazy<UserModel> _user;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="FacebookController" /> class.
@@ -43,16 +41,11 @@ namespace SteamAchievements.Web.Controllers
             UserService = userService;
             ErrorLogger = errorLogger;
 
-            _facebookUserId = new Lazy<long>(() =>
-            {
-                return UserSettings?.FacebookUserId ?? 0;
-            });
-
-            _user = new Lazy<User>(() => UserService.GetUser(User.Identity.Name));
+            _user = new Lazy<UserModel>(() => UserService.GetUser(User.Identity.Name));
         }
 
-        public User UserSettings => _user.Value;
-        
+        protected UserModel UserSettings => _user.Value;
+
         /// <summary>
         ///     Gets the user service.
         /// </summary>
@@ -63,8 +56,6 @@ namespace SteamAchievements.Web.Controllers
         /// </summary>
         protected IErrorLogger ErrorLogger { get; }
 
-        protected static FacebookMode FacebookMode { get; } = Settings.Default.Mode;
-
         #region Overrides of Controller
 
         /// <summary>
@@ -73,7 +64,7 @@ namespace SteamAchievements.Web.Controllers
         /// <param name="filterContext">Information about the current request and action.</param>
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            ViewBag.FacebookMode = FacebookMode;
+            ViewBag.FacebookMode = Settings.Default.Mode;
 
             base.OnActionExecuted(filterContext);
         }

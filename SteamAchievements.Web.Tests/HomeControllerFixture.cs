@@ -1,6 +1,6 @@
 ﻿#region License
 
-//  Copyright 2012 John Rummell
+//  Copyright 2015 John Rummell
 //  
 //  This file is part of SteamAchievements.
 //  
@@ -49,30 +49,35 @@ namespace SteamAchievements.Web.Tests
             Mock<IAchievementService> mockAchievementService = new Mock<IAchievementService>();
 
             Mock<IUserService> mockUserService = new Mock<IUserService>();
-            User originalUser = new User
-                {
-                    AutoUpdate = true,
-                    FacebookUserId = 12345,
-                    PublishDescription = true,
-                    SteamUserId = "NullReference"
-                };
-            mockUserService.Setup(service => service.GetUser(originalUser.FacebookUserId))
-                .Returns(() => originalUser).Verifiable();
+            UserModel originalUser = new UserModel
+                                     {
+                                         Id = 12345,
+                                         PublishDescription = true,
+                                         SteamUserId = "NullReference",
+                                         UserName = 12345.ToString()
+                                     };
+            mockUserService.Setup(service => service.GetUser(originalUser.UserName))
+                           .Returns(() => originalUser)
+                           .Verifiable();
+            mockUserService.Setup(service => service.GetUser(originalUser.Id))
+                           .Returns(() => originalUser)
+                           .Verifiable();
 
             SessionStateItemCollection sessionItems = new SessionStateItemCollection();
             HomeController controller = new HomeController(mockAchievementService.Object,
                                                            mockUserService.Object,
-                                                           new Mock<IErrorLogger>().Object);
-            FakeControllerContext context = new FakeControllerContext(controller, sessionItems);
+                                                           new Mock<IErrorLogger>().Object,
+                                                           Mock.Of<IFormsAuthenticationService>());
+            FakeControllerContext context = new FakeControllerContext(controller, originalUser.UserName, new string[0]);
             controller.ControllerContext = context;
 
             SettingsViewModel model =
                 new SettingsViewModel
-                    {
-                        AutoUpdate = true,
-                        PublishDescription = true,
-                        SteamUserId = originalUser.SteamUserId
-                    };
+                {
+                    Id = 12345,
+                    PublishDescription = true,
+                    SteamUserId = originalUser.SteamUserId
+                };
 
             ViewResult result = (ViewResult) controller.SaveSettings(model);
 

@@ -37,6 +37,7 @@ namespace SteamAchievements.Web
             if (Settings.Default.Mode != FacebookMode.None)
             {
                 filters.Add(new AuthorizeAttribute());
+                filters.Add(new RequireHttpsAttribute());
             }
         }
     }

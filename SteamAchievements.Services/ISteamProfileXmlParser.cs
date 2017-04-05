@@ -23,7 +23,7 @@ using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Services
 {
-    public interface ISteamProfileXmlParser : IXmlParser<SteamProfile>
+    public interface ISteamProfileXmlParser : IXmlParser<SteamProfileModel>
     {
     }
 }

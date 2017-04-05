@@ -31,11 +31,13 @@ namespace SteamAchievements.Web.Controllers
     public class HomeController : FacebookController
     {
         private readonly IAchievementService _achievementService;
+        private readonly IFormsAuthenticationService _authenticationService;
 
-        public HomeController(IAchievementService achievementService, IUserService userService, IErrorLogger errorLogger)
+        public HomeController(IAchievementService achievementService, IUserService userService, IErrorLogger errorLogger, IFormsAuthenticationService authenticationService)
             : base(userService, errorLogger)
         {
             _achievementService = achievementService;
+            _authenticationService = authenticationService;
         }
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
@@ -55,13 +57,11 @@ namespace SteamAchievements.Web.Controllers
 
         public ActionResult Index()
         {
-            SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(UserSettings ?? new User());
+            SettingsViewModel model = Mapper.Map<UserModel, SettingsViewModel>(UserSettings ?? new UserModel());
 
-            // this technically shouldn't be necessary, but sometimes we don't get the signed_request parameter 
-            // in CanvasSignedRequestAttribute and we don't have a valid facebook user
-            if (FacebookMode != FacebookMode.None && model.FacebookUserId == 0)
+            if (String.IsNullOrEmpty(model.SteamUserId))
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Settings");
             }
 
             return View(model);
@@ -69,66 +69,44 @@ namespace SteamAchievements.Web.Controllers
 
         public ActionResult Games()
         {
-            User user = UserSettings ?? new User();
+            UserModel user = UserSettings ?? new UserModel();
 
-            IndexViewModel model = Mapper.Map<User, IndexViewModel>(user);
-
-            // this technically shouldn't be necessary, but sometimes we don't get the signed_request parameter 
-            // in CanvasSignedRequestAttribute and we don't have a valid facebook user
-            if (FacebookMode != FacebookMode.None && model.FacebookUserId == 0)
-            {
-                return RedirectToAction("LogOn", "Account");
-            }
+            IndexViewModel model = Mapper.Map<UserModel, IndexViewModel>(user);
 
             return View(model);
         }
 
         public ActionResult Settings()
         {
-            User user = UserSettings ?? new User();
-            SettingsViewModel model = Mapper.Map<User, SettingsViewModel>(user);
+            UserModel user = UserSettings ?? new UserModel();
+            SettingsViewModel model = Mapper.Map<UserModel, SettingsViewModel>(user);
             return View(model);
         }
 
         [HttpPost]
         public ActionResult SaveSettings(SettingsViewModel model)
         {
-            // Since facebook posts to the canvas iframe, we need a separate action to post
-            // our form.
-
             if (!ModelState.IsValid)
             {
                 return View("Settings", model);
             }
 
-            User user = UserService.GetUser(UserSettings.FacebookUserId);
-            bool newUser = false;
-            if (user == null)
-            {
-                newUser = true;
-                user = new User {FacebookUserId = UserSettings.FacebookUserId, AccessToken = String.Empty};
-            }
+            UserModel user = UserService.GetUser(UserSettings.Id);
 
-            Mapper.Map(model, user);
+            user.SteamUserId = model.SteamUserId;
+            user.PublishDescription = model.PublishDescription;
 
             UserService.UpdateUser(user);
-
-            if (newUser)
-            {
-                try
-                {
-                    _achievementService.UpdateNewUserAchievements(user);
-                }
-                catch (Exception ex)
-                {
-                    // log and swallow exceptions so that the settings can be saved
-                    ErrorLogger.Log(ex);
-                }
-            }
 
             ViewBag.Success = true;
 
             return View("Settings", model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult Canvas()
+        {
+            return View();
         }
 
         public ActionResult Deauthorize()
@@ -138,9 +116,9 @@ namespace SteamAchievements.Web.Controllers
                 return View();
             }
 
-            UserService.DeauthorizeUser(UserSettings.FacebookUserId);
+            UserService.DeauthorizeUser(UserSettings.Id);
 
-            //TODO: logout
+            _authenticationService.SignOut();
 
             return View();
         }

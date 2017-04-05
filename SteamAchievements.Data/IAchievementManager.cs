@@ -29,63 +29,62 @@ namespace SteamAchievements.Data
         /// <summary>
         /// Gets the user.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        steam_User GetUser(long facebookUserId);
+        User GetUser(int userId);
 
-        steam_User GetUser(string userName);
+        /// <summary>
+        /// Gets the user.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
+        User GetUser(string userName);
 
         /// <summary>
         /// Gets the unpublished achievements.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        ICollection<steam_Achievement> GetUnpublishedAchievements(long facebookUserId);
+        ICollection<Achievement> GetUnpublishedAchievements(int userId);
 
         /// <summary>
         /// Gets the unpublished achievements by oldest date.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="userId">The user identifier.</param>
         /// <param name="oldestDate">The oldest date.</param>
         /// <returns></returns>
-        ICollection<steam_Achievement> GetUnpublishedAchievements(long facebookUserId, DateTime oldestDate);
-
-        /// <summary>
-        /// Gets the auto update users.
-        /// </summary>
-        /// <returns></returns>
-        ICollection<steam_User> GetAutoUpdateUsers();
+        ICollection<Achievement> GetUnpublishedAchievements(int userId, DateTime oldestDate);
 
         /// <summary>
         /// Updates the achievements.
         /// </summary>
         /// <param name="achievements">The achievements.</param>
-        int UpdateAchievements(IEnumerable<steam_UserAchievement> achievements);
+        int UpdateAchievements(IEnumerable<UserAchievement> achievements);
 
         /// <summary>
         /// Updates the published flag on the given achievements.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="userId">The user identifier.</param>
         /// <param name="achievementIds">The achievement ids.</param>
-        void UpdatePublished(long facebookUserId, IEnumerable<int> achievementIds);
+        void UpdatePublished(int userId, IEnumerable<int> achievementIds);
 
         /// <summary>
         /// Updates the hidden flag on the given achievements.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
+        /// <param name="userId">The user identifier.</param>
         /// <param name="achievementIds">The achievement ids.</param>
-        void UpdateHidden(long facebookUserId, IEnumerable<int> achievementIds);
+        void UpdateHidden(int userId, IEnumerable<int> achievementIds);
 
         /// <summary>
         /// Updates the user.
         /// </summary>
         /// <param name="user"></param>
-        void UpdateUser(steam_User user);
+        void UpdateUser(User user);
 
         /// <summary>
         /// Deauthorizes the user.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
-        void DeauthorizeUser(long facebookUserId);
+        /// <param name="userId">The user identifier.</param>
+        void DeauthorizeUser(int userId);
     }
 }

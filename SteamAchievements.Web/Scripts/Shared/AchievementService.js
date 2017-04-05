@@ -1,4 +1,4 @@
-﻿/// <reference path="~/Scripts/jquery-2.1.3.js" />
+﻿/// <reference path="~/Scripts/jquery-2.1.4.js" />
 /// <reference path="~/Scripts/bootstrap.message.js" />
 /// <reference path="json2.js" />
 /// <reference path="columnizer.js" />
@@ -14,24 +14,15 @@ if (!window.console)
     }
 }
 
-function AchievementService(steamUserId, signedRequest, enableLog, publishDescription)
+function AchievementService(steamUserId, enableLog, publishDescription)
 {
     var self = this;
 
     // fields
-    self.mobile = typeof($.mobile) !== "undefined";
     self.steamUserId = steamUserId;
-    self.signedRequest = signedRequest;
     self.serviceBase = "Achievement/";
     self.enableLog = enableLog === true;
     self.publishDescription = publishDescription;
-
-    // private functions
-    function setSignedRequest(params)
-    {
-        // since this is an ajax request, we need to add the signed_request parameter explicitly
-        params.signed_request = self.signedRequest;
-    }
 
     function load(selector, method, params, ondone)
     {
@@ -39,7 +30,6 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
         {
             params = { };
         }
-        setSignedRequest(params);
 
         var url = self.serviceBase + method;
         $(selector).load(url, params, ondone);
@@ -56,7 +46,6 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
         if (params == null) {
             params = {};
         }
-        setSignedRequest(params);
 
         $.ajax({
             url: self.serviceBase + method,
@@ -146,11 +135,6 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
         };
 
         post("ValidateProfile", data, ondone);
-    };
-
-    self.updateAccessToken = function(callback)
-    {
-        post("UpdateAccessToken", { }, callback);
     };
 
     self.loadGames = function(selector, callback)
@@ -282,37 +266,18 @@ function AchievementService(steamUserId, signedRequest, enableLog, publishDescri
         return valid;
     };
 
-    self.showLoading = function(selector)
+    self.showLoading = function (selector)
     {
-        if (self.mobile)
-        {
-            $.mobile.showPageLoadingMsg();
-        }
-        else
-        {
-            $(selector).show("normal", self.updateSize);
-        }
+        $(selector).show("normal", self.updateSize);
     };
 
     self.hideLoading = function(selector)
     {
-        if (self.mobile)
-        {
-            $.mobile.hidePageLoadingMsg();
-        }
-        else
-        {
-            $(selector || "img.loading").fadeOut("slow", self.updateSize);
-        }
+        $(selector || "img.loading").fadeOut("slow", self.updateSize);
     };
 
     self.updateSize = function()
     {
-        if (self.mobile)
-        {
-            return;
-        }
-
         if (typeof(FB) !== "undefined")
         {
             //TODO: the canvas resize api has changed

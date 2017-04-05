@@ -19,20 +19,17 @@
 
 #endregion
 
-using System.Collections.Generic;
-using System.Linq;
 using Moq;
 using NUnit.Framework;
 using SteamAchievements.Data;
 using SteamAchievements.Services.Models;
+using User = SteamAchievements.Data.User;
 
 namespace SteamAchievements.Services.Tests
 {
     [TestFixture]
     public class UserServiceFixture
     {
-        #region Setup/Teardown
-
         [SetUp]
         public void SetUp()
         {
@@ -46,8 +43,6 @@ namespace SteamAchievements.Services.Tests
             _service.Dispose();
         }
 
-        #endregion
-
         private IUserService _service;
         private Mock<IAchievementManager> _managerMock;
 
@@ -56,7 +51,7 @@ namespace SteamAchievements.Services.Tests
         {
             const int facebookUserId = 1234;
             _managerMock.Setup(manager => manager.DeauthorizeUser(facebookUserId))
-                .Verifiable();
+                        .Verifiable();
 
             _service.DeauthorizeUser(facebookUserId);
 
@@ -64,48 +59,33 @@ namespace SteamAchievements.Services.Tests
         }
 
         [Test]
-        public void GetAutoUpdateUsers()
-        {
-            const string steamUserId = "user1";
-            _managerMock.Setup(manager => manager.GetAutoUpdateUsers())
-                .Returns(new List<Data.steam_User> {new Data.steam_User {SteamUserId = steamUserId}})
-                .Verifiable();
-
-            ICollection<Models.User> users = _service.GetAutoUpdateUsers();
-
-            Assert.That(users.Count(), Is.EqualTo(1));
-            Assert.That(users.First().SteamUserId, Is.EqualTo(steamUserId));
-            _managerMock.Verify();
-        }
-
-        [Test]
         public void GetUserByFacebookId()
         {
-            const int facebookUserId = 1234;
-            _managerMock.Setup(manager => manager.GetUser(facebookUserId))
-                .Returns(new Data.steam_User {FacebookUserId = facebookUserId})
-                .Verifiable();
+            const int userId = 1234;
+            _managerMock.Setup(manager => manager.GetUser(userId))
+                        .Returns(new User {Id = userId})
+                        .Verifiable();
 
-            Models.User user = _service.GetUser(facebookUserId);
+            var user = _service.GetUser(userId);
 
             Assert.That(user, Is.Not.Null);
-            Assert.That(user.FacebookUserId, Is.EqualTo(facebookUserId));
+            Assert.That(user.Id, Is.EqualTo(userId));
             _managerMock.Verify();
         }
 
         [Test]
         public void UpdateUser()
         {
-            Models.User user = new Models.User {AccessToken = "x", AutoUpdate = true, FacebookUserId = 1234, SteamUserId = "user1"};
+            var user = new Models.UserModel {Id = 1234, SteamUserId = "user1"};
 
-            Mock<IAchievementManager> managerMock = new Mock<IAchievementManager>();
+            var managerMock = new Mock<IAchievementManager>();
             managerMock.Setup(
-                rep =>
-                rep.UpdateUser(
-                    It.Is<Data.steam_User>(u => u.SteamUserId == user.SteamUserId && u.FacebookUserId == user.FacebookUserId)))
-                .Verifiable();
+                              rep =>
+                              rep.UpdateUser(
+                                             It.Is<User>(u => u.SteamUserId == user.SteamUserId && u.Id == user.Id)))
+                       .Verifiable();
 
-            UserService service = new UserService(managerMock.Object);
+            var service = new UserService(managerMock.Object);
             service.UpdateUser(user);
 
             managerMock.Verify();

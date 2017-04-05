@@ -8,4 +8,8 @@
     <li role="presentation" class="@IsActive("Games", "Home")">@Html.CanvasLink(Strings.MenuGames, "Games")</li>
     <li role="presentation" class="@IsActive("Settings", "Home") @IsActive("SaveSettings", "Home")">@Html.CanvasLink(Strings.MenuSettings, "Settings")</li>
     <li role="presentation">@Html.HelpLink(Strings.MenuHelp)</li>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li role="presentation">@Html.CanvasLink("Log Out", "LogOff", "Account")</li>
+    }
 </ul>

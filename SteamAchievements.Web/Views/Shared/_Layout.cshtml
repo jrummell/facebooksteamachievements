@@ -1,7 +1,6 @@
 ﻿@{
     bool includeFacebookScripts = ViewBag.IncludeFacebookScripts ?? true;
-    FacebookMode mode = ViewBag.FacebookMode ?? FacebookMode.None;
-    string containerClass = mode == FacebookMode.Canvas ? "container-fluid" : "container";
+    string containerClass = "container";
 }
 <!DOCTYPE html>
 <html>
@@ -26,7 +25,7 @@
     <div class="fbbody @containerClass">
         <div class="row header">
             <a href="@Url.Action("Index", "Home")">
-                <img src="~/Content/themes/canvas/banner-light.png" class="img-responsive" alt="Steam Achievements" />
+                <img src="~/Content/theme/banner-light.png" class="img-responsive" alt="Steam Achievements" />
             </a>
         </div>
         <nav class="row nav navbar">
@@ -45,12 +44,12 @@
     <div id="bottomAdWrapper">
         @Html.Ad(AdLocation.Bottom)
     </div>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         if (!window.jQuery || !window.jQuery.fn.modal) {
             // fallback on local jquery if CDN fails
-            document.write('<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-2.1.3.min.js")"><\/script>');
+            document.write('<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-2.1.4.min.js")"><\/script>');
             document.write('<script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"><\/script>');
         }
     </script>
@@ -60,7 +59,7 @@
     }
     @Scripts.Render(BundlePaths.CanvasScripts)
     @RenderSection("scripts", required: false)
-    @Html.UserVoice()
+    @Html.IssueTracker()
     @Html.Analytics()
 </body>
 </html>

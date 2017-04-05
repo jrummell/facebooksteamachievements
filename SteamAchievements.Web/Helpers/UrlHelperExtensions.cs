@@ -33,10 +33,7 @@ namespace SteamAchievements.Web.Helpers
 
         public static string CanvasAction(this UrlHelper url, string canvasAction, string canvasController = null)
         {
-            if (_settings.Mode != FacebookMode.Canvas)
-            {
-                return url.Action(canvasAction, canvasController ?? "Home");
-            }
+            return url.Action(canvasAction, canvasController ?? "Home");
 
             string canvasUrl = _settings.FacebookCanvasUrl.ToString();
             StringBuilder canvasLink = new StringBuilder(canvasUrl);

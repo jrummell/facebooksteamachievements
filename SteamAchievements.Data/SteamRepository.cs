@@ -44,7 +44,7 @@ namespace SteamAchievements.Data
         /// Gets the achievements.
         /// </summary>
         /// <value>The achievements.</value>
-        public IQueryable<steam_Achievement> Achievements
+        public IQueryable<Achievement> Achievements
         {
             get { return _context.Achievements; }
         }
@@ -53,7 +53,7 @@ namespace SteamAchievements.Data
         /// Gets the user achievements.
         /// </summary>
         /// <value>The user achievements.</value>
-        public IQueryable<steam_UserAchievement> UserAchievements
+        public IQueryable<UserAchievement> UserAchievements
         {
             get { return _context.UserAchievements; }
         }
@@ -62,7 +62,7 @@ namespace SteamAchievements.Data
         /// Gets the users.
         /// </summary>
         /// <value>The users.</value>
-        public IQueryable<steam_User> Users
+        public IQueryable<User> Users
         {
             get { return _context.Users; }
         }
@@ -73,7 +73,7 @@ namespace SteamAchievements.Data
         /// <value>
         /// The achievement names.
         /// </value>
-        public IQueryable<steam_AchievementName> AchievementNames
+        public IQueryable<AchievementName> AchievementNames
         {
             get { return _context.AchievementNames; }
         }
@@ -82,7 +82,7 @@ namespace SteamAchievements.Data
         /// Inserts the user on submit.
         /// </summary>
         /// <param name="user">The user.</param>
-        public void InsertOnSubmit(steam_User user)
+        public void InsertOnSubmit(User user)
         {
             _context.Users.Add(user);
         }
@@ -91,7 +91,7 @@ namespace SteamAchievements.Data
         /// Deletes all given achievements on submit.
         /// </summary>
         /// <param name="achievements">The achievements.</param>
-        public void DeleteAllOnSubmit(IEnumerable<steam_UserAchievement> achievements)
+        public void DeleteAllOnSubmit(IEnumerable<UserAchievement> achievements)
         {
             _context.UserAchievements.RemoveRange(achievements);
         }
@@ -100,7 +100,7 @@ namespace SteamAchievements.Data
         /// Deletes the user on submit.
         /// </summary>
         /// <param name="user">The user.</param>
-        public void DeleteOnSubmit(steam_User user)
+        public void DeleteOnSubmit(User user)
         {
             _context.Users.Remove(user);
         }
@@ -117,7 +117,7 @@ namespace SteamAchievements.Data
         /// Inserts the achievement on submit.
         /// </summary>
         /// <param name="achievement">The achievement.</param>
-        public void InsertOnSubmit(steam_Achievement achievement)
+        public void InsertOnSubmit(Achievement achievement)
         {
             _context.Achievements.Add(achievement);
         }
@@ -126,7 +126,7 @@ namespace SteamAchievements.Data
         /// Inserts all given achievements on submit.
         /// </summary>
         /// <param name="achievements">The achievements.</param>
-        public void InsertAllOnSubmit(IEnumerable<steam_UserAchievement> achievements)
+        public void InsertAllOnSubmit(IEnumerable<UserAchievement> achievements)
         {
             _context.UserAchievements.AddRange(achievements);
         }
@@ -135,7 +135,7 @@ namespace SteamAchievements.Data
         /// Inserts the on submit.
         /// </summary>
         /// <param name="achievementName">Name of the achievement.</param>
-        public void InsertOnSubmit(steam_AchievementName achievementName)
+        public void InsertOnSubmit(AchievementName achievementName)
         {
             _context.AchievementNames.Add(achievementName);
         }

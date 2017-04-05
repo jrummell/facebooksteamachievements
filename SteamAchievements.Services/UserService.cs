@@ -20,11 +20,10 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using SteamAchievements.Data;
-using User = SteamAchievements.Services.Models.User;
+using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Services
 {
@@ -40,7 +39,7 @@ namespace SteamAchievements.Services
         {
             if (manager == null)
             {
-                throw new ArgumentNullException("manager");
+                throw new ArgumentNullException(nameof(manager));
             }
 
             _manager = manager;
@@ -53,16 +52,21 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="userName">The user name.</param>
         /// <returns></returns>
-        public User GetUser(string userName)
+        public UserModel GetUser(string userName)
         {
-            Data.steam_User user = _manager.GetUser(userName);
+            Data.User user = _manager.GetUser(userName);
 
             return Map(user);
         }
 
-        public User GetUser(long facebookUserId)
+        /// <summary>
+        /// Gets the user.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public UserModel GetUser(int userId)
         {
-            Data.steam_User user = _manager.GetUser(facebookUserId);
+            Data.User user = _manager.GetUser(userId);
 
             return Map(user);
         }
@@ -71,11 +75,11 @@ namespace SteamAchievements.Services
         /// Updates the user.
         /// </summary>
         /// <param name="user">The user.</param>
-        public void UpdateUser(Models.User user)
+        public void UpdateUser(Models.UserModel user)
         {
             if (user == null)
             {
-                throw new ArgumentNullException("user");
+                throw new ArgumentNullException(nameof(user));
             }
 
             _manager.UpdateUser(Map(user));
@@ -84,19 +88,10 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Deauthorizes the user.
         /// </summary>
-        /// <param name="facebookUserId">The facebook user id.</param>
-        public void DeauthorizeUser(long facebookUserId)
+        /// <param name="userId">The user identifier.</param>
+        public void DeauthorizeUser(int userId)
         {
-            _manager.DeauthorizeUser(facebookUserId);
-        }
-
-        /// <summary>
-        /// Gets the auto update users.
-        /// </summary>
-        /// <returns></returns>
-        public ICollection<Models.User> GetAutoUpdateUsers()
-        {
-            return _manager.GetAutoUpdateUsers().Select(Map).ToArray();
+            _manager.DeauthorizeUser(userId);
         }
 
         #endregion
@@ -111,14 +106,14 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        private static Models.User Map(Data.steam_User user)
+        private static Models.UserModel Map(Data.User user)
         {
             if (user == null)
             {
                 return null;
             }
 
-            return Mapper.Map<Models.User>(user);
+            return Mapper.Map<Models.UserModel>(user);
         }
 
         /// <summary>
@@ -126,14 +121,14 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        private static Data.steam_User Map(Models.User user)
+        private static Data.User Map(Models.UserModel user)
         {
             if (user == null)
             {
                 return null;
             }
 
-            return Mapper.Map<Data.steam_User>(user);
+            return Mapper.Map<Data.User>(user);
         }
     }
     

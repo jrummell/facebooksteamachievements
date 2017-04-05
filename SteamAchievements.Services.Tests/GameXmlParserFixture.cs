@@ -48,7 +48,7 @@ namespace SteamAchievements.Services.Tests
             string xml = File.ReadAllText("games.xml");
 
             GameXmlParser parser = new GameXmlParser();
-            IEnumerable<Game> games = parser.Parse(xml);
+            IEnumerable<GameModel> games = parser.Parse(xml);
 
             Assert.That(games.Any());
             Assert.That(games.Count(game => game.PlayedRecently), Is.EqualTo(2));
@@ -61,11 +61,11 @@ namespace SteamAchievements.Services.Tests
             string xml = File.ReadAllText(file.FullName);
 
             GameXmlParser parser = new GameXmlParser();
-            List<Game> games = parser.Parse(xml).ToList();
+            List<GameModel> games = parser.Parse(xml).ToList();
 
             Assert.That(games.Count, Is.GreaterThan(0));
 
-            DataContractSerializer serializer = new DataContractSerializer(typeof (Game), new[] {typeof (List<Game>)});
+            DataContractSerializer serializer = new DataContractSerializer(typeof (GameModel), new[] {typeof (List<GameModel>)});
             StringBuilder builder = new StringBuilder();
             using (XmlWriter writer = XmlWriter.Create(builder))
             {

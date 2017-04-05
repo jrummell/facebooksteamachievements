@@ -1,25 +1,6 @@
 ﻿@using Microsoft.Owin.Security
 @model ExternalLoginListViewModel
 
-@helper GetClass(string type)
-{
-    var cssClass = "";
-    switch (type)
-    {
-        case "GitHub":
-            cssClass = "fa-github";
-            break;
-        case "Microsoft":
-            cssClass = "fa-windows";
-            break;
-        default:
-            cssClass = "";
-            break;
-    }
-
-    @cssClass
-}
-
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
 

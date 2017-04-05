@@ -6,6 +6,6 @@ namespace SteamAchievements.Data
     {
         public int Id { get; set; }
 
-        public virtual steam_User User { get; set; }
+        public virtual User User { get; set; }
     }
 }

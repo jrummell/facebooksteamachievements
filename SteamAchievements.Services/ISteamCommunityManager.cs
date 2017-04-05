@@ -49,14 +49,14 @@ namespace SteamAchievements.Services
         /// <param name="steamUserId">The steam user id.</param>
         /// <param name="language">The language.</param>
         /// <returns></returns>
-        ICollection<Game> GetGames(string steamUserId, string language);
+        ICollection<GameModel> GetGames(string steamUserId, string language);
 
         /// <summary>
         /// Gets the profile.
         /// </summary>
         /// <param name="steamUserId">The steam user id.</param>
         /// <returns></returns>
-        SteamProfile GetProfile(string steamUserId);
+        SteamProfileModel GetProfile(string steamUserId);
 
         ///// <summary>
         ///// Sets Name, Description, and ImageUrl from the achievement cache.

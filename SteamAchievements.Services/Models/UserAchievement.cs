@@ -31,13 +31,7 @@ namespace SteamAchievements.Services.Models
         /// <value>
         /// The achievement.
         /// </value>
-        public Achievement Achievement { get; set; }
-        
-        /// <summary>
-        /// Gets or sets the facebook user ID.
-        /// </summary>
-        /// <value>The facebook user ID</value>
-        public long FacebookUserId { get; set; }
+        public AchievementModel Achievement { get; set; }
 
         /// <summary>
         /// Gets or sets the steam user ID.
@@ -56,6 +50,14 @@ namespace SteamAchievements.Services.Models
         /// </summary>
         /// <value>The date the achievement was unlocked.</value>
         public DateTime Date { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user identifier.
+        /// </summary>
+        /// <value>
+        /// The user identifier.
+        /// </value>
+        public int UserId { get; set; }
 
         #region IEquatable<UserAchievement> Members
 

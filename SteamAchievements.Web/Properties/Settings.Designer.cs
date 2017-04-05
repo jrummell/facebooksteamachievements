@@ -64,18 +64,9 @@ namespace SteamAchievements.Web.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("                    <script type=\"text/javascript\">\r\n                    // feedb" +
             "ack script\r\n                    </script>\r\n                ")]
-        public string UserVoiceMarkup {
+        public string IssueTrackerMarkup {
             get {
-                return ((string)(this["UserVoiceMarkup"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("None")]
-        public global::SteamAchievements.Web.Models.FacebookMode Mode {
-            get {
-                return ((global::SteamAchievements.Web.Models.FacebookMode)(this["Mode"]));
+                return ((string)(this["IssueTrackerMarkup"]));
             }
         }
         
@@ -121,6 +112,15 @@ namespace SteamAchievements.Web.Properties {
         public string HelpUrl {
             get {
                 return ((string)(this["HelpUrl"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::SteamAchievements.Web.Models.FacebookMode Mode {
+            get {
+                return ((global::SteamAchievements.Web.Models.FacebookMode)(this["Mode"]));
             }
         }
     }

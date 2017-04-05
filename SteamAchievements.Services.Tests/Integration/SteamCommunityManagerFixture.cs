@@ -63,7 +63,7 @@ namespace SteamAchievements.Services.Tests.Integration
         [Test]
         public void GetGames()
         {
-            IEnumerable<Game> games = _manager.GetGames("nullreference", "english");
+            IEnumerable<GameModel> games = _manager.GetGames("nullreference", "english");
 
             Assert.That(games.Any());
             Assert.That(games.Any(game => game.Name == "Left 4 Dead"));
@@ -74,7 +74,7 @@ namespace SteamAchievements.Services.Tests.Integration
         [Test]
         public void GetProfile()
         {
-            SteamProfile profile = _manager.GetProfile("nullreference");
+            SteamProfileModel profile = _manager.GetProfile("nullreference");
 
             Assert.That(profile, Is.Not.Null);
             Assert.That(profile.SteamUserId, Is.EqualTo("Null Reference"));

@@ -5,9 +5,8 @@ $(document).ready(function()
 {
     var steamUserId = $("#SteamUserId").val();
     var publishDescription = $("#PublishDescription").val() === "True";
-    var signedRequest = $("#SignedRequest").val();
     var enableLog = $("#EnableLog").val() === "True";
-    var achievementService = new AchievementService(steamUserId, signedRequest, enableLog, publishDescription);
+    var achievementService = new AchievementService(steamUserId, enableLog, publishDescription);
 
     var valid = achievementService.validateSteamUserId("#steamIdError");
     if (!valid)
@@ -40,10 +39,6 @@ $(document).ready(function()
             if (this.tagName === "IMG") {
                 var checkbox = $achievementDiv.find(":checkbox").get(0);
                 checkbox.checked = !checkbox.checked;
-
-                if (achievementService.mobile) {
-                    checkbox.checkboxradio("refresh");
-                }
             }
         }
 

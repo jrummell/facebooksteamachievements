@@ -10,12 +10,10 @@
             @Strings.SettingsSuccess
         </div>
         }
-        <div id="validateProfileError" class="row hidden"></div>
+        <div id="validateProfileError" class="row hidden">@Strings.SettingsInvalidCustomUrl</div>
 
         @using (Html.BeginForm("SaveSettings", "Home"))
         {
-        @Html.HiddenFor(model => model.FacebookUserId)
-        @Html.HiddenFor(model => model.SignedRequest)
         @Html.HiddenFor(model => model.EnableLog)
         @Html.ValidationMessageFor(model => model.SteamUserId)
         <div class="settings">
@@ -41,12 +39,6 @@
         <div class="settings">
             <label>Publish Options</label>
             <div class="form-group">
-                <!--
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.AutoUpdate)
-                    @Html.LabelFor(model => model.AutoUpdate)
-                </div>
-                -->
                 <div class="checkbox">
                     @Html.EditorFor(model => model.PublishDescription)
                     @Html.LabelFor(model => model.PublishDescription)

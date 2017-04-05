@@ -1,10 +1,9 @@
 ﻿$(document).ready(function()
 {
     var steamUserId = $("#SteamUserId").val();
-    var signedRequest = $("#SignedRequest").val();
     var enableLog = $("#EnableLog").val() == "True";
 
-    var achievementService = new AchievementService(steamUserId, signedRequest, enableLog, false);
+    var achievementService = new AchievementService(steamUserId, enableLog, false);
 
     getProfile(getGames);
 

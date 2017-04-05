@@ -19,5 +19,10 @@ namespace SteamAchievements.Web.Models
                 FormsAuthentication.SetAuthCookie(userName, true);
             }
         }
+
+        public void SignOut()
+        {
+            FormsAuthentication.SignOut();
+        }
     }
 }

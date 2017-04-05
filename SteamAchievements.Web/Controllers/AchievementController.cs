@@ -24,7 +24,6 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using SteamAchievements.Services;
-using SteamAchievements.Services.Models;
 using SteamAchievements.Web.Helpers;
 using SteamAchievements.Web.Models;
 using SteamAchievements.Web.Resources;
@@ -34,16 +33,12 @@ namespace SteamAchievements.Web.Controllers
     public class AchievementController : FacebookController
     {
         private readonly IAchievementService _achievementService;
-        private readonly IFacebookClientService _facebookService;
-        private readonly IUserService _userService;
 
         public AchievementController(IAchievementService achievementService, IUserService userService,
-                                     IFacebookClientService facebookService, IErrorLogger errorLogger)
+                                     IErrorLogger errorLogger)
             : base(userService, errorLogger)
         {
             _achievementService = achievementService;
-            _userService = userService;
-            _facebookService = facebookService;
         }
 
         [HttpPost]
@@ -54,14 +49,14 @@ namespace SteamAchievements.Web.Controllers
                 steamUserId = UserSettings.SteamUserId;
             }
 
-            if (String.IsNullOrEmpty(steamUserId))
+            if (string.IsNullOrEmpty(steamUserId))
             {
                 return Json(false);
             }
 
-            ProfileViewModel model = GetProfileViewModel(steamUserId);
+            var model = GetProfileViewModel(steamUserId);
 
-            var data = new {Valid = !model.HasError, Error = model.Error};
+            var data = new {Valid = !model.HasError, model.Error};
             return Json(data);
         }
 
@@ -70,21 +65,21 @@ namespace SteamAchievements.Web.Controllers
         {
             steamUserId = steamUserId ?? UserSettings.SteamUserId;
 
-            ProfileViewModel model = GetProfileViewModel(steamUserId);
+            var model = GetProfileViewModel(steamUserId);
 
             return PartialView(model);
         }
 
         private ProfileViewModel GetProfileViewModel(string steamUserId)
         {
-            ProfileViewModel model = new ProfileViewModel();
-            
-            if (String.IsNullOrEmpty(steamUserId))
+            var model = new ProfileViewModel();
+
+            if (string.IsNullOrEmpty(steamUserId))
             {
                 model.Error =
-                    String.Format(
-                        "You haven't set your Steam Community Profile URL. Please set it on the <a href='{0}'>Settings</a> page.",
-                        Url.CanvasAction("Settings"));
+                    string.Format(
+                                  "You haven't set your Steam Community Profile URL. Please set it on the <a href='{0}'>Settings</a> page.",
+                                  Url.CanvasAction("Settings"));
 
                 return model;
             }
@@ -105,7 +100,7 @@ namespace SteamAchievements.Web.Controllers
 
             if (model.HasError)
             {
-                model.Error += String.Format(" <a class='error-settings-link' href='{0}'>{1}</a>",
+                model.Error += string.Format(" <a class='error-settings-link' href='{0}'>{1}</a>",
                                              Url.CanvasAction("Settings"),
                                              Strings.MenuSettings);
             }
@@ -116,10 +111,10 @@ namespace SteamAchievements.Web.Controllers
         [HttpPost]
         public PartialViewResult UnpublishedAchievements()
         {
-            ICollection<Achievement> achievements =
-                _achievementService.GetUnpublishedAchievements(UserSettings.FacebookUserId, null);
+            var achievements =
+                _achievementService.GetUnpublishedAchievements(UserSettings.Id, null);
 
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            var serializer = new JavaScriptSerializer();
             ViewBag.Achievements = serializer.Serialize(achievements);
 
             return PartialView(achievements);
@@ -130,7 +125,7 @@ namespace SteamAchievements.Web.Controllers
         {
             steamUserId = steamUserId ?? UserSettings.SteamUserId;
 
-            ICollection<Game> games = _achievementService.GetGames(steamUserId);
+            var games = _achievementService.GetGames(steamUserId);
             return PartialView(games);
         }
 
@@ -139,7 +134,7 @@ namespace SteamAchievements.Web.Controllers
         {
             try
             {
-                return Json(_achievementService.UpdateAchievements(UserSettings.FacebookUserId));
+                return Json(_achievementService.UpdateAchievements(UserSettings.Id));
             }
             catch (Exception exception)
             {
@@ -153,43 +148,13 @@ namespace SteamAchievements.Web.Controllers
         [HttpPost]
         public JsonResult PublishAchievements(IEnumerable<int> achievementIds)
         {
-            return Json(_achievementService.PublishAchievements(UserSettings.FacebookUserId, achievementIds));
+            return Json(_achievementService.PublishAchievements(UserSettings.Id, achievementIds));
         }
 
         [HttpPost]
         public JsonResult HideAchievements(IEnumerable<int> achievementIds)
         {
-            return Json(_achievementService.HideAchievements(UserSettings.FacebookUserId, achievementIds));
-        }
-
-        [HttpPost]
-        public JsonResult UpdateAccessToken()
-        {
-            string accessToken = _facebookService.UpdateAccessToken(UserSettings.AccessToken);
-            if (!String.IsNullOrEmpty(accessToken))
-            {
-                UserSettings.AccessToken = accessToken;
-                _userService.UpdateUser(UserSettings);
-
-                return Json(true);
-            }
-
-            return Json(false);
-        }
-
-        [HttpPost]
-        public JsonResult SetAccessToken(string accessToken)
-        {
-            if (!String.IsNullOrEmpty(accessToken))
-            {
-                UserSettings.AccessToken = accessToken;
-                UserSettings.FacebookUserId = _facebookService.GetUserId(accessToken);
-                _userService.UpdateUser(UserSettings);
-
-                return Json(true);
-            }
-
-            return Json(false);
+            return Json(_achievementService.HideAchievements(UserSettings.Id, achievementIds));
         }
     }
 }

@@ -51,11 +51,11 @@ namespace SteamAchievements.Services
                                      IGameXmlParser gamesParser, IAchievementXmlParser achievementParser,
                                      IErrorLogger errorLogger)
         {
-            if (webClient == null) throw new ArgumentNullException("webClient");
-            if (profileParser == null) throw new ArgumentNullException("profileParser");
-            if (gamesParser == null) throw new ArgumentNullException("gamesParser");
-            if (achievementParser == null) throw new ArgumentNullException("achievementParser");
-            if (errorLogger == null) throw new ArgumentNullException("errorLogger");
+            if (webClient == null) throw new ArgumentNullException(nameof(webClient));
+            if (profileParser == null) throw new ArgumentNullException(nameof(profileParser));
+            if (gamesParser == null) throw new ArgumentNullException(nameof(gamesParser));
+            if (achievementParser == null) throw new ArgumentNullException(nameof(achievementParser));
+            if (errorLogger == null) throw new ArgumentNullException(nameof(errorLogger));
 
             _webClient = webClient;
             _achievementParser = achievementParser;
@@ -71,11 +71,11 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="steamUserId"> The steam user id. </param>
         /// <returns> </returns>
-        public SteamProfile GetProfile(string steamUserId)
+        public SteamProfileModel GetProfile(string steamUserId)
         {
             if (steamUserId == null)
             {
-                throw new ArgumentNullException("steamUserId");
+                throw new ArgumentNullException(nameof(steamUserId));
             }
 
             string xml = _webClient.DownloadString(GetProfileUrl(steamUserId, true));
@@ -116,11 +116,11 @@ namespace SteamAchievements.Services
         /// <param name="steamUserId"> The steam user id. </param>
         /// <param name="language"> The language. </param>
         /// <returns> </returns>
-        public ICollection<Game> GetGames(string steamUserId, string language)
+        public ICollection<GameModel> GetGames(string steamUserId, string language)
         {
             if (steamUserId == null)
             {
-                throw new ArgumentNullException("steamUserId");
+                throw new ArgumentNullException(nameof(steamUserId));
             }
 
             Uri gamesUrl = GetGamesUrl(steamUserId, true, language);
@@ -130,7 +130,7 @@ namespace SteamAchievements.Services
 
             if (xml == null)
             {
-                return new Game[0];
+                return new GameModel[0];
             }
 
             try
@@ -156,17 +156,17 @@ namespace SteamAchievements.Services
         {
             if (steamUserId == null)
             {
-                throw new ArgumentNullException("steamUserId");
+                throw new ArgumentNullException(nameof(steamUserId));
             }
 
             List<UserAchievement> achievements = new List<UserAchievement>();
 
-            IEnumerable<Game> games = GetGames(steamUserId, language);
+            IEnumerable<GameModel> games = GetGames(steamUserId, language);
             if (closedOnly)
             {
                 games = games.Where(g => g.PlayedRecently);
             }
-            foreach (Game game in games)
+            foreach (GameModel game in games)
             {
                 Uri xmlStatsUrl = GetStatsUrl(game.StatsUrl, language);
                 Debug.WriteLine(xmlStatsUrl);
@@ -213,7 +213,7 @@ namespace SteamAchievements.Services
                 }
 
                 List<UserAchievement> achievementList = gameAchievements.ToList();
-                Game game1 = game;
+                GameModel game1 = game;
                 achievementList.ForEach(a =>
                     {
                         a.Achievement.Game = game1;

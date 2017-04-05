@@ -28,17 +28,16 @@ namespace SteamAchievements.Web.Models
     {
         public void CreateMappings()
         {
-            Mapper.CreateMap<User, SettingsViewModel>()
+            Mapper.CreateMap<UserModel, SettingsViewModel>()
                 .ForMember(vm => vm.EnableLog, options => options.Ignore());
 
-            Mapper.CreateMap<User, IndexViewModel>()
+            Mapper.CreateMap<UserModel, IndexViewModel>()
                 .ForMember(vm => vm.LogOnRedirectUrl, options => options.Ignore())
                 .ForMember(vm => vm.EnableLog, options => options.Ignore());
 
-            Mapper.CreateMap<SettingsViewModel, User>()
-                .ForMember(user => user.AccessToken, options => options.Ignore())
-                .ForMember(user => user.FacebookUserId, options => options.Ignore())
-                .ForMember(user => user.Language, options => options.Ignore());
+            Mapper.CreateMap<SettingsViewModel, UserModel>()
+                .ForMember(user => user.Language, options => options.Ignore())
+                .ForMember(user => user.UserName, options => options.Ignore());
         }
     }
 }

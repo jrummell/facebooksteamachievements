@@ -61,14 +61,12 @@ namespace SteamAchievements.Updater
 
         private static Publisher CreatePublisher()
         {
-            var settings = Settings.Default;
             var logger = new AutoUpdateLogger(_logDirectory.FullName);
             var achievementManager = new AchievementManager(new SteamRepository());
             var communityManager = new SteamCommunityManager(new WebClientWrapper(), new SteamProfileXmlParser(),
                                                              new GameXmlParser(), new AchievementXmlParser(), logger);
             var achievementService = new AchievementService(achievementManager, communityManager);
-            var facebookClient = new FacebookClientService(settings.FacebookAppId, settings.FacebookAppSecret,
-                                                           settings.FacebookCanvasUrl);
+            var facebookClient = new FacebookClientService();
             var autoUpdateManager = new AutoUpdateManager(achievementService, new UserService(achievementManager),
                                                           facebookClient, logger);
             return new Publisher(autoUpdateManager);

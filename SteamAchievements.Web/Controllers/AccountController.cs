@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SteamAchievements.Data;
 
@@ -44,68 +44,34 @@ namespace SteamAchievements.Web.Controllers
                 return RedirectToAction("Login");
             }
 
-            // Sign in the user with this external login provider if the user already has a login
-            var result = await SignInManager.ExternalSignInAsync(loginInfo, false);
-            switch (result)
+            var user = await UserManager.FindByNameAsync(loginInfo.Login.ProviderKey);
+            if (user == null)
             {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                default:
-                    // If the user does not have an account, then prompt the user to create an account
-                    ViewBag.ReturnUrl = returnUrl;
-                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginFailure");
-            }
-        }
-
-        //
-        // POST: /Account/ExternalLoginConfirmation
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(string returnUrl)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (ModelState.IsValid)
-            {
-                // Get the information about the user from the external login provider
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-                if (info == null)
+                user = new User {UserName = loginInfo.Login.ProviderKey};
+                var createResult = await UserManager.CreateAsync(user);
+                if (!createResult.Succeeded)
                 {
+                    AddErrors(createResult);
                     return View("ExternalLoginFailure");
                 }
-                var user = new steam_User
-                {
-                    UserName = info.DefaultUserName,
-                    Email = info.Email,
-                    AccessToken = info.ExternalIdentity.FindFirstValue("AccessToken"),
-                    FacebookUserId = Convert.ToInt64(info.ExternalIdentity.GetUserId())
-                };
-                var result = await UserManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
-                    if (result.Succeeded)
-                    {
-                        await SignInManager.SignInAsync(user, false, false);
-                        return RedirectToLocal(returnUrl);
-                    }
-                }
-                AddErrors(result);
             }
 
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
+            var logins = await UserManager.GetLoginsAsync(user.Id);
+            if (!logins.Any())
+            {
+                var addResult = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
+                if (!addResult.Succeeded)
+                {
+                    AddErrors(addResult);
+                    return View("ExternalLoginFailure");
+                }
+            }
+
+            await SignInManager.ExternalSignInAsync(loginInfo, true);
+
+            return RedirectToLocal("~/");
         }
 
-        //
-        // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();

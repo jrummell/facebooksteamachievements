@@ -3,7 +3,6 @@
     ViewBag.Title = Strings.TitleHome;
 }
 @Html.HiddenFor(model => model.SteamUserId)
-@Html.HiddenFor(model => model.SignedRequest)
 <div id="profileDiv" class="row">
 </div>
 
@@ -15,7 +14,7 @@
                 @Html.HelpLink(Strings.ButtonHelp, "supported-games")
             </p>
         </div>
-        <img id="loadingGames" class="loading" src="@Url.Content("~/Content/images/ajax-loader.gif")" alt="Loading..." />
+        <img id="loadingGames" class="loading" src="~/Content/images/ajax-loader.gif" alt="Loading..." />
         <div id="gamesDiv"></div>
     </div>
 </div>

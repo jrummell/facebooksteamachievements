@@ -48,9 +48,9 @@ namespace SteamAchievements.Services.Tests
             Mock<ISteamCommunityManager> communityManagerMock = new Mock<ISteamCommunityManager>();
 
             // expect
-            Models.User user = new Models.User {FacebookUserId = 1234, SteamUserId = "user1"};
-            Data.steam_User dataUser = new Data.steam_User {FacebookUserId = 1234, SteamUserId = "user1"};
-            achievementManagerMock.Setup(rep => rep.GetUser(user.FacebookUserId))
+            Models.UserModel user = new Models.UserModel {Id = 1234, SteamUserId = "user1"};
+            Data.User dataUser = new Data.User {Id = 1234, SteamUserId = "user1"};
+            achievementManagerMock.Setup(rep => rep.GetUser(user.Id))
                 .Returns(dataUser).Verifiable();
 
             AchievementXmlParser achievementXmlParser = new AchievementXmlParser();
@@ -59,7 +59,7 @@ namespace SteamAchievements.Services.Tests
             userAchievements.ForEach(
                 userAchievement =>
                 userAchievement.Achievement.Game =
-                new Game
+                new GameModel
                     {
                         Id = 240,
                         ImageUrl =
@@ -74,23 +74,23 @@ namespace SteamAchievements.Services.Tests
             communityManagerMock.Setup(rep => rep.GetClosedAchievements(user.SteamUserId, "english"))
                 .Returns(new List<Models.UserAchievement>()).Verifiable();
 
-            achievementManagerMock.Setup(rep => rep.GetUser(user.FacebookUserId))
+            achievementManagerMock.Setup(rep => rep.GetUser(user.Id))
                 .Returns(dataUser).Verifiable();
-            achievementManagerMock.Setup(rep => rep.UpdateAchievements(It.IsAny<IEnumerable<Data.steam_UserAchievement>>()))
+            achievementManagerMock.Setup(rep => rep.UpdateAchievements(It.IsAny<IEnumerable<Data.UserAchievement>>()))
                 .Returns(5).Verifiable();
 
-            ICollection<Game> games = new GameXmlParser().Parse(File.ReadAllText("games.xml"));
+            ICollection<GameModel> games = new GameXmlParser().Parse(File.ReadAllText("games.xml"));
             communityManagerMock.Setup(rep => rep.GetGames(user.SteamUserId, "english"))
                 .Returns(games).Verifiable();
 
-            Data.steam_Achievement[] dataAchievements = new[]
+            Data.Achievement[] dataAchievements = new[]
                                                       {
-                                                          new Data.steam_Achievement
+                                                          new Data.Achievement
                                                               {
                                                                   AchievementNames =
-                                                                      new EntitySet<steam_AchievementName>
+                                                                      new EntitySet<AchievementName>
                                                                           {
-                                                                              new steam_AchievementName
+                                                                              new AchievementName
                                                                                   {
                                                                                       Name = "x",
                                                                                       Description = "y",
@@ -102,11 +102,11 @@ namespace SteamAchievements.Services.Tests
                                                               }
                                                       };
             achievementManagerMock.Setup(
-                rep => rep.GetUnpublishedAchievements(user.FacebookUserId, DateTime.UtcNow.Date.AddDays(-2)))
+                rep => rep.GetUnpublishedAchievements(user.Id, DateTime.UtcNow.Date.AddDays(-2)))
                 .Returns(dataAchievements).Verifiable();
             achievementManagerMock.Setup(
                 rep =>
-                rep.UpdateHidden(user.FacebookUserId, It.IsAny<IEnumerable<int>>()))
+                rep.UpdateHidden(user.Id, It.IsAny<IEnumerable<int>>()))
                 .Verifiable();
 
             // execute

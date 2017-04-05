@@ -25,6 +25,7 @@ using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Services
 {
+    [Obsolete("replace with moq")]
     public class MockUserService : IUserService
     {
         #region IUserService Members
@@ -33,26 +34,21 @@ namespace SteamAchievements.Services
         {
         }
 
-        public ICollection<User> GetAutoUpdateUsers()
+        public UserModel GetUser(string userName)
         {
-            throw new NotImplementedException();
+            return new UserModel {Id = 1000, UserName = userName, SteamUserId = "SteamUser"};
         }
 
-        public User GetUser(string userName)
+        public UserModel GetUser(int userId)
         {
-            return new User {FacebookUserId = 1000, UserName = userName, SteamUserId = "SteamUser"};
+            return new UserModel { Id = userId, UserName = userId.ToString(), SteamUserId = "SteamUser" };
         }
 
-        public User GetUser(long facebookUserId)
-        {
-            return new User { FacebookUserId = facebookUserId, UserName = facebookUserId.ToString(), SteamUserId = "SteamUser" };
-        }
-
-        public void UpdateUser(User user)
+        public void UpdateUser(UserModel user)
         {
         }
 
-        public void DeauthorizeUser(long facebookUserId)
+        public void DeauthorizeUser(int userId)
         {
         }
 

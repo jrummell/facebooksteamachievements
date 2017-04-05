@@ -19,7 +19,6 @@ namespace SteamAchievements.Web.Tests
             SettingsViewModel model =
                 new SettingsViewModel
                     {
-                        AutoUpdate = true,
                         PublishDescription = true,
                         SteamUserId = "NullReference"
                     };
