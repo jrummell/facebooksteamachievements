@@ -9,7 +9,6 @@ using SteamAchievements.Data;
 
 namespace SteamAchievements.Web.Controllers
 {
-    [Authorize]
     public class AccountController : UserController
     {
         //
@@ -25,7 +24,6 @@ namespace SteamAchievements.Web.Controllers
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
             // Request a redirect to the external login provider
@@ -72,6 +70,7 @@ namespace SteamAchievements.Web.Controllers
             return RedirectToLocal("~/");
         }
 
+        [AllowAnonymous]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
