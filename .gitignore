@@ -3,8 +3,7 @@ packages
 **/obj
 *.user
 *.suo
-SteamAchievements.Web/App_Data/Config
-SteamAchievements.Web/App_Data/elmah
+/SteamAchievements.Web/App_Data
 *.db
 /.vs
 /SteamAchievements.Web/Properties/PublishProfiles
