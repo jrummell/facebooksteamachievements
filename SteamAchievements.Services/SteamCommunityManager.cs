@@ -124,7 +124,6 @@ namespace SteamAchievements.Services
             }
 
             Uri gamesUrl = GetGamesUrl(steamUserId, true, language);
-            Debug.WriteLine(gamesUrl);
 
             string xml = _webClient.DownloadString(gamesUrl);
 

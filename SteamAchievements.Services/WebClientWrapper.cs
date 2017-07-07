@@ -20,14 +20,16 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using System.Net;
+using System.Text;
 using SteamAchievements.Data;
 
 namespace SteamAchievements.Services
 {
     public class WebClientWrapper : Disposable, IWebClientWrapper
     {
-        private readonly WebClient _webClient = new WebClient();
+        private readonly WebClient _webClient = new WebClient {Encoding = Encoding.UTF8 };
 
         #region IWebClientWrapper Members
 
@@ -36,7 +38,13 @@ namespace SteamAchievements.Services
             //TODO: wrap usages with retry logic?
             try
             {
-                return _webClient.DownloadString(url);
+                Debug.WriteLine(url);
+
+                var content = _webClient.DownloadString(url);
+
+                Debug.WriteLine(content);
+
+                return content;
             }
             catch (Exception ex)
             {
