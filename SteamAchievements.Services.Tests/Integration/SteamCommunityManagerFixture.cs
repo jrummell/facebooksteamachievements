@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 
 //  Copyright 2012 John Rummell
 //  
@@ -78,6 +78,15 @@ namespace SteamAchievements.Services.Tests.Integration
 
             Assert.That(profile, Is.Not.Null);
             Assert.That(profile.SteamUserId, Is.EqualTo("Null Reference"));
+        }
+
+        [Test]
+        public void GetProfileUnicode()
+        {
+            SteamProfileModel profile = _manager.GetProfile("gaebber");
+
+            Assert.That(profile, Is.Not.Null);
+            Assert.That(profile.SteamUserId, Is.EqualTo("G Λ Σ B B Σ Я"));
         }
     }
 }
