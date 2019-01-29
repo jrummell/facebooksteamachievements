@@ -15,7 +15,7 @@ For example, my Left 4 Dead stats page is http://steamcommunity.com/id/NullRefer
 See the [Help](https://github.com/jrummell/facebooksteamachievements/wiki/help) page.
 
 ## Issues and feature requests
-Find an issue? Have a great idea for new feature? Please visit the [feedback forum](http://fbsteamachievements.uservoice.com/).
+Find an issue? Have a great idea for new feature? Please log an [issue](https://github.com/jrummell/facebooksteamachievements/issues).
 
 ## Contribute
 We're looking for a few developers interested in [contributing](https://github.com/jrummell/facebooksteamachievements/wiki/develop) to our project.
