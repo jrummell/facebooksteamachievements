@@ -7,3 +7,4 @@ packages
 *.db
 /.vs
 /SteamAchievements.Web/Properties/PublishProfiles
+**/node_modules
