@@ -19,7 +19,7 @@
 
 #endregion
 
-using System.Data.Linq;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using SteamAchievements.Data;
@@ -41,7 +41,7 @@ namespace SteamAchievements.Services.Models
                   .ForMember(entity => entity.EmailConfirmed, options => options.Ignore())
                   .ForMember(entity => entity.Logins, options => options.Ignore())
                   .ForMember(entity => entity.LockoutEnabled, options => options.Ignore())
-                  .ForMember(entity => entity.LockoutEndDateUtc, options => options.Ignore())
+                  .ForMember(entity => entity.LockoutEnd, options => options.Ignore())
                   .ForMember(entity => entity.PasswordHash, options => options.Ignore())
                   .ForMember(entity => entity.PhoneNumber, options => options.Ignore())
                   .ForMember(entity => entity.PhoneNumberConfirmed, options => options.Ignore())
@@ -61,7 +61,7 @@ namespace SteamAchievements.Services.Models
                   .ForMember(entity => entity.UserAchievements, options => options.Ignore())
                   .ForMember(entity => entity.AchievementNames,
                              options => options.MapFrom(model =>
-                                                        new EntitySet<AchievementName>
+                                                        new List<AchievementName>
                                                         {
                                                             new AchievementName
                                                             {

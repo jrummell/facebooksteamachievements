@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.Linq;
 using System.IO;
 using System.Linq;
 using Moq;
@@ -88,7 +87,7 @@ namespace SteamAchievements.Services.Tests
                                                           new Data.Achievement
                                                               {
                                                                   AchievementNames =
-                                                                      new EntitySet<AchievementName>
+                                                                      new List<AchievementName>
                                                                           {
                                                                               new AchievementName
                                                                                   {

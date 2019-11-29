@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.Linq;
 using System.Linq;
 
 namespace SteamAchievements.Services
@@ -58,7 +57,7 @@ namespace SteamAchievements.Services
                                                 ImageUrl =
                                                     "http://media.steampowered.com/steamcommunity/public/images/apps/550/8a1dbb0d78c8e288ed5ce990a20454073d01ba9b.jpg",
                                                 AchievementNames =
-                                                    new EntitySet<Data.AchievementName>
+                                                    new List<Data.AchievementName>
                                                         {
                                                             new Data.AchievementName
                                                                 {

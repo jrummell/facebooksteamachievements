@@ -20,8 +20,7 @@
 #endregion
 
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace SteamAchievements.Data

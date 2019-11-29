@@ -22,14 +22,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Identity;
 
 namespace SteamAchievements.Data
 {
     [Table("steam_User")]
-    public partial class User : IdentityUser<int, UserLogin, UserRole, UserClaim>
+    public class User : IdentityUser<int>
     {
-        [Index]
         [StringLength(50)]
         public string SteamUserId { get; set; }
 
@@ -39,5 +38,8 @@ namespace SteamAchievements.Data
         public string Language { get; set; }
 
         public virtual ICollection<UserAchievement> UserAchievements { get; set; } = new List<UserAchievement>();
+        public virtual ICollection<UserLogin> Logins { get; set; } = new List<UserLogin>();
+        public virtual ICollection<UserRole> Roles { get; set; }
+        public virtual ICollection<UserClaim> Claims { get; set; }
     }
 }
