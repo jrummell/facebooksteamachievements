@@ -20,11 +20,9 @@
 #endregion
 
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SteamAchievements.Data
 {
-    [Table("steam_UserAchievement")]
     public class UserAchievement
     {
         public int AchievementId { get; set; }

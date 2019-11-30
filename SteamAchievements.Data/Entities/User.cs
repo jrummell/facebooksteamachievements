@@ -21,16 +21,17 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Identity;
 
 namespace SteamAchievements.Data
 {
-    [Table("steam_User")]
-    public class User : IdentityUser<int>
+    public class User
     {
+        public int Id { get; set; }
+
         [StringLength(50)]
         public string SteamUserId { get; set; }
+
+        public long FacebookUserId { get; set; }
 
         public bool PublishDescription { get; set; }
 
@@ -38,8 +39,5 @@ namespace SteamAchievements.Data
         public string Language { get; set; }
 
         public virtual ICollection<UserAchievement> UserAchievements { get; set; } = new List<UserAchievement>();
-        public virtual ICollection<UserLogin> Logins { get; set; } = new List<UserLogin>();
-        public virtual ICollection<UserRole> Roles { get; set; }
-        public virtual ICollection<UserClaim> Claims { get; set; }
     }
 }

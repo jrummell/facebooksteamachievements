@@ -59,9 +59,14 @@ namespace SteamAchievements.Data
             return _repository.Users.Where(e => e.Id == userId).SingleOrDefault();
         }
 
-        public User GetUser(string userName)
+        /// <summary>
+        /// Gets the user by facebook user identifier.
+        /// </summary>
+        /// <param name="facebookUserId">The facebook user identifier.</param>
+        /// <returns></returns>
+        public User GetByFacebookUserId(long facebookUserId)
         {
-            return _repository.Users.Where(e => e.UserName == userName).SingleOrDefault();
+            return _repository.Users.Where(e => e.FacebookUserId == facebookUserId).SingleOrDefault();
         }
 
         /// <summary>
@@ -141,6 +146,17 @@ namespace SteamAchievements.Data
             return AssignAchievements(userAchievements);
         }
 
+        public void CreateUser(User user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            _repository.InsertOnSubmit(user);
+            _repository.SubmitChanges();
+        }
+
         /// <summary>
         /// Updates the user.
         /// </summary>
@@ -174,8 +190,6 @@ namespace SteamAchievements.Data
             
             existingUser.SteamUserId = user.SteamUserId;
             existingUser.PublishDescription = user.PublishDescription;
-            existingUser.UserName = user.UserName;
-            existingUser.Email = user.Email;
 
             _repository.SubmitChanges();
         }

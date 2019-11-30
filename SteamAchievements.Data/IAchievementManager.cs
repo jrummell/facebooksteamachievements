@@ -34,11 +34,11 @@ namespace SteamAchievements.Data
         User GetUser(int userId);
 
         /// <summary>
-        /// Gets the user.
+        /// Gets the user by facebook user identifier.
         /// </summary>
-        /// <param name="userName">Name of the user.</param>
+        /// <param name="facebookUserId">The facebook user identifier.</param>
         /// <returns></returns>
-        User GetUser(string userName);
+        User GetByFacebookUserId(long facebookUserId);
 
         /// <summary>
         /// Gets the unpublished achievements.
@@ -86,5 +86,7 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         void DeauthorizeUser(int userId);
+
+        void CreateUser(User user);
     }
 }
