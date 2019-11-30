@@ -8,10 +8,13 @@ Vue.config.productionTip = false;
 
 import facebookLogin from "facebook-login-vuejs";
 
+Vue.component(facebookLogin.name, facebookLogin);
+
 import Login from "./components/Login.vue";
+import Profile from "./components/Profile.vue";
 
 Vue.component(Login.name, Login);
-Vue.component(facebookLogin.name, facebookLogin);
+Vue.component(Profile.name, Profile);
 
 const facebookConfig = new FacebookConfig();
 

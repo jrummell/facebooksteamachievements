@@ -14,14 +14,22 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
+import { MutationPayload } from "vuex";
+import { AppState } from "./store/index";
 
 @Component
 export default class App extends Vue {
     loggedIn: boolean = false;
 
     mounted() {
-        this.$root.$on("login-loggedin", () => {
-            this.loggedIn = true;
+        this.loggedIn = this.$store.state.user != undefined;
+
+        this.$store.subscribe((mutation: MutationPayload, state: AppState) => {
+            if (mutation.type == "setUser") {
+                this.loggedIn = state.user != undefined;
+
+                //TODO: route to profile page if steamUserId is null
+            }
         });
     }
 }

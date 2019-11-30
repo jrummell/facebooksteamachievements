@@ -3,6 +3,10 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
+        "eslint": "eslint ./app/src --ext .js,.ts,.vue",
+        "eslint-fix": "eslint ./app/src --ext .js,.ts,.vue --fix",
+        "eslint-report": "eslint -f json -o eslint-report.json . --ext .js,.ts,.vue",
+        "eslint-to-editorconfig": "eslint-to-editorconfig .eslintrc.json",
         "serve": "vue-cli-service serve ./app/src/main.ts",
         "build": "vue-cli-service build ./app/src/main.ts --mode development",
         "test:unit": "vue-cli-service test:unit",
