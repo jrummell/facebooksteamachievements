@@ -1,9 +1,19 @@
-using System.Collections.Generic;
+using System;
+using System.IO;
+using System.Reflection;
+using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
+using SteamAchievements.Data;
+using SteamAchievements.Services;
+using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Web.Spa
 {
@@ -19,7 +29,58 @@ namespace SteamAchievements.Web.Spa
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddDbContext<SteamContext>(options =>
+                                                {
+                                                    options.UseLazyLoadingProxies()
+                                                           .ConfigureWarnings(w => w.Ignore(new EventId(30000)))
+                                                           .EnableSensitiveDataLogging()
+                                                           .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                                                                         o =>
+                                                                             o.MigrationsAssembly(typeof(
+                                                                                                      SteamContext
+                                                                                                  )
+                                                                                                 .Assembly
+                                                                                                 .FullName));
+                                                });
+
+            services.AddControllers()
+                     // use Newtonsoft Json instead of the new .NET Json serializer
+                    .AddNewtonsoftJson(options =>
+                                           options.SerializerSettings.ContractResolver =
+                                               new CamelCasePropertyNamesContractResolver());
+
+            services.AddScoped<DbContext, SteamContext>();
+
+            services.AddOptions();
+
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            // https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-2.1
+            services.AddSwaggerGen(c =>
+                                   {
+                                       var assemblyName = Assembly.GetExecutingAssembly().GetName();
+                                       c.SwaggerDoc("v1",
+                                                    new OpenApiInfo
+                                                    {Title = "Liftoff API", Version = "v" + assemblyName.Version});
+
+                                       // Set the comments path for the Swagger JSON and UI.
+                                       var xmlFile = $"{assemblyName.Name}.xml";
+                                       var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                                       c.IncludeXmlComments(xmlPath);
+
+                                       //Note: The warning messages for these obsolete methods are a lie - it won't work without them
+                                       c.DescribeAllEnumsAsStrings();
+                                       c.DescribeStringEnumsInCamelCase();
+                                   });
+
+            var mapper = new ModelMapCreator();
+            mapper.CreateMappings();
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            // Register your own things directly with Autofac, like:
+            builder.RegisterAssemblyTypes(GetType().Assembly, typeof(SteamContext).Assembly,
+                                          typeof(IAchievementService).Assembly).AsImplementedInterfaces();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,12 +98,16 @@ namespace SteamAchievements.Web.Spa
 
             app.UseAuthorization();
 
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"); });
+
             app.UseRouting();
 
-            app.UseEndpoints(config =>
-                             {
-                                 config.MapControllers();
-                             });
+            app.UseEndpoints(config => { config.MapControllers(); });
         }
     }
 }
