@@ -50,18 +50,6 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Gets the user.
         /// </summary>
-        /// <param name="userName">The user name.</param>
-        /// <returns></returns>
-        public UserModel GetUser(string userName)
-        {
-            Data.User user = _manager.GetUser(userName);
-
-            return Map(user);
-        }
-
-        /// <summary>
-        /// Gets the user.
-        /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
         public UserModel GetUser(int userId)
@@ -69,6 +57,23 @@ namespace SteamAchievements.Services
             Data.User user = _manager.GetUser(userId);
 
             return Map(user);
+        }
+
+        public UserModel GetByFacebookUserId(long facebookUserId)
+        {
+            var user = _manager.GetByFacebookUserId(facebookUserId);
+
+            return Map(user);
+        }
+
+        public void CreateUser(UserModel user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            _manager.CreateUser(Map(user));
         }
 
         /// <summary>

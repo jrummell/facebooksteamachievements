@@ -34,20 +34,7 @@ namespace SteamAchievements.Services.Models
             Mapper.CreateMap<User, UserModel>();
 
             Mapper.CreateMap<UserModel, User>()
-                  .ForMember(entity => entity.UserAchievements, options => options.Ignore())
-                  .ForMember(entity => entity.AccessFailedCount, options => options.Ignore())
-                  .ForMember(entity => entity.Claims, options => options.Ignore())
-                  .ForMember(entity => entity.Email, options => options.Ignore())
-                  .ForMember(entity => entity.EmailConfirmed, options => options.Ignore())
-                  .ForMember(entity => entity.Logins, options => options.Ignore())
-                  .ForMember(entity => entity.LockoutEnabled, options => options.Ignore())
-                  .ForMember(entity => entity.LockoutEnd, options => options.Ignore())
-                  .ForMember(entity => entity.PasswordHash, options => options.Ignore())
-                  .ForMember(entity => entity.PhoneNumber, options => options.Ignore())
-                  .ForMember(entity => entity.PhoneNumberConfirmed, options => options.Ignore())
-                  .ForMember(entity => entity.SecurityStamp, options => options.Ignore())
-                  .ForMember(entity => entity.TwoFactorEnabled, options => options.Ignore())
-                  .ForMember(entity => entity.Roles, options => options.Ignore());
+                  .ForMember(entity => entity.UserAchievements, options => options.Ignore());
 
             // UserAchievement
             Mapper.CreateMap<UserAchievement, Data.UserAchievement>()
