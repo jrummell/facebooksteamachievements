@@ -1,9 +1,11 @@
 using System;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -74,6 +76,8 @@ namespace SteamAchievements.Web.Spa
 
             var mapper = new ModelMapCreator();
             mapper.CreateMappings();
+
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -90,6 +94,22 @@ namespace SteamAchievements.Web.Spa
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            var supportedCultures = new[]
+                                    {
+                                        new CultureInfo("en-US"),
+                                        new CultureInfo("fr"),
+                                        new CultureInfo("pl")
+                                    };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+                                       {
+                                           DefaultRequestCulture = new RequestCulture("en-US"),
+                                           // Formatting numbers, dates, etc.
+                                           SupportedCultures = supportedCultures,
+                                           // UI strings that we have localized.
+                                           SupportedUICultures = supportedCultures
+                                       });
 
             app.UseStaticFiles();
             app.UseDefaultFiles();

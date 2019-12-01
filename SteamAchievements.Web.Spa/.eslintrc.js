@@ -15,7 +15,8 @@ module.exports = {
             "warn",
             4
         ],
-        "no-tabs": "error"
+        "no-tabs": "error",
+        "max-len": "off"
     },
     parserOptions: {
         parser: "@typescript-eslint/parser"

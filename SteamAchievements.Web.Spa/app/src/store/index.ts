@@ -1,13 +1,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import ProfileModel from "@/models/ProfileModel";
 import IUser from "@/models/IUser";
+import IResources from "@/models/IResources";
+import ISteamProfile from "@/models/ISteamProfile";
 
 Vue.use(Vuex);
 
 export class AppState {
     user?: IUser;
-    profile?: ProfileModel;
+    profile?: ISteamProfile;
+    resources: IResources;
 }
 
 export default new Vuex.Store({
@@ -16,8 +18,11 @@ export default new Vuex.Store({
         setUser(state, payload: IUser) {
             state.user = { ...state.user, ...payload };
         },
-        setProfile(state, payload: ProfileModel) {
+        setProfile(state, payload: ISteamProfile) {
             state.profile = { ...state.profile, ...payload };
+        },
+        setResources(state, payload: IResources) {
+            state.resources = { ...state.resources, ...payload };
         }
     },
     actions: {},

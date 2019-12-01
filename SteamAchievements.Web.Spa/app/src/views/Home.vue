@@ -1,8 +1,5 @@
 <template>
-    <div class="home">
-        <img alt="Vue logo" src="../assets/logo.png" />
-        <profile></profile>
-    </div>
+    <div class="home">TODO: achievements here</div>
 </template>
 
 <script lang="ts">

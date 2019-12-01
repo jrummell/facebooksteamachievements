@@ -52,6 +52,10 @@ namespace SteamAchievements.Services
         /// <param name="userId">The user identifier.</param>
         void DeauthorizeUser(int userId);
 
+        /// <summary>
+        /// Creates the user.
+        /// </summary>
+        /// <param name="user">The user.</param>
         void CreateUser(UserModel user);
     }
 }

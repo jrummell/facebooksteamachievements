@@ -4,5 +4,211 @@
         <name>SteamAchievements.Web.Spa</name>
     </assembly>
     <members>
+        <member name="T:SteamAchievements.Web.Spa.Controllers.ProfileController">
+            <summary>
+            Gets a user's steam profile
+            </summary>
+            <seealso cref="T:SteamAchievements.Web.Spa.Controllers.ApiController" />
+        </member>
+        <member name="M:SteamAchievements.Web.Spa.Controllers.ProfileController.#ctor(SteamAchievements.Services.IAchievementService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SteamAchievements.Web.Spa.Controllers.ProfileController"/> class.
+            </summary>
+            <param name="achievementService">The achievement service.</param>
+        </member>
+        <member name="M:SteamAchievements.Web.Spa.Controllers.ProfileController.Get(System.String)">
+            <summary>
+            Gets the specified steam user.
+            </summary>
+            <param name="steamUserId">The steam user identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="T:SteamAchievements.Web.Spa.Controllers.ResourceController">
+            <summary>
+            Gets localized resources
+            </summary>
+            <seealso cref="T:SteamAchievements.Web.Spa.Controllers.ApiController" />
+        </member>
+        <member name="M:SteamAchievements.Web.Spa.Controllers.ResourceController.#ctor(Microsoft.Extensions.Localization.IStringLocalizer{SteamAchievements.Web.Spa.SharedResource})">
+            <summary>
+            Initializes a new instance of the <see cref="T:SteamAchievements.Web.Spa.Controllers.ResourceController"/> class.
+            </summary>
+            <param name="localizer">The localizer.</param>
+        </member>
+        <member name="M:SteamAchievements.Web.Spa.Controllers.ResourceController.Get">
+            <summary>
+            Gets localized resources.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SteamAchievements.Web.Spa.Controllers.UserController">
+            <summary>
+            Manages users
+            </summary>
+            <seealso cref="T:SteamAchievements.Web.Spa.Controllers.ApiController" />
+        </member>
+        <member name="M:SteamAchievements.Web.Spa.Controllers.UserController.#ctor(SteamAchievements.Services.IUserService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SteamAchievements.Web.Spa.Controllers.UserController"/> class.
+            </summary>
+            <param name="userService">The user service.</param>
+        </member>
+        <member name="M:SteamAchievements.Web.Spa.Controllers.UserController.Get(System.Int64)">
+            <summary>
+            Gets the user by facebook user identifier.
+            </summary>
+            <param name="facebookUserId">The facebook user identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SteamAchievements.Web.Spa.Controllers.UserController.Post(SteamAchievements.Services.Models.CreateUserModel)">
+            <summary>
+            Creates a user.
+            </summary>
+            <param name="model">The model.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SteamAchievements.Web.Spa.Controllers.UserController.Put(SteamAchievements.Services.Models.UserModel)">
+            <summary>
+            Updates a user.
+            </summary>
+            <param name="model">The model.</param>
+            <returns></returns>
+        </member>
+        <member name="T:SteamAchievements.Web.Resources.Strings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.ButtonHelp">
+            <summary>
+              Looks up a localized string similar to Help.
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.ButtonHide">
+            <summary>
+              Looks up a localized string similar to Hide.
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.ButtonPublish">
+            <summary>
+              Looks up a localized string similar to Publish.
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.GamesIntructions">
+            <summary>
+              Looks up a localized string similar to Use the publish page to update and publish new achievements to your profile..
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.GamesViewAchievements">
+            <summary>
+              Looks up a localized string similar to View Achievements.
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.GamesYourGames">
+            <summary>
+              Looks up a localized string similar to Your games. This list includes all Steam games that you own (including some free Source Mods) that support achievements..
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.MenuGames">
+            <summary>
+              Looks up a localized string similar to Games.
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.MenuHelp">
+            <summary>
+              Looks up a localized string similar to Help.
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.MenuHome">
+            <summary>
+              Looks up a localized string similar to Home.
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.MenuSettings">
+            <summary>
+              Looks up a localized string similar to Settings.
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.PublishInstructions">
+            <summary>
+              Looks up a localized string similar to Click an achievement icon to select it. You can select up to five at a time. If you don&apos;t see the publish dialog after clicking Publish, scroll down. If you hide an achievement, you will no longer see it on this page and it can not be published..
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.PublishUnpublishedAchievements">
+            <summary>
+              Looks up a localized string similar to Unpublished Achievements.
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.SettingsAutoUpdateLabel">
+            <summary>
+              Looks up a localized string similar to Update and publish my achievements automatically..
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.SettingsCustomUrl">
+            <summary>
+              Looks up a localized string similar to Steam Community Custom URL.
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.SettingsCustomUrlRequired">
+            <summary>
+              Looks up a localized string similar to {0} is required..
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.SettingsDuplicateCustomUrl">
+            <summary>
+              Looks up a localized string similar to This Steam Community URL is already in use..
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.SettingsInvalidCustomUrl">
+            <summary>
+              Looks up a localized string similar to Your Steam Community profile could not be accessed. Please verify that your custom URL is correct and that your profile is public..
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.SettingsPublishDescriptionLabel">
+            <summary>
+              Looks up a localized string similar to Include achievement descriptions when publishing..
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.SettingsPublishOptions">
+            <summary>
+              Looks up a localized string similar to Publish Options.
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.SettingsSuccess">
+            <summary>
+              Looks up a localized string similar to Your settings have been saved successfully..
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.TitleGames">
+            <summary>
+              Looks up a localized string similar to Games.
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.TitleHome">
+            <summary>
+              Looks up a localized string similar to Home.
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.TitlePublish">
+            <summary>
+              Looks up a localized string similar to Publish.
+            </summary>
+        </member>
+        <member name="P:SteamAchievements.Web.Resources.Strings.TitleSettings">
+            <summary>
+              Looks up a localized string similar to Settings.
+            </summary>
+        </member>
     </members>
 </doc>

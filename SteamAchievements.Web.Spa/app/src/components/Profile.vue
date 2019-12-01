@@ -1,6 +1,6 @@
 <template>
     <div v-if="profile != null">
-        <img id="profileImage" src="profile.avatarUrl" class="pull-left" />
+        <img id="profileImage" :src="profile.avatarUrl" class="float-left" />
         <h1 id="steamUserIdHeading">{{ profile.steamUserId }}</h1>
         <span>{{ profile.headline }}</span>
     </div>
@@ -9,13 +9,14 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop, Inject } from "vue-property-decorator";
-import ProfileModel from "../models/ProfileModel";
 import { MutationPayload } from "vuex";
 import { AppState } from "../store";
+import IUser from "../models/IUser";
+import ISteamProfile from "../models/ISteamProfile";
 
 @Component
 export default class Profile extends Vue {
-    profile: ProfileModel | null = null;
+    profile: ISteamProfile | null = null;
 
     mounted() {
         this.$store.subscribe((mutation: MutationPayload, state: AppState) => {
