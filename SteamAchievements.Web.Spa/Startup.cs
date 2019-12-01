@@ -1,8 +1,14 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Reflection;
+using System.Security;
+using System.Security.Cryptography.X509Certificates;
 using Autofac;
+using IdentityServer4;
+using IdentityServer4.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -11,15 +17,19 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
+using SteamAchievements.Web.Spa.Settings;
+using JsonWebKey = Microsoft.IdentityModel.Tokens.JsonWebKey;
 
 namespace SteamAchievements.Web.Spa
 {
-    public class Startup
+    internal class Startup
     {
         public Startup(IConfiguration configuration)
         {
@@ -78,6 +88,54 @@ namespace SteamAchievements.Web.Spa
             mapper.CreateMappings();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            ConfigureOauth2(services);
+        }
+
+        private void ConfigureOauth2(IServiceCollection services)
+        {
+            // OAuth 2
+            var apiSettingsSection = Configuration.GetSection(nameof(ApiSettings));
+            var apiSettings = new ApiSettings();
+            apiSettingsSection.Bind(apiSettings);
+
+            SecureString password = new NetworkCredential("", apiSettings.CertificatePassword).SecurePassword;
+            var certificate = new X509Certificate2(File.ReadAllBytes(apiSettings.CertificatePath), password);
+
+            services.AddIdentityServer()
+                    .AddInMemoryIdentityResources(new[] {new IdentityResources.OpenId()})
+                     // http://docs.identityserver.io/en/latest/topics/add_apis.html
+                    .AddInMemoryApiResources(new[] {new ApiResource(IdentityServerConstants.LocalApi.ScopeName)})
+                    .AddInMemoryClients(new[]
+                                        {
+                                            new Client
+                                            {
+                                                ClientId = apiSettings.ClientId,
+                                                AllowedGrantTypes = GrantTypes.ClientCredentials,
+                                                ClientSecrets = new List<Secret>
+                                                                {
+                                                                    new Secret(apiSettings.ClientSecret
+                                                                                          .Sha256())
+                                                                },
+                                                AllowedScopes = {IdentityServerConstants.LocalApi.ScopeName}
+                                            }
+                                        })
+                     // http://docs.identityserver.io/en/latest/topics/startup.html#refstartupkeymaterial
+                    //.AddValidationKey(new SecurityKeyInfo
+                    //                  {
+                    //                      Key =
+                    //                          new JsonWebKey(JsonConvert
+                    //                                            .SerializeObject(new
+                    //                                                             {
+                    //                                                                 key
+                    //                                                                     = Guid
+                    //                                                                        .NewGuid()
+                    //                                                             })),
+                    //                      SigningAlgorithm = "RS256"
+                    //                  });
+            .AddSigningCredential(new SigningCredentials(new X509SecurityKey(certificate), "RS256"));
+
+            services.AddLocalApiAuthentication();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -116,7 +174,11 @@ namespace SteamAchievements.Web.Spa
 
             app.UseHttpsRedirection();
 
+            app.UseRouting();
+            
+            app.UseAuthentication();
             app.UseAuthorization();
+            app.UseIdentityServer();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -124,8 +186,6 @@ namespace SteamAchievements.Web.Spa
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"); });
-
-            app.UseRouting();
 
             app.UseEndpoints(config => { config.MapControllers(); });
         }

@@ -6,10 +6,20 @@ import ISteamProfile from "@/models/ISteamProfile";
 
 Vue.use(Vuex);
 
+interface IApiSettings {
+    clientId: string;
+    clientSecret: string;
+}
+
 export class AppState {
     user?: IUser;
     profile?: ISteamProfile;
     resources: IResources;
+    apiSettings: IApiSettings = {
+        // https://cli.vuejs.org/guide/mode-and-env.html#environment-variables
+        clientId: process.env.VUE_APP_CLIENT_ID,
+        clientSecret: process.env.VUE_APP_CLIENT_SECRET
+    };
 }
 
 export default new Vuex.Store({

@@ -2,34 +2,22 @@
     <div id="app">
         <div class="header">
             <router-link to="/">
-                <img
-                    src="/images/banner-light.png"
-                    class="img-responsive"
-                    alt="Steam Achievements"
-                />
+                <img src="/images/banner-light.png" class="img-responsive" alt="Steam Achievements" />
             </router-link>
         </div>
         <div v-if="loaded">
             <div v-if="loggedIn">
                 <b-nav tabs>
                     <b-nav-item>
-                        <router-link to="/">{{
-                            resources.menuHome
-                        }}</router-link>
+                        <router-link to="/">{{ resources.menuHome }}</router-link>
                     </b-nav-item>
                     <b-nav-item>
-                        <router-link to="/games">{{
-                            resources.menuGames
-                        }}</router-link>
+                        <router-link to="/games">{{ resources.menuGames }}</router-link>
                     </b-nav-item>
                     <b-nav-item>
-                        <router-link to="/settings">{{
-                            resources.menuSettings
-                        }}</router-link>
+                        <router-link to="/settings">{{ resources.menuSettings }}</router-link>
                     </b-nav-item>
-                    <b-nav-item :href="helpConfig.helpUrl" target="_blank">{{
-                        resources.menuHelp
-                    }}</b-nav-item>
+                    <b-nav-item :href="helpConfig.helpUrl" target="_blank">{{ resources.menuHelp }}</b-nav-item>
                 </b-nav>
                 <profile></profile>
             </div>
@@ -39,11 +27,7 @@
             </div>
         </div>
         <div v-else>
-            <font-awesome-icon
-                icon="spinner"
-                spin
-                size="2x"
-            ></font-awesome-icon>
+            <font-awesome-icon icon="spinner" spin size="2x"></font-awesome-icon>
         </div>
 
         <router-view />
@@ -57,9 +41,14 @@ import { MutationPayload } from "vuex";
 import { AppState } from "./store/index";
 import IResources from "./models/IResources";
 import HelpConfig from "./config/HelpConfig";
+import { Inject } from "vue-property-decorator";
+import RestClient from "./helpers/RestClient";
 
 @Component
 export default class App extends Vue {
+    @Inject()
+    restClient: RestClient;
+
     helpConfig: HelpConfig = new HelpConfig();
 
     loggedIn: boolean = false;
@@ -81,12 +70,30 @@ export default class App extends Vue {
     }
 
     async getResources(): Promise<void> {
-        const response = await fetch("/api/Resource");
-        this.resources = await response.json();
+        if (!(await this.authorize())) {
+            return;
+        }
+
+        this.resources = await this.restClient.getJson("/api/Resource");
 
         this.$store.commit("setResources", this.resources);
 
         this.loaded = true;
+    }
+
+    async authorize(): Promise<boolean> {
+        const apiSettings = this.$store.state.apiSettings;
+        const body = `grant_type=client_credentials&client_id=${apiSettings.clientId}&client_secret=${apiSettings.clientSecret}`;
+
+        // https://gomakethings.com/using-oauth-with-fetch-in-vanilla-js/
+        const json = await this.restClient.postFormUrlEncoded<{
+            access_token: string;
+        }>("/connect/token", body);
+        const token: string = json.access_token;
+
+        this.restClient.setToken(token);
+
+        return true;
     }
 }
 </script>

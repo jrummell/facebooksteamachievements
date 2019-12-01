@@ -13,11 +13,14 @@ import { Prop, Component, Inject } from "vue-property-decorator";
 import facebookLogin from "facebook-login-vuejs";
 import FacebookConfig from "../config/FacebookConfig";
 import IUser from "../models/IUser";
+import RestClient from "../helpers/RestClient";
 
 @Component({})
 export default class Login extends Vue {
     @Inject()
     facebookConfig: FacebookConfig;
+    @Inject()
+    restClient: RestClient;
 
     isConnected: boolean = false;
     FB: any;
@@ -52,21 +55,15 @@ export default class Login extends Vue {
     }
 
     async getUser() {
-        let response = await fetch(`api/User/${this.userId}`);
-        if (response.status === 404) {
+        let user = await this.restClient.getJson<IUser>(
+            `api/User/${this.userId}`
+        );
+        if (user == null) {
             // create a user if they don't exist
             const model = { facebookUserId: this.userId };
 
-            response = await fetch("/api/User", {
-                method: "POST",
-                body: JSON.stringify(model),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
+            user = await this.restClient.postJson("/api/User", model);
         }
-
-        const user: IUser = await response.json();
 
         this.$store.commit("setUser", user);
     }

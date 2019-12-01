@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 
 //  Copyright  John Rummell
 // 
@@ -19,10 +19,13 @@
 
 #endregion
 
+using IdentityServer4;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SteamAchievements.Web.Spa.Controllers
 {
+    [Authorize(IdentityServerConstants.LocalApi.PolicyName)]
     [ApiController]
     [Route("api/[controller]")]
     public abstract class ApiController : ControllerBase

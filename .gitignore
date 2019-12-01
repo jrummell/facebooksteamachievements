@@ -8,3 +8,5 @@ packages
 /.vs
 /SteamAchievements.Web/Properties/PublishProfiles
 **/node_modules
+**/appsettings.Local.json
+*.pfx

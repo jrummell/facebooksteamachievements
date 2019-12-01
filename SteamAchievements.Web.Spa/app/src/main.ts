@@ -35,16 +35,18 @@ Vue.component(facebookLogin.name, facebookLogin);
 import Login from "./components/Login.vue";
 import Profile from "./components/Profile.vue";
 import HelpButton from "./components/HelpButton.vue";
+import RestClient from "./helpers/RestClient";
 
 Vue.component(Login.name, Login);
 Vue.component(Profile.name, Profile);
 Vue.component(HelpButton.name, HelpButton);
 
 const facebookConfig = new FacebookConfig();
+const restClient = new RestClient();
 
 new Vue({
     router,
     store,
-    provide: { facebookConfig },
+    provide: { facebookConfig, restClient },
     render: h => h(App)
 }).$mount("#app");
