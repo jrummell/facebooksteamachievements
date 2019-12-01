@@ -7,7 +7,6 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
-import HelpConfig from "../config/HelpConfig";
 
 @Component
 export default class HelpButton extends Vue {
@@ -17,10 +16,8 @@ export default class HelpButton extends Vue {
     @Prop({ required: false })
     anchor?: string;
 
-    helpConfig: HelpConfig = new HelpConfig();
-
     get href(): string {
-        const link = this.link || this.helpConfig.helpUrl;
+        const link = this.link || this.$store.state.helpUrl;
         if (this.anchor) {
             return `${link}#${this.anchor}`;
         }

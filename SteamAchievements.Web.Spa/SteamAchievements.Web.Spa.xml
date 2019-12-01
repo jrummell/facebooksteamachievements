@@ -4,6 +4,25 @@
         <name>SteamAchievements.Web.Spa</name>
     </assembly>
     <members>
+        <member name="T:SteamAchievements.Web.Spa.Controllers.GameController">
+            <summary>
+            Gets a user's games
+            </summary>
+            <seealso cref="T:SteamAchievements.Web.Spa.Controllers.ApiController" />
+        </member>
+        <member name="M:SteamAchievements.Web.Spa.Controllers.GameController.#ctor(SteamAchievements.Services.IAchievementService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SteamAchievements.Web.Spa.Controllers.GameController"/> class.
+            </summary>
+            <param name="achievementService">The achievement service.</param>
+        </member>
+        <member name="M:SteamAchievements.Web.Spa.Controllers.GameController.Get(System.String)">
+            <summary>
+            Gets the user's games.
+            </summary>
+            <param name="steamUserId">The steam user identifier.</param>
+            <returns></returns>
+        </member>
         <member name="T:SteamAchievements.Web.Spa.Controllers.ProfileController">
             <summary>
             Gets a user's steam profile

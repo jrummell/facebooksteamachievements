@@ -8,6 +8,7 @@
         "eslint-report": "eslint -f json -o eslint-report.json . --ext .js,.ts,.vue",
         "eslint-to-editorconfig": "eslint-to-editorconfig .eslintrc.json",
         "serve": "vue-cli-service serve ./src/main.ts",
+        "tsc": "tsc --noEmit",
         "build": "vue-cli-service build ./src/main.ts --mode development",
         "test:unit": "vue-cli-service test:unit",
         "lint": "vue-cli-service lint"

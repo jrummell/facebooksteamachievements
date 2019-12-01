@@ -2,7 +2,6 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import FacebookConfig from "./config/FacebookConfig";
 
 Vue.config.productionTip = false;
 
@@ -41,12 +40,11 @@ Vue.component(Login.name, Login);
 Vue.component(Profile.name, Profile);
 Vue.component(HelpButton.name, HelpButton);
 
-const facebookConfig = new FacebookConfig();
 const restClient = new RestClient();
 
 new Vue({
     router,
     store,
-    provide: { facebookConfig, restClient },
+    provide: { restClient },
     render: h => h(App)
 }).$mount("#app");

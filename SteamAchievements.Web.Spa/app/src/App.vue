@@ -17,7 +17,7 @@
                     <b-nav-item>
                         <router-link to="/settings">{{ resources.menuSettings }}</router-link>
                     </b-nav-item>
-                    <b-nav-item :href="helpConfig.helpUrl" target="_blank">{{ resources.menuHelp }}</b-nav-item>
+                    <b-nav-item :href="helpUrl" target="_blank">{{ resources.menuHelp }}</b-nav-item>
                 </b-nav>
                 <profile></profile>
             </div>
@@ -40,7 +40,6 @@ import Component from "vue-class-component";
 import { MutationPayload } from "vuex";
 import { AppState } from "./store/index";
 import IResources from "./models/IResources";
-import HelpConfig from "./config/HelpConfig";
 import { Inject } from "vue-property-decorator";
 import RestClient from "./helpers/RestClient";
 
@@ -49,14 +48,14 @@ export default class App extends Vue {
     @Inject()
     restClient: RestClient;
 
-    helpConfig: HelpConfig = new HelpConfig();
-
     loggedIn: boolean = false;
     loaded: boolean = false;
     resources: IResources | null = null;
+    helpUrl: string = "";
 
     mounted() {
         this.loggedIn = this.$store.state.user != undefined;
+        this.helpUrl = this.$store.state.helpUrl;
 
         this.$store.subscribe((mutation: MutationPayload, state: AppState) => {
             if (mutation.type == "setUser") {

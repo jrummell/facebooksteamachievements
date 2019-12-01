@@ -11,14 +11,11 @@
 import Vue from "vue";
 import { Prop, Component, Inject } from "vue-property-decorator";
 import facebookLogin from "facebook-login-vuejs";
-import FacebookConfig from "../config/FacebookConfig";
 import IUser from "../models/IUser";
 import RestClient from "../helpers/RestClient";
 
 @Component({})
 export default class Login extends Vue {
-    @Inject()
-    facebookConfig: FacebookConfig;
     @Inject()
     restClient: RestClient;
 
@@ -27,7 +24,7 @@ export default class Login extends Vue {
     userId: number;
 
     get appId(): string {
-        return this.facebookConfig.appId.toString();
+        return this.$store.state.facebookAppId;
     }
 
     sdkLoaded(payload: { isConnected: boolean; FB: any }) {

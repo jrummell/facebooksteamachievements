@@ -20,6 +20,8 @@ export class AppState {
         clientId: process.env.VUE_APP_CLIENT_ID,
         clientSecret: process.env.VUE_APP_CLIENT_SECRET
     };
+    facebookAppId: number = process.env.VUE_APP_FACEBOOK_APP_ID;
+    helpUrl: string = process.env.VUE_APP_HELP_URL;
 }
 
 export default new Vuex.Store({
