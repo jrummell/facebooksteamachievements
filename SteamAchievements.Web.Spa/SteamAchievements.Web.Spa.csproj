@@ -14,6 +14,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="app\**" />
+    <Compile Remove="wwwroot\**" />
+    <Content Remove="app\**" />
+    <Content Remove="wwwroot\**" />
+    <EmbeddedResource Remove="app\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
+    <None Remove="app\**" />
+    <None Remove="wwwroot\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SteamAchievements.Services\SteamAchievements.Services.csproj" />
   </ItemGroup>
 

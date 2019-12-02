@@ -51,8 +51,9 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Inject } from "vue-property-decorator";
 import IResources from "../models/IResources";
-import IUser from "../models/IUser";
+import { IUser } from "../models";
 import RestClient from "../helpers/RestClient";
+import { MutationTypes } from "../store";
 
 @Component
 export default class Settings extends Vue {
@@ -94,7 +95,7 @@ export default class Settings extends Vue {
         if (this.steamUserIdValid) {
             this.model = response;
 
-            this.$store.commit("setUser", this.model);
+            this.$store.commit(MutationTypes.setUser, this.model);
         }
     }
 }

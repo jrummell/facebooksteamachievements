@@ -8,27 +8,26 @@
         <div v-if="loaded">
             <div v-if="loggedIn">
                 <b-nav tabs>
-                    <b-nav-item>
+                    <b-nav-item :active="$route.name == 'home'">
                         <router-link to="/">{{ resources.menuHome }}</router-link>
                     </b-nav-item>
-                    <b-nav-item>
+                    <b-nav-item :active="$route.name == 'games'">
                         <router-link to="/games">{{ resources.menuGames }}</router-link>
                     </b-nav-item>
-                    <b-nav-item>
+                    <b-nav-item :active="$route.name == 'settings'">
                         <router-link to="/settings">{{ resources.menuSettings }}</router-link>
                     </b-nav-item>
                     <b-nav-item :href="helpUrl" target="_blank">{{ resources.menuHelp }}</b-nav-item>
                 </b-nav>
-                <profile></profile>
+                <div class="mt-2 mb-2">
+                    <profile></profile>
+                </div>
             </div>
-
             <div v-else>
                 <login></login>
             </div>
         </div>
-        <div v-else>
-            <font-awesome-icon icon="spinner" spin size="2x"></font-awesome-icon>
-        </div>
+        <loading-indicator :loading="!loaded"></loading-indicator>
 
         <router-view />
     </div>
@@ -38,8 +37,8 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { MutationPayload } from "vuex";
-import { AppState } from "./store/index";
-import IResources from "./models/IResources";
+import { AppState, MutationTypes } from "./store";
+import { IResources } from "./models";
 import { Inject } from "vue-property-decorator";
 import RestClient from "./helpers/RestClient";
 
@@ -58,10 +57,8 @@ export default class App extends Vue {
         this.helpUrl = this.$store.state.helpUrl;
 
         this.$store.subscribe((mutation: MutationPayload, state: AppState) => {
-            if (mutation.type == "setUser") {
+            if (mutation.type == MutationTypes.setUser) {
                 this.loggedIn = state.user != undefined;
-
-                //TODO: route to settings page if steamUserId is null
             }
         });
 
@@ -75,7 +72,7 @@ export default class App extends Vue {
 
         this.resources = await this.restClient.getJson("/api/Resource");
 
-        this.$store.commit("setResources", this.resources);
+        this.$store.commit(MutationTypes.setResources, this.resources);
 
         this.loaded = true;
     }

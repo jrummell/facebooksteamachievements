@@ -34,12 +34,14 @@ Vue.component(facebookLogin.name, facebookLogin);
 import Login from "./components/Login.vue";
 import Profile from "./components/Profile.vue";
 import HelpButton from "./components/HelpButton.vue";
-import RestClient from "./helpers/RestClient";
+import LoadingIndicator from "./components/LoadingIndicator.vue";
 
 Vue.component(Login.name, Login);
 Vue.component(Profile.name, Profile);
 Vue.component(HelpButton.name, HelpButton);
+Vue.component(LoadingIndicator.name, LoadingIndicator);
 
+import RestClient from "./helpers/RestClient";
 const restClient = new RestClient();
 
 new Vue({

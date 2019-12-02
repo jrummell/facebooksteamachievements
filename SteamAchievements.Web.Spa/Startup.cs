@@ -121,19 +121,7 @@ namespace SteamAchievements.Web.Spa
                                             }
                                         })
                      // http://docs.identityserver.io/en/latest/topics/startup.html#refstartupkeymaterial
-                    //.AddValidationKey(new SecurityKeyInfo
-                    //                  {
-                    //                      Key =
-                    //                          new JsonWebKey(JsonConvert
-                    //                                            .SerializeObject(new
-                    //                                                             {
-                    //                                                                 key
-                    //                                                                     = Guid
-                    //                                                                        .NewGuid()
-                    //                                                             })),
-                    //                      SigningAlgorithm = "RS256"
-                    //                  });
-            .AddSigningCredential(new SigningCredentials(new X509SecurityKey(certificate), "RS256"));
+                    .AddSigningCredential(new SigningCredentials(new X509SecurityKey(certificate), "RS256"));
 
             services.AddLocalApiAuthentication();
         }
@@ -168,9 +156,9 @@ namespace SteamAchievements.Web.Spa
                                            // UI strings that we have localized.
                                            SupportedUICultures = supportedCultures
                                        });
-
-            app.UseStaticFiles();
+            // allow / to route to /wwwroot/index.html
             app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 
