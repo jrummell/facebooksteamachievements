@@ -4,6 +4,32 @@
         <name>SteamAchievements.Web.Spa</name>
     </assembly>
     <members>
+        <member name="T:SteamAchievements.Web.Spa.Controllers.AchievementController">
+            <summary>
+                Manages a user's achievements
+            </summary>
+            <seealso cref="T:SteamAchievements.Web.Spa.Controllers.ApiController" />
+        </member>
+        <member name="M:SteamAchievements.Web.Spa.Controllers.AchievementController.#ctor(SteamAchievements.Services.IAchievementService)">
+            <summary>
+                Initializes a new instance of the <see cref="T:SteamAchievements.Web.Spa.Controllers.AchievementController" /> class.
+            </summary>
+            <param name="achievementService">The achievement service.</param>
+        </member>
+        <member name="M:SteamAchievements.Web.Spa.Controllers.AchievementController.Update(System.Int32)">
+            <summary>
+                Updates the user's achievements.
+            </summary>
+            <param name="userId">The user identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SteamAchievements.Web.Spa.Controllers.AchievementController.Get(System.Int32)">
+            <summary>
+                Gets the user's unpublished achievements.
+            </summary>
+            <param name="userId">The user identifier.</param>
+            <returns></returns>
+        </member>
         <member name="T:SteamAchievements.Web.Spa.Controllers.GameController">
             <summary>
             Gets a user's games

@@ -10,7 +10,7 @@ export default class RestClient {
         this.headers.set("Authorization", `Bearer ${token}`);
     }
 
-    async getJson<TBody, TResponse = TBody>(url: string): Promise<TResponse | null> {
+    async getJson<TResponse>(url: string): Promise<TResponse | null> {
         const response = await fetch(url, {
             method: "GET",
             headers: this.headers

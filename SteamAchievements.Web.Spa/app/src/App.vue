@@ -29,7 +29,7 @@
         </div>
         <loading-indicator :loading="!loaded"></loading-indicator>
 
-        <router-view />
+        <router-view v-if="loaded && loggedIn" />
     </div>
 </template>
 
