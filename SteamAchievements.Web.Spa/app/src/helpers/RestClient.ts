@@ -43,6 +43,16 @@ export default class RestClient {
         return await response.json();
     }
 
+    async deleteJson<TBody, TResponse = TBody>(url: string, body: TBody): Promise<TResponse> {
+        const response = await fetch(url, {
+            method: "DELETE",
+            body: JSON.stringify(body),
+            headers: this.headers
+        });
+
+        return await response.json();
+    }
+
     async postFormUrlEncoded<TResponse>(url: string, body: string): Promise<TResponse> {
         const response = await fetch(url, {
             method: "POST",

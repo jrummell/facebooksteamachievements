@@ -19,6 +19,7 @@
 
 #endregion
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -63,11 +64,49 @@ namespace SteamAchievements.Web.Spa.Controllers
         [HttpGet("{userId}")]
         public async Task<ActionResult<GameAchievementsModel[]>> Get(int userId)
         {
-            return _achievementService.GetUnpublishedAchievements(userId, null)
-                                      .ToLookup(a => a.Game.Name)
-                                      .Select(group => new GameAchievementsModel
-                                                       {Game = group.Key, Achievements = group})
-                                      .ToArray();
+            var gameAchievements = _achievementService.GetUnpublishedAchievements(userId, null)
+                                                      .ToLookup(a => a.Game.Name)
+                                                      .Select(group => new GameAchievementsModel
+                                                                       {
+                                                                           Game = group.First().Game,
+                                                                           Achievements = group
+                                                                       })
+                                                      .ToArray();
+
+            // we don't need the game property on model since we're returning games with achievements
+            foreach (var model in gameAchievements)
+            {
+                foreach (var achievement in model.Achievements)
+                {
+                    achievement.Game = null;
+                }
+            }
+
+            return gameAchievements;
+        }
+
+        /// <summary>
+        /// Publishes the user's achievements.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="achievementIds">The achievement ids.</param>
+        /// <returns></returns>
+        [HttpPost("{userId}")]
+        public async Task<ActionResult<bool>> Publish(int userId, IEnumerable<int> achievementIds)
+        {
+            return _achievementService.PublishAchievements(userId, achievementIds);
+        }
+
+        /// <summary>
+        /// Hides the user's achievements.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="achievementIds">The achievement ids.</param>
+        /// <returns></returns>
+        [HttpDelete("{userId}")]
+        public async Task<ActionResult<bool>> Hide(int userId, IEnumerable<int> achievementIds)
+        {
+            return _achievementService.HideAchievements(userId, achievementIds);
         }
     }
 }

@@ -1,6 +1,7 @@
 import IAchievement from "./IAchievement";
+import IGame from "./IGame";
 
 export default interface IGameAchievements {
-    game: string;
+    game: IGame;
     achievements: IAchievement[];
 }

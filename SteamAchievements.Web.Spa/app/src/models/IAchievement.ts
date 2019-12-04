@@ -1,5 +1,3 @@
-import IGame from "./IGame";
-
 export default interface IAchievement {
     id: number;
     apiName: string;
@@ -7,6 +5,5 @@ export default interface IAchievement {
     name: string;
     description: string;
     language: string;
-    game: IGame;
     selected?: boolean;
 }

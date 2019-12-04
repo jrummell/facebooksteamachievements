@@ -26,7 +26,7 @@ namespace SteamAchievements.Web.Spa.Models
 {
     public class GameAchievementsModel
     {
-        public string Game { get; set; }
+        public GameModel Game { get; set; }
         public IEnumerable<AchievementModel> Achievements { get; set; }
     }
 }
