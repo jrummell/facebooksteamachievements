@@ -33,7 +33,7 @@ namespace SteamAchievements.Services.Tests
     [TestFixture]
     public class AchievementServiceFixture
     {
-    	[TestFixtureSetUp]
+    	[OneTimeSetUp]
     	public void TestFixtureSetUp()
     	{
     		ModelMapCreator mapCreator = new ModelMapCreator();
