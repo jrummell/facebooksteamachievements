@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -16,14 +16,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <!-- the vue app is not managed by visual studio -->
         <Compile Remove="app\**" />
-        <Compile Remove="wwwroot\**" />
         <Content Remove="app\**" />
-        <Content Remove="wwwroot\**" />
         <EmbeddedResource Remove="app\**" />
-        <EmbeddedResource Remove="wwwroot\**" />
         <None Remove="app\**" />
-        <None Remove="wwwroot\**" />
     </ItemGroup>
 
     <ItemGroup>
