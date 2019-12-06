@@ -24,6 +24,16 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="steam-achievements.pfx" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="steam-achievements.pfx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\SteamAchievements.Services\SteamAchievements.Services.csproj" />
     </ItemGroup>
 
