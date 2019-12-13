@@ -31,16 +31,21 @@ export default class Profile extends Vue {
                 state.user &&
                 state.user.steamUserId
             ) {
-                this.getUser();
+                this.getProfile();
             }
         });
 
         if (this.$store.state.user.steamUserId) {
-            this.getUser();
+            this.getProfile();
         }
     }
 
-    async getUser(): Promise<void> {
+    async getProfile(): Promise<void> {
+        if (this.$store.state.profile) {
+            this.profile = this.$store.state.profile;
+            return;
+        }
+
         if (this.$store.state.user.steamUserId) {
             this.profile = await this.restClient.getJson(
                 `/api/Profile/${this.$store.state.user.steamUserId}`

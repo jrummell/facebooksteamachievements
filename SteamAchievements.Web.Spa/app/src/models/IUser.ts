@@ -1,5 +1,5 @@
 export default interface IUser {
-    id: number;
+    id: string;
     publishDescription: boolean;
     steamUserId?: string;
     language?: string;

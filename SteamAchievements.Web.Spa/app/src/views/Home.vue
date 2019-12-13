@@ -1,5 +1,13 @@
 <template>
     <b-card>
+        <div v-if="!loading && showSettings">
+            <div class="alert alert-info">
+                <p>
+                    Configure your steam
+                    <router-link to="/settings">{{ resources.menuSettings }}</router-link>
+                </p>
+            </div>
+        </div>
         <div v-if="!loading">
             <div class="alert alert-info">
                 <p>{{resources.publishInstructions}}</p>
@@ -71,7 +79,9 @@ export default class Home extends Vue {
 
     resources: IResources = this.$store.state.resources;
 
+    user: IUser = this.$store.state.user;
     loading: boolean = true;
+    showSettings: boolean = false;
     achievements: IGameAchievements[] = this.$store.state.achievements || [];
 
     mounted() {
@@ -79,6 +89,9 @@ export default class Home extends Vue {
 
         this.$store.subscribe((mutation: MutationPayload, state: AppState) => {
             if (mutation.type == MutationTypes.setUser) {
+                if (state.user) {
+                    this.user = state.user;
+                }
                 this.loadAchievements();
             }
         });
@@ -87,28 +100,31 @@ export default class Home extends Vue {
     async loadAchievements(): Promise<void> {
         if (
             this.achievements.length === 0 &&
-            this.$store.state.user &&
-            this.$store.state.user.id
+            this.user &&
+            this.user.id &&
+            this.user.steamUserId
         ) {
             this.loading = true;
 
-            const userId: number = this.$store.state.user.id;
             await this.restClient.postJson<{}, number>(
-                `/api/Achievement/Update/${userId}`,
+                `/api/Achievement/Update/${this.user.id}`,
                 {}
             );
 
             await this.getAchievements();
 
             this.loading = false;
+            this.showSettings = false;
+        } else {
+            this.loading = false;
         }
+
+        this.showSettings = this.user && !this.user.steamUserId;
     }
 
     async getAchievements(): Promise<void> {
-        const userId: number = this.$store.state.user.id;
-
         const achievements = await this.restClient.getJson<IGameAchievements[]>(
-            `/api/Achievement/${userId}`
+            `/api/Achievement/${this.user.id}`
         );
 
         if (achievements) {
@@ -181,7 +197,7 @@ export default class Home extends Vue {
     }
 
     async markPublished(
-        userId: number,
+        userId: string,
         achievementIds: number[]
     ): Promise<void> {
         await this.restClient.postJson(

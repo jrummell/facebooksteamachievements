@@ -1,5 +1,5 @@
 module.exports = {
-    outputDir: "../wwwroot",
+    outputDir: "build",
     productionSourceMap: true,
     chainWebpack: config => {
         config.externals({
