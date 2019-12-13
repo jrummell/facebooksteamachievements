@@ -21,13 +21,12 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace SteamAchievements.Data
 {
-    public class User
+    public class User : IdentityUser
     {
-        public int Id { get; set; }
-
         [StringLength(50)]
         public string SteamUserId { get; set; }
 

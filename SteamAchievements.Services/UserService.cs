@@ -30,12 +30,15 @@ namespace SteamAchievements.Services
     public class UserService : Disposable, IUserService
     {
         private readonly IAchievementManager _manager;
+        private readonly IMapper _mapper;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserService"/> class.
+        /// Initializes a new instance of the <see cref="UserService" /> class.
         /// </summary>
         /// <param name="manager">The manager.</param>
-        public UserService(IAchievementManager manager)
+        /// <param name="mapper">The mapper.</param>
+        /// <exception cref="ArgumentNullException">manager</exception>
+        public UserService(IAchievementManager manager, IMapper mapper)
         {
             if (manager == null)
             {
@@ -43,6 +46,7 @@ namespace SteamAchievements.Services
             }
 
             _manager = manager;
+            _mapper = mapper;
         }
 
         #region IUserService Members
@@ -52,7 +56,7 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public UserModel GetUser(int userId)
+        public UserModel GetUser(string userId)
         {
             Data.User user = _manager.GetUser(userId);
 
@@ -94,7 +98,7 @@ namespace SteamAchievements.Services
         /// Deauthorizes the user.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        public void DeauthorizeUser(int userId)
+        public void DeauthorizeUser(string userId)
         {
             _manager.DeauthorizeUser(userId);
         }
@@ -111,14 +115,14 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        private static Models.UserModel Map(Data.User user)
+        private Models.UserModel Map(Data.User user)
         {
             if (user == null)
             {
                 return null;
             }
 
-            return Mapper.Map<Models.UserModel>(user);
+            return _mapper.Map<Models.UserModel>(user);
         }
 
         /// <summary>
@@ -126,14 +130,14 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        private static Data.User Map(Models.UserModel user)
+        private Data.User Map(Models.UserModel user)
         {
             if (user == null)
             {
                 return null;
             }
 
-            return Mapper.Map<Data.User>(user);
+            return _mapper.Map<Data.User>(user);
         }
     }
     

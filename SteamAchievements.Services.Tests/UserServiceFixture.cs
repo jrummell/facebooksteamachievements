@@ -19,6 +19,7 @@
 
 #endregion
 
+using AutoMapper;
 using Moq;
 using NUnit.Framework;
 using SteamAchievements.Data;
@@ -34,7 +35,7 @@ namespace SteamAchievements.Services.Tests
         public void SetUp()
         {
             _managerMock = new Mock<IAchievementManager>();
-            _service = new UserService(_managerMock.Object);
+            _service = new UserService(_managerMock.Object, Mock.Of<IMapper>());
         }
 
         [TearDown]
@@ -49,19 +50,19 @@ namespace SteamAchievements.Services.Tests
         [Test]
         public void DeauthorizeUser()
         {
-            const int facebookUserId = 1234;
-            _managerMock.Setup(manager => manager.DeauthorizeUser(facebookUserId))
+            string userId = 1234.ToString();
+            _managerMock.Setup(manager => manager.DeauthorizeUser(userId))
                         .Verifiable();
 
-            _service.DeauthorizeUser(facebookUserId);
+            _service.DeauthorizeUser(userId);
 
             _managerMock.Verify();
         }
 
         [Test]
-        public void GetUserByFacebookId()
+        public void GetUserById()
         {
-            const int userId = 1234;
+            string userId = 1234.ToString();
             _managerMock.Setup(manager => manager.GetUser(userId))
                         .Returns(new User {Id = userId})
                         .Verifiable();
@@ -76,7 +77,7 @@ namespace SteamAchievements.Services.Tests
         [Test]
         public void UpdateUser()
         {
-            var user = new Models.UserModel {Id = 1234, SteamUserId = "user1"};
+            var user = new Models.UserModel {Id = 1234.ToString(), SteamUserId = "user1"};
 
             var managerMock = new Mock<IAchievementManager>();
             managerMock.Setup(
@@ -85,7 +86,7 @@ namespace SteamAchievements.Services.Tests
                                              It.Is<User>(u => u.SteamUserId == user.SteamUserId && u.Id == user.Id)))
                        .Verifiable();
 
-            var service = new UserService(managerMock.Object);
+            var service = new UserService(managerMock.Object, Mock.Of<IMapper>());
             service.UpdateUser(user);
 
             managerMock.Verify();

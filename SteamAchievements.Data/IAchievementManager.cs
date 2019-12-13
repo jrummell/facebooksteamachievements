@@ -31,7 +31,7 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        User GetUser(int userId);
+        User GetUser(string userId);
 
         /// <summary>
         /// Gets the user by facebook user identifier.
@@ -45,7 +45,7 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        ICollection<Achievement> GetUnpublishedAchievements(int userId);
+        ICollection<Achievement> GetUnpublishedAchievements(string userId);
 
         /// <summary>
         /// Gets the unpublished achievements by oldest date.
@@ -53,7 +53,7 @@ namespace SteamAchievements.Data
         /// <param name="userId">The user identifier.</param>
         /// <param name="oldestDate">The oldest date.</param>
         /// <returns></returns>
-        ICollection<Achievement> GetUnpublishedAchievements(int userId, DateTime oldestDate);
+        ICollection<Achievement> GetUnpublishedAchievements(string userId, DateTime oldestDate);
 
         /// <summary>
         /// Updates the achievements.
@@ -66,14 +66,14 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <param name="achievementIds">The achievement ids.</param>
-        void UpdatePublished(int userId, IEnumerable<int> achievementIds);
+        void UpdatePublished(string userId, IEnumerable<int> achievementIds);
 
         /// <summary>
         /// Updates the hidden flag on the given achievements.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <param name="achievementIds">The achievement ids.</param>
-        void UpdateHidden(int userId, IEnumerable<int> achievementIds);
+        void UpdateHidden(string userId, IEnumerable<int> achievementIds);
 
         /// <summary>
         /// Updates the user.
@@ -85,8 +85,12 @@ namespace SteamAchievements.Data
         /// Deauthorizes the user.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        void DeauthorizeUser(int userId);
+        void DeauthorizeUser(string userId);
 
+        /// <summary>
+        /// Creates the user.
+        /// </summary>
+        /// <param name="user">The user.</param>
         void CreateUser(User user);
     }
 }

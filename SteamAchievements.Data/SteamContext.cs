@@ -1,11 +1,15 @@
+using IdentityServer4.EntityFramework.Options;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace SteamAchievements.Data
 {
-    public class SteamContext : DbContext
+    public class SteamContext : ApiAuthorizationDbContext<User>
     {
-        public SteamContext(DbContextOptions<SteamContext> options)
-            : base(options)
+        public SteamContext(DbContextOptions<SteamContext> options,
+                            IOptions<OperationalStoreOptions> operationalStoreOptions)
+            : base(options, operationalStoreOptions)
         {
         }
 
@@ -15,6 +19,8 @@ namespace SteamAchievements.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Achievement>()
                         .Property(e => e.ApiName)
                         .IsUnicode(false);

@@ -16,21 +16,21 @@
             </summary>
             <param name="achievementService">The achievement service.</param>
         </member>
-        <member name="M:SteamAchievements.Web.Spa.Controllers.AchievementController.Update(System.Int32)">
+        <member name="M:SteamAchievements.Web.Spa.Controllers.AchievementController.Update(System.String)">
             <summary>
                 Updates the user's achievements.
             </summary>
             <param name="userId">The user identifier.</param>
             <returns></returns>
         </member>
-        <member name="M:SteamAchievements.Web.Spa.Controllers.AchievementController.Get(System.Int32)">
+        <member name="M:SteamAchievements.Web.Spa.Controllers.AchievementController.Get(System.String)">
             <summary>
                 Gets the user's unpublished achievements.
             </summary>
             <param name="userId">The user identifier.</param>
             <returns></returns>
         </member>
-        <member name="M:SteamAchievements.Web.Spa.Controllers.AchievementController.Publish(System.Int32,System.Collections.Generic.IEnumerable{System.Int32})">
+        <member name="M:SteamAchievements.Web.Spa.Controllers.AchievementController.Publish(System.String,System.Collections.Generic.IEnumerable{System.Int32})">
             <summary>
             Publishes the user's achievements.
             </summary>
@@ -38,7 +38,7 @@
             <param name="achievementIds">The achievement ids.</param>
             <returns></returns>
         </member>
-        <member name="M:SteamAchievements.Web.Spa.Controllers.AchievementController.Hide(System.Int32,System.Collections.Generic.IEnumerable{System.Int32})">
+        <member name="M:SteamAchievements.Web.Spa.Controllers.AchievementController.Hide(System.String,System.Collections.Generic.IEnumerable{System.Int32})">
             <summary>
             Hides the user's achievements.
             </summary>
@@ -104,33 +104,35 @@
         </member>
         <member name="T:SteamAchievements.Web.Spa.Controllers.UserController">
             <summary>
-            Manages users
+                Manages users
             </summary>
             <seealso cref="T:SteamAchievements.Web.Spa.Controllers.ApiController" />
         </member>
-        <member name="M:SteamAchievements.Web.Spa.Controllers.UserController.#ctor(SteamAchievements.Services.IUserService)">
+        <member name="M:SteamAchievements.Web.Spa.Controllers.UserController.#ctor(Microsoft.AspNetCore.Identity.UserManager{SteamAchievements.Data.User},SteamAchievements.Services.IUserService,AutoMapper.IMapper)">
             <summary>
-            Initializes a new instance of the <see cref="T:SteamAchievements.Web.Spa.Controllers.UserController"/> class.
+                Initializes a new instance of the <see cref="T:SteamAchievements.Web.Spa.Controllers.UserController" /> class.
             </summary>
+            <param name="userManager">The user manager.</param>
             <param name="userService">The user service.</param>
+            <param name="mapper">The mapper.</param>
         </member>
         <member name="M:SteamAchievements.Web.Spa.Controllers.UserController.Get(System.Int64)">
             <summary>
-            Gets the user by facebook user identifier.
+                Gets the user by facebook user identifier.
             </summary>
             <param name="facebookUserId">The facebook user identifier.</param>
             <returns></returns>
         </member>
         <member name="M:SteamAchievements.Web.Spa.Controllers.UserController.Post(SteamAchievements.Services.Models.CreateUserModel)">
             <summary>
-            Creates a user.
+                Creates a user.
             </summary>
             <param name="model">The model.</param>
             <returns></returns>
         </member>
         <member name="M:SteamAchievements.Web.Spa.Controllers.UserController.Put(SteamAchievements.Services.Models.UserModel)">
             <summary>
-            Updates a user.
+                Updates a user.
             </summary>
             <param name="model">The model.</param>
             <returns></returns>

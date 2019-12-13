@@ -38,6 +38,6 @@ namespace SteamAchievements.Data
         public virtual Achievement Achievement { get; set; }
 
         public virtual User User { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

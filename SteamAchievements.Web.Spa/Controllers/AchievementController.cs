@@ -51,7 +51,7 @@ namespace SteamAchievements.Web.Spa.Controllers
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
         [HttpPost("Update/{userId}")]
-        public async Task<ActionResult<int>> Update(int userId)
+        public async Task<ActionResult<int>> Update(string userId)
         {
             return _achievementService.UpdateAchievements(userId, CultureHelper.GetLanguage());
         }
@@ -62,7 +62,7 @@ namespace SteamAchievements.Web.Spa.Controllers
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
         [HttpGet("{userId}")]
-        public async Task<ActionResult<GameAchievementsModel[]>> Get(int userId)
+        public async Task<ActionResult<GameAchievementsModel[]>> Get(string userId)
         {
             var gameAchievements = _achievementService.GetUnpublishedAchievements(userId, null)
                                                       .ToLookup(a => a.Game.Name)
@@ -92,7 +92,7 @@ namespace SteamAchievements.Web.Spa.Controllers
         /// <param name="achievementIds">The achievement ids.</param>
         /// <returns></returns>
         [HttpPost("{userId}")]
-        public async Task<ActionResult<bool>> Publish(int userId, IEnumerable<int> achievementIds)
+        public async Task<ActionResult<bool>> Publish(string userId, IEnumerable<int> achievementIds)
         {
             return _achievementService.PublishAchievements(userId, achievementIds);
         }
@@ -104,7 +104,7 @@ namespace SteamAchievements.Web.Spa.Controllers
         /// <param name="achievementIds">The achievement ids.</param>
         /// <returns></returns>
         [HttpDelete("{userId}")]
-        public async Task<ActionResult<bool>> Hide(int userId, IEnumerable<int> achievementIds)
+        public async Task<ActionResult<bool>> Hide(string userId, IEnumerable<int> achievementIds)
         {
             return _achievementService.HideAchievements(userId, achievementIds);
         }

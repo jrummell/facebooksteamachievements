@@ -57,7 +57,7 @@ namespace SteamAchievements.Services.Models
         /// <value>
         /// The user identifier.
         /// </value>
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         #region IEquatable<UserAchievement> Members
 

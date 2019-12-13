@@ -31,7 +31,7 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        UserModel GetUser(int userId);
+        UserModel GetUser(string userId);
 
         /// <summary>
         ///     Gets the user by facebook user identifier.
@@ -50,7 +50,7 @@ namespace SteamAchievements.Services
         ///     Deauthorizes the user.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        void DeauthorizeUser(int userId);
+        void DeauthorizeUser(string userId);
 
         /// <summary>
         /// Creates the user.

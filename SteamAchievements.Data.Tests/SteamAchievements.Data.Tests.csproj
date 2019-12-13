@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{35747624-FAE1-4D7F-A7A7-DCB192DA7279}</ProjectGuid>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyTitle>SteamAchievements.Data.Tests</AssemblyTitle>
     <Product>SteamAchievements.Data.Tests</Product>
     <Copyright>Copyright ©  2010</Copyright>

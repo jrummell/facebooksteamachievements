@@ -120,8 +120,8 @@ namespace SteamAchievements.Data.Tests
 
             _users = new[]
                      {
-                         new User {Id = 1, SteamUserId = "user1"},
-                         new User {Id = 2, SteamUserId = "user2"}
+                         new User {Id = "1", SteamUserId = "user1"},
+                         new User {Id = "2", SteamUserId = "user2"}
                      }.AsQueryable();
 
             _userAchievements = new[]
@@ -131,7 +131,7 @@ namespace SteamAchievements.Data.Tests
                                         Id = 1,
                                         AchievementId = 1,
                                         Date = DateTime.Now,
-                                        UserId = 1,
+                                        UserId = "1",
                                         Achievement = _achievements.Single(achievement => achievement.Id == 1),
                                         Published = true,
                                         Hidden = false
@@ -141,7 +141,7 @@ namespace SteamAchievements.Data.Tests
                                         Id = 2,
                                         AchievementId = 2,
                                         Date = DateTime.Now,
-                                        UserId = 1,
+                                        UserId = "1",
                                         Achievement = _achievements.Single(achievement => achievement.Id == 2),
                                         Published = true,
                                         Hidden = false
@@ -151,7 +151,7 @@ namespace SteamAchievements.Data.Tests
                                         Id = 3,
                                         AchievementId = 3,
                                         Date = DateTime.Now,
-                                        UserId = 1,
+                                        UserId = "1",
                                         Achievement = _achievements.Single(achievement => achievement.Id == 3),
                                         Published = false,
                                         Hidden = false
@@ -219,7 +219,7 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.SetupGet(rep => rep.Achievements).Returns(_achievements);
             _repositoryMock.SetupGet(rep => rep.UserAchievements).Returns(_userAchievements);
 
-            const int userId = 1;
+            const string userId = "1";
             IEnumerable<Achievement> achievements =
                 _manager.GetUnassignedAchievements(userId, _achievements);
             Assert.That(achievements.Any());
@@ -274,7 +274,7 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.SetupGet(rep => rep.Achievements).Returns(_achievements);
             _repositoryMock.SetupGet(rep => rep.UserAchievements).Returns(_userAchievements);
 
-            var achievements = _manager.GetUnassignedAchievements(1, _achievements);
+            var achievements = _manager.GetUnassignedAchievements("1", _achievements);
 
             _repositoryMock.VerifyGet(rep => rep.UserAchievements);
             _repositoryMock.VerifyGet(rep => rep.Achievements);
@@ -290,7 +290,7 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.SetupGet(rep => rep.UserAchievements).Returns(_userAchievements);
             _repositoryMock.SetupGet(rep => rep.Users).Returns(_users);
 
-            var achievements = _manager.GetUnpublishedAchievements(1);
+            var achievements = _manager.GetUnpublishedAchievements("1");
 
             _repositoryMock.VerifyGet(rep => rep.UserAchievements);
 
@@ -514,7 +514,7 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.SetupGet(rep => rep.UserAchievements).Returns(_userAchievements);
             _repositoryMock.SetupGet(rep => rep.Achievements).Returns(_achievements);
 
-            const int userId = 1;
+            const string userId = "1";
             var achievements = _manager.GetUnpublishedAchievements(userId);
             _manager.UpdateHidden(userId, achievements.Select(acheivement => acheivement.Id));
 
@@ -535,7 +535,7 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.SetupGet(rep => rep.UserAchievements).Returns(_userAchievements);
             _repositoryMock.SetupGet(rep => rep.Achievements).Returns(_achievements);
 
-            const int userId = 1;
+            const string userId = "1";
             var achievements = _manager.GetUnpublishedAchievements(userId);
             _manager.UpdatePublished(userId, achievements.Select(acheivement => acheivement.Id));
 
@@ -557,7 +557,7 @@ namespace SteamAchievements.Data.Tests
             _repositoryMock.Setup(rep => rep.SubmitChanges());
 
             const string steamUserId = "user1";
-            const int userId = 1;
+            const string userId = "1";
 
             var user = new User {SteamUserId = steamUserId, Id = userId};
             _manager.UpdateUser(user);
@@ -571,17 +571,17 @@ namespace SteamAchievements.Data.Tests
         public void UpdateUserWithNewSteamUserId()
         {
             _repositoryMock.SetupGet(rep => rep.Users)
-                           .Returns(new[] {new User {SteamUserId = "user1", Id = 1}}.AsQueryable())
+                           .Returns(new[] {new User {SteamUserId = "user1", Id = "1"}}.AsQueryable())
                            .Verifiable();
             _repositoryMock.SetupGet(rep => rep.UserAchievements)
-                           .Returns(new[] {new UserAchievement {UserId = 1}}.AsQueryable())
+                           .Returns(new[] {new UserAchievement {UserId = "1"}}.AsQueryable())
                            .Verifiable();
             _repositoryMock.Setup(rep => rep.DeleteAllOnSubmit(It.IsAny<IEnumerable<UserAchievement>>()))
                            .Verifiable();
             _repositoryMock.Setup(rep => rep.SubmitChanges())
                            .Verifiable();
 
-            var user = new User {SteamUserId = "userxxx", Id = 1};
+            var user = new User {SteamUserId = "userxxx", Id = "1"};
             _manager.UpdateUser(user);
 
             _repositoryMock.Verify();

@@ -31,7 +31,7 @@ namespace SteamAchievements.Services.Models
         /// <value>
         /// The identifier.
         /// </value>
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [publish description].

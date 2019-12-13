@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using AutoMapper;
 using Moq;
 using NUnit.Framework;
 using SteamAchievements.Data;
@@ -33,11 +34,16 @@ namespace SteamAchievements.Services.Tests
     [TestFixture]
     public class AchievementServiceFixture
     {
-    	[OneTimeSetUp]
+        private IMapper _mapper;
+
+        [OneTimeSetUp]
     	public void TestFixtureSetUp()
     	{
-    		ModelMapCreator mapCreator = new ModelMapCreator();
-    		mapCreator.CreateMappings();
+            var config = new AutoMapper.MapperConfiguration(c =>
+                                                            {
+                                                                c.AddProfile<SteamAchievementsProfile>();
+                                                            });
+            _mapper = config.CreateMapper();
     	}
     	
         [Test]
@@ -47,8 +53,8 @@ namespace SteamAchievements.Services.Tests
             Mock<ISteamCommunityManager> communityManagerMock = new Mock<ISteamCommunityManager>();
 
             // expect
-            Models.UserModel user = new Models.UserModel {Id = 1234, SteamUserId = "user1"};
-            Data.User dataUser = new Data.User {Id = 1234, SteamUserId = "user1"};
+            Models.UserModel user = new Models.UserModel {Id = 1234.ToString(), SteamUserId = "user1"};
+            Data.User dataUser = new Data.User {Id = 1234.ToString(), SteamUserId = "user1"};
             achievementManagerMock.Setup(rep => rep.GetUser(user.Id))
                 .Returns(dataUser).Verifiable();
 
@@ -110,7 +116,7 @@ namespace SteamAchievements.Services.Tests
 
             // execute
             IAchievementService service =
-                new AchievementService(achievementManagerMock.Object, communityManagerMock.Object);
+                new AchievementService(achievementManagerMock.Object, communityManagerMock.Object, _mapper);
             service.UpdateNewUserAchievements(user);
 
             // verify

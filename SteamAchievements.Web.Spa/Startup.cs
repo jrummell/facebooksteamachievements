@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Net;
 using System.Reflection;
-using System.Security;
-using System.Security.Cryptography.X509Certificates;
 using Autofac;
-using IdentityServer4;
+using AutoMapper;
 using IdentityServer4.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -17,15 +15,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using SteamAchievements.Data;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
 using SteamAchievements.Web.Spa.Settings;
-using JsonWebKey = Microsoft.IdentityModel.Tokens.JsonWebKey;
 
 namespace SteamAchievements.Web.Spa
 {
@@ -41,6 +36,8 @@ namespace SteamAchievements.Web.Spa
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(SteamAchievementsProfile).Assembly);
+
             services.AddDbContext<SteamContext>(options =>
                                                 {
                                                     options.UseLazyLoadingProxies()
@@ -54,6 +51,9 @@ namespace SteamAchievements.Web.Spa
                                                                                                  .Assembly
                                                                                                  .FullName));
                                                 });
+
+            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddEntityFrameworkStores<SteamContext>();
 
             services.AddControllers()
                      // use Newtonsoft Json instead of the new .NET Json serializer
@@ -84,46 +84,46 @@ namespace SteamAchievements.Web.Spa
                                        c.DescribeStringEnumsInCamelCase();
                                    });
 
-            var mapper = new ModelMapCreator();
-            mapper.CreateMappings();
-
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             ConfigureOauth2(services);
+
+            services.AddSpaStaticFiles(config => { config.RootPath = "app/build"; });
         }
 
         private void ConfigureOauth2(IServiceCollection services)
         {
-            // OAuth 2
+            // see https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity-api-authorization?view=aspnetcore-3.1
+
             var apiSettingsSection = Configuration.GetSection(nameof(ApiSettings));
             var apiSettings = new ApiSettings();
             apiSettingsSection.Bind(apiSettings);
 
-            SecureString password = new NetworkCredential("", apiSettings.CertificatePassword).SecurePassword;
-            var certificate = new X509Certificate2(File.ReadAllBytes(apiSettings.CertificatePath), password);
-
             services.AddIdentityServer()
-                    .AddInMemoryIdentityResources(new[] {new IdentityResources.OpenId()})
-                     // http://docs.identityserver.io/en/latest/topics/add_apis.html
-                    .AddInMemoryApiResources(new[] {new ApiResource(IdentityServerConstants.LocalApi.ScopeName)})
-                    .AddInMemoryClients(new[]
-                                        {
-                                            new Client
-                                            {
-                                                ClientId = apiSettings.ClientId,
-                                                AllowedGrantTypes = GrantTypes.ClientCredentials,
-                                                ClientSecrets = new List<Secret>
-                                                                {
-                                                                    new Secret(apiSettings.ClientSecret
-                                                                                          .Sha256())
-                                                                },
-                                                AllowedScopes = {IdentityServerConstants.LocalApi.ScopeName}
-                                            }
-                                        })
-                     // http://docs.identityserver.io/en/latest/topics/startup.html#refstartupkeymaterial
-                    .AddSigningCredential(new SigningCredentials(new X509SecurityKey(certificate), "RS256"));
+                    .AddApiAuthorization<User, SteamContext>(options =>
+                                                             {
+                                                                 options.Clients.Add(new Client
+                                                                                     {
+                                                                                         ClientId = apiSettings.ClientId,
+                                                                                         ClientSecrets =
+                                                                                             new List<Secret>
+                                                                                             {
+                                                                                                 new
+                                                                                                     Secret(apiSettings.ClientSecret
+                                                                                                               .Sha256())
+                                                                                             },
+                                                                                         AllowedGrantTypes = GrantTypes.ClientCredentials,
+                                                                                         AllowedScopes = new List<string>
+                                                                                                         {
+                                                                                                             "openid", "profile"
+                                                                                                         },
+                                                                                         RequireConsent = false,
+                                                                                         RequireClientSecret = true
+                                                                                     });
+                                                             });
 
-            services.AddLocalApiAuthentication();
+            services.AddAuthentication()
+                    .AddIdentityServerJwt();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -159,14 +159,15 @@ namespace SteamAchievements.Web.Spa
             // allow / to route to /wwwroot/index.html
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseSpaStaticFiles();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            
+
             app.UseAuthentication();
-            app.UseAuthorization();
             app.UseIdentityServer();
+            app.UseAuthorization();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();

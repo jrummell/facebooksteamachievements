@@ -54,7 +54,7 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public User GetUser(int userId)
+        public User GetUser(string userId)
         {
             return _repository.Users.Where(e => e.Id == userId).SingleOrDefault();
         }
@@ -74,7 +74,7 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public ICollection<Achievement> GetUnpublishedAchievements(int userId)
+        public ICollection<Achievement> GetUnpublishedAchievements(string userId)
         {
             return (from achievement in _repository.UserAchievements
                     where achievement.UserId == userId
@@ -90,7 +90,7 @@ namespace SteamAchievements.Data
         /// <param name="userId">The user identifier.</param>
         /// <param name="oldestDate">The oldest date.</param>
         /// <returns></returns>
-        public ICollection<Achievement> GetUnpublishedAchievements(int userId, DateTime oldestDate)
+        public ICollection<Achievement> GetUnpublishedAchievements(string userId, DateTime oldestDate)
         {
             oldestDate = ValidateDate(oldestDate);
 
@@ -123,7 +123,7 @@ namespace SteamAchievements.Data
                 return 0;
             }
 
-            int userId = userAchievements.First().UserId;
+            string userId = userAchievements.First().UserId;
             if (userAchievements.Any(achievement => achievement.UserId != userId))
             {
                 throw new ArgumentException("All achievements must have the same SteamUserId", nameof(userAchievements));
@@ -198,7 +198,7 @@ namespace SteamAchievements.Data
         /// Deauthorizes the user.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        public void DeauthorizeUser(int userId)
+        public void DeauthorizeUser(string userId)
         {
             User user = _repository.Users.Where(u => u.Id == userId).SingleOrDefault();
             if (user == null)
@@ -221,7 +221,7 @@ namespace SteamAchievements.Data
         /// <param name="userId">The user identifier.</param>
         /// <param name="achievementIds">The achievement ids.</param>
         /// <exception cref="System.ArgumentNullException">achievementIds</exception>
-        public void UpdatePublished(int userId, IEnumerable<int> achievementIds)
+        public void UpdatePublished(string userId, IEnumerable<int> achievementIds)
         {
             if (achievementIds == null)
             {
@@ -252,7 +252,7 @@ namespace SteamAchievements.Data
         /// <param name="userId">The user identifier.</param>
         /// <param name="achievementIds">The achievement ids.</param>
         /// <exception cref="System.ArgumentNullException">achievementIds</exception>
-        public void UpdateHidden(int userId, IEnumerable<int> achievementIds)
+        public void UpdateHidden(string userId, IEnumerable<int> achievementIds)
         {
             if (achievementIds == null)
             {
@@ -290,7 +290,7 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        private bool Exists(int userId)
+        private bool Exists(string userId)
         {
             return _repository.Users.Where(u => u.Id == userId).Any();
         }
@@ -313,7 +313,7 @@ namespace SteamAchievements.Data
             }
 
             // get the achievement ids for the games in the given achievements
-            int userId = achievements.First().UserId;
+            string userId = achievements.First().UserId;
             IEnumerable<Achievement> unassignedAchievements =
                 GetUnassignedAchievements(userId, achievements.Select(achievement => achievement.Achievement));
 
@@ -374,7 +374,7 @@ namespace SteamAchievements.Data
         /// <param name="allAchievements">All achievements. These will not necessarily have an Id set.</param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentNullException">allAchievements</exception>
-        public ICollection<Achievement> GetUnassignedAchievements(int userId,
+        public ICollection<Achievement> GetUnassignedAchievements(string userId,
                                                                   IEnumerable<Achievement> allAchievements)
         {
             if (allAchievements == null)

@@ -20,31 +20,40 @@
 #endregion
 
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SteamAchievements.Data;
 using SteamAchievements.Services;
 using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Web.Spa.Controllers
 {
     /// <summary>
-    /// Manages users
+    ///     Manages users
     /// </summary>
     /// <seealso cref="SteamAchievements.Web.Spa.Controllers.ApiController" />
     public class UserController : ApiController
     {
+        private readonly IMapper _mapper;
+        private readonly UserManager<User> _userManager;
         private readonly IUserService _userService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserController"/> class.
+        ///     Initializes a new instance of the <see cref="UserController" /> class.
         /// </summary>
+        /// <param name="userManager">The user manager.</param>
         /// <param name="userService">The user service.</param>
-        public UserController(IUserService userService)
+        /// <param name="mapper">The mapper.</param>
+        public UserController(UserManager<User> userManager, IUserService userService, IMapper mapper)
         {
+            _userManager = userManager;
             _userService = userService;
+            _mapper = mapper;
         }
 
         /// <summary>
-        /// Gets the user by facebook user identifier.
+        ///     Gets the user by facebook user identifier.
         /// </summary>
         /// <param name="facebookUserId">The facebook user identifier.</param>
         /// <returns></returns>
@@ -62,29 +71,63 @@ namespace SteamAchievements.Web.Spa.Controllers
         }
 
         /// <summary>
-        /// Creates a user.
+        ///     Creates a user.
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<UserModel>> Post(CreateUserModel model)
         {
-            _userService.CreateUser(new UserModel{FacebookUserId = model.FacebookUserId});
+            var user = new User {UserName = model.FacebookUserId.ToString(), FacebookUserId = model.FacebookUserId};
+            var result = await _userManager.CreateAsync(user);
 
-            return _userService.GetByFacebookUserId(model.FacebookUserId);
+            if (!result.Succeeded)
+            {
+                return InvalidRequest(result);
+            }
+
+            return await GetById(user.Id);
         }
 
         /// <summary>
-        /// Updates a user.
+        ///     Updates a user.
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns></returns>
         [HttpPut]
         public async Task<ActionResult<UserModel>> Put(UserModel model)
         {
-            _userService.UpdateUser(model);
+            var user = await _userManager.FindByIdAsync(model.Id);
 
-            return _userService.GetUser(model.Id);
+            user.FacebookUserId = model.FacebookUserId;
+            user.PublishDescription = model.PublishDescription;
+            user.SteamUserId = model.SteamUserId;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                return InvalidRequest(result);
+            }
+
+            return await GetById(user.Id);
+        }
+
+        private ActionResult<UserModel> InvalidRequest(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return BadRequest(ModelState);
+        }
+
+        private async Task<UserModel> GetById(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            return _mapper.Map<UserModel>(user);
         }
     }
 }

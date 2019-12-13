@@ -43,7 +43,7 @@ namespace SteamAchievements.Services
         /// <returns>
         /// The achievements that haven't been published yet.
         /// </returns>
-        ICollection<AchievementModel> GetUnpublishedAchievements(int userId, DateTime? oldestDate, string language = null);
+        ICollection<AchievementModel> GetUnpublishedAchievements(string userId, DateTime? oldestDate, string language = null);
 
         /// <summary>
         /// Gets the games.
@@ -62,7 +62,7 @@ namespace SteamAchievements.Services
         /// <returns>
         /// The number of achievements that were updated.
         /// </returns>
-        int UpdateAchievements(int userId, string language = null);
+        int UpdateAchievements(string userId, string language = null);
 
         /// <summary>
         /// Publishes the given user's achievements.
@@ -72,7 +72,7 @@ namespace SteamAchievements.Services
         /// <returns>
         /// true if successful, else false.
         /// </returns>
-        bool PublishAchievements(int userId, IEnumerable<int> achievementIds);
+        bool PublishAchievements(string userId, IEnumerable<int> achievementIds);
 
         /// <summary>
         /// Hides the given user's achievements
@@ -80,7 +80,7 @@ namespace SteamAchievements.Services
         /// <param name="userId">The user identifier.</param>
         /// <param name="achievementIds">The ids of the achievements to hide.</param>
         /// <returns></returns>
-        bool HideAchievements(int userId, IEnumerable<int> achievementIds);
+        bool HideAchievements(string userId, IEnumerable<int> achievementIds);
 
         /// <summary>
         /// Updates the new user's achievements and hides any that are more than 2 days old.
