@@ -3,22 +3,11 @@ packages
 **/obj
 *.user
 *.suo
-/SteamAchievements.Web/App_Data
 *.db
 /.vs
-/SteamAchievements.Web/Properties/PublishProfiles
 **/node_modules
 **/appsettings.Local.json
 *.pfx
 steam web api.txt
 *.pubxml
-SteamAchievements.Web.Spa/app/build/favicon.ico
-SteamAchievements.Web.Spa/app/build/index.html
-SteamAchievements.Web.Spa/app/build/images/achievements.png
-SteamAchievements.Web.Spa/app/build/images/appcustomurl.png
-SteamAchievements.Web.Spa/app/build/images/banner-light.png
-SteamAchievements.Web.Spa/app/build/images/profilecustomurl.png
-SteamAchievements.Web.Spa/app/build/images/steamsettings.png
-SteamAchievements.Web.Spa/app/build/images/timelinepost.png
-SteamAchievements.Web.Spa/app/build/js/app.js
-SteamAchievements.Web.Spa/app/build/js/chunk-vendors.js
+SteamAchievements.Web.Spa/app/build
