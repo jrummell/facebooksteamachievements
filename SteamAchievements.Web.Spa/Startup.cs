@@ -177,6 +177,8 @@ namespace SteamAchievements.Web.Spa
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"); });
 
             app.UseEndpoints(config => { config.MapControllers(); });
+
+            app.UseSpa(config => { config.Options.SourcePath = "app"; });
         }
     }
 }
