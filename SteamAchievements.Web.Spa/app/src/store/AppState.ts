@@ -15,5 +15,6 @@ export default class AppState {
     };
     facebookAppId: number = process.env.VUE_APP_FACEBOOK_APP_ID;
     helpUrl: string = process.env.VUE_APP_HELP_URL;
+    version: string = process.env.VUE_APP_VERSION || "9.0.0";
     games: IGame[] = [];
 }

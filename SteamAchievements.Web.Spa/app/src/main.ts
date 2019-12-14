@@ -24,9 +24,6 @@ library.add(faQuestion, faSave, faCheck, faTimes, faSpinner, faExclamation);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
-import Vuelidate from "vuelidate";
-Vue.use(Vuelidate);
-
 import facebookLogin from "facebook-login-vuejs";
 
 Vue.component(facebookLogin.name, facebookLogin);

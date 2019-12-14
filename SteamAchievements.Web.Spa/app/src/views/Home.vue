@@ -2,10 +2,8 @@
     <b-card>
         <div v-if="!loading && showSettings">
             <div class="alert alert-info">
-                <p>
-                    Configure your steam
-                    <router-link to="/settings">{{ resources.menuSettings }}</router-link>
-                </p>
+                Configure your steam
+                <router-link to="/settings">{{ resources.menuSettings }}</router-link>
             </div>
         </div>
         <div v-if="!loading">
@@ -26,7 +24,7 @@
 
             <b-row v-for="item in achievements" :key="item.game.id">
                 <b-col md="12">
-                    <h4>{{item.game.name}}</h4>
+                    <h4 class="pt-3">{{item.game.name}}</h4>
                     <b-row>
                         <b-col
                             v-for="achievement in item.achievements"

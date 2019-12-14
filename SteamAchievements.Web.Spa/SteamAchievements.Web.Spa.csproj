@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -14,24 +14,6 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
         <DocumentationFile>SteamAchievements.Web.Spa.xml</DocumentationFile>
     </PropertyGroup>
-
-    <ItemGroup>
-        <!-- the vue app is not managed by visual studio -->
-        <Compile Remove="app\**" />
-        <Content Remove="app\**" />
-        <EmbeddedResource Remove="app\**" />
-        <None Remove="app\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="steam-achievements.pfx" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Content Include="steam-achievements.pfx">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-    </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\SteamAchievements.Services\SteamAchievements.Services.csproj" />
@@ -52,4 +34,9 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Content Include="app\build\**\*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 </Project>

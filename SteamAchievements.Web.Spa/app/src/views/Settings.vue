@@ -10,7 +10,7 @@
             >{{resources.settingsCustomUrlRequired}}</span>
             <b-form-group :label="resources.settingsCustomUrl">
                 <b-row>
-                    <b-col md="10">
+                    <b-col>
                         <b-input-group>
                             <b-input-group-prepend>
                                 <b-input-group-text>http://steamcommunity.com/id/</b-input-group-text>
@@ -25,11 +25,9 @@
                                     ></font-awesome-icon>
                                     <font-awesome-icon v-else icon="exclamation" full-width></font-awesome-icon>
                                 </b-input-group-text>
+                                <help-button anchor="configure-your-steam-community-profile"></help-button>
                             </b-input-group-append>
                         </b-input-group>
-                    </b-col>
-                    <b-col md="2">
-                        <help-button anchor="configure-your-steam-community-profile"></help-button>
                     </b-col>
                 </b-row>
             </b-form-group>

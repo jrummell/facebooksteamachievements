@@ -1,5 +1,5 @@
 <template>
-    <b-button :href="href" target="_blank">
+    <b-button :href="href" target="_blank" :title="title">
         <font-awesome-icon icon="question"></font-awesome-icon>
         {{ text }}
     </b-button>
@@ -27,8 +27,12 @@ export default class HelpButton extends Vue {
     @Prop({ required: false })
     text?: string;
 
-    get textInternal(): string {
-        return this.text || this.$store.state.resources.buttonHelp;
+    get title(): string | null {
+        if (this.text) {
+            return null;
+        }
+
+        return this.$store.state.resources.buttonHelp;
     }
 }
 </script>

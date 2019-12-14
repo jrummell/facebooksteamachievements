@@ -1,13 +1,19 @@
 <template>
     <b-card>
         <b-row>
-            <b-alert show>
-                {{resources.gamesYourGames}}
-                <help-button anchor="supported-games" :text="resources.buttonHelp"></help-button>
-            </b-alert>
+            <b-col>
+                <b-alert show>
+                    {{resources.gamesYourGames}}
+                    <help-button anchor="supported-games" :text="resources.buttonHelp"></help-button>
+                </b-alert>
+            </b-col>
         </b-row>
         <b-row>
-            <loading-indicator :loading="loading"></loading-indicator>
+            <b-col>
+                <loading-indicator :loading="loading"></loading-indicator>
+            </b-col>
+        </b-row>
+        <b-row>
             <b-col v-for="game in games" :key="game.id" md="4" lg="3">
                 <div class="mb-2">
                     <a target="_blank" :href="`${game.statsUrl}?tab=achievements`">
