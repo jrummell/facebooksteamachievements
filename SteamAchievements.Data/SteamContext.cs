@@ -1,101 +1,77 @@
-using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Diagnostics;
-using Microsoft.AspNet.Identity.EntityFramework;
+using IdentityServer4.EntityFramework.Options;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace SteamAchievements.Data
 {
-    public class SteamContext : IdentityDbContext<User, Role, int, UserLogin, UserRole, UserClaim>
+    public class SteamContext : ApiAuthorizationDbContext<User>
     {
-        public SteamContext()
-            : base("name=SteamContext")
+        public SteamContext(DbContextOptions<SteamContext> options,
+                            IOptions<OperationalStoreOptions> operationalStoreOptions)
+            : base(options, operationalStoreOptions)
         {
-            Database.Log = message => Debug.WriteLine(message);
         }
 
         public virtual DbSet<Achievement> Achievements { get; set; }
         public virtual DbSet<AchievementName> AchievementNames { get; set; }
         public virtual DbSet<UserAchievement> UserAchievements { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Achievement>()
-                .Property(e => e.ApiName)
-                .IsUnicode(false);
+                        .Property(e => e.ApiName)
+                        .IsUnicode(false);
 
             modelBuilder.Entity<Achievement>()
-                .Property(e => e.ImageUrl)
-                .IsUnicode(false);
+                        .Property(e => e.ImageUrl)
+                        .IsUnicode(false);
 
             modelBuilder.Entity<Achievement>()
-                .HasMany(e => e.AchievementNames)
-                .WithRequired(e => e.Achievement)
-                .HasForeignKey(e => e.AchievementId)
-                .WillCascadeOnDelete(false);
+                        .HasMany(e => e.AchievementNames)
+                        .WithOne(e => e.Achievement)
+                        .HasForeignKey(e => e.AchievementId)
+                        .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Achievement>()
-                .HasMany(e => e.UserAchievements)
-                .WithRequired(e => e.Achievement)
-                .HasForeignKey(e => e.AchievementId)
-                .WillCascadeOnDelete(false);
+                        .HasMany(e => e.UserAchievements)
+                        .WithOne(e => e.Achievement)
+                        .HasForeignKey(e => e.AchievementId)
+                        .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<AchievementName>()
-                .Property(e => e.Language)
-                .IsUnicode(false);
+                        .Property(e => e.Language)
+                        .IsUnicode(false);
 
             modelBuilder.Entity<User>()
-                .Property(e => e.SteamUserId)
-                .IsUnicode(false);
+                        .Property(e => e.SteamUserId)
+                        .IsUnicode(false);
 
             modelBuilder.Entity<User>()
-                .Property(e => e.Language)
-                .IsUnicode(false);
+                        .HasIndex(e => e.SteamUserId)
+                        .IsUnique();
+
+            modelBuilder.Entity<User>()
+                        .Property(e => e.Language)
+                        .IsUnicode(false);
+
+            modelBuilder.Entity<User>()
+                        .HasIndex(e => e.FacebookUserId)
+                        .IsUnique();
 
             modelBuilder.Entity<UserAchievement>()
-                .HasRequired(e => e.User)
-                .WithMany(e => e.UserAchievements)
-                .HasForeignKey(e => e.UserId)
-                .WillCascadeOnDelete(false);
+                        .HasOne(e => e.User)
+                        .WithMany(e => e.UserAchievements)
+                        .HasForeignKey(e => e.UserId)
+                        .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<UserAchievement>()
-                .HasRequired(e => e.Achievement)
-                .WithMany(e => e.UserAchievements)
-                .HasForeignKey(e => e.AchievementId)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Role>()
-                .HasKey(e => e.Id);
-
-            modelBuilder.Entity<UserLogin>()
-                .HasKey(e => e.Id);
-            modelBuilder.Entity<UserLogin>()
-                .HasRequired(e => e.User)
-                .WithMany(e => e.Logins)
-                .HasForeignKey(e => e.UserId)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<UserRole>()
-                .HasKey(e => e.Id);
-            modelBuilder.Entity<UserRole>()
-                .HasRequired(e => e.User)
-                .WithMany(e => e.Roles)
-                .HasForeignKey(e => e.UserId)
-                .WillCascadeOnDelete(false);
-            modelBuilder.Entity<UserRole>()
-                .HasRequired(e => e.Role)
-                .WithMany(e => e.Users)
-                .HasForeignKey(e => e.RoleId)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<UserClaim>()
-                .HasKey(e => e.Id);
-            modelBuilder.Entity<UserClaim>()
-                .HasRequired(e => e.User)
-                .WithMany(e => e.Claims)
-                .HasForeignKey(e => e.UserId)
-                .WillCascadeOnDelete(false);
+                        .HasOne(e => e.Achievement)
+                        .WithMany(e => e.UserAchievements)
+                        .HasForeignKey(e => e.AchievementId)
+                        .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -19,11 +19,16 @@
 
 #endregion
 
+using System;
+using System.Collections.Generic;
+using System.Data.SqlTypes;
+using System.Linq;
+using AutoMapper;
 using Moq;
 using NUnit.Framework;
 using SteamAchievements.Data;
 using SteamAchievements.Services.Models;
-using User = SteamAchievements.Data.User;
+using UserAchievement = SteamAchievements.Data.UserAchievement;
 
 namespace SteamAchievements.Services.Tests
 {
@@ -33,8 +38,10 @@ namespace SteamAchievements.Services.Tests
         [SetUp]
         public void SetUp()
         {
-            _managerMock = new Mock<IAchievementManager>();
-            _service = new UserService(_managerMock.Object);
+            _repositoryMock = new Mock<ISteamRepository>();
+            _mapperMock = new Mock<IMapper>();
+
+            _service = new UserService(_mapperMock.Object, _repositoryMock.Object);
         }
 
         [TearDown]
@@ -43,52 +50,61 @@ namespace SteamAchievements.Services.Tests
             _service.Dispose();
         }
 
-        private IUserService _service;
-        private Mock<IAchievementManager> _managerMock;
+        private UserService _service;
+        private Mock<ISteamRepository> _repositoryMock;
+        private Mock<IMapper> _mapperMock;
 
         [Test]
-        public void DeauthorizeUser()
+        public void ChangeSteamUserId()
         {
-            const int facebookUserId = 1234;
-            _managerMock.Setup(manager => manager.DeauthorizeUser(facebookUserId))
-                        .Verifiable();
+            _repositoryMock.SetupGet(rep => rep.Users)
+                           .Returns(new[] {new User {SteamUserId = "user1", Id = "1"}}.AsQueryable())
+                           .Verifiable();
+            _repositoryMock.SetupGet(rep => rep.UserAchievements)
+                           .Returns(new[] {new UserAchievement {UserId = "1"}}.AsQueryable())
+                           .Verifiable();
+            _repositoryMock.Setup(rep => rep.DeleteAllOnSubmit(It.IsAny<IEnumerable<UserAchievement>>()))
+                           .Verifiable();
+            _repositoryMock.Setup(rep => rep.SubmitChanges())
+                           .Verifiable();
 
-            _service.DeauthorizeUser(facebookUserId);
+            var user = new User {SteamUserId = "userxxx", Id = "1"};
+            _service.ChangeSteamUserId(user.Id, user.SteamUserId);
 
-            _managerMock.Verify();
+            _repositoryMock.Verify();
+            _repositoryMock.VerifyGet(rep => rep.Users, Times.Exactly(1));
+            _repositoryMock.Verify(rep => rep.InsertOnSubmit(It.IsAny<User>()), Times.Never());
         }
 
         [Test]
-        public void GetUserByFacebookId()
+        public void GetUserById()
         {
-            const int userId = 1234;
-            _managerMock.Setup(manager => manager.GetUser(userId))
-                        .Returns(new User {Id = userId})
-                        .Verifiable();
+            var userId = 1234.ToString();
+            var user = new User {Id = userId};
+            _repositoryMock.SetupGet(r => r.Users)
+                           .Returns(new[] {user}.AsQueryable())
+                           .Verifiable();
 
-            var user = _service.GetUser(userId);
-
-            Assert.That(user, Is.Not.Null);
-            Assert.That(user.Id, Is.EqualTo(userId));
-            _managerMock.Verify();
-        }
-
-        [Test]
-        public void UpdateUser()
-        {
-            var user = new Models.UserModel {Id = 1234, SteamUserId = "user1"};
-
-            var managerMock = new Mock<IAchievementManager>();
-            managerMock.Setup(
-                              rep =>
-                              rep.UpdateUser(
-                                             It.Is<User>(u => u.SteamUserId == user.SteamUserId && u.Id == user.Id)))
+            var model = new UserModel();
+            _mapperMock.Setup(m => m.Map<UserModel>(user))
+                       .Returns(model)
                        .Verifiable();
 
-            var service = new UserService(managerMock.Object);
-            service.UpdateUser(user);
+            var actual = _service.GetUser(userId);
 
-            managerMock.Verify();
+            Assert.That(actual, Is.SameAs(model));
+
+            _repositoryMock.Verify();
+            _mapperMock.Verify();
+        }
+
+        [Test]
+        public void ValidateDate()
+        {
+            var date = AchievementManager.ValidateDate(DateTime.MinValue);
+
+            var sqlMinTicks = SqlDateTime.MinValue.Value.Ticks;
+            Assert.That(date.Ticks, Is.GreaterThan(sqlMinTicks));
         }
     }
 }

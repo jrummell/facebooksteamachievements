@@ -20,7 +20,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Services
@@ -30,26 +29,28 @@ namespace SteamAchievements.Services
         /// <summary>
         /// Gets the user.
         /// </summary>
-        /// <param name="userName">The user name.</param>
-        UserModel GetUser(string userName);
-
-        /// <summary>
-        /// Gets the user.
-        /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        UserModel GetUser(int userId);
+        UserModel GetUser(string userId);
 
         /// <summary>
-        /// Updates the user.
+        /// Gets the user by facebook user identifier.
         /// </summary>
-        /// <param name="user">The user.</param>
-        void UpdateUser(UserModel user);
+        /// <param name="facebookUserId">The facebook user identifier.</param>
+        /// <returns></returns>
+        UserModel GetByFacebookUserId(long facebookUserId);
+
+        /// <summary>
+        /// Changes the steam user identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="steamUserId">The steam user identifier.</param>
+        void ChangeSteamUserId(string userId, string steamUserId);
 
         /// <summary>
         /// Deauthorizes the user.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        void DeauthorizeUser(int userId);
+        void DeauthorizeUser(string userId);
     }
 }

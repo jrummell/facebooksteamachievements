@@ -24,81 +24,90 @@ using System.Linq;
 using AutoMapper;
 using SteamAchievements.Data;
 using SteamAchievements.Services.Models;
+using UserAchievement = SteamAchievements.Data.UserAchievement;
 
 namespace SteamAchievements.Services
 {
     public class UserService : Disposable, IUserService
     {
-        private readonly IAchievementManager _manager;
+        private readonly IMapper _mapper;
+        private readonly ISteamRepository _repository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserService"/> class.
+        /// Initializes a new instance of the <see cref="UserService" /> class.
         /// </summary>
-        /// <param name="manager">The manager.</param>
-        public UserService(IAchievementManager manager)
+        /// <param name="mapper">The mapper.</param>
+        /// <param name="repository">The repository.</param>
+        /// <exception cref="ArgumentNullException">manager</exception>
+        public UserService(IMapper mapper, ISteamRepository repository)
         {
-            if (manager == null)
-            {
-                throw new ArgumentNullException(nameof(manager));
-            }
-
-            _manager = manager;
+            _mapper = mapper;
+            _repository = repository;
         }
 
         #region IUserService Members
 
-        /// <summary>
-        /// Gets the user.
-        /// </summary>
-        /// <param name="userName">The user name.</param>
-        /// <returns></returns>
-        public UserModel GetUser(string userName)
+        /// <inheritdoc />
+        public UserModel GetUser(string userId)
         {
-            Data.User user = _manager.GetUser(userName);
+            Data.User user = _repository.Users.SingleOrDefault(e => e.Id == userId);
 
             return Map(user);
         }
 
-        /// <summary>
-        /// Gets the user.
-        /// </summary>
-        /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
-        public UserModel GetUser(int userId)
+        /// <inheritdoc />
+        public UserModel GetByFacebookUserId(long facebookUserId)
         {
-            Data.User user = _manager.GetUser(userId);
+            var user = _repository.Users.SingleOrDefault(e => e.FacebookUserId == facebookUserId);;
 
             return Map(user);
         }
 
-        /// <summary>
-        /// Updates the user.
-        /// </summary>
-        /// <param name="user">The user.</param>
-        public void UpdateUser(Models.UserModel user)
+        /// <inheritdoc />
+        public void ChangeSteamUserId(string userId, string steamUserId)
         {
+            User existingUser = _repository.Users.Single(u => u.Id == userId);
+            
+            // if the user changed steam IDs, remove their achievements
+            if (!string.Equals(existingUser.SteamUserId, steamUserId, StringComparison.CurrentCultureIgnoreCase))
+            {
+                var existingAchievements = _repository.UserAchievements
+                                                      .Where(ua => ua.UserId == userId)
+                                                      .ToArray();
+                if (existingAchievements.Length > 0)
+                {
+                    _repository.DeleteAllOnSubmit(existingAchievements);
+                }
+            }
+            
+            existingUser.SteamUserId = steamUserId;
+
+            _repository.SubmitChanges();
+        }
+
+        /// <inheritdoc />
+        public void DeauthorizeUser(string userId)
+        {
+            User user = _repository.Users.SingleOrDefault(u => u.Id == userId);
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                return;
             }
 
-            _manager.UpdateUser(Map(user));
-        }
+            IQueryable<UserAchievement> userAchievements =
+                _repository.UserAchievements.Where(ua => ua.UserId == userId);
+            _repository.DeleteAllOnSubmit(userAchievements);
+            _repository.SubmitChanges();
 
-        /// <summary>
-        /// Deauthorizes the user.
-        /// </summary>
-        /// <param name="userId">The user identifier.</param>
-        public void DeauthorizeUser(int userId)
-        {
-            _manager.DeauthorizeUser(userId);
+            _repository.DeleteOnSubmit(user);
+            _repository.SubmitChanges();
         }
 
         #endregion
 
         protected override void DisposeManaged()
         {
-            _manager.Dispose();
+            _repository.Dispose();
         }
 
         /// <summary>
@@ -106,31 +115,14 @@ namespace SteamAchievements.Services
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        private static Models.UserModel Map(Data.User user)
+        private Models.UserModel Map(Data.User user)
         {
             if (user == null)
             {
                 return null;
             }
 
-            return Mapper.Map<Models.UserModel>(user);
-        }
-
-        /// <summary>
-        /// Maps the specified user.
-        /// </summary>
-        /// <param name="user">The user.</param>
-        /// <returns></returns>
-        private static Data.User Map(Models.UserModel user)
-        {
-            if (user == null)
-            {
-                return null;
-            }
-
-            return Mapper.Map<Data.User>(user);
+            return _mapper.Map<Models.UserModel>(user);
         }
     }
-    
-
 }

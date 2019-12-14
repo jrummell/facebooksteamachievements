@@ -21,17 +21,16 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Identity;
 
 namespace SteamAchievements.Data
 {
-    [Table("steam_User")]
-    public partial class User : IdentityUser<int, UserLogin, UserRole, UserClaim>
+    public class User : IdentityUser
     {
-        [Index]
         [StringLength(50)]
         public string SteamUserId { get; set; }
+
+        public long FacebookUserId { get; set; }
 
         public bool PublishDescription { get; set; }
 
