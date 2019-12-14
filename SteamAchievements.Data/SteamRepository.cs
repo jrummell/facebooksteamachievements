@@ -20,8 +20,8 @@
 #endregion
 
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace SteamAchievements.Data
 {
@@ -34,34 +34,33 @@ namespace SteamAchievements.Data
             _context = context;
         }
 
+        /// <summary>
+        /// Disposes the managed resources.
+        /// </summary>
+        protected override void DisposeManaged()
+        {
+            _context.Dispose();
+        }
+
         #region ISteamRepository Members
 
         /// <summary>
         /// Gets the achievements.
         /// </summary>
         /// <value>The achievements.</value>
-        public IQueryable<Achievement> Achievements
-        {
-            get { return _context.Set<Achievement>(); }
-        }
+        public IQueryable<Achievement> Achievements => _context.Set<Achievement>();
 
         /// <summary>
         /// Gets the user achievements.
         /// </summary>
         /// <value>The user achievements.</value>
-        public IQueryable<UserAchievement> UserAchievements
-        {
-            get { return _context.Set<UserAchievement>(); }
-        }
+        public IQueryable<UserAchievement> UserAchievements => _context.Set<UserAchievement>();
 
         /// <summary>
         /// Gets the users.
         /// </summary>
         /// <value>The users.</value>
-        public IQueryable<User> Users
-        {
-            get { return _context.Set<User>(); }
-        }
+        public IQueryable<User> Users => _context.Set<User>();
 
         /// <summary>
         /// Gets the achievement names.
@@ -69,10 +68,7 @@ namespace SteamAchievements.Data
         /// <value>
         /// The achievement names.
         /// </value>
-        public IQueryable<AchievementName> AchievementNames
-        {
-            get { return _context.Set<AchievementName>(); }
-        }
+        public IQueryable<AchievementName> AchievementNames => _context.Set<AchievementName>();
 
         /// <summary>
         /// Inserts the user on submit.
@@ -137,13 +133,5 @@ namespace SteamAchievements.Data
         }
 
         #endregion
-
-        /// <summary>
-        /// Disposes the managed resources.
-        /// </summary>
-        protected override void DisposeManaged()
-        {
-            _context.Dispose();
-        }
     }
 }

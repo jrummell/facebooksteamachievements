@@ -58,11 +58,6 @@
     <ProjectReference Include="..\SteamAchievements.Services\SteamAchievements.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Achievements.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Remove="AutoUpdateLoggerFixture.cs" />
     <Compile Remove="AutoUpdateManagerFixture.cs" />
   </ItemGroup>

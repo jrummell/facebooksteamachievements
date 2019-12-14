@@ -31,10 +31,9 @@ namespace SteamAchievements.Services.Models
         public SteamAchievementsProfile()
         {
             // User
-            CreateMap<User, UserModel>();
+            CreateMap<User, UserModel>(MemberList.Destination);
 
-            CreateMap<UserModel, User>()
-               .ForMember(entity => entity.UserAchievements, options => options.Ignore());
+            CreateMap<UserModel, User>(MemberList.Source);
 
             // UserAchievement
             CreateMap<UserAchievement, Data.UserAchievement>()

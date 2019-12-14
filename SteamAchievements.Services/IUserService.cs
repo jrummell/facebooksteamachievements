@@ -27,35 +27,30 @@ namespace SteamAchievements.Services
     public interface IUserService : IDisposable
     {
         /// <summary>
-        ///     Gets the user.
+        /// Gets the user.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
         UserModel GetUser(string userId);
 
         /// <summary>
-        ///     Gets the user by facebook user identifier.
+        /// Gets the user by facebook user identifier.
         /// </summary>
         /// <param name="facebookUserId">The facebook user identifier.</param>
         /// <returns></returns>
         UserModel GetByFacebookUserId(long facebookUserId);
 
         /// <summary>
-        ///     Updates the user.
+        /// Changes the steam user identifier.
         /// </summary>
-        /// <param name="user">The user.</param>
-        void UpdateUser(UserModel user);
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="steamUserId">The steam user identifier.</param>
+        void ChangeSteamUserId(string userId, string steamUserId);
 
         /// <summary>
-        ///     Deauthorizes the user.
+        /// Deauthorizes the user.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         void DeauthorizeUser(string userId);
-
-        /// <summary>
-        /// Creates the user.
-        /// </summary>
-        /// <param name="user">The user.</param>
-        void CreateUser(UserModel user);
     }
 }

@@ -72,11 +72,6 @@ namespace SteamAchievements.Data
         void DeleteOnSubmit(User user);
 
         /// <summary>
-        /// Submits the changes.
-        /// </summary>
-        void SubmitChanges();
-
-        /// <summary>
         /// Inserts the achievement on submit.
         /// </summary>
         /// <param name="achievement">The achievement.</param>
@@ -93,5 +88,10 @@ namespace SteamAchievements.Data
         /// </summary>
         /// <param name="achievementName">Name of the achievement.</param>
         void InsertOnSubmit(AchievementName achievementName);
+
+        /// <summary>
+        /// Submits the changes.
+        /// </summary>
+        void SubmitChanges();
     }
 }
