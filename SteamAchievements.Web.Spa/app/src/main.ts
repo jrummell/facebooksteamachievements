@@ -33,10 +33,11 @@ import Profile from "./components/Profile.vue";
 import HelpButton from "./components/HelpButton.vue";
 import LoadingIndicator from "./components/LoadingIndicator.vue";
 
-Vue.component(Login.name, Login);
-Vue.component(Profile.name, Profile);
-Vue.component(HelpButton.name, HelpButton);
-Vue.component(LoadingIndicator.name, LoadingIndicator);
+// Note: the explicit html tag name must be used here or this will not work in a production build
+Vue.component("login", Login);
+Vue.component("profile", Profile);
+Vue.component("help-button", HelpButton);
+Vue.component("loading-indicator", LoadingIndicator);
 
 import RestClient from "./helpers/RestClient";
 const restClient = new RestClient();
