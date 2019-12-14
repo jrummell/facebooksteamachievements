@@ -20,11 +20,9 @@
 #endregion
 
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SteamAchievements.Data
 {
-    [Table("steam_UserAchievement")]
     public class UserAchievement
     {
         public int AchievementId { get; set; }
@@ -40,6 +38,6 @@ namespace SteamAchievements.Data
         public virtual Achievement Achievement { get; set; }
 
         public virtual User User { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

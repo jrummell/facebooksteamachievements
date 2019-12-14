@@ -33,16 +33,19 @@ namespace SteamAchievements.Services
     {
         private readonly IAchievementManager _achievementManager;
         private readonly ISteamCommunityManager _communityService;
+        private readonly IMapper _mapper;
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="AchievementService" /> class.
+        /// Initializes a new instance of the <see cref="AchievementService" /> class.
         /// </summary>
-        /// <param name="achievementManager"> The achievement manager. </param>
-        /// <param name="communityManager"> The community manager. </param>
-        public AchievementService(IAchievementManager achievementManager, ISteamCommunityManager communityManager)
+        /// <param name="achievementManager">The achievement manager.</param>
+        /// <param name="communityManager">The community manager.</param>
+        /// <param name="mapper">The mapper.</param>
+        public AchievementService(IAchievementManager achievementManager, ISteamCommunityManager communityManager, IMapper mapper)
         {
             _achievementManager = achievementManager;
             _communityService = communityManager;
+            _mapper = mapper;
         }
 
         #region IAchievementService Members
@@ -65,7 +68,7 @@ namespace SteamAchievements.Services
         /// <returns>
         /// true if successful, else false.
         /// </returns>
-        public int UpdateAchievements(int userId, string language = null)
+        public int UpdateAchievements(string userId, string language = null)
         {
             if (language == null)
             {
@@ -81,7 +84,7 @@ namespace SteamAchievements.Services
                 achievement.UserId = userId;
             }
 
-            var dataUserAchievements = Mapper.Map<ICollection<UserAchievement>>(userAchievements);
+            var dataUserAchievements = _mapper.Map<ICollection<UserAchievement>>(userAchievements);
             int updated = _achievementManager.UpdateAchievements(dataUserAchievements);
 
             return updated;
@@ -96,7 +99,7 @@ namespace SteamAchievements.Services
         /// <returns>
         /// The achievements that haven't been published yet.
         /// </returns>
-        public ICollection<AchievementModel> GetUnpublishedAchievements(int userId, DateTime? oldestDate,
+        public ICollection<AchievementModel> GetUnpublishedAchievements(string userId, DateTime? oldestDate,
                                                                    string language = null)
         {
             if (language == null)
@@ -148,7 +151,7 @@ namespace SteamAchievements.Services
                 }
             }
 
-            ICollection<AchievementModel> achievements = Mapper.Map<ICollection<AchievementModel>>(dataAchievements);
+            ICollection<AchievementModel> achievements = _mapper.Map<ICollection<AchievementModel>>(dataAchievements);
             // set game
             foreach (var dataAchievement in dataAchievements)
             {
@@ -211,7 +214,7 @@ namespace SteamAchievements.Services
         /// true if successful, else false.
         /// </returns>
         /// <exception cref="System.ArgumentNullException"></exception>
-        public bool PublishAchievements(int userId, IEnumerable<int> achievementIds)
+        public bool PublishAchievements(string userId, IEnumerable<int> achievementIds)
         {
             if (achievementIds == null)
             {
@@ -229,7 +232,7 @@ namespace SteamAchievements.Services
         /// <param name="userId">The user identifier.</param>
         /// <param name="achievementIds">The ids of the achievements to hide.</param>
         /// <returns></returns>
-        public bool HideAchievements(int userId, IEnumerable<int> achievementIds)
+        public bool HideAchievements(string userId, IEnumerable<int> achievementIds)
         {
             _achievementManager.UpdateHidden(userId, achievementIds);
 
@@ -238,7 +241,7 @@ namespace SteamAchievements.Services
 
         #endregion
 
-        private string GetSteamUserId(int userId)
+        private string GetSteamUserId(string userId)
         {
             Data.User user = _achievementManager.GetUser(userId);
             if (user != null)

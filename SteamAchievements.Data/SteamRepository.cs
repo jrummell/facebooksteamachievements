@@ -20,22 +20,26 @@
 #endregion
 
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Linq;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace SteamAchievements.Data
 {
     public class SteamRepository : Disposable, ISteamRepository
     {
-        private readonly SteamContext _context = new SteamContext();
+        private readonly DbContext _context;
+
+        public SteamRepository(DbContext context)
+        {
+            _context = context;
+        }
 
         /// <summary>
-        /// Gets the context.
+        /// Disposes the managed resources.
         /// </summary>
-        public DbContext Context
+        protected override void DisposeManaged()
         {
-            get { return _context; }
+            _context.Dispose();
         }
 
         #region ISteamRepository Members
@@ -44,28 +48,19 @@ namespace SteamAchievements.Data
         /// Gets the achievements.
         /// </summary>
         /// <value>The achievements.</value>
-        public IQueryable<Achievement> Achievements
-        {
-            get { return _context.Achievements; }
-        }
+        public IQueryable<Achievement> Achievements => _context.Set<Achievement>();
 
         /// <summary>
         /// Gets the user achievements.
         /// </summary>
         /// <value>The user achievements.</value>
-        public IQueryable<UserAchievement> UserAchievements
-        {
-            get { return _context.UserAchievements; }
-        }
+        public IQueryable<UserAchievement> UserAchievements => _context.Set<UserAchievement>();
 
         /// <summary>
         /// Gets the users.
         /// </summary>
         /// <value>The users.</value>
-        public IQueryable<User> Users
-        {
-            get { return _context.Users; }
-        }
+        public IQueryable<User> Users => _context.Set<User>();
 
         /// <summary>
         /// Gets the achievement names.
@@ -73,10 +68,7 @@ namespace SteamAchievements.Data
         /// <value>
         /// The achievement names.
         /// </value>
-        public IQueryable<AchievementName> AchievementNames
-        {
-            get { return _context.AchievementNames; }
-        }
+        public IQueryable<AchievementName> AchievementNames => _context.Set<AchievementName>();
 
         /// <summary>
         /// Inserts the user on submit.
@@ -84,7 +76,7 @@ namespace SteamAchievements.Data
         /// <param name="user">The user.</param>
         public void InsertOnSubmit(User user)
         {
-            _context.Users.Add(user);
+            _context.Set<User>().Add(user);
         }
 
         /// <summary>
@@ -93,7 +85,7 @@ namespace SteamAchievements.Data
         /// <param name="achievements">The achievements.</param>
         public void DeleteAllOnSubmit(IEnumerable<UserAchievement> achievements)
         {
-            _context.UserAchievements.RemoveRange(achievements);
+            _context.Set<UserAchievement>().RemoveRange(achievements);
         }
 
         /// <summary>
@@ -102,7 +94,7 @@ namespace SteamAchievements.Data
         /// <param name="user">The user.</param>
         public void DeleteOnSubmit(User user)
         {
-            _context.Users.Remove(user);
+            _context.Set<User>().Remove(user);
         }
 
         /// <summary>
@@ -119,7 +111,7 @@ namespace SteamAchievements.Data
         /// <param name="achievement">The achievement.</param>
         public void InsertOnSubmit(Achievement achievement)
         {
-            _context.Achievements.Add(achievement);
+            _context.Set<Achievement>().Add(achievement);
         }
 
         /// <summary>
@@ -128,7 +120,7 @@ namespace SteamAchievements.Data
         /// <param name="achievements">The achievements.</param>
         public void InsertAllOnSubmit(IEnumerable<UserAchievement> achievements)
         {
-            _context.UserAchievements.AddRange(achievements);
+            _context.Set<UserAchievement>().AddRange(achievements);
         }
 
         /// <summary>
@@ -137,17 +129,9 @@ namespace SteamAchievements.Data
         /// <param name="achievementName">Name of the achievement.</param>
         public void InsertOnSubmit(AchievementName achievementName)
         {
-            _context.AchievementNames.Add(achievementName);
+            _context.Set<AchievementName>().Add(achievementName);
         }
 
         #endregion
-
-        /// <summary>
-        /// Disposes the managed resources.
-        /// </summary>
-        protected override void DisposeManaged()
-        {
-            _context.Dispose();
-        }
     }
 }

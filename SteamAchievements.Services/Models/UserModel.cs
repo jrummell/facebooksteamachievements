@@ -23,7 +23,7 @@ using System;
 
 namespace SteamAchievements.Services.Models
 {
-    public class UserModel : IEquatable<UserModel>
+    public class UserModel : CreateUserModel, IEquatable<UserModel>
     {
         /// <summary>
         /// Gets or sets the identifier.
@@ -31,15 +31,7 @@ namespace SteamAchievements.Services.Models
         /// <value>
         /// The identifier.
         /// </value>
-        public int Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the user.
-        /// </summary>
-        /// <value>
-        /// The name of the user.
-        /// </value>
-        public string UserName { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [publish description].
@@ -48,7 +40,7 @@ namespace SteamAchievements.Services.Models
         ///   <c>true</c> if [publish description]; otherwise, <c>false</c>.
         /// </value>
         public bool PublishDescription { get; set; }
-
+        
         /// <summary>
         /// Gets or sets the steam user id.
         /// </summary>

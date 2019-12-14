@@ -21,97 +21,102 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.Linq;
 using System.IO;
 using System.Linq;
+using AutoMapper;
 using Moq;
 using NUnit.Framework;
 using SteamAchievements.Data;
 using SteamAchievements.Services.Models;
+using UserAchievement = SteamAchievements.Services.Models.UserAchievement;
 
 namespace SteamAchievements.Services.Tests
 {
     [TestFixture]
     public class AchievementServiceFixture
     {
-    	[TestFixtureSetUp]
-    	public void TestFixtureSetUp()
-    	{
-    		ModelMapCreator mapCreator = new ModelMapCreator();
-    		mapCreator.CreateMappings();
-    	}
-    	
+        private IMapper _mapper;
+
+        [OneTimeSetUp]
+        public void TestFixtureSetUp()
+        {
+            var config = new MapperConfiguration(c => { c.AddProfile<SteamAchievementsProfile>(); });
+            _mapper = config.CreateMapper();
+        }
+
         [Test]
         public void UpdateNewUserAchievements()
         {
-            Mock<IAchievementManager> achievementManagerMock = new Mock<IAchievementManager>();
-            Mock<ISteamCommunityManager> communityManagerMock = new Mock<ISteamCommunityManager>();
+            var achievementManagerMock = new Mock<IAchievementManager>();
+            var communityManagerMock = new Mock<ISteamCommunityManager>();
 
             // expect
-            Models.UserModel user = new Models.UserModel {Id = 1234, SteamUserId = "user1"};
-            Data.User dataUser = new Data.User {Id = 1234, SteamUserId = "user1"};
+            var user = new UserModel {Id = 1234.ToString(), SteamUserId = "user1"};
+            var dataUser = new User {Id = 1234.ToString(), SteamUserId = "user1"};
             achievementManagerMock.Setup(rep => rep.GetUser(user.Id))
-                .Returns(dataUser).Verifiable();
+                                  .Returns(dataUser).Verifiable();
 
-            AchievementXmlParser achievementXmlParser = new AchievementXmlParser();
-            List<Models.UserAchievement> userAchievements =
+            var achievementXmlParser = new AchievementXmlParser();
+            var userAchievements =
                 achievementXmlParser.ParseClosed(File.ReadAllText("cssAchievements.xml")).ToList();
             userAchievements.ForEach(
-                userAchievement =>
-                userAchievement.Achievement.Game =
-                new GameModel
-                    {
-                        Id = 240,
-                        ImageUrl =
-                            "http://media.steampowered.com/steamcommunity/public/images/apps/10/af890f848dd606ac2fd4415de3c3f5e7a66fcb9f.jpg",
-                        Name = "Counter-Strike: Source",
-                        PlayedRecently = true,
-                        StatsUrl =
-                            String.Format("http://steamcommunity.com/id/{0}/games/?xml=1", user.SteamUserId),
-                        StoreUrl = "http://store.steampowered.com/app/10"
-                    });
+                                     userAchievement =>
+                                         userAchievement.Achievement.Game =
+                                             new GameModel
+                                             {
+                                                 Id = 240,
+                                                 ImageUrl =
+                                                     "http://media.steampowered.com/steamcommunity/public/images/apps/10/af890f848dd606ac2fd4415de3c3f5e7a66fcb9f.jpg",
+                                                 Name = "Counter-Strike: Source",
+                                                 PlayedRecently = true,
+                                                 StatsUrl =
+                                                     string.Format("http://steamcommunity.com/id/{0}/games/?xml=1",
+                                                                   user.SteamUserId),
+                                                 StoreUrl = "http://store.steampowered.com/app/10"
+                                             });
 
             communityManagerMock.Setup(rep => rep.GetClosedAchievements(user.SteamUserId, "english"))
-                .Returns(new List<Models.UserAchievement>()).Verifiable();
+                                .Returns(new List<UserAchievement>()).Verifiable();
 
             achievementManagerMock.Setup(rep => rep.GetUser(user.Id))
-                .Returns(dataUser).Verifiable();
+                                  .Returns(dataUser).Verifiable();
             achievementManagerMock.Setup(rep => rep.UpdateAchievements(It.IsAny<IEnumerable<Data.UserAchievement>>()))
-                .Returns(5).Verifiable();
+                                  .Returns(5).Verifiable();
 
-            ICollection<GameModel> games = new GameXmlParser().Parse(File.ReadAllText("games.xml"));
+            var games = new GameXmlParser().Parse(File.ReadAllText("games.xml"));
             communityManagerMock.Setup(rep => rep.GetGames(user.SteamUserId, "english"))
-                .Returns(games).Verifiable();
+                                .Returns(games).Verifiable();
 
-            Data.Achievement[] dataAchievements = new[]
-                                                      {
-                                                          new Data.Achievement
-                                                              {
-                                                                  AchievementNames =
-                                                                      new EntitySet<AchievementName>
-                                                                          {
-                                                                              new AchievementName
-                                                                                  {
-                                                                                      Name = "x",
-                                                                                      Description = "y",
-                                                                                      Language = "english"
-                                                                                  }
-                                                                          },
-                                                                  GameId = 1,
-                                                                  Id = 1
-                                                              }
-                                                      };
+            Achievement[] dataAchievements =
+            {
+                new Achievement
+                {
+                    AchievementNames =
+                        new List<AchievementName>
+                        {
+                            new AchievementName
+                            {
+                                Name = "x",
+                                Description = "y",
+                                Language = "english"
+                            }
+                        },
+                    GameId = 1,
+                    Id = 1
+                }
+            };
             achievementManagerMock.Setup(
-                rep => rep.GetUnpublishedAchievements(user.Id, DateTime.UtcNow.Date.AddDays(-2)))
-                .Returns(dataAchievements).Verifiable();
+                                         rep =>
+                                             rep.GetUnpublishedAchievements(user.Id, DateTime.UtcNow.Date.AddDays(-2)))
+                                  .Returns(dataAchievements).Verifiable();
             achievementManagerMock.Setup(
-                rep =>
-                rep.UpdateHidden(user.Id, It.IsAny<IEnumerable<int>>()))
-                .Verifiable();
+                                         rep =>
+                                             rep.UpdateHidden(user.Id, It.IsAny<IEnumerable<int>>()))
+                                  .Verifiable();
 
             // execute
             IAchievementService service =
-                new AchievementService(achievementManagerMock.Object, communityManagerMock.Object);
+                new AchievementService(achievementManagerMock.Object, communityManagerMock.Object, _mapper);
             service.UpdateNewUserAchievements(user);
 
             // verify
