@@ -165,6 +165,9 @@ namespace SteamAchievements.Web.Spa
 
             app.UseRouting();
 
+            // redirect errors back to the home page
+            app.UseStatusCodePagesWithRedirects("/index.html?code={0}");
+
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
