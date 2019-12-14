@@ -179,7 +179,7 @@ export default class Home extends Vue {
         FB.ui(
             {
                 method: "share",
-                href: `http://steamcommunity.com/id/${user.steamUserId}`,
+                href: window.location.href,
                 quote: message
             },
             async (): Promise<void> => {
