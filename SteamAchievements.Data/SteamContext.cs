@@ -51,7 +51,7 @@ namespace SteamAchievements.Data
 
             modelBuilder.Entity<User>()
                         .HasIndex(e => e.SteamUserId)
-                        .IsUnique();
+                        .IsUnique(false);
 
             modelBuilder.Entity<User>()
                         .Property(e => e.Language)
