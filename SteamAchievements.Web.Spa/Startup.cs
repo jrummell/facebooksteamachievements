@@ -72,7 +72,7 @@ namespace SteamAchievements.Web.Spa
                                        var assemblyName = Assembly.GetExecutingAssembly().GetName();
                                        c.SwaggerDoc("v1",
                                                     new OpenApiInfo
-                                                    {Title = "Liftoff API", Version = "v" + assemblyName.Version});
+                                                    {Title = "Steam Achievements Web API", Version = "v" + assemblyName.Version});
 
                                        // Set the comments path for the Swagger JSON and UI.
                                        var xmlFile = $"{assemblyName.Name}.xml";
