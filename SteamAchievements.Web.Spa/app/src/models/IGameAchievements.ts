@@ -4,4 +4,5 @@ import IGame from "./IGame";
 export default interface IGameAchievements {
     game: IGame;
     achievements: IAchievement[];
+    selected?: boolean;
 }
