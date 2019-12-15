@@ -115,9 +115,8 @@ export default class Home extends Vue {
             this.showSettings = false;
         } else {
             this.loading = false;
+            this.showSettings = true;
         }
-
-        this.showSettings = this.user && !this.user.steamUserId;
     }
 
     async getAchievements(): Promise<void> {
