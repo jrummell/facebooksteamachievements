@@ -135,6 +135,12 @@
   <data name="GamesYourGames" xml:space="preserve">
     <value>Your games. This list includes all Steam games that you own (including some free Source Mods) that support achievements.</value>
   </data>
+  <data name="HomeConfigure" xml:space="preserve">
+    <value>Configure your steam</value>
+  </data>
+  <data name="HomeNoUnPublishedAchievements" xml:space="preserve">
+    <value>You have no unpublished achievements.</value>
+  </data>
   <data name="MenuGames" xml:space="preserve">
     <value>Games</value>
   </data>
@@ -148,19 +154,16 @@
     <value>Settings</value>
   </data>
   <data name="PublishInstructions" xml:space="preserve">
-    <value>Click an achievement icon to select it. You can select up to five at a time. If you don't see the publish dialog after clicking Publish, scroll down. If you hide an achievement, you will no longer see it on this page and it can not be published.</value>
+    <value>Your recent achievements. If you hide an achievement, you will no longer see it on this page and it can not be published.</value>
   </data>
   <data name="PublishUnpublishedAchievements" xml:space="preserve">
     <value>Unpublished Achievements</value>
-  </data>
-  <data name="SettingsAutoUpdateLabel" xml:space="preserve">
-    <value>Update and publish my achievements automatically.</value>
   </data>
   <data name="SettingsCustomUrl" xml:space="preserve">
     <value>Steam Community Custom URL</value>
   </data>
   <data name="SettingsCustomUrlRequired" xml:space="preserve">
-    <value>{0} is required.</value>
+    <value>Steam Community Custom URL is required.</value>
   </data>
   <data name="SettingsDuplicateCustomUrl" xml:space="preserve">
     <value>This Steam Community URL is already in use.</value>

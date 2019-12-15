@@ -3,7 +3,7 @@ export default class RestClient {
 
     headers: Headers = new Headers({
         "Content-Type": "application/json",
-        "Accept": "application/json"
+        Accept: "application/json"
     });
 
     setToken(token: string) {

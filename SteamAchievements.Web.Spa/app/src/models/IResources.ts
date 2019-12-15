@@ -19,8 +19,9 @@ export default interface IResources {
     gamesInstructions: string;
     buttonHide: string;
     buttonHelp: string;
-    settingsAutoUpdateLabel: string;
     menuSettings: string;
     gamesViewAchievements: string;
     settingsCustomUrlRequired: string;
+    homeNoUnPublishedAchievements: string;
+    homeConfigure: string;
 }

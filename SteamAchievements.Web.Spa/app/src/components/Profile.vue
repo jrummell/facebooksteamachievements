@@ -26,11 +26,7 @@ export default class Profile extends Vue {
 
     mounted() {
         this.$store.subscribe((mutation: MutationPayload, state: AppState) => {
-            if (
-                mutation.type === "setUser" &&
-                state.user &&
-                state.user.steamUserId
-            ) {
+            if (mutation.type === "setUser" && state.user && state.user.steamUserId) {
                 this.getProfile();
             }
         });
@@ -47,9 +43,7 @@ export default class Profile extends Vue {
         }
 
         if (this.$store.state.user.steamUserId) {
-            this.profile = await this.restClient.getJson(
-                `/api/Profile/${this.$store.state.user.steamUserId}`
-            );
+            this.profile = await this.restClient.getJson(`/api/Profile/${this.$store.state.user.steamUserId}`);
 
             this.$store.commit("setProfile", this.profile);
         }

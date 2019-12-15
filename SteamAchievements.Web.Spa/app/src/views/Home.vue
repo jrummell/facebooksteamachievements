@@ -2,47 +2,55 @@
     <b-card>
         <div v-if="!loading && showSettings">
             <div class="alert alert-info">
-                Configure your steam
+                {{ resources.homeConfigure }}
                 <router-link to="/settings">{{ resources.menuSettings }}</router-link>
             </div>
         </div>
         <div v-if="!loading">
-            <div class="alert alert-info">
-                <p>{{resources.publishInstructions}}</p>
+            <div v-if="achievements.length > 0">
+                <div class="alert alert-info">
+                    {{ resources.publishInstructions }}
+                </div>
+                <div v-if="selectedAchievements.length > 0">
+                    <b-button variant="primary" class="mr-2" @click="publish">
+                        <font-awesome-icon icon="check"></font-awesome-icon>
+                        {{ resources.buttonPublish || "Publish" }}
+                    </b-button>
+                    <b-button variant="danger" @click="hide">
+                        <font-awesome-icon icon="times"></font-awesome-icon>
+                        {{ resources.buttonHide || "Hide" }}
+                    </b-button>
+                </div>
             </div>
-            <div>
-                <b-button variant="primary" class="mr-2" @click="publish">
-                    <font-awesome-icon icon="check"></font-awesome-icon>
-                    {{resources.buttonPublish || "Publish"}}
-                </b-button>
-                <b-button variant="danger" @click="hide">
-                    <font-awesome-icon icon="times"></font-awesome-icon>
-                    {{resources.buttonHide || "Hide"}}
-                </b-button>
+            <div v-if="achievements.length == 0 && !showSettings">
+                {{ resources.homeNoUnPublishedAchievements }}
             </div>
-            <div v-if="achievements.length == 0">You have no unpublished achievements.</div>
 
             <b-row v-for="item in achievements" :key="item.game.id">
                 <b-col md="12">
-                    <h4 class="pt-3">{{item.game.name}}</h4>
+                    <h4 class="pt-3">
+                        {{ item.game.name }}
+                        <b-form-checkbox
+                            :inline="true"
+                            @change="selectGame(item)"
+                            v-model="item.selected"
+                        ></b-form-checkbox>
+                    </h4>
                     <b-row>
-                        <b-col
-                            v-for="achievement in item.achievements"
-                            :key="achievement.id"
-                            md="6"
-                        >
-                            <b-row class="achievement" :class="{selected: achievement.selected}">
+                        <b-col v-for="achievement in item.achievements" :key="achievement.id" md="6">
+                            <b-row class="achievement" :class="{ selected: achievement.selected }">
                                 <b-col md="3">
                                     <b-form-checkbox
+                                        :id="`achievement-check-${achievement.apiName}`"
                                         class="achievement-check"
                                         v-model="achievement.selected"
                                     ></b-form-checkbox>
                                     <img :src="achievement.imageUrl" :alt="achievement.name" />
                                 </b-col>
                                 <b-col md="9">
-                                    <label>
-                                        <span class="name">{{achievement.name}}</span>
-                                        <span class="description">{{achievement.description}}</span>
+                                    <label :for="`achievement-check-${achievement.apiName}`">
+                                        <span class="name">{{ achievement.name }}</span>
+                                        <span class="description">{{ achievement.description }}</span>
                                     </label>
                                 </b-col>
                             </b-row>
@@ -59,16 +67,11 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Inject } from "vue-property-decorator";
+import { BFormCheckbox } from "bootstrap-vue";
 import RestClient from "../helpers/RestClient";
 import { MutationPayload } from "vuex";
 import { AppState, MutationTypes } from "../store";
-import {
-    IAchievement,
-    IResources,
-    IGameAchievements,
-    IUser,
-    ISteamProfile
-} from "../models";
+import { IAchievement, IResources, IGameAchievements, IUser, ISteamProfile } from "../models";
 
 @Component
 export default class Home extends Vue {
@@ -81,6 +84,20 @@ export default class Home extends Vue {
     loading: boolean = true;
     showSettings: boolean = false;
     achievements: IGameAchievements[] = this.$store.state.achievements || [];
+
+    get selectedAchievements(): IAchievement[] {
+        const selected: IAchievement[] = [];
+
+        this.achievements.forEach(gameAchievement => {
+            gameAchievement.achievements
+                .filter(achievement => achievement.selected)
+                .forEach(achievement => {
+                    selected.push(achievement);
+                });
+        });
+
+        return selected;
+    }
 
     mounted() {
         this.loadAchievements();
@@ -96,18 +113,10 @@ export default class Home extends Vue {
     }
 
     async loadAchievements(): Promise<void> {
-        if (
-            this.achievements.length === 0 &&
-            this.user &&
-            this.user.id &&
-            this.user.steamUserId
-        ) {
+        if (this.achievements.length === 0 && this.user && this.user.id && this.user.steamUserId) {
             this.loading = true;
 
-            await this.restClient.postJson<{}, number>(
-                `/api/Achievement/Update/${this.user.id}`,
-                {}
-            );
+            await this.restClient.postJson<{}, number>(`/api/Achievement/Update/${this.user.id}`, {});
 
             await this.getAchievements();
 
@@ -115,15 +124,12 @@ export default class Home extends Vue {
             this.showSettings = false;
         } else {
             this.loading = false;
+            this.showSettings = true;
         }
-
-        this.showSettings = this.user && !this.user.steamUserId;
     }
 
     async getAchievements(): Promise<void> {
-        const achievements = await this.restClient.getJson<IGameAchievements[]>(
-            `/api/Achievement/${this.user.id}`
-        );
+        const achievements = await this.restClient.getJson<IGameAchievements[]>(`/api/Achievement/${this.user.id}`);
 
         if (achievements) {
             this.achievements = achievements;
@@ -134,28 +140,32 @@ export default class Home extends Vue {
         achievement.selected = !(achievement.selected || false);
     }
 
+    selectGame(game: IGameAchievements) {
+        game.achievements.forEach(achievement => {
+            achievement.selected = !game.selected;
+        });
+    }
+
     async publish(): Promise<void> {
+        if (this.selectedAchievements.length === 0) {
+            return;
+        }
+
         const user: IUser = this.$store.state.user;
 
         let descriptions: string[] = [];
 
         let selectedAchivementIds: number[] = [];
         this.achievements.forEach((value, index) => {
-            const selected = value.achievements.filter(
-                a => a.selected === true
-            );
+            const selected = value.achievements.filter(a => a.selected === true);
 
-            selectedAchivementIds = selectedAchivementIds.concat(
-                selected.map(a => a.id)
-            );
+            selectedAchivementIds = selectedAchivementIds.concat(selected.map(a => a.id));
 
             let description = `${value.game.name}: `;
 
             description += selected
                 .map(a => {
-                    const achievementDescription = user.publishDescription
-                        ? ` (${a.description})`
-                        : "";
+                    const achievementDescription = user.publishDescription ? ` (${a.description})` : "";
 
                     return a.name + achievementDescription;
                 })
@@ -169,9 +179,7 @@ export default class Home extends Vue {
             return;
         }
 
-        const message = `${
-            user.steamUserId
-        } unlocked ${achievementCount} achievement${
+        const message = `${user.steamUserId} unlocked ${achievementCount} achievement${
             achievementCount > 1 ? "s" : ""
         }! \r\n\r\n${descriptions.join(". ")}`;
 
@@ -182,7 +190,11 @@ export default class Home extends Vue {
                 href: window.location.href,
                 quote: message
             },
-            async (): Promise<void> => {
+            async (response: any): Promise<void> => {
+                if (response.error_code) {
+                    return;
+                }
+
                 this.loading = true;
 
                 await this.markPublished(user.id, selectedAchivementIds);
@@ -194,17 +206,15 @@ export default class Home extends Vue {
         );
     }
 
-    async markPublished(
-        userId: string,
-        achievementIds: number[]
-    ): Promise<void> {
-        await this.restClient.postJson(
-            `/api/Achievement/${userId}`,
-            achievementIds
-        );
+    async markPublished(userId: string, achievementIds: number[]): Promise<void> {
+        await this.restClient.postJson(`/api/Achievement/${userId}`, achievementIds);
     }
 
     async hide(): Promise<void> {
+        if (this.selectedAchievements.length === 0) {
+            return;
+        }
+
         const user: IUser = this.$store.state.user;
 
         const selectedAchivementIds: number[] = [];
@@ -218,10 +228,7 @@ export default class Home extends Vue {
 
         this.loading = true;
 
-        await this.restClient.deleteJson(
-            `/api/Achievement/${user.id}`,
-            selectedAchivementIds
-        );
+        await this.restClient.deleteJson(`/api/Achievement/${user.id}`, selectedAchivementIds);
 
         await this.getAchievements();
 

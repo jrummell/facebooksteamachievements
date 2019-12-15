@@ -10,14 +10,7 @@ import BootstrapVue from "bootstrap-vue";
 Vue.use(BootstrapVue);
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-    faQuestion,
-    faSave,
-    faCheck,
-    faTimes,
-    faSpinner,
-    faExclamation
-} from "@fortawesome/free-solid-svg-icons";
+import { faQuestion, faSave, faCheck, faTimes, faSpinner, faExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(faQuestion, faSave, faCheck, faTimes, faSpinner, faExclamation);
