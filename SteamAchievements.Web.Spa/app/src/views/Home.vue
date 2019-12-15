@@ -3,9 +3,7 @@
         <div v-if="!loading && showSettings">
             <div class="alert alert-info">
                 {{ resources.homeConfigure }}
-                <router-link to="/settings">{{
-                    resources.menuSettings
-                }}</router-link>
+                <router-link to="/settings">{{ resources.menuSettings }}</router-link>
             </div>
         </div>
         <div v-if="!loading">
@@ -39,40 +37,20 @@
                         ></b-form-checkbox>
                     </h4>
                     <b-row>
-                        <b-col
-                            v-for="achievement in item.achievements"
-                            :key="achievement.id"
-                            md="6"
-                        >
-                            <b-row
-                                class="achievement"
-                                :class="{ selected: achievement.selected }"
-                            >
+                        <b-col v-for="achievement in item.achievements" :key="achievement.id" md="6">
+                            <b-row class="achievement" :class="{ selected: achievement.selected }">
                                 <b-col md="3">
                                     <b-form-checkbox
-                                        :id="
-                                            `achievement-check-${achievement.apiName}`
-                                        "
+                                        :id="`achievement-check-${achievement.apiName}`"
                                         class="achievement-check"
                                         v-model="achievement.selected"
                                     ></b-form-checkbox>
-                                    <img
-                                        :src="achievement.imageUrl"
-                                        :alt="achievement.name"
-                                    />
+                                    <img :src="achievement.imageUrl" :alt="achievement.name" />
                                 </b-col>
                                 <b-col md="9">
-                                    <label
-                                        :for="
-                                            `achievement-check-${achievement.apiName}`
-                                        "
-                                    >
-                                        <span class="name">{{
-                                            achievement.name
-                                        }}</span>
-                                        <span class="description">{{
-                                            achievement.description
-                                        }}</span>
+                                    <label :for="`achievement-check-${achievement.apiName}`">
+                                        <span class="name">{{ achievement.name }}</span>
+                                        <span class="description">{{ achievement.description }}</span>
                                     </label>
                                 </b-col>
                             </b-row>
@@ -93,13 +71,7 @@ import { BFormCheckbox } from "bootstrap-vue";
 import RestClient from "../helpers/RestClient";
 import { MutationPayload } from "vuex";
 import { AppState, MutationTypes } from "../store";
-import {
-    IAchievement,
-    IResources,
-    IGameAchievements,
-    IUser,
-    ISteamProfile
-} from "../models";
+import { IAchievement, IResources, IGameAchievements, IUser, ISteamProfile } from "../models";
 
 @Component
 export default class Home extends Vue {
@@ -141,18 +113,10 @@ export default class Home extends Vue {
     }
 
     async loadAchievements(): Promise<void> {
-        if (
-            this.achievements.length === 0 &&
-            this.user &&
-            this.user.id &&
-            this.user.steamUserId
-        ) {
+        if (this.achievements.length === 0 && this.user && this.user.id && this.user.steamUserId) {
             this.loading = true;
 
-            await this.restClient.postJson<{}, number>(
-                `/api/Achievement/Update/${this.user.id}`,
-                {}
-            );
+            await this.restClient.postJson<{}, number>(`/api/Achievement/Update/${this.user.id}`, {});
 
             await this.getAchievements();
 
@@ -165,9 +129,7 @@ export default class Home extends Vue {
     }
 
     async getAchievements(): Promise<void> {
-        const achievements = await this.restClient.getJson<IGameAchievements[]>(
-            `/api/Achievement/${this.user.id}`
-        );
+        const achievements = await this.restClient.getJson<IGameAchievements[]>(`/api/Achievement/${this.user.id}`);
 
         if (achievements) {
             this.achievements = achievements;
@@ -195,21 +157,15 @@ export default class Home extends Vue {
 
         let selectedAchivementIds: number[] = [];
         this.achievements.forEach((value, index) => {
-            const selected = value.achievements.filter(
-                a => a.selected === true
-            );
+            const selected = value.achievements.filter(a => a.selected === true);
 
-            selectedAchivementIds = selectedAchivementIds.concat(
-                selected.map(a => a.id)
-            );
+            selectedAchivementIds = selectedAchivementIds.concat(selected.map(a => a.id));
 
             let description = `${value.game.name}: `;
 
             description += selected
                 .map(a => {
-                    const achievementDescription = user.publishDescription
-                        ? ` (${a.description})`
-                        : "";
+                    const achievementDescription = user.publishDescription ? ` (${a.description})` : "";
 
                     return a.name + achievementDescription;
                 })
@@ -223,9 +179,7 @@ export default class Home extends Vue {
             return;
         }
 
-        const message = `${
-            user.steamUserId
-        } unlocked ${achievementCount} achievement${
+        const message = `${user.steamUserId} unlocked ${achievementCount} achievement${
             achievementCount > 1 ? "s" : ""
         }! \r\n\r\n${descriptions.join(". ")}`;
 
@@ -252,14 +206,8 @@ export default class Home extends Vue {
         );
     }
 
-    async markPublished(
-        userId: string,
-        achievementIds: number[]
-    ): Promise<void> {
-        await this.restClient.postJson(
-            `/api/Achievement/${userId}`,
-            achievementIds
-        );
+    async markPublished(userId: string, achievementIds: number[]): Promise<void> {
+        await this.restClient.postJson(`/api/Achievement/${userId}`, achievementIds);
     }
 
     async hide(): Promise<void> {
@@ -280,10 +228,7 @@ export default class Home extends Vue {
 
         this.loading = true;
 
-        await this.restClient.deleteJson(
-            `/api/Achievement/${user.id}`,
-            selectedAchivementIds
-        );
+        await this.restClient.deleteJson(`/api/Achievement/${user.id}`, selectedAchivementIds);
 
         await this.getAchievements();
 

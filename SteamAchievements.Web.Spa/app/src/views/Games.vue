@@ -3,7 +3,7 @@
         <b-row>
             <b-col>
                 <b-alert show>
-                    {{resources.gamesYourGames}}
+                    {{ resources.gamesYourGames }}
                     <help-button anchor="supported-games" :text="resources.buttonHelp"></help-button>
                 </b-alert>
             </b-col>
@@ -53,9 +53,7 @@ export default class Games extends Vue {
             return;
         }
 
-        const games = await this.restClient.getJson<IGame[]>(
-            `/api/Game/${this.$store.state.user.steamUserId}`
-        );
+        const games = await this.restClient.getJson<IGame[]>(`/api/Game/${this.$store.state.user.steamUserId}`);
         if (games) {
             this.$store.commit(MutationTypes.setGames, games);
             this.games = games;

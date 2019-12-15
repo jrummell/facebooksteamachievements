@@ -8,22 +8,15 @@
         </div>
 
         <b-form>
-            <span v-if="steamUserIdValid === false" class="text-danger">{{
-                resources.settingsCustomUrlRequired
-            }}</span>
+            <span v-if="steamUserIdValid === false" class="text-danger">{{ resources.settingsCustomUrlRequired }}</span>
             <b-form-group :label="resources.settingsCustomUrl">
                 <b-row>
                     <b-col>
                         <b-input-group>
                             <b-input-group-prepend>
-                                <b-input-group-text
-                                    >http://steamcommunity.com/id/</b-input-group-text
-                                >
+                                <b-input-group-text>http://steamcommunity.com/id/</b-input-group-text>
                             </b-input-group-prepend>
-                            <b-form-input
-                                v-model="model.steamUserId"
-                                @change="validateSteamUserId"
-                            ></b-form-input>
+                            <b-form-input v-model="model.steamUserId" @change="validateSteamUserId"></b-form-input>
                             <b-input-group-append>
                                 <b-input-group-text>
                                     <font-awesome-icon
@@ -31,15 +24,9 @@
                                         icon="check"
                                         full-width
                                     ></font-awesome-icon>
-                                    <font-awesome-icon
-                                        v-else
-                                        icon="exclamation"
-                                        full-width
-                                    ></font-awesome-icon>
+                                    <font-awesome-icon v-else icon="exclamation" full-width></font-awesome-icon>
                                 </b-input-group-text>
-                                <help-button
-                                    anchor="configure-your-steam-community-profile"
-                                ></help-button>
+                                <help-button anchor="configure-your-steam-community-profile"></help-button>
                             </b-input-group-append>
                         </b-input-group>
                     </b-col>
@@ -91,9 +78,7 @@ export default class Settings extends Vue {
 
     async validateSteamUserId(value: string): Promise<void> {
         if (this.model && this.model.steamUserId) {
-            const response = await this.restClient.getJson(
-                `/api/Profile/${value}`
-            );
+            const response = await this.restClient.getJson(`/api/Profile/${value}`);
 
             this.steamProfileValid = response != null;
         }
@@ -101,10 +86,7 @@ export default class Settings extends Vue {
 
     async save(): Promise<void> {
         if (this.steamProfileValid) {
-            const response = await this.restClient.putJson(
-                "/api/User",
-                this.model
-            );
+            const response = await this.restClient.putJson("/api/User", this.model);
 
             this.steamUserIdValid = response != null;
 
