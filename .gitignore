@@ -11,3 +11,5 @@ packages
 steam web api.txt
 *.pubxml
 SteamAchievements.Web.Spa/app/build
+.env.local
+SteamAchievements.Web.Spa/.vscode
