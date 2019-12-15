@@ -1,0 +1,34 @@
+{
+    "cSpell.words": [
+    ],
+    "vetur.format.options.tabSize": 4,
+    "vetur.format.styleInitialIndent": true,
+    "prettier.jsxBracketSameLine": true,
+    "prettier.tabWidth": 4,
+    "vetur.format.scriptInitialIndent": true,
+    "eslint.autoFixOnSave": true,
+    "eslint.alwaysShowStatus": true,
+    "eslint.packageManager": "yarn",
+    "eslint.lintTask.enable": true,
+    "eslint.validate": [
+        {
+            "language": "html",
+            "autoFix": true
+        },
+        {
+            "language": "javascript",
+            "autoFix": true
+        },
+        {
+            "language": "vue",
+            "autoFix": true
+        },
+        {
+            "language": "typescript",
+            "autoFix": true
+        }
+    ],
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "prettier.packageManager": "yarn",
+    "prettier.printWidth": 120
+}
