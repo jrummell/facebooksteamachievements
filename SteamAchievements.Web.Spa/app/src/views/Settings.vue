@@ -1,11 +1,7 @@
 <template>
     <b-card v-if="resources" class="settings-page">
-        <div v-if="saveSuccess" class="text-success">
-            {{ resources.settingsSuccess }}
-        </div>
-        <div v-if="steamProfileValid === false" class="text-danger">
-            {{ resources.settingsInvalidCustomUrl }}
-        </div>
+        <div v-if="saveSuccess" class="text-success">{{ resources.settingsSuccess }}</div>
+        <div v-if="steamProfileValid === false" class="text-danger">{{ resources.settingsInvalidCustomUrl }}</div>
 
         <b-form>
             <span v-if="steamUserIdValid === false" class="text-danger">{{ resources.settingsCustomUrlRequired }}</span>
@@ -13,7 +9,7 @@
                 <b-row>
                     <b-col>
                         <b-input-group>
-                            <b-input-group-prepend>
+                            <b-input-group-prepend class="d-none d-sm-block">
                                 <b-input-group-text>http://steamcommunity.com/id/</b-input-group-text>
                             </b-input-group-prepend>
                             <b-form-input v-model="model.steamUserId" @change="validateSteamUserId"></b-form-input>
@@ -33,9 +29,9 @@
                 </b-row>
             </b-form-group>
             <b-form-group label="Publish Options">
-                <b-form-checkbox v-model="model.publishDescription">{{
-                    resources.settingsPublishDescriptionLabel
-                }}</b-form-checkbox>
+                <b-form-checkbox v-model="model.publishDescription">
+                    {{ resources.settingsPublishDescriptionLabel }}
+                </b-form-checkbox>
             </b-form-group>
             <b-button @click="save" variant="primary">
                 <font-awesome-icon icon="save"></font-awesome-icon>
