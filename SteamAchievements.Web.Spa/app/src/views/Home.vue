@@ -8,9 +8,7 @@
         </div>
         <div v-if="!loading">
             <div v-if="achievements.length > 0">
-                <div class="alert alert-info">
-                    {{ resources.publishInstructions }}
-                </div>
+                <div class="alert alert-info">{{ resources.publishInstructions }}</div>
                 <div v-if="selectedAchievements.length > 0">
                     <b-button variant="primary" class="mr-2" @click="publish">
                         <font-awesome-icon icon="check"></font-awesome-icon>
@@ -22,38 +20,47 @@
                     </b-button>
                 </div>
             </div>
-            <div v-if="achievements.length == 0 && !showSettings">
-                {{ resources.homeNoUnPublishedAchievements }}
-            </div>
+            <div v-if="achievements.length == 0 && !showSettings">{{ resources.homeNoUnPublishedAchievements }}</div>
 
             <b-row v-for="item in achievements" :key="item.game.id">
                 <b-col md="12">
-                    <h4 class="pt-3">
-                        {{ item.game.name }}
+                    <h4 class="pt-3" @click="selectGame(item)">
                         <b-form-checkbox
+                            :id="`game-${item.game.id}`"
                             :inline="true"
+                            class="mr-0 pt-1"
                             @change="selectGame(item)"
                             v-model="item.selected"
                         ></b-form-checkbox>
+                        <label :for="`game-${item.game.id}`">{{ item.game.name }}</label>
                     </h4>
                     <b-row>
                         <b-col v-for="achievement in item.achievements" :key="achievement.id" md="6">
-                            <b-row class="achievement" :class="{ selected: achievement.selected }">
-                                <b-col md="3">
-                                    <b-form-checkbox
-                                        :id="`achievement-check-${achievement.apiName}`"
-                                        class="achievement-check"
-                                        v-model="achievement.selected"
-                                    ></b-form-checkbox>
-                                    <img :src="achievement.imageUrl" :alt="achievement.name" />
-                                </b-col>
-                                <b-col md="9">
-                                    <label :for="`achievement-check-${achievement.apiName}`">
-                                        <span class="name">{{ achievement.name }}</span>
-                                        <span class="description">{{ achievement.description }}</span>
-                                    </label>
-                                </b-col>
-                            </b-row>
+                            <div
+                                :class="{
+                                    'bg-secondary': achievement.selected,
+                                    'text-light': achievement.selected,
+                                    'p-2': true,
+                                    'mb-2': true
+                                }"
+                            >
+                                <label :for="`achievement-check-${achievement.apiName}`">
+                                    <b-row>
+                                        <b-col cols="3">
+                                            <img :src="achievement.imageUrl" :alt="achievement.name" class="mt-2" />
+                                        </b-col>
+                                        <b-col cols="9">
+                                            <b-form-checkbox
+                                                :id="`achievement-check-${achievement.apiName}`"
+                                                class="d-inline-block"
+                                                v-model="achievement.selected"
+                                            ></b-form-checkbox>
+                                            <span class="font-weight-bold">{{ achievement.name }}</span>
+                                            <p>{{ achievement.description }}</p>
+                                        </b-col>
+                                    </b-row>
+                                </label>
+                            </div>
                         </b-col>
                     </b-row>
                 </b-col>
@@ -236,23 +243,3 @@ export default class Home extends Vue {
     }
 }
 </script>
-
-<style lang="less" scoped>
-.achievement {
-    padding: 5px;
-    margin: 2px;
-
-    .achievement-check {
-        display: inline-block;
-    }
-
-    .name {
-        display: block;
-        font-weight: bold;
-    }
-}
-.achievement.selected {
-    background-color: #fff9d7;
-    border: 1px solid #e2c822;
-}
-</style>

@@ -2,7 +2,7 @@
     <div id="app">
         <div class="header mb-2">
             <router-link to="/">
-                <img src="/images/banner-light.png" class="img-responsive" alt="Steam Achievements" />
+                <img src="/images/banner-light.png" class="img-fluid" alt="Steam Achievements" />
             </router-link>
         </div>
         <div v-if="loaded">
