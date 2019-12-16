@@ -33,32 +33,18 @@
 
         <div class="footer">
             <p>
-                <a
-                    href="http://www.facebook.com/SteamAchievements"
-                    target="_blank"
-                >Steam Achievements</a>
+                <a href="http://www.facebook.com/SteamAchievements" target="_blank">Steam Achievements</a>
                 is not developed by Facebook or Valve. Steam Achievements is an
-                <a
-                    href="https://github.com/jrummell/facebooksteamachievements"
-                    target="_blank"
-                >open source project</a>
-                created
-                by a dude who likes to frag
-                on the PC. Logo design by
-                <a
-                    href="http://www.facebook.com/vince.costello"
-                    target="_blank"
-                >Vince Costello</a>. If you have a suggestion or have found a bug, please report
-                it on the project's
-                <a
-                    href="https://github.com/jrummell/facebooksteamachievements/issues"
-                    target="_blank"
-                >issue tracker</a>. Please include your Steam Community Profile URL when reporting
-                any issues.
+                <a href="https://github.com/jrummell/facebooksteamachievements" target="_blank">open source project</a>
+                created by a dude who likes to frag on the PC. Logo design by
+                <a href="http://www.facebook.com/vince.costello" target="_blank">Vince Costello</a>. If you have a
+                suggestion or have found a bug, please report it on the project's
+                <a href="https://github.com/jrummell/facebooksteamachievements/issues" target="_blank">issue tracker</a
+                >. Please include your Steam Community Profile URL when reporting any issues.
             </p>
             <p>Valve, Steam and the Steam logo are registered trademarks of Valve Corporation.</p>
 
-            <p>Version {{version}}.</p>
+            <p>Version {{ version }}.</p>
         </div>
     </div>
 </template>

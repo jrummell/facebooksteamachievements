@@ -52,9 +52,7 @@ export default class Login extends Vue {
     }
 
     async getUser() {
-        let user = await this.restClient.getJson<IUser>(
-            `api/User/${this.userId}`
-        );
+        let user = await this.restClient.getJson<IUser>(`api/User/${this.userId}`);
         if (user == null) {
             // create a user if they don't exist
             const model = { facebookUserId: this.userId };

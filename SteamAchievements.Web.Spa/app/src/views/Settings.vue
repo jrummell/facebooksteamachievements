@@ -1,13 +1,14 @@
 <template>
     <b-card v-if="resources" class="settings-page">
-        <b-row v-if="saveSuccess">{{ resources.settingsSuccess }}</b-row>
-        <b-row v-if="validateProfileError">{{ resources.settingsInvalidCustomUrl }}</b-row>
+        <div v-if="saveSuccess" class="text-success">
+            {{ resources.settingsSuccess }}
+        </div>
+        <div v-if="steamProfileValid === false" class="text-danger">
+            {{ resources.settingsInvalidCustomUrl }}
+        </div>
 
         <b-form>
-            <span
-                v-if="steamUserIdValid === false"
-                class="danger"
-            >{{resources.settingsCustomUrlRequired}}</span>
+            <span v-if="steamUserIdValid === false" class="text-danger">{{ resources.settingsCustomUrlRequired }}</span>
             <b-form-group :label="resources.settingsCustomUrl">
                 <b-row>
                     <b-col>
@@ -32,9 +33,9 @@
                 </b-row>
             </b-form-group>
             <b-form-group label="Publish Options">
-                <b-form-checkbox
-                    v-model="model.publishDescription"
-                >{{ resources.settingsPublishDescriptionLabel }}</b-form-checkbox>
+                <b-form-checkbox v-model="model.publishDescription">{{
+                    resources.settingsPublishDescriptionLabel
+                }}</b-form-checkbox>
             </b-form-group>
             <b-button @click="save" variant="primary">
                 <font-awesome-icon icon="save"></font-awesome-icon>
@@ -61,7 +62,7 @@ export default class Settings extends Vue {
     resources: IResources | null = null;
 
     saveSuccess: boolean = false;
-    validateProfileError: boolean = false;
+    steamProfileValid: boolean | null = null;
     steamUserIdValid: boolean | null = null;
 
     model: IUser | null = null;
@@ -77,23 +78,25 @@ export default class Settings extends Vue {
 
     async validateSteamUserId(value: string): Promise<void> {
         if (this.model && this.model.steamUserId) {
-            const response = await this.restClient.getJson(
-                `/api/Profile/${value}`
-            );
+            const response = await this.restClient.getJson(`/api/Profile/${value}`);
 
-            this.steamUserIdValid = response != null;
+            this.steamProfileValid = response != null;
         }
     }
 
     async save(): Promise<void> {
-        const response = await this.restClient.putJson("/api/User", this.model);
+        if (this.steamProfileValid) {
+            const response = await this.restClient.putJson("/api/User", this.model);
 
-        this.steamUserIdValid = response != null;
+            this.steamUserIdValid = response != null;
 
-        if (this.steamUserIdValid) {
-            this.model = response;
+            if (this.steamUserIdValid) {
+                this.model = response;
 
-            this.$store.commit(MutationTypes.setUser, this.model);
+                this.$store.commit(MutationTypes.setUser, this.model);
+
+                this.saveSuccess = true;
+            }
         }
     }
 }
