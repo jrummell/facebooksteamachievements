@@ -156,7 +156,7 @@ namespace SteamAchievements.Web.Spa
                                            // UI strings that we have localized.
                                            SupportedUICultures = supportedCultures
                                        });
-            // allow / to route to /wwwroot/index.html
+            // allow / to route to /app/build/index.html
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
