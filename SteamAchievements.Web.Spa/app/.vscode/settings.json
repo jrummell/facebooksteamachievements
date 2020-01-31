@@ -30,5 +30,8 @@
     ],
     "typescript.tsdk": "node_modules/typescript/lib",
     "prettier.packageManager": "yarn",
-    "prettier.printWidth": 120
+    "prettier.printWidth": 120,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    }
 }
