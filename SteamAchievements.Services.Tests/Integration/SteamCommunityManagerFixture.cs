@@ -27,7 +27,7 @@ using SteamAchievements.Services.Models;
 
 namespace SteamAchievements.Services.Tests.Integration
 {
-    [TestFixture, Category("Integration")]
+    [TestFixture, Explicit, Category("Integration")]
     public class SteamCommunityManagerFixture
     {
         #region Setup/Teardown
@@ -60,7 +60,7 @@ namespace SteamAchievements.Services.Tests.Integration
             Assert.That(achievements.Any(a => a.Achievement.Name == "Acid Reflex"));
         }
 
-        [Test]
+        [Test, Explicit]
         public void GetGames()
         {
             IEnumerable<GameModel> games = _manager.GetGames("nullreference", "english");
@@ -71,7 +71,7 @@ namespace SteamAchievements.Services.Tests.Integration
             Assert.That(games.Any(game => game.Id == 730));
         }
 
-        [Test]
+        [Test, Explicit]
         public void GetProfile()
         {
             SteamProfileModel profile = _manager.GetProfile("nullreference");
@@ -80,7 +80,7 @@ namespace SteamAchievements.Services.Tests.Integration
             Assert.That(profile.SteamUserId, Is.EqualTo("Null Reference"));
         }
 
-        [Test]
+        [Test, Explicit]
         public void GetProfileUnicode()
         {
             SteamProfileModel profile = _manager.GetProfile("gaebber");
