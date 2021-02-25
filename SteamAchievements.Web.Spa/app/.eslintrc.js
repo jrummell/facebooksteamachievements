@@ -3,18 +3,24 @@ module.exports = {
     env: {
         node: true
     },
-    plugins: ["prettier"],
-    extends: ["plugin:vue/essential", "prettier", "@vue/prettier", "@vue/typescript"],
+    extends: [
+        "plugin:vue/vue3-essential",
+        "eslint:recommended",
+        "@vue/typescript/recommended",
+        "@vue/prettier",
+        "@vue/prettier/@typescript-eslint"
+    ],
+    parserOptions: {
+        ecmaVersion: 2020
+    },
     rules: {
         "no-console": "warn",
         "no-debugger": "warn",
         quotes: ["warn", "double"],
         indent: ["warn", 4],
         "no-tabs": "error",
-        "max-len": ["warn", { code: 120, ignoreStrings: true, ignoreTemplateLiterals: true, ignoreUrls: true }]
-    },
-    parserOptions: {
-        parser: "@typescript-eslint/parser"
+        "max-len": ["warn", { code: 120, ignoreStrings: true, ignoreTemplateLiterals: true, ignoreUrls: true }],
+        "@typescript-eslint/interface-name-prefix": "off"
     },
     overrides: [
         {

@@ -6,10 +6,7 @@ module.exports = {
             {
                 vue: "Vue",
                 bootstrap: "Bootstrap",
-                "bootstrap-vue": "BootstrapVue",
-                "vue-class-component": "VueClassComponent",
-                "vue-property-decorator": "VuePropertyDecorator",
-                vuex: "Vuex"
+                "bootstrap-vue": "BootstrapVue"
             }
         ]);
     }

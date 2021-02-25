@@ -1,26 +1,23 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import { createStore } from "vuex";
 import { IResources, ISteamProfile, IGame, IUser } from "@/models";
 import AppState from "./AppState";
 import IApiSettings from "./IApiSettings";
 import MutationTypes from "./MutationTypes";
 
-Vue.use(Vuex);
-
-export default new Vuex.Store({
+export default createStore<AppState>({
     state: new AppState(),
     mutations: {
-        setUser(state, payload: IUser) {
+        setUser(state: AppState, payload: IUser) {
             state.user = { ...state.user, ...payload };
         },
-        setProfile(state, payload: ISteamProfile) {
+        setProfile(state: AppState, payload: ISteamProfile) {
             state.profile = { ...state.profile, ...payload };
         },
-        setResources(state, payload: IResources) {
+        setResources(state: AppState, payload: IResources) {
             state.resources = { ...state.resources, ...payload };
         },
-        setGames(state, payload: IGame[]) {
-            Vue.set(state, "games", [...payload]);
+        setGames(state: AppState, payload: IGame[]) {
+            state.games = [...payload];
         }
     },
     actions: {},

@@ -1,31 +1,25 @@
-import Vue from "vue";
-import VueRouter, { RouteConfig } from "vue-router";
-import Home from "../views/Home.vue";
-import Settings from "../views/Settings.vue";
-import Games from "../views/Games.vue";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
-Vue.use(VueRouter);
-
-const routes: RouteConfig[] = [
+const routes: RouteRecordRaw[] = [
     {
         path: "/",
         name: "home",
-        component: Home
+        component: () => import(/* webpackChunkName: "home" */ "../views/Home.vue")
     },
     {
         path: "/games",
         name: "games",
-        component: Games
+        component: () => import(/* webpackChunkName: "games" */ "../views/Games.vue")
     },
     {
         path: "/settings",
         name: "settings",
-        component: Settings
+        component: () => import(/* webpackChunkName: "settings" */ "../views/Settings.vue")
     }
 ];
 
-const router = new VueRouter({
-    base: process.env.BASE_URL,
+const router = createRouter({
+    history: createWebHistory(process.env.BASE_URL),
     routes
 });
 

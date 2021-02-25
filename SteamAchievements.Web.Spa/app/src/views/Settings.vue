@@ -42,31 +42,28 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
+import { Options, Vue } from "vue-class-component";
 import { Inject } from "vue-property-decorator";
-import IResources from "../models/IResources";
 import { IUser } from "../models";
 import RestClient from "../helpers/RestClient";
 import { MutationTypes } from "../store";
 
-@Component
+@Options({ name: "Settings" })
 export default class Settings extends Vue {
     @Inject()
-    restClient: RestClient;
+    restClient!: RestClient;
 
-    resources: IResources | null = null;
+    resources = this.$store.state.resources;
 
-    saveSuccess: boolean = false;
+    saveSuccess = false;
     steamProfileValid: boolean | null = null;
     steamUserIdValid: boolean | null = null;
 
-    model: IUser | null = null;
+    get model(): IUser | undefined {
+        return this.$store.state.user;
+    }
 
     mounted() {
-        this.resources = this.$store.state.resources;
-        this.model = this.$store.state.user;
-
         if (this.model) {
             this.validateSteamUserId(this.model.steamUserId || "");
         }
@@ -87,9 +84,7 @@ export default class Settings extends Vue {
             this.steamUserIdValid = response != null;
 
             if (this.steamUserIdValid) {
-                this.model = response;
-
-                this.$store.commit(MutationTypes.setUser, this.model);
+                this.$store.commit(MutationTypes.setUser, response);
 
                 this.saveSuccess = true;
             }

@@ -2,12 +2,12 @@
     <div id="app">
         <div class="header mb-2">
             <router-link to="/">
-                <img src="/images/banner-light.png" class="img-fluid" alt="Steam Achievements" />
+                <!-- <img src="./assets/banner-light.png" class="img-fluid" alt="Steam Achievements" /> -->
             </router-link>
         </div>
         <div v-if="loaded">
             <div v-if="loggedIn">
-                <b-nav tabs class="mb-2">
+                <!-- <b-nav tabs class="mb-2">
                     <b-nav-item :active="$route.name == 'home'">
                         <router-link to="/">{{ resources.menuHome }}</router-link>
                     </b-nav-item>
@@ -18,7 +18,7 @@
                         <router-link to="/settings">{{ resources.menuSettings }}</router-link>
                     </b-nav-item>
                     <b-nav-item :href="helpUrl" target="_blank">{{ resources.menuHelp }}</b-nav-item>
-                </b-nav>
+                </b-nav> -->
                 <div class="mt-2 mb-2">
                     <profile></profile>
                 </div>
@@ -33,11 +33,11 @@
 
         <div class="footer">
             <p>
-                <a href="http://www.facebook.com/SteamAchievements" target="_blank">Steam Achievements</a>
+                <a href="https://www.facebook.com/SteamAchievements" target="_blank">Steam Achievements</a>
                 is not developed by Facebook or Valve. Steam Achievements is an
                 <a href="https://github.com/jrummell/facebooksteamachievements" target="_blank">open source project</a>
                 created by a dude who likes to frag on the PC. Logo design by
-                <a href="http://www.facebook.com/vince.costello" target="_blank">Vince Costello</a>. If you have a
+                <a href="https://www.facebook.com/vince.costello" target="_blank">Vince Costello</a>. If you have a
                 suggestion or have found a bug, please report it on the project's
                 <a href="https://github.com/jrummell/facebooksteamachievements/issues" target="_blank">issue tracker</a
                 >. Please include your Steam Community Profile URL when reporting any issues.
@@ -50,21 +50,21 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
+import { Options, Vue } from "vue-class-component";
+import { Inject } from "vue-property-decorator";
 import { MutationPayload } from "vuex";
 import { AppState, MutationTypes } from "./store";
 import { IResources } from "./models";
-import { Inject } from "vue-property-decorator";
 import RestClient from "./helpers/RestClient";
+import Profile from "./components/Profile.vue";
 
-@Component
+@Options({ name: "App", components: { profile: Profile } })
 export default class App extends Vue {
     @Inject()
-    restClient: RestClient;
+    restClient!: RestClient;
 
-    loggedIn: boolean = false;
-    loaded: boolean = false;
+    loggedIn = false;
+    loaded = false;
     resources: IResources | null = null;
     helpUrl: string = this.$store.state.helpUrl;
     version: string = this.$store.state.version;

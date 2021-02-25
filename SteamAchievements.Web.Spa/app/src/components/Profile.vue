@@ -8,19 +8,17 @@
     </b-row>
 </template>
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
-import { Prop, Inject } from "vue-property-decorator";
+import { Options, Vue } from "vue-class-component";
+import { Inject } from "vue-property-decorator";
 import { MutationPayload } from "vuex";
 import { AppState } from "../store";
-import IUser from "../models/IUser";
 import ISteamProfile from "../models/ISteamProfile";
 import RestClient from "../helpers/RestClient";
 
-@Component
+@Options({ name: "Profile" })
 export default class Profile extends Vue {
     @Inject()
-    restClient: RestClient;
+    restClient!: RestClient;
 
     profile: ISteamProfile | null = null;
 
@@ -31,7 +29,7 @@ export default class Profile extends Vue {
             }
         });
 
-        if (this.$store.state.user.steamUserId) {
+        if (this.$store.state.user?.steamUserId) {
             this.getProfile();
         }
     }
@@ -42,7 +40,7 @@ export default class Profile extends Vue {
             return;
         }
 
-        if (this.$store.state.user.steamUserId) {
+        if (this.$store.state.user?.steamUserId) {
             this.profile = await this.restClient.getJson(`/api/Profile/${this.$store.state.user.steamUserId}`);
 
             this.$store.commit("setProfile", this.profile);

@@ -5,10 +5,10 @@
     </b-button>
 </template>
 <script lang="ts">
-import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
+import { Options, Vue } from "vue-class-component";
+import { Prop } from "vue-property-decorator";
 
-@Component
+@Options({ name: "HelpButton" })
 export default class HelpButton extends Vue {
     @Prop({ required: false })
     link?: string;
@@ -32,7 +32,7 @@ export default class HelpButton extends Vue {
             return null;
         }
 
-        return this.$store.state.resources.buttonHelp;
+        return this.$store.state.resources?.buttonHelp || null;
     }
 }
 </script>

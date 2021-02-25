@@ -71,26 +71,25 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
+import { Options, Vue } from "vue-class-component";
 import { Inject } from "vue-property-decorator";
-import { BFormCheckbox } from "bootstrap-vue";
 import RestClient from "../helpers/RestClient";
 import { MutationPayload } from "vuex";
 import { AppState, MutationTypes } from "../store";
-import { IAchievement, IResources, IGameAchievements, IUser, ISteamProfile } from "../models";
+import { IAchievement, IGameAchievements } from "../models";
+import FB from "@/helpers/FB";
 
-@Component
+@Options({ name: "Home" })
 export default class Home extends Vue {
     @Inject()
-    restClient: RestClient;
+    restClient!: RestClient;
 
-    resources: IResources = this.$store.state.resources;
+    resources = this.$store.state.resources;
 
-    user: IUser = this.$store.state.user;
-    loading: boolean = true;
-    showSettings: boolean = false;
-    achievements: IGameAchievements[] = this.$store.state.achievements || [];
+    user = this.$store.state.user;
+    loading = true;
+    showSettings = false;
+    achievements = this.$store.state.achievements;
 
     get selectedAchievements(): IAchievement[] {
         const selected: IAchievement[] = [];
@@ -136,7 +135,7 @@ export default class Home extends Vue {
     }
 
     async getAchievements(): Promise<void> {
-        const achievements = await this.restClient.getJson<IGameAchievements[]>(`/api/Achievement/${this.user.id}`);
+        const achievements = await this.restClient.getJson<IGameAchievements[]>(`/api/Achievement/${this.user?.id}`);
 
         if (achievements) {
             this.achievements = achievements;
@@ -154,16 +153,16 @@ export default class Home extends Vue {
     }
 
     async publish(): Promise<void> {
-        if (this.selectedAchievements.length === 0) {
+        if (this.selectedAchievements.length === 0 || !this.$store.state.user) {
             return;
         }
 
-        const user: IUser = this.$store.state.user;
+        const user = this.$store.state.user;
 
-        let descriptions: string[] = [];
+        const descriptions: string[] = [];
 
         let selectedAchivementIds: number[] = [];
-        this.achievements.forEach((value, index) => {
+        this.achievements.forEach(value => {
             const selected = value.achievements.filter(a => a.selected === true);
 
             selectedAchivementIds = selectedAchivementIds.concat(selected.map(a => a.id));
@@ -191,12 +190,14 @@ export default class Home extends Vue {
         }! \r\n\r\n${descriptions.join(". ")}`;
 
         // https://developers.facebook.com/docs/sharing/reference/share-dialog#jssdk
-        FB.ui(
+        // eslint-disable-next-line no-undef
+        (window.FB as FB).ui(
             {
                 method: "share",
                 href: window.location.href,
                 quote: message
             },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             async (response: any): Promise<void> => {
                 if (response.error_code) {
                     return;
@@ -222,7 +223,7 @@ export default class Home extends Vue {
             return;
         }
 
-        const user: IUser = this.$store.state.user;
+        const user = this.$store.state.user;
 
         const selectedAchivementIds: number[] = [];
         this.achievements.forEach(g => {
@@ -235,7 +236,7 @@ export default class Home extends Vue {
 
         this.loading = true;
 
-        await this.restClient.deleteJson(`/api/Achievement/${user.id}`, selectedAchivementIds);
+        await this.restClient.deleteJson(`/api/Achievement/${user?.id}`, selectedAchivementIds);
 
         await this.getAchievements();
 

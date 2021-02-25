@@ -8,28 +8,28 @@
     ></facebook-login>
 </template>
 <script lang="ts">
-import Vue from "vue";
-import { Prop, Component, Inject } from "vue-property-decorator";
-import facebookLogin from "facebook-login-vuejs";
+import { Vue, Options } from "vue-class-component";
+import { Inject } from "vue-property-decorator";
 import IUser from "../models/IUser";
 import RestClient from "../helpers/RestClient";
+import FB from "../helpers/FB";
 
-@Component({})
+@Options({ name: "Login" })
 export default class Login extends Vue {
     @Inject()
-    restClient: RestClient;
+    restClient!: RestClient;
 
-    isConnected: boolean = false;
-    FB: any;
-    userId: number;
+    isConnected = false;
+    FB?: FB;
+    userId = 0;
 
     get appId(): string {
-        return this.$store.state.facebookAppId;
+        return this.$store.state.facebookAppId.toString();
     }
 
-    sdkLoaded(payload: { isConnected: boolean; FB: any }) {
+    sdkLoaded(payload: { isConnected: boolean; FB: object }) {
         this.isConnected = payload.isConnected;
-        this.FB = payload.FB;
+        this.FB = payload.FB as FB;
         if (this.isConnected) {
             this.getFacebookUser();
         }
@@ -42,13 +42,15 @@ export default class Login extends Vue {
     }
 
     getFacebookUser() {
-        this.FB.api("/me", "GET", { fields: "id" }, (user: { id: string }) => {
-            this.userId = Number.parseInt(user.id, 10);
+        if (this.FB) {
+            this.FB.api("/me", "GET", { fields: "id" }, (user: { id: string }) => {
+                this.userId = Number.parseInt(user.id, 10);
 
-            this.$store.commit("setUser", { facebookUserId: this.userId });
+                this.$store.commit("setUser", { facebookUserId: this.userId });
 
-            this.getUser();
-        });
+                this.getUser();
+            });
+        }
     }
 
     async getUser() {

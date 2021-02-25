@@ -26,20 +26,20 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Inject, Component } from "vue-property-decorator";
+import { Options, Vue } from "vue-class-component";
+import { Inject } from "vue-property-decorator";
 import RestClient from "../helpers/RestClient";
-import { IGame, IResources } from "../models";
+import { IGame } from "../models";
 import { MutationTypes } from "../store";
 
-@Component
+@Options({ name: "Games" })
 export default class Games extends Vue {
     @Inject()
-    restClient: RestClient;
+    restClient!: RestClient;
 
-    resources: IResources = this.$store.state.resources;
+    resources = this.$store.state.resources;
 
-    loading: boolean = true;
+    loading = true;
 
     games: IGame[] = this.$store.state.games;
 
@@ -48,7 +48,7 @@ export default class Games extends Vue {
     }
 
     async getGames(): Promise<void> {
-        if (this.games.length > 0) {
+        if (!this.$store.state.user?.steamUserId || this.games.length > 0) {
             this.loading = false;
             return;
         }

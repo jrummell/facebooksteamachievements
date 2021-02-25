@@ -1,13 +1,10 @@
-import IUser from "@/models/IUser";
-import IResources from "@/models/IResources";
-import ISteamProfile from "@/models/ISteamProfile";
-import IGame from "@/models/IGame";
 import IApiSettings from "./IApiSettings";
+import { IGame, ISteamProfile, IResources, IUser, IGameAchievements } from "@/models";
 
 export default class AppState {
     user?: IUser;
     profile?: ISteamProfile;
-    resources: IResources;
+    resources?: IResources;
     apiSettings: IApiSettings = {
         // https://cli.vuejs.org/guide/mode-and-env.html#environment-variables
         clientId: process.env.VUE_APP_CLIENT_ID,
@@ -15,6 +12,7 @@ export default class AppState {
     };
     facebookAppId: number = process.env.VUE_APP_FACEBOOK_APP_ID;
     helpUrl: string = process.env.VUE_APP_HELP_URL;
-    version: string = process.env.VUE_APP_VERSION || "9.0.0";
+    version: string = process.env.VUE_APP_VERSION || "10.0.0";
     games: IGame[] = [];
+    achievements: IGameAchievements[] = [];
 }

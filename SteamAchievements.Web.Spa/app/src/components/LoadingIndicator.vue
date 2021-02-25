@@ -3,13 +3,12 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
+import { Options, Vue } from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 
-@Component
+@Options({ name: "LoadingIndicator" })
 export default class LoadingIndicator extends Vue {
     @Prop({ required: true })
-    loading: boolean;
+    loading!: boolean;
 }
 </script>
