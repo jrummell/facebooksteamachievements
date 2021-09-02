@@ -56,14 +56,21 @@ jobs:
     inputs:
       projects: '**/*.csproj'
       arguments: --configuration $(BuildConfiguration)
-      configurationToPack: Debug
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet ef migrations script'
+    inputs:
+      command: 'custom'
+      custom: 'ef'
+      arguments: 'migrations script --output $(Build.ArtifactStagingDirectory)\migrate.sql --context SteamContext --idempotent --startup-project ..\SteamAchievements.Web.Spa --configuration $(BuildConfiguration)'
+
+
   - task: DotNetCoreCLI@2
     displayName: dotnet test
     inputs:
       command: test
       projects: '**/*.Test*.csproj'
       arguments: --configuration $(BuildConfiguration)
-      configurationToPack: Debug
 
   - script: yarn install
     displayName: yarn install
