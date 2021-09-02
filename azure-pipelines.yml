@@ -70,6 +70,7 @@ jobs:
       command: 'custom'
       custom: 'ef'
       arguments: 'migrations script --output $(Build.ArtifactStagingDirectory)\migrate.sql --context SteamContext --idempotent --startup-project ..\SteamAchievements.Web.Spa --configuration $(BuildConfiguration)'
+      workingDirectory: 'SteamAchievements.Data'
 
 
   - task: DotNetCoreCLI@2
