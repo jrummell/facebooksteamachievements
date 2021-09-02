@@ -2,7 +2,7 @@
 
 Steam Achievements is a web app that displays achievements for your Steam games and allows you to publish them on facebook. It's  built with ASP.NET Core, ASP.NET Identity, facebook login, and Vue.js. You can see it action at <https://fbsteamachievements.azurewebsites.net/>.
 
-![Build status](https://dev.azure.com/rummellwebsolutions/SteamAchievements/_apis/build/status/PROD%20-%20SteamAchievements%20(Continuous)) ![Deployment status](https://vsrm.dev.azure.com/rummellwebsolutions/_apis/public/Release/badge/c7c8aee6-37db-49de-8626-df06a9e82a96/2/2)
+[![Build Status](https://dev.azure.com/jrummell/SteamAchievements/_apis/build/status/jrummell.facebooksteamachievements)](https://dev.azure.com/jrummell/SteamAchievements/_build/latest?definitionId=2) ![Deployment status](https://vsrm.dev.azure.com/rummellwebsolutions/_apis/public/Release/badge/c7c8aee6-37db-49de-8626-df06a9e82a96/2/2)
 
 ## How it works
 
