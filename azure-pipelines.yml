@@ -33,12 +33,12 @@ jobs:
   - task: DownloadSecureFile@1
     displayName: Download .env.staging
     inputs:
-      secureFile: b6783058-9aaf-4e93-ae88-7ae305f3f525
+      secureFile: .env.staging
       retryCount: 5
   - task: DownloadSecureFile@1
     displayName: Download .env.production
     inputs:
-      secureFile: 118942fe-73a9-4cbe-ae84-7a060d53b5d0
+      secureFile: .env.production
       retryCount: 5
 
   - task: CopyFiles@2
