@@ -1,0 +1,89 @@
+trigger:
+  branches:
+    include:
+    - main
+    - develop
+  batch: True
+
+name: 9.0.$(Rev:r)
+
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+
+  pool:
+    name: Default
+
+  steps:
+  - checkout: self
+    clean: true
+  - task: UseDotNet@2
+    displayName: Use .NET Core sdk 5.x
+    inputs:
+      version: 5.x
+  - task: SonarCloudPrepare@1
+    displayName: Prepare analysis on SonarCloud
+    inputs:
+      SonarCloud: a10878fd-149a-48bf-808d-fdb9e5804f02
+      organization: jrummell-github
+      projectKey: jrummell_facebooksteamachievements
+      projectVersion: $(Build.BuildNumber)
+  - task: DownloadSecureFile@1
+    displayName: Download .env.staging
+    inputs:
+      secureFile: b6783058-9aaf-4e93-ae88-7ae305f3f525
+      retryCount: 5
+  - task: DownloadSecureFile@1
+    displayName: Download .env.production
+    inputs:
+      secureFile: 118942fe-73a9-4cbe-ae84-7a060d53b5d0
+      retryCount: 5
+  - task: CopyFiles@2
+    displayName: 'Copy .env Files to: SteamAchievements.Web.Spa\app'
+    inputs:
+      SourceFolder: $(Agent.TempDirectory)
+      Contents: '**\.env.*'
+      TargetFolder: SteamAchievements.Web.Spa\app
+  - task: UseDotNet@2
+    displayName: Use .Net Core sdk 5.x
+    inputs:
+      version: 5.x
+  - task: DotNetCoreCLI@2
+    displayName: dotnet build
+    inputs:
+      projects: '**/*.csproj'
+      arguments: --configuration Debug
+      configurationToPack: Debug
+  - task: DotNetCoreCLI@2
+    displayName: dotnet test
+    inputs:
+      command: test
+      projects: '**/*.Test*.csproj'
+      arguments: --configuration Debug
+      configurationToPack: Debug
+  - task: Yarn@3
+    displayName: Yarn install
+    inputs:
+      projectDirectory: SteamAchievements.Web.Spa\app
+  - task: Yarn@3
+    displayName: Yarn build
+    inputs:
+      projectDirectory: SteamAchievements.Web.Spa\app
+      arguments: build
+  - task: DotNetCoreCLI@2
+    displayName: dotnet publish
+    inputs:
+      command: publish
+      arguments: --configuration Debug --no-restore
+      configurationToPack: Debug
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+    condition: succeededOrFailed()
+    inputs:
+      SourceFolder: $(build.sourcesdirectory)
+      Contents: '**\*.zip'
+      TargetFolder: $(build.artifactstagingdirectory)
+  - task: SonarCloudAnalyze@1
+    displayName: Run Code Analysis
+  - task: SonarCloudPublish@1
+    displayName: Publish Quality Gate Result
