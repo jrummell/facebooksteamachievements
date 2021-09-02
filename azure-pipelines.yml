@@ -62,7 +62,6 @@ jobs:
       arguments: 'migrations script --output $(Build.ArtifactStagingDirectory)\migrate.sql --context SteamContext --idempotent --startup-project ..\SteamAchievements.Web.Spa --configuration $(BuildConfiguration)'
       workingDirectory: 'SteamAchievements.Data'
 
-
   - task: DotNetCoreCLI@2
     displayName: dotnet test
     inputs:
@@ -74,7 +73,7 @@ jobs:
     displayName: yarn install
     workingDirectory: SteamAchievements.Web.Spa\app
 
-  - script: yarn build
+  - script: yarn $(YarnBuildCommand)
     displayName: yarn build
     workingDirectory: SteamAchievements.Web.Spa\app
 
