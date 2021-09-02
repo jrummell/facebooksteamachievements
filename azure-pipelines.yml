@@ -5,7 +5,7 @@ trigger:
     - develop
   batch: True
 
-name: 9.0.$(Rev:r)
+name: 9.1.$(Rev:r)
 
 jobs:
 - job: Job_1
