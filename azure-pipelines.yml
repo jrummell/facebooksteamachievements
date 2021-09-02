@@ -66,9 +66,11 @@ jobs:
       configurationToPack: Debug
 
   - script: yarn install
+    displayName: yarn install
     workingDirectory: SteamAchievements.Web.Spa\app
 
   - script: yarn build
+    displayName: yarn build
     workingDirectory: SteamAchievements.Web.Spa\app
 
   - task: DotNetCoreCLI@2
