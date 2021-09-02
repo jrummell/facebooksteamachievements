@@ -24,10 +24,12 @@ jobs:
   - task: SonarCloudPrepare@1
     displayName: Prepare analysis on SonarCloud
     inputs:
-      SonarCloud: a10878fd-149a-48bf-808d-fdb9e5804f02
-      organization: jrummell-github
-      projectKey: jrummell_facebooksteamachievements
-      projectVersion: $(Build.BuildNumber)
+      SonarCloud: 'https://sonarcloud.io/organizations/jrummell-github/'
+      organization: 'jrummell-github'
+      scannerMode: 'MSBuild'
+      projectKey: 'jrummell_facebooksteamachievements'
+      projectVersion: '$(Build.BuildNumber)'
+
   - task: DownloadSecureFile@1
     displayName: Download .env.staging
     inputs:
@@ -38,6 +40,7 @@ jobs:
     inputs:
       secureFile: 118942fe-73a9-4cbe-ae84-7a060d53b5d0
       retryCount: 5
+
   - task: CopyFiles@2
     displayName: 'Copy .env Files to: SteamAchievements.Web.Spa\app'
     inputs:
@@ -52,14 +55,14 @@ jobs:
     displayName: dotnet build
     inputs:
       projects: '**/*.csproj'
-      arguments: --configuration Debug
+      arguments: --configuration $(BuildConfiguration)
       configurationToPack: Debug
   - task: DotNetCoreCLI@2
     displayName: dotnet test
     inputs:
       command: test
       projects: '**/*.Test*.csproj'
-      arguments: --configuration Debug
+      arguments: --configuration $(BuildConfiguration)
       configurationToPack: Debug
   - task: Yarn@3
     displayName: Yarn install
@@ -74,8 +77,8 @@ jobs:
     displayName: dotnet publish
     inputs:
       command: publish
-      arguments: --configuration Debug --no-restore
-      configurationToPack: Debug
+      arguments: --configuration $(BuildConfiguration) --no-restore
+      configurationToPack: $(BuildConfiguration)
   - task: CopyFiles@2
     displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
     condition: succeededOrFailed()
