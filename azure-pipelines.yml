@@ -64,15 +64,13 @@ jobs:
       projects: '**/*.Test*.csproj'
       arguments: --configuration $(BuildConfiguration)
       configurationToPack: Debug
-  - task: Yarn@3
-    displayName: Yarn install
-    inputs:
-      projectDirectory: SteamAchievements.Web.Spa\app
-  - task: Yarn@3
-    displayName: Yarn build
-    inputs:
-      projectDirectory: SteamAchievements.Web.Spa\app
-      arguments: build
+
+  - script: yarn install
+    workingDirectory: SteamAchievements.Web.Spa\app
+
+  - script: yarn build
+    workingDirectory: SteamAchievements.Web.Spa\app
+
   - task: DotNetCoreCLI@2
     displayName: dotnet publish
     inputs:
